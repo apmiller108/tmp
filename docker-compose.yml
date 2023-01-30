@@ -1,0 +1,46 @@
+version: "3.6"
+
+services:
+  web:
+    tty: true
+    stdin_open: true
+    build: .
+    command: bash -c "rm -f tmp/pids/server.pid && /app/bin/dev"
+    volumes:
+      - ".:/app"
+    ports:
+      - "3000:3000"
+    links:
+      - "database"
+      - "redis"
+    env_file:
+      - ".env"
+  database:
+    image: postgres:latest
+    volumes:
+      - 'postgres:/var/lib/postgresql/data'
+    ports:
+      - "5432"
+    env_file:
+      - ".env"
+  redis:
+    image: redis:latest
+    volumes:
+      - "redis:/data"
+    ports:
+      - "6379"
+  sidekiq:
+    depends_on:
+      - "database"
+      - "redis"
+    build: .
+    volumes:
+      - ".:/app"
+      - "/app/tmp" # don't mount tmp dir
+    command: "bundle exec sidekiq"
+    env_file:
+      - ".env"
+
+volumes:
+  redis:
+  postgres:
