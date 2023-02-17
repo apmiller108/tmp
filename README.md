@@ -1,24 +1,18 @@
-# README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# TODOs
+- [x] Add Devise
+- [x] Add Haml gem
+- [x] Create an Item resource
+- [ ] Add CRUD actions for Item, both HTML and JSON formats
+  - [x] Add index
+  - [ ] Add show
+  - [ ] Add new
+  - [ ] Add create
+  - [ ] Add edit
+  - [ ] Add update
+  - [ ] Add destroy
+- [x] Learn about and use view_component library
+- [ ] Write a feature test for logging in
+- [ ] Add log out
+- [ ] Setup ActionCable
+- [ ] Do something with turbo frames
+- [ ] Do something with Stimulus

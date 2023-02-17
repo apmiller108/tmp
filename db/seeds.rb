@@ -5,3 +5,15 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+
+puts 'creating items...'
+items = Item.create!(
+  [
+    { name: 'Item 1' },
+    { name: 'Item 2' },
+    { name: 'Item 3' },
+    { name: 'Item 4' }
+  ]
+)
+
+puts "created #{items.count} items"

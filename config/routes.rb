@@ -3,5 +3,7 @@ Rails.application.routes.draw do
     sessions: 'users/sessions'
   }
 
-  root "articles#index"
+  root "items#index"
+
+  resources :items, only: %i[index]
 end

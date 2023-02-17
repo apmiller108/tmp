@@ -1,0 +1,24 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title Tmp
+    %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag "application", "data-turbo-track": "reload"
+    = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
+  %body
+    %nav.bg-gray-800
+      .mx-auto.max-w-7xl-px-2.sm:px-6.lg:px-8
+        .relative.flex.h-16.item-center.justify-between
+          .absolute.inset-y-0.left-0.flex.items-center.sm:hidden
+          .flex.flex-1.items-center.justify-center.sm:items-stretch.sm:justify-start
+            .hidden.sm:ml-6.sm:block
+              .flex.space-x-4
+                %a.bg-gray-900.text-white.px-3.py-2.rounded-md.text-sm.font-medium{href: '#', 'aria-current': 'page'} Dashboard
+                %a.bg-gray-900.text-white.px-3.py-2.rounded-md.text-sm.font-medium{href: '#', 'aria-current': 'page'} Team
+
+    %p.notice= notice
+    %p.alert= alert
+    = yield
