@@ -11,7 +11,9 @@
   - [ ] Add update
   - [ ] Add destroy
 - [x] Learn about and use view_component library
-- [ ] Write a feature test for logging in
+- [x] Setup Cuprite
+- [x] Write a feature test for logging in 
+- [ ] Write a feature test for Signing up
 - [ ] Add log out
 - [ ] Setup ActionCable
 - [ ] Do something with turbo frames

@@ -1,6 +1,6 @@
 version: "3.6"
 
-services:
+services: # docker-compose up web database redis sidekiq
   web:
     tty: true
     stdin_open: true
@@ -40,6 +40,13 @@ services:
     command: "bundle exec sidekiq"
     env_file:
       - ".env"
+  chrome: # docker-compose up -d chrome
+    image: browserless/chrome:latest # See https://www.browserless.io/docs/docker
+    ports:
+      - "3333:3333"
+    environment:
+      PORT: 3333
+      CONNECTION_TIMEOUT: -1 # No timeout
 
 volumes:
   redis:
