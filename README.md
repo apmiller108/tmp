@@ -18,3 +18,26 @@
 - [ ] Setup ActionCable
 - [ ] Do something with turbo frames
 - [ ] Do something with Stimulus
+
+
+# Start
+
+- Docker
+  - docker-compose up web database redis sidekiq
+  - docker-compose exec -it web bash
+  - docker-compose exec -it database psql -U postgres
+
+# Application
+## Authentication
+- Devise
+- Note about Devise and Turbo
+
+## View Component
+
+# Testing
+
+## System Tests
+
+- Cuprite
+- Docker
+  - docker-compose up -d chrome
