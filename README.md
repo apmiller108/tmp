@@ -22,22 +22,29 @@
 
 # Start
 
-- Docker
+## Docker
   - docker-compose up web database redis sidekiq
   - docker-compose exec -it web bash
   - docker-compose exec -it database psql -U postgres
 
 # Application
 ## Authentication
-- Devise
-- Note about Devise and Turbo
+### Devise
+#### Devise and Turbo
+Device and turbo streams have some compatability issues, which can be resolved with some customization to the forms. 
+- Use HTML data attribute on registration and sign in forms: `data: { turbo: false }`
+- On session destroy link: `data: { turbo_method: :delete }`.
 
 ## View Component
+  - https://viewcomponent.org/guide/getting-started.html
 
 # Testing
 
 ## System Tests
 
-- Cuprite
+- [Cuprite](https://github.com/rubycdp/cuprite "cuprite")
+  - See also https://evilmartians.com/chronicles/system-of-a-test-setting-up-end-to-end-rails-testing
 - Docker
-  - docker-compose up -d chrome
+  - Uses [browserless' Chrome image](https://www.browserless.io/docs/docker-quickstart)
+  - `docker-compose up -d chrome`
+  - visit http://localhost:3333/
