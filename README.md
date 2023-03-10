@@ -13,8 +13,9 @@
 - [x] Learn about and use view_component library
 - [x] Setup Cuprite
 - [x] Write a feature test for logging in 
+- [x] Write a feature test for logging out
 - [ ] Write a feature test for Signing up
-- [ ] Add log out
+- [x] Add log out link
 - [ ] Setup ActionCable
 - [ ] Do something with turbo frames
 - [ ] Do something with Stimulus
@@ -31,12 +32,15 @@
 ## Authentication
 ### Devise
 #### Devise and Turbo
-Device and turbo streams have some compatability issues, which can be resolved with some customization to the forms. 
+At the time of writing this, Devise and turbo streams have some compatability
+issues, which can be resolved with some customization to the forms:
 - Use HTML data attribute on registration and sign in forms: `data: { turbo: false }`
 - On session destroy link: `data: { turbo_method: :delete }`.
 
 ## View Component
   - https://viewcomponent.org/guide/getting-started.html
+## CSS Framework
+[Bootstrap](https://getbootstrap.com/docs/5.3/getting-started/introduction/)
 
 # Testing
 
