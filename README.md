@@ -14,7 +14,7 @@
 - [x] Setup Cuprite
 - [x] Write a feature test for logging in 
 - [x] Write a feature test for logging out
-- [ ] Write a feature test for Signing up
+- [x] Write a feature test for Signing up
 - [x] Add log out link
 - [ ] Setup ActionCable
 - [ ] Do something with turbo frames
@@ -33,9 +33,12 @@
 ### Devise
 #### Devise and Turbo
 At the time of writing this, Devise and turbo streams have some compatability
-issues, which can be resolved with some customization to the forms:
-- Use HTML data attribute on registration and sign in forms: `data: { turbo: false }`
-- On session destroy link: `data: { turbo_method: :delete }`.
+issues, which can be resolved by disabling turbo in the forms using a HTML data
+attribute `data: { turbo: false }`.
+
+There is [an alternative to make turbo work with the devise forms](https://gorails.com/episodes/devise-hotwire-turbo), 
+but involves some customizations to devise that are require more advanced
+understanding of devise configuration.
 
 ## View Component
   - https://viewcomponent.org/guide/getting-started.html

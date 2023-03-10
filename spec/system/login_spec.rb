@@ -10,8 +10,8 @@ RSpec.describe 'logging in', type: :system do
     fill_in 'Email', with: user.email
     fill_in 'Password', with: password
     click_button 'Log in'
-    expect(page).to have_text 'Signed in successfully'
+    expect(page).to have_text I18n.t('devise.sessions.signed_in')
     expect(page).to have_current_path('/')
-    expect(page).to have_link('Sign Out')
+    expect(page).to have_button('Sign Out')
   end
 end
