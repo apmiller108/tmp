@@ -6,14 +6,9 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-puts 'creating items...'
-items = Item.create!(
-  [
-    { name: 'Item 1' },
-    { name: 'Item 2' },
-    { name: 'Item 3' },
-    { name: 'Item 4' }
-  ]
-)
-
-puts "created #{items.count} items"
+puts 'Creating users...'
+user =  User.find_or_create_by!(email: 'alex@example.com') do |user|
+  user.password = 'Password!'
+  user.password_confirmation = 'Password!'
+end
+puts "Created user #{user.email}"
