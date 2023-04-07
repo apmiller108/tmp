@@ -1,9 +1,18 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: {
-    sessions: 'users/sessions'
+    sessions: 'users/sessions',
+    registrations: 'users/registrations'
   }
 
-  root "items#index"
+  devise_scope :user do
+    authenticated :user do
+      root 'users#show', as: :authenticated_root
+    end
 
-  resources :items, only: %i[index]
+    unauthenticated do
+      root 'users/registrations#new'
+    end
+  end
+
+  resources :users, only: %i[show]
 end

@@ -1,9 +1,8 @@
 require 'system_helper'
 
-RSpec.describe 'Signing in', type: :system do
+RSpec.describe 'Signing up', type: :system do
   specify 'user signs in' do
     visit '/'
-    click_link 'Sign up'
     fill_in 'Email', with: 'alex@example.com'
     fill_in 'Password', with: 'Password!'
     fill_in 'Password confirmation', with: 'Password!'

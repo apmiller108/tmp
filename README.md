@@ -2,8 +2,12 @@
 - [x] Add Devise
 - [x] Add Haml gem
 - [x] Create an Item resource
-- [ ] Remove Item resource
-- [ ] Remove Item controller
+- [x] Remove Item resource
+- [x] Remove Item controller
+- [ ] Implement API authentication
+- [ ] Add authenticated route behaviour shared examples
+- [ ] Write request spec for user resourse
+- [ ] Add auth helper for request specs
 - [ ] Create box model
 - [ ] Create message model
 - [x] Learn about and use view_component library

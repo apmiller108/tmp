@@ -11,6 +11,6 @@ RSpec.describe 'Logging out', type: :system do
     click_button 'Log in'
 
     click_button 'Sign Out'
-    expect(page).to have_current_path new_user_session_path
+    expect(page).to have_current_path "/"
   end
 end
