@@ -1,16 +1,18 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.2.0"
+ruby "~> 3.2"
 
 gem "cssbundling-rails"
 gem "devise"
+gem "devise-jwt"
 gem "haml"
 gem "jwt"
 gem "jbuilder"
 gem "jsbundling-rails"
 gem "pg", "~> 1.1"
 gem "puma", "~> 5.0"
+gem "rack-cors"
 gem "rails", "~> 7.0.4", ">= 7.0.4.2"
 gem "sidekiq", "~> 7.0"
 gem "sprockets-rails"
