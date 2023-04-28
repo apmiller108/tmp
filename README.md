@@ -4,7 +4,9 @@
 - [x] Create an Item resource
 - [x] Remove Item resource
 - [x] Remove Item controller
-- [ ] Implement API authentication
+- [x] Implement API authentication
+- [ ] Disable session cookies for JSON requests
+- [ ] Figure out what to do with jwt_revocation_strategy
 - [ ] Add authenticated route behaviour shared examples
 - [ ] Write request spec for user resourse
 - [ ] Add auth helper for request specs

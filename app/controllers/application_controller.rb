@@ -1,11 +1,10 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
+  skip_before_action :verify_authenticity_token, if: :json_request?
 
-  def authenticate_user!
-    if request.format.json?
-      # TODO: authenticate_with_jwt
-    else
-      super
-    end
+  private
+
+  def json_request?
+    request.format.json?
   end
 end

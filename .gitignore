@@ -38,3 +38,5 @@
 .env
 
 yarn-error.log
+
+/config/credentials/development.key
