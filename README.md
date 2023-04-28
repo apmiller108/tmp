@@ -6,7 +6,11 @@
 - [x] Remove Item controller
 - [x] Implement API authentication
 - [ ] Disable session cookies for JSON requests
+      - See https://github.com/waiting-for-dev/devise-jwt
 - [ ] Figure out what to do with jwt_revocation_strategy
+      - See https://dakotaleemartinez.com/tutorials/devise-jwt-api-only-mode-for-authentication/
+- [ ] Figure out better cors config https://github.com/cyu/rack-cors
+- [ ] Add request specs for registrations, sessions, etc. for API
 - [ ] Add authenticated route behaviour shared examples
 - [ ] Write request spec for user resourse
 - [ ] Add auth helper for request specs
@@ -34,6 +38,7 @@
 ## Authentication
 ### Devise
 #### Devise and Turbo
+##### Session Cookies
 At the time of writing this, Devise and turbo streams have some compatability
 issues, which can be resolved by disabling turbo in the forms using a HTML data
 attribute `data: { turbo: false }`.
@@ -41,6 +46,11 @@ attribute `data: { turbo: false }`.
 There is [an alternative to make turbo work with the devise forms](https://gorails.com/episodes/devise-hotwire-turbo), 
 but involves some customizations to devise that are require more advanced
 understanding of devise configuration.
+
+##### JWTs
+Enpoints that respond to `json` formats are authenticated with JWT tokens.
+See also [devise-jwt](https://github.com/waiting-for-dev/devise-jwt)
+
 
 ## View Component
   - https://viewcomponent.org/guide/getting-started.html
