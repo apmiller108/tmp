@@ -5,11 +5,10 @@
 - [x] Remove Item resource
 - [x] Remove Item controller
 - [x] Implement API authentication
-- [ ] Disable session cookies for JSON requests
-      - See https://github.com/waiting-for-dev/devise-jwt
-- [ ] Figure out what to do with jwt_revocation_strategy
-      - See https://dakotaleemartinez.com/tutorials/devise-jwt-api-only-mode-for-authentication/
-- [ ] Figure out better cors config https://github.com/cyu/rack-cors
+- [x] Implement jti jwt_revocation_strategy
+- [ ] Add request spec for sign in
+- [ ] Add request spec for users
+- [ ] Make sure registrations works with API
 - [ ] Add request specs for registrations, sessions, etc. for API
 - [ ] Add authenticated route behaviour shared examples
 - [ ] Write request spec for user resourse
@@ -25,6 +24,7 @@
 - [ ] Setup ActionCable
 - [ ] Do something with turbo frames
 - [ ] Do something with Stimulus
+- [ ] Figure out better cors config https://github.com/cyu/rack-cors
 
 
 # Start
@@ -38,20 +38,32 @@
 ## Authentication
 ### Devise
 #### Devise and Turbo
-##### Session Cookies
 At the time of writing this, Devise and turbo streams have some compatability
 issues, which can be resolved by disabling turbo in the forms using a HTML data
 attribute `data: { turbo: false }`.
 
-There is [an alternative to make turbo work with the devise forms](https://gorails.com/episodes/devise-hotwire-turbo), 
-but involves some customizations to devise that are require more advanced
+There is [an alternative to make turbo work with the devise forms](https://gorails.com/episodes/devise-hotwire-turbo),
+but involves some customization to devise that are require more advanced
 understanding of devise configuration.
+##### Session Cookies
+Authentication with session cookies is the Devise default and is used for same origin web requests.
 
 ##### JWTs
-Enpoints that respond to `json` formats are authenticated with JWT tokens.
-See also [devise-jwt](https://github.com/waiting-for-dev/devise-jwt)
+Endpoints that respond to `json` formats are authenticated with JWT tokens.
+(unless the request is same origin, in which case Devise will authenticate using
+the session cookie.)
 
+See also [devise-jwt](https://github.com/waiting-for-dev/devise-jwt) docs:
 
+> If the authentication succeeds, a JWT token is dispatched to the client in the Authorization response header, with format Bearer #{token} (tokens are also dispatched on a successful sign up).
+
+###### Revocation Strategy
+`jti` (JWT ID). See https://github.com/waiting-for-dev/devise-jwt#revocation-strategies
+
+## Secrets
+This application stores encrypted credentials per the [Custom
+Credentials](https://edgeguides.rubyonrails.org/security.html#custom-credentials)
+Rails convention.
 ## View Component
   - https://viewcomponent.org/guide/getting-started.html
 ## CSS Framework

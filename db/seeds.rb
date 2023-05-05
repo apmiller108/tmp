@@ -7,8 +7,14 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 puts 'Creating users...'
-user =  User.find_or_create_by!(email: 'alex@example.com') do |user|
+users = []
+users << User.find_or_create_by!(email: 'alex@example.com') do |user|
   user.password = 'Password!'
   user.password_confirmation = 'Password!'
 end
-puts "Created user #{user.email}"
+
+users << User.find_or_create_by!(email: 'rick@example.com') do |user|
+  user.password = 'Password!'
+  user.password_confirmation = 'Password!'
+end
+puts "Created users:\n #{users.map(&:email).join("\n")}"
