@@ -4,7 +4,9 @@ services: # docker-compose up web database redis sidekiq
   web:
     tty: true
     stdin_open: true
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
     command: bash -c "rm -f tmp/pids/server.pid && /app/bin/dev"
     volumes:
       - ".:/app"
@@ -33,7 +35,9 @@ services: # docker-compose up web database redis sidekiq
     depends_on:
       - "database"
       - "redis"
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
     volumes:
       - ".:/app"
       - "/app/tmp" # don't mount tmp dir
