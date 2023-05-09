@@ -105,6 +105,8 @@ GEM
       devise (~> 4.0)
       warden-jwt_auth (~> 0.6)
     diff-lcs (1.5.0)
+    dockerfile-rails (1.2.5)
+      rails
     dry-auto_inject (1.0.1)
       dry-core (~> 1.0)
       zeitwerk (~> 2.6)
@@ -215,6 +217,8 @@ GEM
       zeitwerk (~> 2.5)
     rainbow (3.1.1)
     rake (13.0.6)
+    redis (5.0.6)
+      redis-client (>= 0.9.0)
     redis-client (0.12.1)
       connection_pool
     regexp_parser (2.6.2)
@@ -330,6 +334,7 @@ DEPENDENCIES
   debug
   devise
   devise-jwt
+  dockerfile-rails (~> 1.2)
   factory_bot_rails (~> 6.2)
   faker
   haml
@@ -340,6 +345,7 @@ DEPENDENCIES
   puma (~> 5.0)
   rack-cors
   rails (~> 7.0.4, >= 7.0.4.2)
+  redis (~> 5.0)
   rspec-rails (~> 6.0)
   rubocop (~> 1.44)
   rubocop-performance (~> 1.15)

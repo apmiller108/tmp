@@ -14,6 +14,7 @@ gem "pg", "~> 1.1"
 gem "puma", "~> 5.0"
 gem "rack-cors"
 gem "rails", "~> 7.0.4", ">= 7.0.4.2"
+gem "redis", "~> 5.0"
 gem "sidekiq", "~> 7.0"
 gem "sprockets-rails"
 gem "stimulus-rails"
@@ -54,6 +55,7 @@ group :development do
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
 
+  gem "dockerfile-rails", "~> 1.2"
   gem "rubocop", "~> 1.44", require: false
   gem "rubocop-performance", "~> 1.15", require: false
   gem "rubocop-rails", "~> 2.17", require: false
