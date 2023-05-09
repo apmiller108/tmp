@@ -30,7 +30,25 @@
 # Start
 
 ## Docker
-  - docker-compose up web database redis sidekiq
+For development, one can use docker-compose. This will use `Dockerfile.dev`.
+### Build
+```
+docker-compose build
+```
+### Run
+You can run all services with
+
+```
+docker-compose up
+```
+
+Or just what you need (ie, without sidekiq and chrome)
+
+```
+docker-compose up web database redis
+```
+
+### Access to running containers
   - docker-compose exec -it web bash
   - docker-compose exec -it database psql -U postgres
 
@@ -78,3 +96,15 @@ Rails convention.
   - Uses [browserless' Chrome image](https://www.browserless.io/docs/docker-quickstart)
   - `docker-compose up -d chrome`
   - visit http://localhost:3333/
+# Deployments
+## Fly.io
+- The deployments use the `Dockerfile` and `fly.toml`.
+- Use the [flyctl](https://fly.io/docs/hands-on/install-flyctl/) commandline utility to manage deployments and production environment.
+
+```
+flyctl deploy
+```
+
+```
+fly ssh console --pty -C '/bin/bash'
+```
