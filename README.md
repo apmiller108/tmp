@@ -82,6 +82,11 @@ See also [devise-jwt](https://github.com/waiting-for-dev/devise-jwt) docs:
 This application stores encrypted credentials per the [Custom
 Credentials](https://edgeguides.rubyonrails.org/security.html#custom-credentials)
 Rails convention.
+### Adding a secret
+1. Generate a secret `bundle exec rake secret`
+2. Add it to the environment's secrets: `bin/rails credentials:edit --environment development`
+NOTE: each environment will have it's own master key
+
 ## View Component
   - https://viewcomponent.org/guide/getting-started.html
 ## CSS Framework
@@ -100,11 +105,27 @@ Rails convention.
 ## Fly.io
 - The deployments use the `Dockerfile` and `fly.toml`.
 - Use the [flyctl](https://fly.io/docs/hands-on/install-flyctl/) commandline utility to manage deployments and production environment.
+- Staging hosted at https://cold-dream-5563.fly.dev/
 
-```
+```shell
 flyctl deploy
 ```
 
-```
+```shell
 fly ssh console --pty -C '/bin/bash'
+```
+### Issues with fly
+#### Server won't start since it things there is one already running.
+The pid should be dockerignored, but had to do `rm tmp/pids/server.pid` locally and then redeployed.
+### I'm cheap and using free stuff...
+So everything goes into suspend and need to wake stuff up.
+
+#### Start a machine
+```shell
+flyctl machine start -a cold-dream-5563-db 17811120c55748
+```
+
+#### Restart an application
+```shell
+flyctl apps restart cold-dream-5563
 ```
