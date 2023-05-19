@@ -1,10 +1,10 @@
 require "system_helper"
 
-RSpec.describe 'logging in', type: :system do
+RSpec.describe 'signing in', type: :system do
   let(:password) { 'Password' }
   let!(:user) { create :user, password: }
 
-  specify 'user logs in' do
+  specify 'user signs in' do
     visit '/'
     click_link 'Log in'
     expect(page).to have_current_path('/users/sign_in')
