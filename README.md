@@ -6,13 +6,15 @@
 - [x] Remove Item controller
 - [x] Implement API authentication
 - [x] Implement jti jwt_revocation_strategy
-- [ ] Add request spec for sign in
+- [x] Add request spec for sign in
+- [ ] Add request spec for sign out
 - [ ] Add request spec for users
 - [ ] Make sure registrations works with API
-- [ ] Add request specs for registrations, sessions, etc. for API
+- [ ] Add request specs for registrations via API
 - [ ] Add authenticated route behaviour shared examples
 - [ ] Write request spec for user resourse
 - [ ] Add auth helper for request specs
+- [ ] Setup CI
 - [ ] Create box model
 - [ ] Create message model
 - [x] Learn about and use view_component library
@@ -77,6 +79,8 @@ See also [devise-jwt](https://github.com/waiting-for-dev/devise-jwt) docs:
 
 ###### Revocation Strategy
 `jti` (JWT ID). See https://github.com/waiting-for-dev/devise-jwt#revocation-strategies
+
+Sending a `DELETE` to `users/sign_out.json` will revoke the token via the jti.
 
 ## Secrets
 This application stores encrypted credentials per the [Custom
