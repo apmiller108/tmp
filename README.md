@@ -8,11 +8,11 @@
 - [x] Implement jti jwt_revocation_strategy
 - [x] Add request spec for sign in
 - [ ] Add request spec for sign out
-- [ ] Add request spec for users
+- [ ] Update request spec for users
+- [ ] Add feature spec for users show
 - [ ] Make sure registrations works with API
 - [ ] Add request specs for registrations via API
 - [ ] Add authenticated route behaviour shared examples
-- [ ] Write request spec for user resourse
 - [ ] Add auth helper for request specs
 - [ ] Setup CI
 - [ ] Create box model

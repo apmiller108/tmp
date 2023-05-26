@@ -8,4 +8,8 @@ class User < ApplicationRecord
   def jwt_payload
     super.merge(email:)
   end
+
+  def as_json(*_args)
+    super(only: %i[id email])
+  end
 end
