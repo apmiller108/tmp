@@ -4,15 +4,27 @@ RSpec.describe "Users", type: :request do
   let!(:user) { create :user }
 
   describe "GET /show" do
-    before { get "users/#{user.id}.json" }
-
-    xit "returns a successful response" do
-      expect(response).to have_http_status(:success)
+    it_behaves_like 'an API authenticated route' do
+      let(:request) { get "/users/#{user.id}.json" }
     end
 
-    xit "returns the user with id 1 in JSON format" do
-      user = JSON.parse(response.body)
-      expect(user).to contain_exactly id: user.id, email: user.email
+    it_behaves_like 'an authenticated route' do
+      let(:request) { get "/users/#{user.id}" }
+    end
+
+    context 'with a JSON format' do
+      before do
+        get "/users/#{user.id}.json", headers: auth_headers(user)
+      end
+
+      it "returns a successful response" do
+        expect(response).to have_http_status(:success)
+      end
+
+      it "returns the user JSON" do
+        body = JSON.parse(response.body)
+        expect(body).to eq({ 'id' => user.id, 'email' => user.email })
+      end
     end
   end
 end

@@ -1,6 +1,6 @@
 require 'system_helper'
 
-RSpec.describe 'Logging out', type: :system do
+RSpec.describe 'Signing out', type: :system do
   let(:password) { 'Password' }
   let!(:user) { create :user, password: }
 

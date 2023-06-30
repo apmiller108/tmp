@@ -7,8 +7,8 @@
 - [x] Implement API authentication
 - [x] Implement jti jwt_revocation_strategy
 - [x] Add request spec for sign in
-- [ ] Add request spec for sign out
-- [ ] Update request spec for users
+- [x] Add request spec for sign out
+- [x] Update request spec for users
 - [ ] Add feature spec for users show
 - [ ] Make sure registrations works with API
 - [ ] Add request specs for registrations via API
