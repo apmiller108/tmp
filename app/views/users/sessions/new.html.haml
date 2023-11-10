@@ -18,4 +18,5 @@
   .actions
     = f.button "Log in", type: :submit
 
+= button_to 'Sign in with Github', user_github_omniauth_authorize_path, data: { turbo: false }
 = render "users/shared/links"

@@ -1,9 +1,25 @@
 class User < ApplicationRecord
   include Devise::JWT::RevocationStrategies::JTIMatcher
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, and :omniauthable
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable,
-         :trackable, :validatable, :jwt_authenticatable, jwt_revocation_strategy: self
+  # :confirmable, :lockable, and :timeoutable
+  devise :database_authenticatable, :jwt_authenticatable, :omniauthable,
+         :registerable, :recoverable, :rememberable, :trackable, :validatable,
+         jwt_revocation_strategy: self, omniauth_providers: %i[github]
+
+  def self.from_omniauth(auth)
+    find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|
+      user.email = auth.info.email
+      user.password = Devise.friendly_token[0, 20]
+    end
+  end
+
+  def self.new_with_session(params, session)
+    super.tap do
+      if data = session['devise.github_data'] && session['devise.github_data']['extra']['raw_info']
+        user.email = data['email'] if user.email.blank?
+      end
+    end
+  end
 
   def jwt_payload
     super.merge(email:)

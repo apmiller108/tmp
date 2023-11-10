@@ -10,6 +10,7 @@ gem "haml"
 gem "jbuilder"
 gem "jsbundling-rails"
 gem "jwt"
+gem 'omniauth-github', '~> 2.0.0'
 gem "omniauth-rails_csrf_protection"
 gem "pg", "~> 1.1"
 gem "puma", "~> 5.0"
