@@ -9,7 +9,6 @@
 - [x] Add request spec for sign in
 - [x] Add request spec for sign out
 - [x] Update request spec for users
-- [ ] Add feature spec for users show
 - [ ] Make sure registrations works with API
 - [ ] Add request specs for registrations via API
 - [ ] Add authenticated route behaviour shared examples
@@ -22,6 +21,7 @@
 - [x] Write a feature test for logging in
 - [x] Write a feature test for logging out
 - [x] Write a feature test for Signing up
+- [ ] Add feature spec for users show
 - [x] Add log out link
 - [ ] Setup ActionCable
 - [ ] Do something with turbo frames
