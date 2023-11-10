@@ -65,11 +65,12 @@ attribute `data: { turbo: false }`.
 There is [an alternative to make turbo work with the devise forms](https://gorails.com/episodes/devise-hotwire-turbo),
 but involves some customization to devise that are require more advanced
 understanding of devise configuration.
-##### Session Cookies
+
+#### Session Cookies
 Authentication with session cookies is the Devise default and is used for same origin web requests.
 
-##### JWTs
-Endpoints that respond to `json` formats are authenticated with JWT tokens.
+#### JWTs
+Endpoints that respond to `json` format are authenticated with JWT tokens.
 (unless the request is same origin, in which case Devise will authenticate using
 the session cookie.)
 
@@ -77,10 +78,24 @@ See also [devise-jwt](https://github.com/waiting-for-dev/devise-jwt) docs:
 
 > If the authentication succeeds, a JWT token is dispatched to the client in the Authorization response header, with format Bearer #{token} (tokens are also dispatched on a successful sign up).
 
-###### Revocation Strategy
+##### Revocation Strategy
 `jti` (JWT ID). See https://github.com/waiting-for-dev/devise-jwt#revocation-strategies
 
 Sending a `DELETE` to `users/sign_out.json` will revoke the token via the jti.
+
+#### Omniauth
+Multi provider authentication is provided by omniauth.
+See also https://github.com/heartcombo/devise/wiki/OmniAuth:-Overview for instructions on how to add an auth provider.
+
+##### Log in with Github
+This only works in development for now, which is setup in Github as `tmp-dev`
+and calls back to `https://titmouse-charming-correctly.ngrok-free.app`. This is
+a domain on my ngrok account. Github may support callback URLs to localhost, in
+which case I should change it. But for now, open a tunnel before using this...
+
+```shell
+ngrok http --domain=titmouse-charming-correctly.ngrok-free.app 3000
+```
 
 ## Secrets
 This application stores encrypted credentials per the [Custom
