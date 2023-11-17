@@ -47,7 +47,7 @@ docker-compose up
 Or just what you need (ie, without sidekiq and chrome)
 
 ```
-docker-compose up web database redis
+docker-compose up web
 ```
 
 ### Access to running containers
@@ -104,13 +104,21 @@ Rails convention.
 ### Adding a secret
 1. Generate a secret `bundle exec rake secret`
 2. Add it to the environment's secrets: `bin/rails credentials:edit --environment development`
-NOTE: each environment will have it's own master key
+#### keys
+Adding and updating keys requires having a key (not in source control) for a particular environment. The keys are
+- config/credentials/development.key
+- config/credentials/production.key
+- config/master.key
 
 ## View Component
   - https://viewcomponent.org/guide/getting-started.html
 ## CSS Framework
 [Bootstrap](https://getbootstrap.com/docs/5.3/getting-started/introduction/)
-
+## ActiveStorage configuration
+### Development
+Uses Amazon s3 bucket for development: `apm-tmp-dev`
+### Production
+TODO: create prod bucket and az user/credentials
 # Testing
 ## System Tests
 - [Cuprite](https://github.com/rubycdp/cuprite "cuprite")
