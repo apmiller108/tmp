@@ -6,6 +6,8 @@ class User < ApplicationRecord
          :registerable, :recoverable, :rememberable, :trackable, :validatable,
          jwt_revocation_strategy: self, omniauth_providers: %i[github]
 
+  has_many :messages, dependent: :destroy
+
   def self.from_omniauth(auth)
     find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|
       user.email = auth.info.email
@@ -15,9 +17,9 @@ class User < ApplicationRecord
 
   def self.new_with_session(params, session)
     super.tap do
-      if data = session['devise.github_data'] && session['devise.github_data']['extra']['raw_info']
-        user.email = data['email'] if user.email.blank?
-      end
+      data = session['devise.github_data'] && session['devise.github_data']['extra']['raw_info']
+
+      user.email = data['email'] if data && user.email.blank?
     end
   end
 
