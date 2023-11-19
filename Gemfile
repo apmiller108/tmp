@@ -18,7 +18,7 @@ gem "omniauth-rails_csrf_protection"
 gem "pg", "~> 1.1"
 gem "puma", "~> 5.0"
 gem "rack-cors"
-gem "rails", "~> 7.0.4", ">= 7.0.4.2"
+gem 'rails', '~> 7.1', '>= 7.1.2'
 gem "redis", "~> 5.0"
 gem "sidekiq", "~> 7.0"
 gem "sprockets-rails"

@@ -17,6 +17,12 @@ module Tmp
     # in config/environments, which are processed later.
     #
     # config.time_zone = "Central Time (US & Canada)"
+    config.generators do |g|
+      g.template_engine :haml
+    end
+
     # config.eager_load_paths << Rails.root.join("extras")
+    config.autoload_lib(ignore: %w[assets tasks])
+    config.autoload_paths << Rails.root.join("app", "views", "components")
   end
 end
