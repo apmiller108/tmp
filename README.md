@@ -111,7 +111,17 @@ Adding and updating keys requires having a key (not in source control) for a par
 - config/master.key
 
 ## View Component
-  - https://viewcomponent.org/guide/getting-started.html
+This uses the [view_component](https://viewcomponent.org/guide/getting-started.html) library.
+Why? Produce views using POROs, thereby making that which was implicit, explicit. Easire to test.
+See also
+- https://evilmartians.com/chronicles/viewcomponent-in-the-wild-building-modern-rails-frontends
+
+### Some best practices for view components
+1. Avoid Deeply Nested Component Trees
+2. Stick to the Single-Responsibility Principle
+3. Avoid Making Database Queries Inside Components
+4. Use Context to Pass Global State
+5. Test the public interface of the component, the template
 ## CSS Framework
 [Bootstrap](https://getbootstrap.com/docs/5.3/getting-started/introduction/)
 ## ActiveStorage configuration
