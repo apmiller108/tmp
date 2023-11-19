@@ -22,12 +22,12 @@ module Tmp
     end
 
     # view component path for the generator
-    config.view_component.view_component.path = 'app/views/components'
+    config.view_component.view_component_path = 'app/views/components'
     # generate view component templates in a sub directory (eg, user_component/user_component.html.haml)
     config.view_component.generate.sidecar = true
 
     # config.eager_load_paths << Rails.root.join("extras")
     config.autoload_lib(ignore: %w[assets tasks])
-    config.eager_paths << Rails.root.join("app", "views", "components")
+    config.eager_load_paths << Rails.root.join("app", "views", "components")
   end
 end
