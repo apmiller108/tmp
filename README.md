@@ -115,8 +115,10 @@ Adding and updating keys requires having a key (not in source control) for a par
 ## CSS Framework
 [Bootstrap](https://getbootstrap.com/docs/5.3/getting-started/introduction/)
 ## ActiveStorage configuration
+Uses Amazon s3 buckets per environment. Buckets have CORS configuration to support direct uploads.
+See also [ActiveStorage Guide](https://guides.rubyonrails.org/active_storage_overview.html#direct-uploads)
 ### Development
-Uses Amazon s3 bucket for development: `apm-tmp-dev`
+Uses Amazon s3 bucket for development: `apm-tmp-development`
 ### Production
 TODO: create prod bucket and az user/credentials
 # Testing
