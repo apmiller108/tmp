@@ -8,6 +8,7 @@ gem "bootsnap", require: false # Reduces boot times through caching; required in
 gem "cssbundling-rails"
 gem "devise"
 gem "devise-jwt"
+gem "dry-effects"
 gem "haml"
 gem "image_processing", "~> 1.2"
 gem "jbuilder"
