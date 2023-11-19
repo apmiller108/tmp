@@ -1,9 +1,10 @@
 class MessagesController < ApplicationController
   def index
+    @messages = current_user.messages
   end
 
   def show
-    @message = Message.find(params[:id])
+    @message = current_user.messages.find(params[:id])
   end
 
   def new
@@ -12,15 +13,28 @@ class MessagesController < ApplicationController
 
   def create
     message = current_user.messages.create!(params.require(:message).permit(:content))
-    redirect_to message
+    redirect_to user_message_path(current_user, message)
   end
 
   def edit
+    @message = current_user.messages.find(params[:id])
   end
 
   def update
+    message = current_user.messages.find(params[:id])
+    message.update(message_params)
+    redirect_to user_message_path(current_user, message)
   end
 
   def destroy
+    @message = current_user.messages.find(params[:id])
+    @message.destroy
+    redirect_to user_messages_path
+  end
+
+  private
+
+  def message_params
+    params.require(:message).permit(:content)
   end
 end

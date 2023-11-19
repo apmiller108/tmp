@@ -31,3 +31,7 @@
 
 en:
   hello: "Hello world"
+  messages:
+    new: "New Message"
+    index: "Messages"
+    edit: "Edit Message"
