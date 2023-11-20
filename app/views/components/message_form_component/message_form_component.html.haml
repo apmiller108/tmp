@@ -1,9 +1,11 @@
 = form_for [current_user, message] do |form|
-  = tag.turbo_frame(id: dom_id(message, 'turbo_frame')) do
+  = tag.turbo_frame(id: "#{dom_id(message, 'turbo_frame')}_content") do
     .field
       = form.label :content
       = form.rich_text_area :content
-    .field
+    .field.inline-action
       = form.submit
     .field.inline-action
-      = link_to 'Cancel', user_message_path(current_user, message)
+      = link_to t('cancel'), user_message_path(current_user, message)
+  .field
+    = form.submit

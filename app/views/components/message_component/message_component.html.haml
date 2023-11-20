@@ -1,6 +1,5 @@
-%div{ id: dom_id(message) }
-  = form_with model: [current_user, message], data: { turbo_frame: frame_id } do
-    = tag.turbo_frame(id: frame_id, class: ['inline-edit']) do
+%div{ id: id }
+  = render InlineEditComponent.new(model: [current_user, message], attribute: :content, id: id) do |component|
+    = component.with_model_attribute do
       = message.content
-      %div
-        = link_to t('messages.edit'), edit_user_message_path(current_user, message)
+  = link_to t('message.edit'), edit_user_message_path(current_user, message)

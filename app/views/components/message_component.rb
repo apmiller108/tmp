@@ -7,7 +7,7 @@ class MessageComponent < ApplicationViewComponent
     @message = message
   end
 
-  def frame_id
-    dom_id(message, 'turbo_frame')
+  def id
+    dom_id(message)
   end
 end

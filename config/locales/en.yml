@@ -30,8 +30,11 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
-  messages:
+  cancel: 'Cancel'
+  content: 'Content'
+  edit: 'Edit'
+  message:
     new: "New Message"
     index: "Messages"
     edit: "Edit Message"
+    content: 'Content'
