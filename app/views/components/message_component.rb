@@ -6,4 +6,8 @@ class MessageComponent < ApplicationViewComponent
   def initialize(message:)
     @message = message
   end
+
+  def frame_id
+    dom_id(message, 'turbo_frame')
+  end
 end

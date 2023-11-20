@@ -124,6 +124,12 @@ See also
 3. Avoid Making Database Queries Inside Components
 4. Use Context to Pass Global State
 5. Test the public interface of the component, the template
+
+### Compatibility issues
+See also
+- https://github.com/ViewComponent/view_component/issues/1099
+- https://viewcomponent.org/compatibility.html
+
 ## CSS Framework
 [Bootstrap](https://getbootstrap.com/docs/5.3/getting-started/introduction/)
 ## ActiveStorage configuration
