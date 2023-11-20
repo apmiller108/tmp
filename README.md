@@ -9,18 +9,20 @@
 - [x] Add request spec for sign in
 - [x] Add request spec for sign out
 - [x] Update request spec for users
-- [ ] Make sure registrations works with API
-- [ ] Add request specs for registrations via API
-- [ ] Add authenticated route behaviour shared examples
-- [ ] Add auth helper for request specs
-- [ ] Setup CI
-- [ ] Create box model
-- [ ] Create message model
+- [x] Create message model
 - [x] Learn about and use view_component library
 - [x] Setup Cuprite
 - [x] Write a feature test for logging in
 - [x] Write a feature test for logging out
 - [x] Write a feature test for Signing up
+- [ ] Add unit tests for message view components
+- [ ] Add request specs for user messages
+- [ ] Add feature specs for user messages
+- [ ] Make sure registrations works with API
+- [ ] Add request specs for registrations via API
+- [ ] Add authenticated route behaviour shared examples
+- [ ] Add auth helper for request specs
+- [ ] Setup CI
 - [ ] Add feature spec for users show
 - [x] Add log out link
 - [ ] Setup ActionCable
