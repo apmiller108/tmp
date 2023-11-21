@@ -1,18 +1,28 @@
 # frozen_string_literal: true
 
 class InlineEditComponent < ApplicationViewComponent
-  attr_reader :model, :attribute, :id
+  extend ActionView::RecordIdentifier
 
-  renders_one :model_attribute
+  attr_reader :model, :attribute
 
-  def initialize(model:, attribute:, id:)
+  renders_one :field_slot
+
+  def self.turbo_frame_id(model, attribute)
+    id = if model.respond_to?(:map)
+           model.map { |m| dom_id(m) }.join('_')
+         else
+           dom_id(model)
+         end
+    "turbo_frame_#{id}_#{attribute}"
+  end
+
+  def initialize(model:, attribute:)
     @model = model
     @attribute = attribute
-    @id = id
   end
 
   def frame_id
-    "turbo_frame_#{id}_#{attribute}"
+    self.class.turbo_frame_id(model, attribute)
   end
 
   def edit_path

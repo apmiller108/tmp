@@ -1,11 +1,7 @@
-= form_for [current_user, message] do |form|
-  = tag.turbo_frame(id: "#{dom_id(message, 'turbo_frame')}_content") do
-    .field
+= form_with model: [current_user, message] do |form|
+  = render InlineFieldComponent.new(model: [current_user, message], attribute: :content, form: form) do |component|
+    = component.with_field_slot do
       = form.label :content
       = form.rich_text_area :content
-    .field.inline-action
-      = form.submit
-    .field.inline-action
-      = link_to t('cancel'), user_message_path(current_user, message)
   .field
     = form.submit

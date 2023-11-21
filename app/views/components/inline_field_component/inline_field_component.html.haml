@@ -1,0 +1,7 @@
+= tag.turbo_frame(id: frame_id) do
+  = field_slot
+  .inline-action
+    .field
+      = form.submit
+    .field
+      = link_to t('cancel'), polymorphic_path(model)
