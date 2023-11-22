@@ -3,13 +3,15 @@
 require "rails_helper"
 
 RSpec.describe MessageComponent, type: :component do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:message) { build_stubbed(:message, :with_user) }
+  let(:user) { message.user }
+  let(:component) { described_class.new(message:) }
 
-  # it "renders something useful" do
-  #   expect(
-  #     render_inline(described_class.new(attr: "value")) { "Hello, components!" }.css("p").to_html
-  #   ).to include(
-  #     "Hello, components!"
-  #   )
-  # end
+  before do
+    with_current_user(user) { render_inline(component) }
+  end
+
+  it 'renders a link to edit the message' do
+    expect(page).to have_link 'Edit Message'
+  end
 end
