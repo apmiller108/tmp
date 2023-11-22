@@ -15,7 +15,7 @@
 - [x] Write a feature test for logging in
 - [x] Write a feature test for logging out
 - [x] Write a feature test for Signing up
-- [ ] Add unit tests for message view components
+- [x] Add unit tests for message view components
 - [ ] Add request specs for user messages
 - [ ] Add feature specs for user messages
 - [ ] Make sure registrations works with API
@@ -34,39 +34,39 @@
 # Start
 
 ## Docker
-For development, one can use docker-compose. This will use `Dockerfile.dev`.
+For development, one can use docker compose. This will use `Dockerfile.dev`.
 ### Build
 ```
-docker-compose build
+docker compose build
 ```
 ### Run
 You can run all services with
 
 ```
-docker-compose up
+docker compose up
 ```
 
 Or just what you need (ie, without sidekiq and chrome)
 
 ```
-docker-compose up web
+docker compose up web
 ```
 
 ### Access to running containers
-  - docker-compose exec -it web bash
-  - docker-compose exec -it database psql -U postgres
+  - docker compose exec -it web bash
+  - docker compose exec -it database psql -U postgres
 
 # Application
 ## Authentication
 ### Devise
 #### Devise and Turbo
 At the time of writing this, Devise and turbo streams have some compatability
-issues, which can be resolved by disabling turbo in the forms using a HTML data
+issues, which can be ~~resoled~~ swept under the rug by disabling turbo in the forms using a HTML data
 attribute `data: { turbo: false }`.
 
 There is [an alternative to make turbo work with the devise forms](https://gorails.com/episodes/devise-hotwire-turbo),
 but involves some customization to devise that are require more advanced
-understanding of devise configuration.
+understanding of devise configuration, and probably not worth it.
 
 #### Session Cookies
 Authentication with session cookies is the Devise default and is used for same origin web requests.
@@ -140,13 +140,15 @@ Uses Amazon s3 bucket for development: `apm-tmp-development`
 ### Production
 TODO: create prod bucket and az user/credentials
 # Testing
+## RSpec
+See also https://github.com/rspec/rspec-mocks
 ## System Tests
 - [Cuprite](https://github.com/rubycdp/cuprite "cuprite")
   - See also https://evilmartians.com/chronicles/system-of-a-test-setting-up-end-to-end-rails-testing
   - See also https://vtc.hatenablog.com/entry/2022/02/26/175431 (giving cuprite a try using a basic Rack app)
 - Docker
   - Uses [browserless' Chrome image](https://www.browserless.io/docs/docker-quickstart)
-  - `docker-compose up -d chrome`
+  - `docker compose up -d chrome`
   - visit http://localhost:3333/
 # Deployments
 ## Fly.io
