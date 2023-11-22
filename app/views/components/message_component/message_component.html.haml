@@ -1,5 +1,5 @@
 %div{ id: id }
   = render InlineEditComponent.new(model: [current_user, message], attribute: :content) do |component|
-    = component.field_slot do
+    = component.with_field_slot do
       = message.content
   = link_to t('message.edit'), edit_user_message_path(current_user, message)
