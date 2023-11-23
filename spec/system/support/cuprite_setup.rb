@@ -5,11 +5,13 @@ Capybara.register_driver(:better_cuprite) do |app|
   Capybara::Cuprite::Driver.new(
     app,
     window_size: [1200, 800],
-    browser_options: { "no-sandbox" => nil },
+    browser_options: { 'no-sandbox' => nil },
     process_timeout: 10, # Chrome startup wait time. Might need to increase on CI.
+    timeout: 10,
     inspector: true, # Enable debugging
-    headless: !ENV["HEADLESS"].in?(%w[n 0 no false]),
-    url: ENV.fetch("CHROME_URL", 'http://chrome:3333')
+    headless: !ENV['HEADLESS'].in?(%w[0 false]),
+    slowmo: ENV['SLOMO']&.to_f,
+    url: ENV.fetch('CHROME_URL', 'http://chrome:3333')
   )
 end
 
