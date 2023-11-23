@@ -16,6 +16,8 @@
 - [x] Write a feature test for logging out
 - [x] Write a feature test for Signing up
 - [x] Add unit tests for message view components
+- [ ] Add a header to the layout
+- [ ] Add user message destroy action
 - [ ] Add request specs for user messages
 - [ ] Add feature specs for user messages
 - [ ] Make sure registrations works with API
@@ -26,7 +28,7 @@
 - [ ] Add feature spec for users show
 - [x] Add log out link
 - [ ] Setup ActionCable
-- [ ] Do something with turbo frames
+- [x] Do something with turbo frames
 - [ ] Do something with Stimulus
 - [ ] Figure out better cors config https://github.com/cyu/rack-cors
 
@@ -141,14 +143,14 @@ Uses Amazon s3 bucket for development: `apm-tmp-development`
 TODO: create prod bucket and az user/credentials
 # Testing
 ## RSpec
-See also https://github.com/rspec/rspec-mocks
+See also https://rspec.info/documentation/
 ## System Tests
 - [Cuprite](https://github.com/rubycdp/cuprite "cuprite")
   - See also https://evilmartians.com/chronicles/system-of-a-test-setting-up-end-to-end-rails-testing
   - See also https://vtc.hatenablog.com/entry/2022/02/26/175431 (giving cuprite a try using a basic Rack app)
 - Docker
   - Uses [browserless' Chrome image](https://www.browserless.io/docs/docker-quickstart)
-  - `docker compose up -d chrome`
+  - To start chrome, run `docker compose up -d chrome`
   - visit http://localhost:3333/
 # Deployments
 ## Fly.io
