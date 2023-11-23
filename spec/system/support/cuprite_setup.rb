@@ -9,7 +9,7 @@ Capybara.register_driver(:better_cuprite) do |app|
     process_timeout: 10, # Chrome startup wait time. Might need to increase on CI.
     inspector: true, # Enable debugging
     headless: !ENV["HEADLESS"].in?(%w[n 0 no false]),
-    url: ENV["CHROME_URL"]
+    url: ENV.fetch("CHROME_URL", 'http://chrome:3333')
   )
 end
 
