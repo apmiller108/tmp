@@ -134,6 +134,13 @@ See also
 
 ## CSS Framework
 [Bootstrap](https://getbootstrap.com/docs/5.3/getting-started/introduction/)
+
+### $color-theme
+- Custom colors override the Bootstrap defaults defined in the `$color-theme`
+  map, as well as define new ones. These colors are used to automatically define
+  utility classes (eg `.bg-accent1`). See [maps and loops](https://getbootstrap.com/docs/5.3/customize/sass/#maps-and-loops)
+- See https://huemint.com/bootstrap-plus/ for quickly testing out color swatches.
+
 ## ActiveStorage configuration
 Uses Amazon s3 buckets per environment. Buckets have CORS configuration to support direct uploads.
 See also [ActiveStorage Guide](https://guides.rubyonrails.org/active_storage_overview.html#direct-uploads)
