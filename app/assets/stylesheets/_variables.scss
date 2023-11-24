@@ -1,16 +1,26 @@
 // Override bootstraps defaults here
-$white: #ffffff;
+$white:     #ffffff;
 
-$theme-colors: (
-  "light":      #e4f2fe,
-  "dark":       #1d1d1f,
-  "primary":    #5d3796,
-  "secondary":  #9a6dd0,
-  "info":       #ac92e5,
-  "accent1":    #159b5b,
-  "accent2":    #6bd0a1,
-  "accent3":    #5cd1b9,
-  "success":    #0eba71,
-  "warning":    #e6d20c,
-  "danger":     #f72904,
-);
+// The following will override the default colors in $theme-colors
+// See also https://getbootstrap.com/docs/5.3/customize/sass/#modify-map
+$light:     #e4f2fe;
+$dark:      #1d1d1f;
+$primary:   #5d3796;
+$secondary: #9a6dd0;
+$info:      #ac92e5;
+$success:   #0eba71;
+$warning:   #e6d20c;
+$danger:    #f72904;
+
+// Custom colors add to the themem
+$accent1:   #159b5b;
+$accent2:   #6bd0a1;
+$accent3:   #5cd1b9;
+
+// These are merged into Bootstraps $theme-colors map
+// See also https://getbootstrap.com/docs/5.3/customize/sass/#add-to-map
+$custom-colors: (
+  "accent1": $accent1,
+  "accent2": $accent2,
+  "accent3": $accent3,
+)

@@ -1,6 +1,14 @@
 @import 'variables.scss';
-@import 'bootstrap/scss/bootstrap';
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+// merge custom colors map into Bootstrap's $theme-colors map.
+// This needs to be imported after variables and before everything else.
+// See also https://getbootstrap.com/docs/5.3/customize/sass/#add-to-map
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+@import "bootstrap/scss/bootstrap";
 @import 'bootstrap-icons/font/bootstrap-icons';
 @import 'actiontext.css';
 @import 'global.scss';
 @import 'nav.scss';
+
