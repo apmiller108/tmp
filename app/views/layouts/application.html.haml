@@ -17,6 +17,7 @@
         - if current_user
           = button_to 'Sign Out', destroy_user_session_path, method: :delete, data: { turbo: false }, class: ['btn', 'btn-sm', 'btn-outline-secondary']
 
-    %p.notice= notice
-    %p.alert= alert
-    = yield
+    .container-sm
+      %p.notice= notice
+      %p.alert= alert
+      = yield

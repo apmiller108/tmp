@@ -1,4 +1,4 @@
 %div
   = link_to t('messages.new'), new_user_message_path(current_user)
-%div
+.list-group
   = render(MessageComponent.with_collection(@messages))

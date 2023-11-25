@@ -1,4 +1,4 @@
-%div{ id: id }
+%div{ id: id, class: ['message', 'list-group-item'] }
   = render InlineEditComponent.new(model: [current_user, message], attribute: :content) do |component|
     = component.with_field_slot do
       = message.content
