@@ -29,7 +29,10 @@ class MessagesController < ApplicationController
   def destroy
     @message = current_user.messages.find(params[:id])
     @message.destroy
-    redirect_to user_messages_path
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.remove(@message) }
+      format.html { redirect_to user_messages_path }
+    end
   end
 
   private
