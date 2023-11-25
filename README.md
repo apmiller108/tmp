@@ -1,9 +1,4 @@
 # TODOs
-- [x] Add Devise
-- [x] Add Haml gem
-- [x] Create an Item resource
-- [x] Remove Item resource
-- [x] Remove Item controller
 - [x] Implement API authentication
 - [x] Implement jti jwt_revocation_strategy
 - [x] Add request spec for sign in
@@ -16,7 +11,7 @@
 - [x] Write a feature test for logging out
 - [x] Write a feature test for Signing up
 - [x] Add unit tests for message view components
-- [ ] Add a header to the layout
+- [x] Add a header to the layout
 - [ ] Add user message destroy action
 - [ ] Add request specs for user messages
 - [ ] Add feature specs for user messages

@@ -1,4 +1,4 @@
-@import 'variables.scss';
+@import 'variables';
 @import "bootstrap/scss/functions";
 @import "bootstrap/scss/variables";
 // merge custom colors map into Bootstrap's $theme-colors map.
@@ -8,7 +8,8 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 
 @import "bootstrap/scss/bootstrap";
 @import 'bootstrap-icons/font/bootstrap-icons';
-@import 'actiontext.scss';
-@import 'global.scss';
-@import 'nav.scss';
+@import 'actiontext';
+@import 'global';
+@import 'nav';
+@import 'inline_edit_component/inline_edit_component';
 
