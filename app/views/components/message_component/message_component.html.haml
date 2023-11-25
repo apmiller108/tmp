@@ -3,4 +3,4 @@
     = link_to user_message_path(current_user, message), target: '_top', class: 'message-link text-body link-opacity-50-hover' do
       = message.content
     = link_to t('message.edit'), edit_user_message_path(current_user, message), class: 'btn btn-outline-primary'
-    = link_to 'Delete', [current_user, message], data: { turbo_method: 'delete', turbo_confirm: 'Are you sure?' }, class: 'btn btn-outline'
+    = link_to 'Delete', [current_user, message], data: { turbo_method: 'delete', turbo_confirm: 'Are you sure?' }

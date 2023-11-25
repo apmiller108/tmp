@@ -27,10 +27,16 @@ class MessagesController < ApplicationController
   end
 
   def destroy
-    @message = current_user.messages.find(params[:id])
-    @message.destroy
+    message = current_user.messages.find(params[:id])
+    message.destroy
     respond_to do |format|
-      format.turbo_stream { render turbo_stream: turbo_stream.remove(@message) }
+      format.turbo_stream do
+        if request.referrer == user_messages_url(current_user)
+          render turbo_stream: turbo_stream.remove(message)
+        else
+          redirect_to user_messages_path(current_user), status: :see_other, notice: 'Message was deleted'
+        end
+      end
       format.html { redirect_to user_messages_path }
     end
   end
