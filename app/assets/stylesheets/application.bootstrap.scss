@@ -8,7 +8,7 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 
 @import "bootstrap/scss/bootstrap";
 @import 'bootstrap-icons/font/bootstrap-icons';
-@import 'actiontext.css';
+@import 'actiontext.scss';
 @import 'global.scss';
 @import 'nav.scss';
 
