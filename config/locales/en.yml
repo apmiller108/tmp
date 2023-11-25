@@ -37,4 +37,5 @@ en:
     new: "New Message"
     index: "Messages"
     edit: "Edit Message"
+    update: "Update Message"
     content: 'Content'

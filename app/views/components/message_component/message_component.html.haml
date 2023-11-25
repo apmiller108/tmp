@@ -1,8 +1,5 @@
 %div{ id: id, class: ['c-message', 'list-group-item'] }
-  = render InlineEditComponent.new(model: [current_user, message], attribute: :content) do |component|
-    = component.with_field_slot do
-      - if show_linkable?
-        = link_to user_message_path(current_user, message), target: '_top', class: 'message-link text-body link-opacity-50-hover' do
-          = message.content
-      - else
-        = message.content
+  = tag.turbo_frame(id: id, class: 'inline-edit') do
+    = link_to user_message_path(current_user, message), target: '_top', class: 'message-link text-body link-opacity-50-hover' do
+      = message.content
+    = link_to t('message.edit'), edit_user_message_path(current_user, message)

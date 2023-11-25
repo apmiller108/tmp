@@ -1,8 +1,6 @@
 .c-inline-field
   = tag.turbo_frame(id: frame_id) do
     = field_slot
-    .inline-action
-      .field
-        = form.submit
-      .field
-        = link_to t('cancel'), polymorphic_path(model)
+    .inline-action.btn-group.d-flex.justify-content-end{'role' => :group, 'aria-label' => 'Message Update'}
+      = form.submit class: 'btn btn-primary flex-grow-0'
+      = link_to t('cancel'), polymorphic_path(model), class: 'btn btn-outline-secondary flex-grow-0'

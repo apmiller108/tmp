@@ -6,4 +6,8 @@ class MessageFormComponent < ApplicationViewComponent
   def initialize(message:)
     @message = message
   end
+
+  def id
+    dom_id(message)
+  end
 end
