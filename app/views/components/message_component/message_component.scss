@@ -1,0 +1,10 @@
+.c-message {
+  .message-link {
+    text-decoration: none;
+    &:hover {
+      .trix-content {
+        background-color: $gray-100;
+      }
+    }
+  }
+}
