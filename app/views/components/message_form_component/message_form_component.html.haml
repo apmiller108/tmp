@@ -1,7 +1,7 @@
 = tag.turbo_frame(id: id) do
   = form_with model: [current_user, message] do |form|
     = form.rich_text_area :content
-    = form.submit t('message.update'), class: 'btn btn-primary flex-grow-0'
-    .inline-action
-      = link_to t('cancel'), cancel_path, class: 'btn btn-outline-secondary'
+    .inline-action.btn-group.d-flex.justify-content-end{'role' => :group, 'aria-label' => 'Message Form'}
+      = form.submit submit_value, class: 'btn btn-primary flex-grow-0'
+      = link_to t('cancel'), cancel_path, class: 'btn btn-outline-secondary flex-grow-0'
 

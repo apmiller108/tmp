@@ -14,4 +14,8 @@ class MessageFormComponent < ApplicationViewComponent
   def cancel_path
     message.persisted? ? user_message_path(current_user, message) : user_messages_path(current_user)
   end
+
+  def submit_value
+    message.persisted? ? t('message.update') : t('message.create')
+  end
 end

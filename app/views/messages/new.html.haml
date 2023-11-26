@@ -1,4 +1,4 @@
 %div
-  = link_to t('messages.index'), user_messages_path(current_user)
+  = link_to t('messages'), user_messages_path(current_user)
 %div
   = render MessageFormComponent.new(message: @message)

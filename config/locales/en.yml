@@ -30,12 +30,16 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
+  new: 'New'
+  create: 'Create'
+  edit: 'Edit'
   cancel: 'Cancel'
   content: 'Content'
-  edit: 'Edit'
   message:
     new: "New Message"
+    create: "Create Message"
     index: "Messages"
     edit: "Edit Message"
     update: "Update Message"
     content: 'Content'
+  messages: "Messages"

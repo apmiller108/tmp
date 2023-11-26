@@ -1,6 +1,6 @@
 class MessagesController < ApplicationController
   def index
-    @messages = current_user.messages
+    @messages = current_user.messages.order(created_at: :desc)
   end
 
   def show
@@ -9,6 +9,9 @@ class MessagesController < ApplicationController
 
   def new
     @message = current_user.messages.new
+    respond_to do |format|
+      format.turbo_stream
+    end
   end
 
   def create
