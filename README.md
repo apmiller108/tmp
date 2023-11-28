@@ -92,9 +92,10 @@ See also https://github.com/heartcombo/devise/wiki/OmniAuth:-Overview for instru
 
 ##### Log in with Github
 This only works in development for now, which is setup in Github as `tmp-dev`
-and calls back to `https://titmouse-charming-correctly.ngrok-free.app`. This is
-a domain on my ngrok account. Github may support callback URLs to localhost, in
-which case I should change it. But for now, open a tunnel before using this...
+and calls back to `localhost:3000`.
+
+For future auth providers that do not support callbacks to `localhost`, use a tunnel service like [ngrok](https://ngrok.com/)
+that supports having a fixed domain.
 
 ```shell
 ngrok http --domain=titmouse-charming-correctly.ngrok-free.app 3000
