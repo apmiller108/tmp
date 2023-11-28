@@ -15,8 +15,20 @@ class MessagesController < ApplicationController
   end
 
   def create
-    message = current_user.messages.create!(params.require(:message).permit(:content))
-    redirect_to user_message_path(current_user, message)
+    @message = current_user.messages.create(message_params)
+    respond_to do |format|
+      format.turbo_stream do
+        component = if @message.persisted?
+                      MessageComponent.new(message: @message)
+                    else
+                      MessageFormComponent.new(message: @message)
+                    end
+        render inline: turbo_stream.replace('new_message', component.render_in(view_context))
+      end
+      format.html do
+        redirect_to user_message_path(current_user, @message)
+      end
+    end
   end
 
   def edit

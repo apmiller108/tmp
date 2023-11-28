@@ -1,5 +1,10 @@
 = tag.turbo_frame(id: id) do
   = form_with model: [current_user, message] do |form|
+    - if message.errors.any?
+      .form-errors
+        %ul
+          - message.errors.each do |e|
+            %li= e.full_message
     = form.rich_text_area :content
     .inline-action.btn-group.d-flex.justify-content-end{'role' => :group, 'aria-label' => 'Message Form'}
       = form.submit submit_value, class: 'btn btn-primary flex-grow-0'

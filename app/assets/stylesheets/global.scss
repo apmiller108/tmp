@@ -3,3 +3,13 @@
     display: initial;
   }
 }
+.field_with_errors {
+  border: 1px solid $warning;
+}
+.form-errors {
+  background: $warning;
+  ul {
+    list-style-type: none;
+  }
+
+}
