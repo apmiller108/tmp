@@ -18,15 +18,14 @@ class MessagesController < ApplicationController
     @message = current_user.messages.create(message_params)
     respond_to do |format|
       format.turbo_stream do
-        component = if @message.persisted?
-                      MessageComponent.new(message: @message)
-                    else
-                      MessageFormComponent.new(message: @message)
-                    end
-        render inline: turbo_stream.replace('new_message', component.render_in(view_context))
+        render inline: turbo_stream.replace('new_message', component_for(message: @message).render_in(view_context))
       end
       format.html do
-        redirect_to user_message_path(current_user, @message)
+        if @message.persisted?
+          redirect_to user_message_path(current_user, @message)
+        else
+          render :new
+        end
       end
     end
   end
@@ -57,6 +56,14 @@ class MessagesController < ApplicationController
   end
 
   private
+
+  def component_for(message:)
+    if message.persisted?
+      MessageComponent.new(message: @message)
+    else
+      MessageFormComponent.new(message: @message)
+    end
+  end
 
   def message_params
     params.require(:message).permit(:content)
