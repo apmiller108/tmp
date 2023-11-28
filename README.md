@@ -12,7 +12,8 @@
 - [x] Write a feature test for Signing up
 - [x] Add unit tests for message view components
 - [x] Add a header to the layout
-- [ ] Add user message destroy action
+- [x] Add user message destroy action
+- [ ] On index, use stimulus to remove new message form on cancel
 - [ ] Add request specs for user messages
 - [ ] Add feature specs for user messages
 - [ ] Make sure registrations works with API
@@ -21,11 +22,14 @@
 - [ ] Add auth helper for request specs
 - [ ] Setup CI
 - [ ] Add feature spec for users show
-- [x] Add log out link
 - [ ] Setup ActionCable
-- [x] Do something with turbo frames
-- [ ] Do something with Stimulus
 - [ ] Figure out better cors config https://github.com/cyu/rack-cors
+- [ ] Add `self_destructs_at` to messages
+- [ ] Create schedule job to destroy messages
+- [ ] Push message destuction turbo stream via web sockets
+- [ ] Add public / private message
+- [ ] Create public message view
+- [ ] Add ability to comment on messages (with other message?)
 
 
 # Start
