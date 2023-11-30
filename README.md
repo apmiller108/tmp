@@ -114,7 +114,10 @@ Adding and updating keys requires having a key (not in source control) for a par
 - config/credentials/development.key
 - config/credentials/production.key
 - config/master.key
+## Hotwire
+Front end build on [turbo](https://turbo.hotwired.dev/) and [stimulus](https://stimulus.hotwired.dev/).
 
+See also https://notes.alex-miller.co/20231125150622-turbo_streams/
 ## View Component
 This uses the [view_component](https://viewcomponent.org/guide/getting-started.html) library.
 Why? Produce views using POROs, thereby making that which was implicit, explicit. Easire to test.
