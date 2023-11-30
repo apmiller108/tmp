@@ -16,12 +16,13 @@
 - [ ] On index, use stimulus to remove new message form on cancel
 - [ ] Add request specs for user messages
 - [ ] Add feature specs for user messages
-- [ ] Make sure registrations works with API
-- [ ] Add request specs for registrations via API
+- [ ] Sentiment analysis
+- [ ] Transcription for audio files added to message
+- [ ] Registration via API
+- [ ] Add request specs for registration via API
 - [ ] Add authenticated route behaviour shared examples
 - [ ] Add auth helper for request specs
 - [ ] Setup CI
-- [ ] Add feature spec for users show
 - [ ] Setup ActionCable
 - [ ] Figure out better cors config https://github.com/cyu/rack-cors
 - [ ] Add `self_destructs_at` to messages
