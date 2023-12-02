@@ -1,5 +1,5 @@
 = tag.turbo_frame(id: id) do
-  = form_with model: [current_user, message] do |form|
+  = form_with model: [current_user, message], data: { controller: 'message-form-component--message-form' } do |form|
     - if message.errors.any?
       .form-errors
         %ul
