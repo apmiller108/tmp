@@ -1,7 +1,6 @@
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
-require_relative './helpers/auth_header'
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
 require 'view_component/test_helpers'
@@ -47,6 +46,9 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   config.include AuthHeader, type: :request
+  config.include Devise::Test::IntegrationHelpers, type: :request
+  config.include Turbo::TestAssertions, type: :request
+
   config.include ViewComponent::TestHelpers, type: :component
   config.include ViewComponent::SystemTestHelpers, type: :component
   config.include Capybara::RSpecMatchers, type: :component

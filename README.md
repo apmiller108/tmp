@@ -151,10 +151,23 @@ See also [ActiveStorage Guide](https://guides.rubyonrails.org/active_storage_ove
 ### Development
 Uses Amazon s3 bucket for development: `apm-tmp-development`
 ### Production
-TODO: create prod bucket and az user/credentials
+TBD
 # Testing
 ## RSpec
 See also https://rspec.info/documentation/
+## Authentication
+For specs that require authentication, there are a few options:
+1. Use Devise's [IntegrationHelpers](https://www.rubydoc.info/gems/devise/Devise/Test/IntegrationHelpers)
+2. For feature tests, use `LoginHelper#login` to log in the user. This will login in the user with username and password on the sign in page.
+3. For JSON format request specs, use the `auth_headers` helper to perform a login and retrieve the `Authorization` header:
+```ruby
+get "/users/#{user.id}.json", headers: auth_headers(user)
+```
+## Turbo Streams
+Use custom RSpec matcher `have_turbo_stream` in request specs. It is a wrapper for [assert_turbo_stream](https://github.com/hotwired/turbo-rails/blob/v1.5.0/lib/turbo/test_assertions.rb#L48C9-L48C28) and accepts the same arguments.
+```ruby
+it { is_expected.to have_turbo_stream(action: 'prepend', target: 'messages') }
+```
 ## System Tests
 - [Cuprite](https://github.com/rubycdp/cuprite "cuprite")
   - See also https://evilmartians.com/chronicles/system-of-a-test-setting-up-end-to-end-rails-testing
