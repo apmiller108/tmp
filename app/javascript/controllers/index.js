@@ -11,7 +11,7 @@ const controllerName = (defaultName) => {
   const namespaces = [
     ...new Set(defaultName.split("--").filter((pathSegment) => !["..", "views", "components"].includes(pathSegment))),
   ];
-  return namespaces.join("--");
+  return namespaces.pop()
 };
 controllers.concat(componentControllers).forEach((controller) => {
   application.register(controllerName(controller.name), controller.module.default)
