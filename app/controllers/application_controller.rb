@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   skip_before_action :verify_authenticity_token, if: :json_request?
 
-  around_action :set_current_user
+  around_action :provide_current_user, if: :current_user
 
   private
 
@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
     request.format.json?
   end
 
-  def set_current_user
+  def provide_current_user
     with_current_user(current_user) { yield }
   end
 end
