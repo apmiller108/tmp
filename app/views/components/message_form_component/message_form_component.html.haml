@@ -1,5 +1,5 @@
-= tag.turbo_frame(id: id) do
-  = form_with model: [current_user, message], data: { controller: 'message-form-component--message-form' } do |form|
+= tag.turbo_frame(id: id, data: { controller: 'message-form' }) do
+  = form_with model: [current_user, message] do |form|
     - if message.errors.any?
       .form-errors
         %ul
@@ -8,5 +8,5 @@
     = form.rich_text_area :content
     .inline-action.btn-group.d-flex.justify-content-end{'role' => :group, 'aria-label' => 'Message Form'}
       = form.submit submit_value, class: 'btn btn-primary flex-grow-0'
-      = link_to t('cancel'), cancel_path, class: 'btn btn-outline-secondary flex-grow-0'
+      %button.btn.btn-outline-secondary.flex-grow-0{'data-action' => "click->message-form#cancel:prevent"} Cancel
 

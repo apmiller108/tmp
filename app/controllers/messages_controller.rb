@@ -11,6 +11,7 @@ class MessagesController < ApplicationController
     @message = current_user.messages.new
     respond_to do |format|
       format.turbo_stream
+      format.html
     end
   end
 

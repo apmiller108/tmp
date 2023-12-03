@@ -4,4 +4,10 @@ export default class extends Controller {
   connect() {
     console.log('hello from view_component dir!')
   }
+  disconnect() {
+    console.log('goodbye')
+  }
+  cancel() {
+    this.element.remove()
+  }
 }
