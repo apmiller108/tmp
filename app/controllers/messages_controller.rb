@@ -17,15 +17,19 @@ class MessagesController < ApplicationController
 
   def create
     @message = current_user.messages.create(message_params)
+    status = @message.persisted? ? :created : :unprocessable_entity
     respond_to do |format|
       format.turbo_stream do
-        render inline: turbo_stream.replace('new_message', component_for(message: @message).render_in(view_context))
+        render(
+          inline: turbo_stream.replace('new_message', component_for(message: @message).render_in(view_context)),
+          status:
+        )
       end
       format.html do
         if @message.persisted?
           redirect_to user_message_path(current_user, @message)
         else
-          render :new
+          render :new, status:
         end
       end
     end
@@ -36,9 +40,13 @@ class MessagesController < ApplicationController
   end
 
   def update
-    message = current_user.messages.find(params[:id])
-    message.update(message_params)
-    redirect_to user_message_path(current_user, message)
+    @message = current_user.messages.find(params[:id])
+
+    if @message.update(message_params)
+      redirect_to user_message_path(current_user, @message)
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy
