@@ -17,19 +17,15 @@ services: # docker-compose up web database redis sidekiq
     links:
       - "database"
       - "redis"
-    env_file:
-      - ".env"
   database:
-    image: postgres:latest
+    image: postgres:16
     restart: always
     volumes:
       - 'postgres:/var/lib/postgresql/data'
     ports:
       - "5432"
-    env_file:
-      - ".env"
   redis:
-    image: redis:latest
+    image: redis:7
     restart: always
     volumes:
       - "redis:/data"
@@ -47,8 +43,6 @@ services: # docker-compose up web database redis sidekiq
     volumes:
       - ".:/app"
       - "/app/tmp" # don't mount tmp dir
-    env_file:
-      - ".env"
   chrome: # docker-compose up -d chrome
     image: browserless/chrome:latest # See https://www.browserless.io/docs/docker
     ports:
