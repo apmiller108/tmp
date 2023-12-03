@@ -13,7 +13,7 @@
 - [x] Add unit tests for message view components
 - [x] Add a header to the layout
 - [x] Add user message destroy action
-- [ ] On index, use stimulus to remove new message form on cancel
+- [x] On index, use stimulus to remove new message form on cancel
 - [ ] Add request specs for user messages
 - [ ] Add feature specs for user messages
 - [ ] Sentiment analysis
