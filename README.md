@@ -14,7 +14,7 @@
 - [x] Add a header to the layout
 - [x] Add user message destroy action
 - [x] On index, use stimulus to remove new message form on cancel
-- [ ] Add request specs for user messages
+- [x] Add request specs for user messages
 - [ ] Add feature specs for user messages
 - [ ] Sentiment analysis
 - [ ] Transcription for audio files added to message
@@ -115,7 +115,7 @@ Adding and updating keys requires having a key (not in source control) for a par
 - config/credentials/production.key
 - config/master.key
 ## Hotwire
-Front end build on [turbo](https://turbo.hotwired.dev/) and [stimulus](https://stimulus.hotwired.dev/).
+Front end built with [turbo](https://turbo.hotwired.dev/) and [stimulus](https://stimulus.hotwired.dev/).
 
 See also https://notes.alex-miller.co/20231125150622-turbo_streams/
 ## View Component
