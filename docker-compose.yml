@@ -24,6 +24,9 @@ services: # docker-compose up web database redis sidekiq
       - 'postgres:/var/lib/postgresql/data'
     ports:
       - "5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
   redis:
     image: redis:7
     restart: always

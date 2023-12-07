@@ -2,4 +2,11 @@
 
 ---
 options:
+  cache: true
+  ci: true
   fullstaq: true
+  jemalloc: true
+  parallel: true
+  postgresql: true
+  redis: true
+  yjit: true
