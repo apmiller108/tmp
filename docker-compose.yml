@@ -46,6 +46,20 @@ services: # docker-compose up web database redis sidekiq
     volumes:
       - ".:/app"
       - "/app/tmp" # don't mount tmp dir
+  actioncable:
+    depends_on:
+      - "database"
+      - "redis"
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: "bundle exec puma -p 28028 cable/config.ru"
+    ports:
+      - "28028:28028"
+    restart: always
+    volumes:
+      - ".:/app"
+      - "/app/tmp" # don't mount tmp dir
   chrome: # docker-compose up -d chrome
     image: browserless/chrome:latest # See https://www.browserless.io/docs/docker
     ports:

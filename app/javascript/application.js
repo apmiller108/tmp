@@ -4,3 +4,8 @@ import "./controllers"
 import * as bootstrap from "bootstrap"
 import "trix"
 import "@rails/actiontext"
+import * as ActionCable from '@rails/actioncable'
+
+import "./channels/hello_channel"
+
+// ActionCable.logger.enabled = true;
