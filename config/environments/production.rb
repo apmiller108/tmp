@@ -44,6 +44,14 @@ Rails.application.configure do
   # config.action_cable.mount_path = nil
   # config.action_cable.url = "wss://example.com/cable"
   # config.action_cable.allowed_request_origins = [ "http://example.com", /http:\/\/example.*/ ]
+  # Specify AnyCable WebSocket server URL to use by JS client
+  config.after_initialize do
+    config.action_cable.url = ActionCable.server.config.url = ENV.fetch('CABLE_URL', 'ws://localhost:8085/cable') if AnyCable::Rails.enabled?
+  end
+  config.action_cable.log_tags = [
+    :action_cable,
+    ->(request) { request.uuid }
+  ]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true

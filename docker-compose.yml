@@ -1,22 +1,14 @@
 version: "3.6"
 
-services: # docker-compose up web database redis sidekiq
-  web:
-    tty: true
-    stdin_open: true
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-    command: bash -c "rm -f tmp/pids/server.pid && /app/bin/dev"
-    restart: always
-    volumes:
-      - ".:/app"
-      - "/app/node_modules"
-    ports:
-      - "3000:3000"
-    links:
-      - "database"
-      - "redis"
+x-base: &base
+  env_file: .env
+  tty: true
+  stdin_open: true
+  build:
+    context: .
+    dockerfile: Dockerfile.dev
+
+services:
   database:
     image: postgres:16
     restart: always
@@ -34,32 +26,43 @@ services: # docker-compose up web database redis sidekiq
       - "redis:/data"
     ports:
       - "6379"
+  ws:
+    image: anycable/anycable-go:1.4
+    ports:
+      - '8085:8085'
+    env_file: .env
+    depends_on:
+      - "redis"
+  web:
+    <<: *base
+    command: bash -c "rm -f tmp/pids/server.pid && /app/bin/dev"
+    restart: always
+    volumes:
+      - ".:/app"
+      - "/app/node_modules"
+    ports:
+      - "3000:3000"
+    links:
+      - "database"
+      - "redis"
   sidekiq:
+    <<: *base
     depends_on:
       - "database"
       - "redis"
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
     command: "bundle exec sidekiq"
     restart: always
     volumes:
       - ".:/app"
       - "/app/tmp" # don't mount tmp dir
-  actioncable:
+  anycable:
+    <<: *base
+    command: bundle exec anycable
+    ports:
+      - '50051'
     depends_on:
       - "database"
-      - "redis"
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-    command: "bundle exec puma -p 28028 cable/config.ru"
-    ports:
-      - "28028:28028"
-    restart: always
-    volumes:
-      - ".:/app"
-      - "/app/tmp" # don't mount tmp dir
+      - "ws"
   chrome: # docker-compose up -d chrome
     image: browserless/chrome:latest # See https://www.browserless.io/docs/docker
     ports:

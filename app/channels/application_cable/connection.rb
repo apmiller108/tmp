@@ -3,8 +3,7 @@ module ApplicationCable
     identified_by :current_user
 
     def connect
-      self.current_user = request.env['warden'].user
-      return reject_unauthorized_connection if current_user.blank?
+      self.current_user = env['warden'].user(:user) || reject_unauthorized_connection
     end
   end
 end

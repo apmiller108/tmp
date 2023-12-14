@@ -3,6 +3,8 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  config.secret_key_base = Rails.application.credentials[:secret_key_base]
+
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
@@ -19,19 +21,25 @@ Rails.application.configure do
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
-  if Rails.root.join("tmp/caching-dev.txt").exist?
-    config.action_controller.perform_caching = true
-    config.action_controller.enable_fragment_cache_logging = true
+  # if Rails.root.join("tmp/caching-dev.txt").exist?
+  #   config.action_controller.perform_caching = true
+  #   config.action_controller.enable_fragment_cache_logging = true
 
-    config.cache_store = :memory_store
-    config.public_file_server.headers = {
-      "Cache-Control" => "public, max-age=#{2.days.to_i}"
-    }
-  else
-    config.action_controller.perform_caching = false
+  #   config.cache_store = :memory_store
+  #   config.public_file_server.headers = {
+  #     "Cache-Control" => "public, max-age=#{2.days.to_i}"
+  #   }
+  # else
+  #   config.action_controller.perform_caching = false
 
-    config.cache_store = :null_store
-  end
+  #   config.cache_store = :null_store
+  # end
+
+  config.action_controller.perform_caching = true
+  config.action_controller.enable_fragment_cache_logging = true
+  config.public_file_server.headers = { 'Cache-Control' => "public, max-age=#{2.days.to_i}" }
+  config.cache_store = :redis_cache_store, { url: ENV.fetch('REDIS_URL', 'redis://redis:6379') }
+  config.session_store :cookie_store, key: '_tmp_session'
 
   # Store uploaded files in amazon using creds and a bucket for development
   config.active_storage.service = :amazon_dev
@@ -69,8 +77,9 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
-  config.action_cable.mount_path = nil
-  config.action_cable.url = 'ws://localhost:28028' # use wss in prod
+  config.after_initialize do
+    config.action_cable.url = ActionCable.server.config.url = ENV.fetch('CABLE_URL', 'ws://localhost:8085/cable') if AnyCable::Rails.enabled?
+  end
   config.action_cable.log_tags = [
     :action_cable,
     ->(request) { request.uuid }
