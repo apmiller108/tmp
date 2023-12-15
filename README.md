@@ -126,6 +126,9 @@ Adding and updating keys requires having a key (not in source control) for a par
 Front end built with [turbo](https://turbo.hotwired.dev/) and [stimulus](https://stimulus.hotwired.dev/).
 
 See also https://notes.alex-miller.co/20231125150622-turbo_streams/
+
+Live reloading in development is handled by [hotwire-livereload](https://github.com/kirillplatonov/hotwire-livereload)
+
 ## View Component
 This uses the [view_component](https://viewcomponent.org/guide/getting-started.html) library.
 Why? Produce views using POROs, thereby making that which was implicit, explicit. Easire to test.
@@ -164,6 +167,7 @@ TBD
 Websockets are handled by [ActionCable](https://guides.rubyonrails.org/action_cable_overview.html) and [Anycable](https://docs.anycable.io/architecture). 
 - ActionCable provides the framework for defining application business logic for handling how connections are authenticated, how messages are responded to and what events should trigger messages to be sent to which clients (eg, channels and subscribers). 
 - Anycable provides the implementation of WebSocket connection management, which entails a WebSocket server separate from the web application and an RPC server for executing application code. This depends on Redis' pub/sub mechanism. There's a lot of moving parts here and things can go wrong. See [troubleshooting](https://docs.anycable.io/troubleshooting)
+- Live reloading in development is handled by [hotwire-livereload](https://github.com/kirillplatonov/hotwire-livereload) which depends on a WS connection.
 
 # Testing
 ## RSpec
