@@ -3,7 +3,7 @@ class HelloChannel < ApplicationCable::Channel
     stream_from 'hello'
   end
 
-  def foo(data)
-    puts data
+  def hello(_data)
+    ActionCable.server.broadcast('hello', { body: 'Hello World!' })
   end
 end

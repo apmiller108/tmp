@@ -1,9 +1,8 @@
 import consumer from "./consumer"
 
-console.log(consumer);
 consumer.subscriptions.create({ channel: "HelloChannel" }, {
-  initialized() {
-    console.log(this)
+  connected() {
+    this.perform('hello')
   },
   received(data) {
     console.log(data)
