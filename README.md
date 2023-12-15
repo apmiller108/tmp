@@ -24,7 +24,7 @@
 - [ ] Add auth helper for request specs
 - [ ] Setup CI
 - [x] Setup ActionCable
-- [ ] Setup hot reloading
+- [x] Setup hot reloading
 - [ ] Figure out better cors config https://github.com/cyu/rack-cors
 - [ ] Add `self_destructs_at` to messages
 - [ ] Create schedule job to destroy messages
