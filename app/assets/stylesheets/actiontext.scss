@@ -23,8 +23,13 @@
   max-width: 100% !important;
 }
 
-action-text-attachment {
-  .attachment__caption {
-    @extend .fw-light, .text-center, .text-black-50;
+.trix-content {
+  action-text-attachment {
+    .attachment__caption {
+      @extend .fw-light, .text-center, .text-black-50;
+    }
+    .attachment--wav {
+      border: none;
+    }
   }
 }

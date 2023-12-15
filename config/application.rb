@@ -30,5 +30,10 @@ module Tmp
     # config.eager_load_paths << Rails.root.join("extras")
     config.autoload_lib(ignore: %w[assets tasks])
     config.eager_load_paths << Rails.root.join("app", "views", "components")
+
+    config.after_initialize do
+      ActionText::ContentHelper.sanitizer.class.allowed_attributes += %w[style controls poster preload type]
+      ActionText::ContentHelper.sanitizer.class.allowed_tags += %w[audio embed iframe source video]
+    end
   end
 end
