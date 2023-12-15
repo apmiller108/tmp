@@ -58,6 +58,8 @@ services:
   anycable:
     <<: *base
     command: bundle exec anycable
+    volumes:
+      - ".:/app"
     ports:
       - '50051'
     depends_on:
