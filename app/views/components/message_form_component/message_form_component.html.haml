@@ -6,8 +6,8 @@
           - message.errors.each do |e|
             %li= e.full_message
     = form.rich_text_area :content
-    .inline-action.btn-group.d-flex.justify-content-end{'role' => :group, 'aria-label' => 'Message Form'}
-      = form.submit submit_value, class: 'btn btn-primary flex-grow-0'
+    .inline-action.btn-group.d-flex.justify-content-end.my-3{'role' => :group, 'aria-label' => 'Message Form'}
+      = form.submit submit_value, class: 'btn btn-outline-primary flex-grow-0'
       - if message.persisted?
         = link_to "Cancel", user_message_path(current_user, message), class: 'btn btn-outline-secondary flex-grow-0'
       - else

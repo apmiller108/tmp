@@ -2,6 +2,7 @@
   = tag.turbo_frame(id: id, class: 'inline-edit') do
     = link_to user_message_path(current_user, message), target: '_top', class: 'message-link text-body link-opacity-50-hover' do
       = message.content
-    .actions.d-flex.justify-content-end.align-items-center
-      = link_to t('message.edit'), edit_user_message_path(current_user, message), class: 'btn btn-outline-primary'
-      = link_to 'Delete', [current_user, message], data: { turbo_method: 'delete', turbo_confirm: 'Are you sure?' }
+    .btn-group.d-flex.justify-content-end.my-3{'role' => :group, 'aria-label' => 'Message Actions'}
+      = link_to t('message.edit'), edit_user_message_path(current_user, message), class: 'btn btn-outline-primary flex-grow-0'
+      = link_to 'Delete', [current_user, message], data: { turbo_method: 'delete', turbo_confirm: 'Are you sure?' },
+      class: 'btn btn-outline-danger flex-grow-0'
