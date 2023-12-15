@@ -23,7 +23,8 @@
 - [ ] Add authenticated route behaviour shared examples
 - [ ] Add auth helper for request specs
 - [ ] Setup CI
-- [ ] Setup ActionCable
+- [x] Setup ActionCable
+- [ ] Setup hot reloading
 - [ ] Figure out better cors config https://github.com/cyu/rack-cors
 - [ ] Add `self_destructs_at` to messages
 - [ ] Create schedule job to destroy messages
@@ -36,7 +37,15 @@
 # Start
 
 ## Docker
-For development, one can use docker compose. This will use `Dockerfile.dev`.
+For development, use docker compose. This will use `Dockerfile.dev`.
+This orchestrates the following services:
+- database: Postgres v16
+- redis: Redis v7
+- ws: Anycable WebSocket server
+- anycable: Anycable [gRPC](https://grpc.io/) server
+- web: Ruby on Rails application
+- sidekiq: Sidekiq background job process
+- chrome: Browserless chrome for running feature/system tests.
 ### Build
 ```
 docker compose build
@@ -48,7 +57,7 @@ You can run all services with
 docker compose up
 ```
 
-Or just what you need (ie, without sidekiq and chrome)
+Or just what you need (ie, without sidekiq, chrome, etc)
 
 ```
 docker compose up web
@@ -101,7 +110,6 @@ that supports having a fixed domain.
 ```shell
 ngrok http --domain=titmouse-charming-correctly.ngrok-free.app 3000
 ```
-
 ## Secrets
 This application stores encrypted credentials per the [Custom
 Credentials](https://edgeguides.rubyonrails.org/security.html#custom-credentials)
@@ -152,6 +160,11 @@ See also [ActiveStorage Guide](https://guides.rubyonrails.org/active_storage_ove
 Uses Amazon s3 bucket for development: `apm-tmp-development`
 ### Production
 TBD
+## WebSockets
+Websockets are handled by [ActionCable](https://guides.rubyonrails.org/action_cable_overview.html) and [Anycable](https://docs.anycable.io/architecture). 
+- ActionCable provides the framework for defining application business logic for handling how connections are authenticated, how messages are responded to and what events should trigger messages to be sent to which clients (eg, channels and subscribers). 
+- Anycable provides the implementation of WebSocket connection management, which entails a WebSocket server separate from the web application and an RPC server for executing application code. This depends on Redis' pub/sub mechanism. There's a lot of moving parts here and things can go wrong. See [troubleshooting](https://docs.anycable.io/troubleshooting)
+
 # Testing
 ## RSpec
 See also https://rspec.info/documentation/
