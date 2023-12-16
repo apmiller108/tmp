@@ -1,10 +1,10 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
+  static targets = ['audio']
   connect() {
-    console.log('Hello, this is a Blob Controller!')
-  }
-  cancel() {
-    this.element.remove()
+    if (this.hasAudioTarget) {
+      console.log(this.audioTarget);
+    }
   }
 }

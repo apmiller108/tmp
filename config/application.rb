@@ -32,8 +32,12 @@ module Tmp
     config.eager_load_paths << Rails.root.join("app", "views", "components")
 
     config.after_initialize do
-      ActionText::ContentHelper.sanitizer.class.allowed_attributes += %w[style controls poster preload type data-controller]
-      ActionText::ContentHelper.sanitizer.class.allowed_tags += %w[audio embed iframe source video]
+      ActionText::ContentHelper.sanitizer.class.allowed_attributes += %w[
+        style controls poster preload type data-controller data-blob-target data-bs-toggle aria-expanded
+      ]
+      ActionText::ContentHelper.sanitizer.class.allowed_tags += %w[
+        audio embed iframe source video button
+      ]
     end
   end
 end

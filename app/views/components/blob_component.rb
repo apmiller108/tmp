@@ -17,4 +17,19 @@ class BlobComponent < ApplicationViewComponent
   end
 
   def caption? = caption.present?
+
+  def humanized_file_size
+    number_to_human_size byte_size
+  end
+
+  def fig_caption
+    tag.figcaption(class: 'attachment__caption') do
+      if caption?
+        caption
+      else
+        tag.span(filename, class: 'attachment__name') +
+          tag.span(humanized_file_size, class: 'attachment__size')
+      end
+    end
+  end
 end

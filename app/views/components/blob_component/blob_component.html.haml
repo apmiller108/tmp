@@ -1,13 +1,18 @@
-.c-blob-component{data: { controller: :blob }}
+.c-blob{data: { controller: :blob }}
   %figure{class:  "attachment attachment--#{representable? ? 'preview' : 'file'} attachment--#{filename.extension}"}
     - if audio?
-      %audio{controls: true, preload: :metadata, width: "100%"}
-        %source{src: url, type: content_type}
+      .audio-player.d-flex
+        %div
+          %audio{controls: true, preload: :metadata, width: "100%", data: { 'blob-target' => :audio }}
+            %source{src: url, type: content_type}
+          = fig_caption
+        .audio-menu.dropend
+          %button.btn.btn-secondary.dropdown-toggle.p-2{ type: :button, data: { 'bs-toggle' => :dropdown }, 'aria-expanded' => false }
+          %ul.dropdown-menu.py-2
+            %li
+              %a.dropdown-item{ href: '#' } Transcribe
+              %a.dropdown-item{ href: '#' } Transcribe & Summarize
+
     - else representable?
       = image_tag representation(resize_to_limit: in_gallery ? [ 800, 600 ] : [ 1024, 768 ])
-    %figcaption.attachment__caption
-      - if caption?
-        = caption
-      - else
-        %span.attachment__name= filename
-        %span.attachment__size= number_to_human_size byte_size
+      = fig_caption
