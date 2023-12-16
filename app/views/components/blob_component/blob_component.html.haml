@@ -1,0 +1,13 @@
+.c-blob-component{data: { controller: :blob }}
+  %figure{class:  "attachment attachment--#{representable? ? 'preview' : 'file'} attachment--#{filename.extension}"}
+    - if audio?
+      %audio{controls: true, preload: :metadata, width: "100%"}
+        %source{src: url, type: content_type}
+    - else representable?
+      = image_tag representation(resize_to_limit: in_gallery ? [ 800, 600 ] : [ 1024, 768 ])
+    %figcaption.attachment__caption
+      - if caption?
+        = caption
+      - else
+        %span.attachment__name= filename
+        %span.attachment__size= number_to_human_size byte_size

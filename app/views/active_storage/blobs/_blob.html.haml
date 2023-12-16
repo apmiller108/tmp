@@ -1,12 +1,1 @@
-%figure{class:  "attachment attachment--#{blob.representable? ? 'preview' : 'file'} attachment--#{blob.filename.extension}"}
-  - if blob.audio?
-    %audio{controls: true, preload: :metadata, width: "100%"}
-      %source{src: blob.url, type: blob.content_type}
-  - else blob.representable?
-    = image_tag blob.representation(resize_to_limit: local_assigns[:in_gallery] ? [ 800, 600 ] : [ 1024, 768 ])
-  %figcaption.attachment__caption
-    - if caption = blob.try(:caption)
-      = caption
-    - else
-      %span.attachment__name= blob.filename
-      %span.attachment__size= number_to_human_size blob.byte_size
+= render BlobComponent.new(blob: blob, in_gallery: local_assigns[:in_gallery])
