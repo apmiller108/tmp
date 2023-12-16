@@ -1,16 +1,9 @@
 # TODOs
 - [x] Implement API authentication
 - [x] Implement jti jwt_revocation_strategy
-- [x] Add request spec for sign in
-- [x] Add request spec for sign out
-- [x] Update request spec for users
 - [x] Create message model
 - [x] Learn about and use view_component library
 - [x] Setup Cuprite
-- [x] Write a feature test for logging in
-- [x] Write a feature test for logging out
-- [x] Write a feature test for Signing up
-- [x] Add unit tests for message view components
 - [x] Add a header to the layout
 - [x] Add user message destroy action
 - [x] On index, use stimulus to remove new message form on cancel
@@ -18,9 +11,10 @@
 - [ ] Add feature specs for user messages
 - [ ] Sentiment analysis
 - [ ] Transcription for audio files added to message
+- [ ] Text to image
+- [ ] Text to speech
 - [ ] Registration via API
 - [ ] Add request specs for registration via API
-- [ ] Add authenticated route behaviour shared examples
 - [ ] Add auth helper for request specs
 - [ ] Setup CI
 - [x] Setup ActionCable
@@ -32,7 +26,6 @@
 - [ ] Add public / private message
 - [ ] Create public message view
 - [ ] Add ability to comment on messages (with other message?)
-
 
 # Start
 
@@ -62,10 +55,13 @@ Or just what you need (ie, without sidekiq, chrome, etc)
 ```
 docker compose up web
 ```
-
 ### Access to running containers
   - docker compose exec -it web bash
   - docker compose exec -it database psql -U postgres
+
+### ENV vars
+Secrets are supplied to the application using [Custom Credentials](https://edgeguides.rubyonrails.org/security.html#custom-credentials) 
+and a ENV vars (eg, .env)
 
 # Application
 ## Authentication
