@@ -5,6 +5,7 @@ ruby "~> 3.2"
 
 gem "anycable-rails"
 gem "aws-sdk-s3", require: false
+gem "aws-sdk-transcribeservice", require: false
 gem "bootsnap", require: false # Reduces boot times through caching; required in config/boot.rb
 gem "cssbundling-rails"
 gem "devise"
