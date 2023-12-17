@@ -10,9 +10,9 @@
           %button.btn.btn-secondary.dropdown-toggle.p-2{ type: :button, data: { 'bs-toggle' => :dropdown }, 'aria-expanded' => false }
           %ul.dropdown-menu.py-2
             %li
-              %a.dropdown-item{ href: '#' } Transcribe
-              %a.dropdown-item{ href: '#' } Transcribe & Summarize
+              %a.dropdown-item{ href: '#' }= t('transcribe')
+              %a.dropdown-item{ href: '#' }= t('transcribe_and_summarize')
 
-    - else representable?
-      = image_tag representation(resize_to_limit: in_gallery ? [ 800, 600 ] : [ 1024, 768 ])
+    - elsif representable?
+      = image_tag representation(resize_to_limit: resize_to_limit)
       = fig_caption

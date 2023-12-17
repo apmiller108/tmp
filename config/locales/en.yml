@@ -43,3 +43,5 @@ en:
     update: "Update Message"
     content: 'Content'
   messages: "Messages"
+  transcribe: 'Transcribe'
+  transcribe_and_summarize: 'Transcribe & Summarize'
