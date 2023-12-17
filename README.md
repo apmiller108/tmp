@@ -9,8 +9,8 @@
 - [x] On index, use stimulus to remove new message form on cancel
 - [x] Add request specs for user messages
 - [ ] Add feature specs for user messages
+- [ ] *Transcription for audio files added to message WIP*
 - [ ] Sentiment analysis
-- [ ] Transcription for audio files added to message
 - [ ] Text to image
 - [ ] Text to speech
 - [ ] Registration via API
@@ -29,7 +29,7 @@
 
 # Start
 
-## Docker
+## Docker for development
 For development, use docker compose. This will use `Dockerfile.dev`.
 This orchestrates the following services:
 - database: Postgres v16
@@ -60,8 +60,11 @@ docker compose up web
   - docker compose exec -it database psql -U postgres
 
 ### ENV vars
-Secrets are supplied to the application using [Custom Credentials](https://edgeguides.rubyonrails.org/security.html#custom-credentials) 
-and a ENV vars (eg, .env)
+Secrets are supplied to the application using [Custom Credentials](https://edgeguides.rubyonrails.org/security.html#custom-credentials)
+and a ENV vars (eg, .env). Anycable needs `RAILS_MASTER_KEY` so the anycable
+service also takes a `.anycable.env` `env_file` with only that variable set. In
+development, setting the `RAILS_MASTER_KEY` in the `.env` will break the test
+env unless they're the same key.
 
 # Application
 ## Authentication

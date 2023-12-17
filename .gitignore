@@ -37,6 +37,7 @@
 /node_modules
 
 .env
+.anycable.env
 
 yarn-error.log
 
