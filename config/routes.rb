@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   devise_for :users, controllers: {
     sessions: 'users/sessions',
@@ -13,6 +15,11 @@ Rails.application.routes.draw do
     unauthenticated do
       root 'users/registrations#new'
     end
+  end
+
+  # Require authentication via devise and current_user be developer to view Sidekiq Web UI
+  authenticate :user, ->(user) { user.developer? } do
+    mount Sidekiq::Web => '/sidekiq'
   end
 
   resources :users, only: %i[show] do
