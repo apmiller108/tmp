@@ -65,6 +65,9 @@ services:
     depends_on:
       - "database"
       - "ws"
+    env_file:
+      - '.env'
+      - '.anycable.env'
   chrome: # docker-compose up -d chrome
     image: browserless/chrome:latest # See https://www.browserless.io/docs/docker
     ports:
