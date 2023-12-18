@@ -1,0 +1,80 @@
+name: CI
+
+# Controls when the action will run.
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+  pull_request:
+    types: [opened, reopened, edited]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  test:
+    # The type of runner that the job will run on
+    name: Tests
+    runs-on: ubuntu-22.04
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports: ["5432:5432"]
+      chrome:
+        image: browserless/chrome:latest
+        env:
+          PORT: 3333
+          CONNECTION_TIMEOUT: -1 # No timeout
+        ports: ["3333:3333"]
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install ruby dependencies
+        uses: ruby/setup-ruby@v1 # https://github.com/ruby/setup-ruby
+        with:
+          bundler-cache: true
+          ruby-version: 3.2
+
+      - name: Include node and yarn
+        uses: actions/setup-node@v2
+        with:
+          node-version: 20
+          cache: yarn
+
+      - name: Install JS dependencies
+        run: |
+          yarn install --pure-lockfile
+
+      - name: Setup databse
+        env:
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+          RAILS_ENV: test
+          CI: true
+        run: |
+          bin/rails db:setup
+
+      - name: Build assets
+        run: |
+          yarn build:dev
+          yarn build:css
+
+      - name: Run tests
+        env:
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+          RAILS_ENV: test
+          CI: true
+          CHROME_URL: http://localhost:3333
+        run: |
+          bundle exec rspec
+      # For debugging the build using upterm to ssh into the container comment in this step
+      # See https://github.com/marketplace/actions/debugging-with-ssh
+      # - name: debug
+      #   uses: lhotari/action-upterm@v1

@@ -19,6 +19,11 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
   redis:
     image: redis:7
     restart: always
@@ -26,13 +31,19 @@ services:
       - "redis:/data"
     ports:
       - "6379"
+    healthcheck:
+      test: ["CMD", "redis-cli","ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
   ws:
     image: anycable/anycable-go:1.4
     ports:
       - '8085:8085'
     env_file: .env
     depends_on:
-      - "redis"
+      redis:
+        condition: service_healthy
   web:
     <<: *base
     command: bash -c "rm -f tmp/pids/server.pid && /rails/bin/dev"
@@ -45,11 +56,16 @@ services:
     links:
       - "database"
       - "redis"
+    depends_on:
+      database:
+        condition: service_healthy
   sidekiq:
     <<: *base
     depends_on:
-      - "database"
-      - "redis"
+      database:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     command: "bundle exec sidekiq"
     restart: always
     volumes:
@@ -63,8 +79,10 @@ services:
     ports:
       - '50051'
     depends_on:
-      - "database"
-      - "ws"
+      database:
+        condition: service_healthy
+      ws:
+        condition: service_started
     env_file:
       - '.env'
       - '.anycable.env'
