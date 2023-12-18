@@ -1,4 +1,6 @@
 class TranscriptionService
+  LANG = 'en-US'.freeze
+
   def self.batch_transcribe(client, blob)
     new(client, blob).batch_transcribe
   end
