@@ -7,9 +7,9 @@ RUN apt-get update -qq \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
-WORKDIR /app
+WORKDIR /rails
 
-# Install JS dependencies
+# Install Node and Yarn JS package manager
 # See also https://github.com/nodesource/distributions#installation-instructions
 ARG NODE_MAJOR=20
 ARG YARN_VERSION=1.22.19
@@ -21,26 +21,33 @@ RUN mkdir -p /etc/apt/keyrings && \
     apt-get install nodejs -y && \
     npm install -g yarn@$YARN_VERSION
 
-# Install node modules
+# Install JS dependencies
+FROM base as node
+
 COPY package.json yarn.lock ./
 RUN yarn install
 
+# Install Ruby dependencies
 FROM base as gems
 
 COPY Gemfile Gemfile.lock ./
 RUN gem install bundler && bundle install --jobs 20 --retry 5
 
+# Final build
 FROM base as build
 
-WORKDIR /app
+WORKDIR /rails
 
 RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
+
 COPY . ./
+# Copy ruby and JS dependencies
 COPY --from=gems /usr/local/bundle /usr/local/bundle
+COPY --from=node /rails/node_modules /rails/node_modules
 
 EXPOSE 3000
 

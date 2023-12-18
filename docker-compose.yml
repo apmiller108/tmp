@@ -35,11 +35,11 @@ services:
       - "redis"
   web:
     <<: *base
-    command: bash -c "rm -f tmp/pids/server.pid && /app/bin/dev"
+    command: bash -c "rm -f tmp/pids/server.pid && /rails/bin/dev"
     restart: always
     volumes:
-      - ".:/app"
-      - "/app/node_modules"
+      - ".:/rails"
+      - "/rails/node_modules"
     ports:
       - "3000:3000"
     links:
@@ -53,13 +53,13 @@ services:
     command: "bundle exec sidekiq"
     restart: always
     volumes:
-      - ".:/app"
-      - "/app/tmp" # don't mount tmp dir
+      - ".:/rails"
+      - "/rails/tmp" # don't mount tmp dir
   anycable:
     <<: *base
     command: bundle exec anycable
     volumes:
-      - ".:/app"
+      - ".:/rails"
     ports:
       - '50051'
     depends_on:
