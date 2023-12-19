@@ -16,7 +16,7 @@
 - [ ] Registration via API
 - [ ] Add request specs for registration via API
 - [ ] Add auth helper for request specs
-- [ ] Setup CI
+- [x] Setup CI
 - [x] Setup ActionCable
 - [x] Setup hot reloading
 - [ ] Figure out better cors config https://github.com/cyu/rack-cors
@@ -26,6 +26,8 @@
 - [ ] Add public / private message
 - [ ] Create public message view
 - [ ] Add ability to comment on messages (with other message?)
+
+![main workflow](https://github.com/apmiller/tmp/actions/workflows/main/badge.svg)
 
 # Start
 
@@ -192,6 +194,11 @@ it { is_expected.to have_turbo_stream(action: 'prepend', target: 'messages') }
   - Uses [browserless' Chrome image](https://www.browserless.io/docs/docker-quickstart)
   - To start chrome, run `docker compose up -d chrome`
   - visit http://localhost:3333/
+
+## CI
+CI run on Github Actions. The following actions comprise the CI pipeline:
+- rspec tests
+
 # Deployments
 ## Fly.io
 - The deployments use the `Dockerfile` and `fly.toml`.
