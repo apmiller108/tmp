@@ -27,7 +27,7 @@
 - [ ] Create public message view
 - [ ] Add ability to comment on messages (with other message?)
 
-![main workflow](https://github.com/apmiller/tmp/actions/workflows/main/badge.svg)
+![main workflow](https://github.com/apmiller108/tmp/actions/workflows/main.yml/badge.svg)
 
 # Start
 
