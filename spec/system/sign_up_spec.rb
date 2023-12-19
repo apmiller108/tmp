@@ -3,7 +3,7 @@ require 'system_helper'
 RSpec.describe 'Signing up', type: :system do
   specify 'user signs in' do
     visit '/'
-    fill_in 'Email', with: 'alex@example.com'
+    fill_in 'Email', with: Faker::Internet.email
     fill_in 'Password', with: 'Password!'
     fill_in 'Password confirmation', with: 'Password!'
     click_button 'Sign up'
