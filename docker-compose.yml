@@ -50,7 +50,7 @@ services:
     restart: always
     volumes:
       - ".:/rails"
-      - "/rails/node_modules"
+      - "/rails/node_modules" # don't mount node_modules
     ports:
       - "3000:3000"
     links:
@@ -70,7 +70,7 @@ services:
     restart: always
     volumes:
       - ".:/rails"
-      - "/rails/tmp" # don't mount tmp dir
+      - "/rails/tmp" # don't mount tmp
   anycable:
     <<: *base
     command: bundle exec anycable

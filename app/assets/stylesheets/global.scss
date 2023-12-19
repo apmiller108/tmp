@@ -16,3 +16,23 @@
   }
 
 }
+
+@mixin glowingPulse($hexColor) {
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba($hexColor, 0.7); // no shadow, opaque
+    }
+    50% {
+      box-shadow: 0 0 1rem 1rem rgba($hexColor, 0); // full shadow, transparent
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba($hexColor, 0); // no shadow, transparent
+    }
+  }
+  animation: pulse 2.5s infinite;
+}
+
+
+.p-pulse {
+  @include glowingPulse($primary);
+}
