@@ -39,5 +39,10 @@ module Tmp
         audio embed iframe source video button
       ]
     end
+
+    # to_prepare block runs once at application startup and before reloading
+    config.to_prepare do
+      ActiveStorage::Blob.include(ActiveStorageBlobExtension)
+    end
   end
 end
