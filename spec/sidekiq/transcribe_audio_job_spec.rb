@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe TranscribeJob, type: :job do
+RSpec.describe TranscribeAudioJob, type: :job do
   subject(:job) { described_class.new }
 
   let(:aws_client) { instance_double(TranscriptionService::AwsClient) }

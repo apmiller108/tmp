@@ -8,11 +8,12 @@
 - [x] Add user message destroy action
 - [x] On index, use stimulus to remove new message form on cancel
 - [x] Add request specs for user messages
-- [ ] Add feature specs for user messages
-- [ ] *Transcription for audio files added to message WIP*
+- [ ] 🚧 Transcription for audio files added to message WIP 🚧
+- [ ] Add web health check with pinglish
 - [ ] Sentiment analysis
 - [ ] Text to image
-- [ ] Text to speech
+- [ ] LLM summary of text selection
+- [ ] Add feature specs for user messages
 - [ ] Registration via API
 - [ ] Add request specs for registration via API
 - [ ] Add auth helper for request specs

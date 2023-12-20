@@ -1,5 +1,4 @@
-# TODO: rename this TranscribeAudioJob ?
-class TranscribeJob
+class TranscribeAudioJob
   include Sidekiq::Job
 
   def perform(blob_id, toxicity_detection: false)
