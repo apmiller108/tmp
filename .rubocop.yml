@@ -1,9 +1,11 @@
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
 Lint/MissingSuper:
-  Enabled: false
-Style/Documentation:
-  Enabled: false
-Style/FrozenStringLiteralComment:
   Enabled: false
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
+Style/Documentation:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
