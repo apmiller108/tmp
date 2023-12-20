@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_20_024655) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_20_222004) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -70,6 +70,16 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_20_024655) do
     t.check_constraint "status = ANY (ARRAY['created'::text, 'queued'::text, 'in_progress'::text, 'failed'::text, 'completed'::text])", name: "status_check"
   end
 
+  create_table "transcriptions", force: :cascade do |t|
+    t.text "content", null: false
+    t.bigint "active_storage_blob_id", null: false
+    t.bigint "transcription_job_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["active_storage_blob_id"], name: "index_transcriptions_on_active_storage_blob_id"
+    t.index ["transcription_job_id"], name: "index_transcriptions_on_transcription_job_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -96,4 +106,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_20_024655) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "messages", "users", on_delete: :cascade
   add_foreign_key "transcription_jobs", "active_storage_blobs"
+  add_foreign_key "transcriptions", "active_storage_blobs"
+  add_foreign_key "transcriptions", "transcription_jobs"
 end

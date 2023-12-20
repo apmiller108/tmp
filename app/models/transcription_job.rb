@@ -1,6 +1,8 @@
 class TranscriptionJob < ApplicationRecord
   belongs_to :active_storage_blob
 
+  has_one :transcription, dependent: :destroy
+
   enum :status, {
          created: 'created',
          queued: 'queued',
