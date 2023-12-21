@@ -27,6 +27,7 @@
 - [ ] Add public / private message
 - [ ] Create public message view
 - [ ] Add ability to comment on messages (with other message?)
+- [ ] Add lograge
 
 ![main workflow](https://github.com/apmiller108/tmp/actions/workflows/main.yml/badge.svg)
 
@@ -67,7 +68,7 @@ Secrets are supplied to the application using [Custom Credentials](https://edgeg
 and a ENV vars (eg, .env). Anycable needs `RAILS_MASTER_KEY` so the anycable
 service also takes a `.anycable.env` `env_file` with only that variable set. In
 development, setting the `RAILS_MASTER_KEY` in the `.env` will break the test
-env unless they're the same key.
+env unless they're the same key. See also [#secrets](secrets).
 
 # Application
 ## Authentication
@@ -170,6 +171,12 @@ Websockets are handled by [ActionCable](https://guides.rubyonrails.org/action_ca
 - ActionCable provides the framework for defining application business logic for handling how connections are authenticated, how messages are responded to and what events should trigger messages to be sent to which clients (eg, channels and subscribers). 
 - Anycable provides the implementation of WebSocket connection management, which entails a WebSocket server separate from the web application and an RPC server for executing application code. This depends on Redis' pub/sub mechanism. There's a lot of moving parts here and things can go wrong. See [troubleshooting](https://docs.anycable.io/troubleshooting)
 - Live reloading in development is handled by [hotwire-livereload](https://github.com/kirillplatonov/hotwire-livereload) which depends on a WS connection.
+
+# Background Job Processing
+- Background jobs are handled by [sidekiq](https://github.com/sidekiq/sidekiq) free version
+- Unique job constraints, normally a sidekiq ENT feature, are provided by the
+  [sidekiq-uniqu-jobs](https://github.com/mhenrixon/sidekiq-unique-jobs) gem
+- Sidekiq UI is mounted at `/sidekiq`. Use must be authenticated and a developer in order to view this.
 
 # Testing
 ## RSpec
