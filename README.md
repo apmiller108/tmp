@@ -70,6 +70,16 @@ service also takes a `.anycable.env` `env_file` with only that variable set. In
 development, setting the `RAILS_MASTER_KEY` in the `.env` will break the test
 env unless they're the same key. See also [#secrets](secrets).
 
+## External Dependencies
+This depends on AWS services. A user will need to be created in the AWS portal with the following permissions:
+- AmazonS3FullAccess
+- AmazonTranscribeFullAccess
+The user's access key and secret needs to be added to the applications credentials.
+### AWS s3
+See also [#activestorage-configuration](ActiveStorage Configuration)
+### AWS Transcribe
+This uses AWS Transcription Jobs for speech to text
+
 # Application
 ## Authentication
 ### Devise
