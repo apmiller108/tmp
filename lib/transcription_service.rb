@@ -2,10 +2,14 @@ class TranscriptionService
   LANG = 'en-US'.freeze
 
   def self.batch_transcribe(client, blob)
-    new(client, blob).batch_transcribe
+    service = new(client, blob)
+    service.batch_transcribe
+    service
   end
 
   attr_reader :client, :blob
+
+  delegate :request, :response, to: :client
 
   def initialize(client, blob)
     @client = client

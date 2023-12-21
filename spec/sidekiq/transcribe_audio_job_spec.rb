@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe TranscribeAudioJob, type: :job do
-  subject(:job) { described_class.new }
-
   let(:aws_client) { instance_double(TranscriptionService::AwsClient) }
   let(:blob_id) { 1 }
   let(:content_type) { 'audio/mp3' }
@@ -15,7 +13,11 @@ RSpec.describe TranscribeAudioJob, type: :job do
     allow(ActiveStorage::Blob).to receive(:find).with(blob_id).and_return(blob)
   end
 
+  it { expect(described_class).to have_valid_sidekiq_options }
+
   describe '#perform' do
+    subject(:job) { described_class.new }
+
     it 'instantiates an AwsClient object' do
       job.perform(blob_id)
       expect(TranscriptionService::AwsClient).to have_received(:new).with(toxicity_detection: false)
@@ -32,6 +34,15 @@ RSpec.describe TranscribeAudioJob, type: :job do
       it 'does not batch transcribes the blob' do
         job.perform(blob.id)
         expect(TranscriptionService).not_to have_received(:batch_transcribe)
+      end
+
+      it 'logs a warning' do
+        expect(Rails.logger).to(
+          receive(:warn).with(
+            "TranscribeAudioJob: Skipped attempt to transcribe non-audio blob. id: #{blob.id}, content_type: #{content_type}"
+          )
+        )
+        job.perform(blob.id)
       end
     end
 

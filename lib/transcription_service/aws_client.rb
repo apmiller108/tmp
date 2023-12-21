@@ -2,14 +2,22 @@ require 'aws-sdk-transcribeservice'
 
 class TranscriptionService
   class AwsClient
+    attr_reader :response
+
     def initialize(**options)
       @options = options
       @config = Rails.application.credentials.fetch(:aws)
     end
 
     def batch_transcribe(blob)
-      client.start_transcription_job(AwsTranscriptionJobParams.for(blob:, **options))
+      @blob = blob
+      @response = client.start_transcription_job(@batch_transcribe_params)
     end
+
+    def params
+      AwsTranscriptionJobParams.for(blob:, **options)
+    end
+    alias request params
 
     private
 
