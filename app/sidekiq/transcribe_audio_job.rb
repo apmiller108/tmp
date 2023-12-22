@@ -10,10 +10,13 @@ class TranscribeAudioJob
 
     return log_skipped(blob) unless blob.audio?
 
-    client = TranscriptionService::AwsClient.new(toxicity_detection:)
+    # TODO: rescue Aws::TranscribeService::Errors::ConflictException and re-raise TranscribeService::InvalidRequest
+    client = TranscriptionService::AWS::Client.new(toxicity_detection:)
     transcription_service = TranscriptionService.new(client, blob)
     transcription_service.batch_transcribe
-    TranscriptionJob.create(request: transcription_service.request, response: transcription_service.response)
+    TranscriptionJob.create_for(transcription_service:)
+  rescue TranscribeService::InvalidRequest => e
+    # TODO: log something
   end
 
   private
