@@ -15,5 +15,6 @@ class TranscriptionService
 
   def batch_transcribe
     client.batch_transcribe(blob)
+    TranscriptionJob.create_for(transcription_service: self)
   end
 end

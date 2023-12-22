@@ -11,7 +11,6 @@ class TranscribeAudioJob
     client = TranscriptionService::AWS::Client.new(toxicity_detection:)
     transcription_service = TranscriptionService.new(client, blob)
     transcription_service.batch_transcribe
-    TranscriptionJob.create_for(transcription_service:)
   rescue TranscriptionService::InvalidRequestError, ActiveRecord::RecordNotFound => e
     Rails.logger.warn("#{self.class}: #{e} : #{e.cause}")
     nil

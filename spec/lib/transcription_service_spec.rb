@@ -6,42 +6,52 @@ describe TranscriptionService do
   let(:response) { instance_double(TranscriptionService::AWS:: BatchTranscriptionResponse, job_id: 'job-id', status: 'job-status') }
   let(:blob) { build_stubbed :active_storage_blob }
 
-  subject { described_class.new(client, blob) }
+  subject(:service) { described_class.new(client, blob) }
 
   describe '#request' do
     it 'delegates to the client' do
-      expect(subject.request).to eq request
+      expect(service.request).to eq request
     end
   end
 
   describe '#response' do
     it 'delegates to the client' do
-      expect(subject.response).to eq response
+      expect(service.response).to eq response
     end
   end
 
   describe '#job_id' do
     it 'delegates to the response' do
-      expect(subject.job_id).to eq response.job_id
+      expect(service.job_id).to eq response.job_id
     end
   end
 
   describe '#status' do
     it 'delegates to the response' do
-      expect(subject.status).to eq response.status
+      expect(service.status).to eq response.status
     end
   end
 
   describe '#params' do
     it 'delegates to the request' do
-      expect(subject.params).to eq request.params
+      expect(service.params).to eq request.params
     end
   end
 
   describe '#batch_transcribe' do
+    let(:transcription_job) { build_stubbed :transcription_job }
+
+    before do
+      allow(TranscriptionJob).to receive(:create_for).with(transcription_service: service).and_return(transcription_job)
+    end
+
     it 'delegates to the client' do
-      subject.batch_transcribe
+      service.batch_transcribe
       expect(client).to have_received(:batch_transcribe).with(blob)
+    end
+
+    it 'returns the transcription_job' do
+      expect(service.batch_transcribe).to eq transcription_job
     end
   end
 end

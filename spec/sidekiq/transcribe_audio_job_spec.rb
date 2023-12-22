@@ -13,7 +13,7 @@ RSpec.describe TranscribeAudioJob, type: :job do
     allow(TranscriptionService::AWS::Client).to receive(:new).and_return(aws_client)
     allow(TranscriptionService).to receive(:new).with(aws_client, blob).and_return(transcription_service)
     allow(ActiveStorage::Blob).to receive(:find).with(blob_id).and_return(blob)
-    allow(TranscriptionJob).to receive(:create_for).and_return(transcription_job)
+    allow(transcription_service).to receive(:batch_transcribe).and_return(transcription_job)
   end
 
   it { expect(described_class).to have_valid_sidekiq_options }
@@ -29,11 +29,6 @@ RSpec.describe TranscribeAudioJob, type: :job do
     it 'batch transcribes the blob' do
       job.perform(blob.id)
       expect(transcription_service).to have_received(:batch_transcribe)
-    end
-
-    it 'creates the transcription_job record' do
-      job.perform(blob.id)
-      expect(TranscriptionJob).to have_received(:create_for).with(transcription_service:)
     end
 
     it 'returns the transcription_job' do
