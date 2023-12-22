@@ -2,6 +2,8 @@ require 'rails_helper'
 require 'aws-sdk-transcribeservice'
 
 RSpec.describe TranscriptionService::AWS::BatchTranscriptionResponse do
+  subject(:response) { described_class.new(start_job_response) }
+
   let(:transcription_job_name) { 'job name' }
   let(:transcription_job_status) { 'job status' }
   let(:transcription_job) do
@@ -9,17 +11,20 @@ RSpec.describe TranscriptionService::AWS::BatchTranscriptionResponse do
   end
   let(:start_job_response) { double(transcription_job:) }
 
-  subject { described_class.new(start_job_response) }
-
   describe '#job_id' do
     it 'delegates to transcription_job' do
-      expect(subject.job_id).to eq transcription_job_name
+      expect(response.job_id).to eq transcription_job_name
     end
   end
 
   describe '#status' do
-    it 'delegates to transcription_job' do
-      expect(subject.status).to eq transcription_job_status
+    aws_statuses = %w[QUEUED IN_PROGRESS FAILED COMPLETED]
+
+    aws_statuses.each do |s|
+      it "normalizes #{s} status" do
+        allow(transcription_job).to receive(:transcription_job_status).and_return(s)
+        expect(response.status).to eq TranscriptionJob.statuses[s.downcase]
+      end
     end
   end
 end
