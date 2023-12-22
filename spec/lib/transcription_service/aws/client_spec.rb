@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe TranscriptionService::AwsClient do
+describe TranscriptionService::AWS::Client do
   describe '#initialize' do
     it 'sets the aws config' do
       client = described_class.new
@@ -14,13 +14,21 @@ describe TranscriptionService::AwsClient do
     end
   end
 
+  describe '#request' do
+    it 'returns the TranscriptionRequest params' do
+      request = { a: 1 }
+      allow(TranscriptionService::AWS::TranscriptionRequest).to receive(:for).and_return(request)
+      expect(described_class.new.request).to eq request
+    end
+  end
+
   describe '#batch_transcription' do
     subject(:client) { described_class.new(**options) }
 
     let(:blob) { build_stubbed :active_storage_blob }
     let(:aws_lib_client) { instance_double(Aws::TranscribeService::Client) }
     let(:aws_credentials) { instance_double(Aws::Credentials) }
-    let(:job_params) { { a: 1 } }
+    let(:request) { { a: 1 } }
     let(:options) { {} }
 
     before do
@@ -34,28 +42,28 @@ describe TranscriptionService::AwsClient do
                            credentials: aws_credentials)
                      .and_return(aws_lib_client)
       )
-      allow(TranscriptionService::AwsTranscriptionJobParams).to receive(:for).and_return(job_params)
+      allow(TranscriptionService::AWS::TranscriptionRequest).to receive(:for).and_return(request)
       allow(aws_lib_client).to receive(:start_transcription_job)
       subject.batch_transcribe(blob)
     end
 
     it 'passes the proper args to the job params' do
-      expect(TranscriptionService::AwsTranscriptionJobParams).to have_received(:for).with(blob:)
+      expect(TranscriptionService::AWS::TranscriptionRequest).to have_received(:for).with(blob:)
     end
 
     it 'starts an aws transcription job with the job params params' do
-      expect(aws_lib_client).to have_received(:start_transcription_job).with(job_params)
+      expect(aws_lib_client).to have_received(:start_transcription_job).with(request)
     end
 
     context 'with the toxicity_detection option' do
       let(:options) { { toxicity_detection: true } }
 
       it 'passes the proper args to the job params' do
-        expect(TranscriptionService::AwsTranscriptionJobParams).to have_received(:for).with(blob:, **options)
+        expect(TranscriptionService::AWS::TranscriptionRequest).to have_received(:for).with(blob:, **options)
       end
 
       it 'starts an aws transcription job with the job params' do
-        expect(aws_lib_client).to have_received(:start_transcription_job).with(job_params)
+        expect(aws_lib_client).to have_received(:start_transcription_job).with(request)
       end
     end
   end
