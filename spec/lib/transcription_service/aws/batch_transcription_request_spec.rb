@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe TranscriptionService::AwsTranscriptionJobParams do
+RSpec.describe TranscriptionService::AWS::BatchTranscriptionRequest do
   describe '.for' do
     subject { described_class.for(blob:, **options) }
 
