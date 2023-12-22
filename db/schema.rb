@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_20_222004) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_22_025432) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -60,12 +60,13 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_20_222004) do
   end
 
   create_table "transcription_jobs", force: :cascade do |t|
-    t.text "status", default: "created", null: false
+    t.text "status", null: false
     t.jsonb "response"
     t.jsonb "request"
     t.bigint "active_storage_blob_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "vendor_job_id", limit: 200, null: false
     t.index ["active_storage_blob_id"], name: "index_transcription_jobs_on_active_storage_blob_id"
     t.check_constraint "status = ANY (ARRAY['created'::text, 'queued'::text, 'in_progress'::text, 'failed'::text, 'completed'::text])", name: "status_check"
   end
