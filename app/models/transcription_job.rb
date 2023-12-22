@@ -3,21 +3,21 @@ class TranscriptionJob < ApplicationRecord
   has_one :transcription, dependent: :destroy
 
   enum :status, {
-         created: 'created',
-         queued: 'queued',
-         in_progress: 'in_progress',
-         failed: 'failed',
-         completed: 'completed'
-       }
+    created: 'created',
+    queued: 'queued',
+    in_progress: 'in_progress',
+    failed: 'failed',
+    completed: 'completed'
+  }
 
-  validates :status, inclusion: { in: statuses.values, message: "%{value} must be one of #{statuses.values}" }
+  validates :status, inclusion: { in: statuses.values, message: "%<value>s must be one of #{statuses.values}" }
   validates_with ReferencesAudioBlobValidator
 
   def self.create_for(transcription_service:)
-    create(request: transcription_service.params,
-           vendor_job_id: transcription_service.job_id,
-           status: transcription_service.status,
-           active_storage_blob: transcription_service.blob)
+    create!(request: transcription_service.params,
+            vendor_job_id: transcription_service.job_id,
+            status: transcription_service.status,
+            active_storage_blob: transcription_service.blob)
   end
 
   # TODO: guard completed?
