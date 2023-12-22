@@ -1,6 +1,8 @@
 class TranscriptionService
   module AWS
     class BatchTranscriptionRequest
+      JOB_NAME_MAX_LENGTH = 200
+
       def initialize(blob, **options)
         @blob = blob
         @options = options
@@ -21,9 +23,8 @@ class TranscriptionService
 
       attr_reader :blob, :options
 
-      # TODO: limit this to max 200 characters
       def transcription_job_name
-        "#{blob.id}_#{blob.filename}"
+        "#{blob.id}_#{blob.filename}".slice(0, JOB_NAME_MAX_LENGTH)
       end
 
       def tags

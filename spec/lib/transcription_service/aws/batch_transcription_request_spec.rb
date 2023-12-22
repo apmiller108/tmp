@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe TranscriptionService::AWS::BatchTranscriptionRequest do
   describe '#params' do
-    subject { described_class.new(blob, **options).params }
+    subject(:params) { described_class.new(blob, **options).params }
 
     let(:blob) { build_stubbed :active_storage_blob }
     let(:options) { {} }
@@ -29,6 +29,14 @@ RSpec.describe TranscriptionService::AWS::BatchTranscriptionRequest do
       let(:options) { { toxicity_detection: true } }
 
       it { is_expected.to eq expected_params }
+    end
+
+    context 'when the computed job name exceeds 200 charcters' do
+      let(:blob) { build_stubbed :active_storage_blob, filename: Faker::Alphanumeric.alphanumeric(number: 201) }
+
+      it 'truncates the job name' do
+        expect(params[:transcription_job_name].length).to eq 200
+      end
     end
   end
 end
