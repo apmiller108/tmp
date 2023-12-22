@@ -13,12 +13,12 @@ class TranscriptionService
       def batch_transcribe(blob)
         @blob = blob
         @response = BatchTranscriptionResponse.new(
-          client.start_transcription_job(request)
+          client.start_transcription_job(request.params)
         )
       end
 
       def request
-        @request ||= TranscriptionRequest.for(blob:, **options)
+        @request ||= BatchTranscriptionRequest.new(blob, **options)
       end
 
       private

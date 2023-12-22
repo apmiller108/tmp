@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe TranscriptionService::AWS::BatchTranscriptionRequest do
-  describe '.for' do
-    subject { described_class.for(blob:, **options) }
+  describe '#params' do
+    subject { described_class.new(blob, **options).params }
 
     let(:blob) { build_stubbed :active_storage_blob }
     let(:options) { {} }
