@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'aws-sdk-transcribeservice'
 
 describe TranscriptionService::AWS::Client do
   describe '#initialize' do
@@ -6,31 +7,45 @@ describe TranscriptionService::AWS::Client do
       client = described_class.new
       expect(client.instance_variable_get(:@config)).to eq Rails.application.credentials.fetch(:aws)
     end
-
-    it 'collects and sets the options' do
-      options = { opt1: 1, opt2: 2 }
-      client = described_class.new(**options)
-      expect(client.instance_variable_get(:@options)).to eq options
-    end
   end
 
   describe '#request' do
-    it 'returns the BatchTranscriptionRequest params' do
-      request = instance_double(TranscriptionService::AWS::BatchTranscriptionRequest)
-      allow(TranscriptionService::AWS::BatchTranscriptionRequest).to receive(:new).and_return(request)
-      expect(described_class.new.request).to eq request
+    subject(:client) { described_class.new }
+
+    it 'is nil' do
+      expect(client.request).to be_nil
+    end
+
+    context 'when @operation is set' do
+      it 'delegates to operation' do
+        request = double
+        operation = instance_double(TranscriptionService::AWS::Client::BatchTranscription, request:)
+        client.instance_variable_set(:@operation, operation)
+        expect(client.request).to eq request
+      end
     end
   end
 
-  describe '#batch_transcription' do
-    subject(:client) { described_class.new(**options) }
+  describe '#response' do
+    subject(:client) { described_class.new }
 
-    let(:blob) { build_stubbed :active_storage_blob }
+    it 'is nil' do
+      expect(client.response).to be_nil
+    end
+
+    context 'when @operation is set' do
+      it 'delegates to operation' do
+        response = double
+        operation = instance_double(TranscriptionService::AWS::Client::BatchTranscription, response:)
+        client.instance_variable_set(:@operation, operation)
+        expect(client.response).to eq response
+      end
+    end
+  end
+
+  describe 'delegate missing' do
     let(:aws_lib_client) { instance_double(Aws::TranscribeService::Client) }
     let(:aws_credentials) { instance_double(Aws::Credentials) }
-    let(:params) { { a: 1 } }
-    let(:request) { instance_double(TranscriptionService::AWS::BatchTranscriptionRequest, params:) }
-    let(:options) { {} }
 
     before do
       allow(Aws::Credentials).to(
@@ -43,28 +58,44 @@ describe TranscriptionService::AWS::Client do
                            credentials: aws_credentials)
                      .and_return(aws_lib_client)
       )
-      allow(TranscriptionService::AWS::BatchTranscriptionRequest).to receive(:new).and_return(request)
       allow(aws_lib_client).to receive(:start_transcription_job)
-      subject.batch_transcribe(blob)
     end
 
-    it 'passes the proper args to the job params' do
-      expect(TranscriptionService::AWS::BatchTranscriptionRequest).to have_received(:new).with(blob)
+    it 'delegates missing methods to the aws client' do
+      described_class.new.start_transcription_job
+      expect(aws_lib_client).to have_received(:start_transcription_job)
+    end
+  end
+
+  describe '#batch_transcription' do
+    subject(:client) { described_class.new }
+
+    let(:blob) { build_stubbed :active_storage_blob }
+    let(:options) { { a: 1 } }
+    let(:batch_transcription) { instance_double(TranscriptionService::AWS::Client::BatchTranscription) }
+
+    before do
+      allow(TranscriptionService::AWS::Client::BatchTranscription).to receive(:call).and_return(batch_transcription)
     end
 
-    it 'starts an aws transcription job with the job params params' do
-      expect(aws_lib_client).to have_received(:start_transcription_job).with(params)
+    it 'calls BatchTranscription with the proper args' do
+      client.batch_transcribe(blob, **options)
+      expect(TranscriptionService::AWS::Client::BatchTranscription).to(
+        have_received(:call).with(client, blob, **options)
+      )
     end
 
-    context 'with the toxicity_detection option' do
-      let(:options) { { toxicity_detection: true } }
+    it 'sets @operation' do
+      client.batch_transcribe(blob, **options)
+      expect(client.operation).to eq batch_transcription
+    end
 
-      it 'passes the proper args to the job params' do
-        expect(TranscriptionService::AWS::BatchTranscriptionRequest).to have_received(:new).with(blob, **options)
-      end
-
-      it 'starts an aws transcription job with the job params' do
-        expect(aws_lib_client).to have_received(:start_transcription_job).with(params)
+    context 'with a ConflictException' do
+      it 're-raises' do
+        allow(TranscriptionService::AWS::Client::BatchTranscription).to(
+          receive(:call).and_raise(Aws::TranscribeService::Errors::ConflictException.new(nil, nil))
+        )
+        expect { client.batch_transcribe(blob, **options) }.to raise_error TranscriptionService::InvalidRequestError
       end
     end
   end

@@ -3,32 +3,27 @@ require 'aws-sdk-transcribeservice'
 class TranscriptionService
   module AWS
     class Client
-      attr_reader :response
+      attr_reader :operation
 
-      def initialize(**options)
-        @options = options
+      delegate :request, :response, :blob, to: :operation, allow_nil: true
+      delegate_missing_to :client
+
+      def initialize
         @config = Rails.application.credentials.fetch(:aws)
       end
 
-      def batch_transcribe(blob)
-        @blob = blob
-        @response = BatchTranscriptionResponse.new(
-          client.start_transcription_job(request.params)
-        )
+      def batch_transcribe(blob, **options)
+        @operation = BatchTranscription.call(self, blob, **options)
       rescue Aws::TranscribeService::Errors::ConflictException
         raise InvalidRequestError
       end
 
-      def request
-        @request ||= BatchTranscriptionRequest.new(blob, **options)
-      end
-
       private
 
-      attr_reader :config, :blob, :options
+      attr_reader :config
 
       def client
-        @client = Aws::TranscribeService::Client.new(
+        @client ||= Aws::TranscribeService::Client.new(
           region: config[:region],
           credentials: Aws::Credentials.new(
             config.fetch(:access_key_id), config.fetch(:secret_access_key)

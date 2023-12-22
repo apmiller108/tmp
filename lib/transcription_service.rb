@@ -2,19 +2,18 @@ class TranscriptionService
   LANG = 'en-US'.freeze
   InvalidRequestError = Class.new(StandardError)
 
-  attr_reader :client, :blob
+  attr_reader :client
 
-  delegate :request, :response, to: :client
+  delegate :request, :response, :blob, to: :client
   delegate :job_id, :status, to: :response
   delegate :params, to: :request
 
-  def initialize(client, blob)
+  def initialize(client)
     @client = client
-    @blob = blob
   end
 
-  def batch_transcribe
-    client.batch_transcribe(blob)
+  def batch_transcribe(blob, **options)
+    client.batch_transcribe(blob, **options)
     TranscriptionJob.create_for(transcription_service: self)
   end
 end

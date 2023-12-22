@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 describe TranscriptionService do
+  subject(:service) { described_class.new(client) }
+
   let(:client) { instance_double(TranscriptionService::AWS::Client, batch_transcribe: nil, request:, response:) }
   let(:request) { instance_double(TranscriptionService::AWS::BatchTranscriptionRequest, params: { foo: :bar }) }
   let(:response) { instance_double(TranscriptionService::AWS:: BatchTranscriptionResponse, job_id: 'job-id', status: 'job-status') }
   let(:blob) { build_stubbed :active_storage_blob }
-
-  subject(:service) { described_class.new(client, blob) }
 
   describe '#request' do
     it 'delegates to the client' do
@@ -40,18 +40,19 @@ describe TranscriptionService do
 
   describe '#batch_transcribe' do
     let(:transcription_job) { build_stubbed :transcription_job }
+    let(:options) { { a: 1 } }
 
     before do
       allow(TranscriptionJob).to receive(:create_for).with(transcription_service: service).and_return(transcription_job)
     end
 
     it 'delegates to the client' do
-      service.batch_transcribe
-      expect(client).to have_received(:batch_transcribe).with(blob)
+      service.batch_transcribe(blob, **options)
+      expect(client).to have_received(:batch_transcribe).with(blob, **options)
     end
 
     it 'returns the transcription_job' do
-      expect(service.batch_transcribe).to eq transcription_job
+      expect(service.batch_transcribe(blob, **options)).to eq transcription_job
     end
   end
 end

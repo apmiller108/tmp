@@ -11,7 +11,7 @@ RSpec.describe TranscribeAudioJob, type: :job do
 
   before do
     allow(TranscriptionService::AWS::Client).to receive(:new).and_return(aws_client)
-    allow(TranscriptionService).to receive(:new).with(aws_client, blob).and_return(transcription_service)
+    allow(TranscriptionService).to receive(:new).with(aws_client).and_return(transcription_service)
     allow(ActiveStorage::Blob).to receive(:find).with(blob_id).and_return(blob)
     allow(transcription_service).to receive(:batch_transcribe).and_return(transcription_job)
   end
@@ -23,12 +23,12 @@ RSpec.describe TranscribeAudioJob, type: :job do
 
     it 'instantiates an AWS::Client object' do
       job.perform(blob_id)
-      expect(TranscriptionService::AWS::Client).to have_received(:new).with(toxicity_detection: false)
+      expect(TranscriptionService::AWS::Client).to have_received(:new)
     end
 
     it 'batch transcribes the blob' do
       job.perform(blob.id)
-      expect(transcription_service).to have_received(:batch_transcribe)
+      expect(transcription_service).to have_received(:batch_transcribe).with(blob, toxicity_detection: false)
     end
 
     it 'returns the transcription_job' do
@@ -56,9 +56,9 @@ RSpec.describe TranscribeAudioJob, type: :job do
     end
 
     context 'when passing in the toxicity_detection argument' do
-      it 'instantiates an AWS::Client object with that option' do
+      it 'passes the option to the transcription_service' do
         job.perform(blob_id, toxicity_detection: true)
-        expect(TranscriptionService::AWS::Client).to have_received(:new).with(toxicity_detection: true)
+        expect(transcription_service).to have_received(:batch_transcribe).with(blob, toxicity_detection: true)
       end
     end
 

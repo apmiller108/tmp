@@ -1,0 +1,12 @@
+* TODO add get_transciption_job method to AWS client
+* TODO Create TranscriptionRetrievalJob
+* TODO Create TranscriptionStatusCheckJob
+* TODO For for any jobs not completed or failed
+* TODO Enqueue a retrieval job
+* TODO Call get_transcription_job with the job name
+* TODO if status is COMPLETED, download the file (URI is in TranscriptFileUri field)
+* TODO Save transcript on the transcription_job response field
+* TODO Create a transcription record and save the transcription content
+* TODO If status is FAILED, save the FailureReason on the transcription_job record
+* TODO Create index for transcription_jobs.status
+* TODO Add a chron lib

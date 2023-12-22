@@ -8,9 +8,9 @@ class TranscribeAudioJob
 
     return log_skipped(blob) unless blob.audio?
 
-    client = TranscriptionService::AWS::Client.new(toxicity_detection:)
-    transcription_service = TranscriptionService.new(client, blob)
-    transcription_service.batch_transcribe
+    client = TranscriptionService::AWS::Client.new
+    transcription_service = TranscriptionService.new(client)
+    transcription_service.batch_transcribe(blob, toxicity_detection:)
   rescue TranscriptionService::InvalidRequestError, ActiveRecord::RecordNotFound => e
     Rails.logger.warn("#{self.class}: #{e} : #{e.cause}")
     nil
