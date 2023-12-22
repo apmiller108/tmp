@@ -20,8 +20,9 @@ class TranscriptionJob < ApplicationRecord
             active_storage_blob: transcription_service.blob)
   end
 
-  # TODO: guard completed?
   def results
+    return if response.blank?
+
     response.dig('results', 'transcripts')[0]['transcript']
   end
 end

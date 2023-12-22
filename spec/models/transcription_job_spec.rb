@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe TranscriptionJob, type: :model do
   it 'declares status enum' do
     expect(described_class.statuses).to eq({
-      "created"=>"created", "queued"=>"queued", "in_progress"=>"in_progress", "failed"=>"failed", "completed"=>"completed"
+      'created' => 'created', 'queued' => 'queued', 'in_progress' => 'in_progress',
+      'failed' => 'failed', 'completed' => 'completed'
     })
   end
 
@@ -12,7 +13,9 @@ RSpec.describe TranscriptionJob, type: :model do
     let(:job_id) { 'job-id' }
     let(:status) { 'in_progress' }
     let(:active_storage_blob) { create :active_storage_blob }
-    let(:transcription_service) { instance_double(TranscriptionService, status:, params:, job_id:, blob: active_storage_blob) }
+    let(:transcription_service) do
+      instance_double(TranscriptionService, status:, params:, job_id:, blob: active_storage_blob)
+    end
 
     it 'creates a new record with the request params and job id' do
       transcription_job = described_class.create_for(transcription_service:)
@@ -27,11 +30,18 @@ RSpec.describe TranscriptionJob, type: :model do
   end
 
   describe '#results' do
+    subject(:results) { described_class.new(response:).results }
+
     let(:response) { JSON.parse(file_fixture('transcription/response_toxicity.json').read) }
-    subject { described_class.new(response:) }
 
     it 'returns the transcript' do
-      expect(subject.results).to eq response['results']['transcripts'][0]['transcript']
+      expect(results).to eq response['results']['transcripts'][0]['transcript']
+    end
+
+    context 'when there is no response' do
+      subject(:job) { described_class.new.results }
+
+      it { is_expected.to be_nil }
     end
   end
 end
