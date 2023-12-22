@@ -1,10 +1,16 @@
 Layout/FirstHashElementIndentation:
   EnforcedStyle: consistent
+
 Lint/MissingSuper:
   Enabled: false
+
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
 Style/Documentation:
   Enabled: false
 Style/FrozenStringLiteralComment:

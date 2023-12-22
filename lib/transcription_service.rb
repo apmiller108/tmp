@@ -1,5 +1,6 @@
 class TranscriptionService
   LANG = 'en-US'.freeze
+  InvalidRequestError = Class.new(StandardError)
 
   attr_reader :client, :blob
 

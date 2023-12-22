@@ -3,7 +3,7 @@ require 'aws-sdk-transcribeservice'
 class TranscriptionService
   module AWS
     class Client
-      attr_reader :request, :response
+      attr_reader :response
 
       def initialize(**options)
         @options = options
@@ -15,6 +15,8 @@ class TranscriptionService
         @response = BatchTranscriptionResponse.new(
           client.start_transcription_job(request.params)
         )
+      rescue Aws::TranscribeService::Errors::ConflictException
+        raise InvalidRequestError
       end
 
       def request
