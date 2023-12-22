@@ -1,8 +1,6 @@
 class TranscriptionJob < ApplicationRecord
-  belongs_to :active_storage_blob
+  belongs_to :active_storage_blob, class_name: 'ActiveStorage::Blob'
   has_one :transcription, dependent: :destroy
-
-  validates_with ReferencesAudioBlobValidator
 
   enum :status, {
          created: 'created',
@@ -10,8 +8,19 @@ class TranscriptionJob < ApplicationRecord
          in_progress: 'in_progress',
          failed: 'failed',
          completed: 'completed'
-       }, default: :new
+       }
 
+  validates :status, inclusion: { in: statuses.values, message: "%{value} must be one of #{statuses.values}" }
+  validates_with ReferencesAudioBlobValidator
+
+  def self.create_for(transcription_service:)
+    create(request: transcription_service.params,
+           vendor_job_id: transcription_service.job_id,
+           status: transcription_service.status,
+           active_storage_blob: transcription_service.blob)
+  end
+
+  # TODO: guard completed?
   def results
     response.dig('results', 'transcripts')[0]['transcript']
   end

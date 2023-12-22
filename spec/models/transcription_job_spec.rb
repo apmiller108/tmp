@@ -7,6 +7,25 @@ RSpec.describe TranscriptionJob, type: :model do
     })
   end
 
+  describe '.create_for' do
+    let(:params) { { transcription_job_name: 'job-name' } }
+    let(:job_id) { 'job-id' }
+    let(:status) { 'in_progress' }
+    let(:active_storage_blob) { create :active_storage_blob }
+    let(:transcription_service) { instance_double(TranscriptionService, status:, params:, job_id:, blob: active_storage_blob) }
+
+    it 'creates a new record with the request params and job id' do
+      transcription_job = described_class.create_for(transcription_service:)
+      expect(transcription_job.attributes).to(
+        include 'vendor_job_id' => job_id,
+                'active_storage_blob_id' => active_storage_blob.id,
+                'request' => params.stringify_keys,
+                'status' => status,
+                'response' => nil
+      )
+    end
+  end
+
   describe '#results' do
     let(:response) { JSON.parse(file_fixture('transcription/response_toxicity.json').read) }
     subject { described_class.new(response:) }
