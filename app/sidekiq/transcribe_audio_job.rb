@@ -14,6 +14,7 @@ class TranscribeAudioJob
     TranscriptionJob.create_for(transcription_service:)
   rescue TranscriptionService::InvalidRequestError, ActiveRecord::RecordNotFound => e
     Rails.logger.warn("#{self.class}: #{e} : #{e.cause}")
+    nil
   end
 
   private
@@ -21,5 +22,6 @@ class TranscribeAudioJob
   def log_skipped(blob)
     Rails.logger.warn("#{self.class}: Skipped attempt to transcribe non-audio blob. "\
                       "id: #{blob.id}, content_type: #{blob.content_type}")
+    nil
   end
 end
