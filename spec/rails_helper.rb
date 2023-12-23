@@ -9,6 +9,7 @@ require "sidekiq_unique_jobs/testing"
 require 'view_component/test_helpers'
 require 'view_component/system_test_helpers'
 require 'capybara/rspec'
+require 'webmock/rspec'
 
 Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
 

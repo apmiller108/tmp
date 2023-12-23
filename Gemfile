@@ -59,4 +59,5 @@ group :test do
   gem 'capybara'
   gem 'cuprite'
   gem 'faker'
+  gem 'webmock'
 end
