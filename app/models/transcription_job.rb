@@ -15,7 +15,7 @@ class TranscriptionJob < ApplicationRecord
 
   def self.create_for(transcription_service:)
     create!(request: transcription_service.params,
-            vendor_job_id: transcription_service.job_id,
+            remote_job_id: transcription_service.job_id,
             status: transcription_service.status,
             active_storage_blob: transcription_service.blob)
   end

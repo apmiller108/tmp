@@ -20,7 +20,7 @@ RSpec.describe TranscriptionJob, type: :model do
     it 'creates a new record with the request params and job id' do
       transcription_job = described_class.create_for(transcription_service:)
       expect(transcription_job.attributes).to(
-        include 'vendor_job_id' => job_id,
+        include 'remote_job_id' => job_id,
                 'active_storage_blob_id' => active_storage_blob.id,
                 'request' => params.stringify_keys,
                 'status' => status,
