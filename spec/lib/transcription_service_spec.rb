@@ -38,6 +38,15 @@ describe TranscriptionService do
     end
   end
 
+  describe '#get_batch_transcribe_job' do
+    it 'delegates to the client' do
+      job_id = 'job id'
+      response = double
+      allow(client).to receive(:get_batch_transcribe_job).with(job_id).and_return(response)
+      expect(service.get_batch_transcribe_job(job_id)).to eq response
+    end
+  end
+
   describe '#batch_transcribe' do
     let(:transcription_job) { build_stubbed :transcription_job }
     let(:options) { { a: 1 } }

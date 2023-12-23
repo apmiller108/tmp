@@ -27,4 +27,19 @@ RSpec.describe TranscriptionService::AWS::BatchTranscriptionResponse do
       end
     end
   end
+
+  describe '#completed?' do
+    subject(:completed?) { described_class.new(start_job_response).completed? }
+    context 'when completed' do
+      let(:transcription_job_status) { 'COMPLETED' }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when not completed' do
+      let(:transcription_job_status) { 'IN_PROGRESS' }
+
+      it { is_expected.to be false }
+    end
+  end
 end

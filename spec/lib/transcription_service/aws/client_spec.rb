@@ -2,6 +2,22 @@ require 'rails_helper'
 require 'aws-sdk-transcribeservice'
 
 describe TranscriptionService::AWS::Client do
+  let(:aws_lib_client) { instance_double(Aws::TranscribeService::Client) }
+  let(:aws_credentials) { instance_double(Aws::Credentials) }
+
+  before do
+    allow(Aws::Credentials).to(
+      receive(:new).with(Rails.application.credentials.dig(:aws, :access_key_id),
+                          Rails.application.credentials.dig(:aws, :secret_access_key))
+                    .and_return(aws_credentials)
+    )
+    allow(Aws::TranscribeService::Client).to(
+      receive(:new).with(region: Rails.application.credentials.dig(:aws, :region),
+                          credentials: aws_credentials)
+                    .and_return(aws_lib_client)
+    )
+  end
+
   describe '#initialize' do
     it 'sets the aws config' do
       client = described_class.new
@@ -44,20 +60,7 @@ describe TranscriptionService::AWS::Client do
   end
 
   describe 'delegate missing' do
-    let(:aws_lib_client) { instance_double(Aws::TranscribeService::Client) }
-    let(:aws_credentials) { instance_double(Aws::Credentials) }
-
     before do
-      allow(Aws::Credentials).to(
-        receive(:new).with(Rails.application.credentials.dig(:aws, :access_key_id),
-                           Rails.application.credentials.dig(:aws, :secret_access_key))
-                     .and_return(aws_credentials)
-      )
-      allow(Aws::TranscribeService::Client).to(
-        receive(:new).with(region: Rails.application.credentials.dig(:aws, :region),
-                           credentials: aws_credentials)
-                     .and_return(aws_lib_client)
-      )
       allow(aws_lib_client).to receive(:start_transcription_job)
     end
 
@@ -97,6 +100,26 @@ describe TranscriptionService::AWS::Client do
         )
         expect { client.batch_transcribe(blob, **options) }.to raise_error TranscriptionService::InvalidRequestError
       end
+    end
+  end
+
+  describe '#get_batch_transcribe_job' do
+    subject(:client) { described_class.new }
+
+    let(:job_id) { 20 }
+    let(:raw_response) { double }
+    let(:response) { instance_double TranscriptionService::AWS::BatchTranscriptionResponse }
+
+    before do
+      allow(aws_lib_client).to receive(:get_transcription_job)
+                                 .with(transcription_job_name: job_id).and_return(raw_response)
+      allow(TranscriptionService::AWS::BatchTranscriptionResponse).to(
+        receive(:new).with(raw_response).and_return(response)
+      )
+    end
+
+    it 'returns a batch trascription response' do
+      expect(client.get_batch_transcribe_job(job_id)).to eq response
     end
   end
 end

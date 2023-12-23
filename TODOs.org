@@ -1,4 +1,5 @@
-* TODO add get_transciption_job method to AWS client
+* DONE add get_transciption_job method to AWS client
+  CLOSED: [2023-12-22 Fri 20:48]
 * TODO Create TranscriptionRetrievalJob
 * TODO Create TranscriptionStatusCheckJob
 * TODO For for any jobs not completed or failed

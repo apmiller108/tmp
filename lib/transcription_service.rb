@@ -4,7 +4,7 @@ class TranscriptionService
 
   attr_reader :client
 
-  delegate :request, :response, :blob, to: :client
+  delegate :blob, :get_batch_transcribe_job, :request, :response, to: :client
   delegate :job_id, :status, to: :response
   delegate :params, to: :request
 

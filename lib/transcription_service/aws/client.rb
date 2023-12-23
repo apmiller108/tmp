@@ -18,6 +18,12 @@ class TranscriptionService
         raise InvalidRequestError
       end
 
+      def get_batch_transcribe_job(job_id)
+        @response = BatchTranscriptionResponse.new(
+            get_transcription_job(transcription_job_name: job_id)
+          )
+      end
+
       private
 
       attr_reader :config
