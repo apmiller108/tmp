@@ -19,7 +19,7 @@ class TranscriptionService
       end
 
       def get_batch_transcribe_job(job_id)
-        @response = BatchTranscriptionResponse.new(
+        @operation = BatchTranscriptionResponse.new(
           get_transcription_job(transcription_job_name: job_id)
         )
       end
