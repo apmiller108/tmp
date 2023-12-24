@@ -4,7 +4,8 @@ class TranscriptionService
       attr_reader :start_job_response
 
       delegate :transcription_job, to: :start_job_response
-      delegate :transcription_job_name, :transcription_job_status, :transcript, to: :transcription_job
+      delegate :transcription_job_name, :transcription_job_status, :transcript,
+               :failure_reason, to: :transcription_job
       delegate :transcript_file_uri, to: :transcript, allow_nil: true
       alias job_id transcription_job_name
 
@@ -18,6 +19,14 @@ class TranscriptionService
 
       def completed?
         status == TranscriptionJob.statuses[:completed]
+      end
+
+      def failed?
+        status == TranscriptionJob.statuses[:failed]
+      end
+
+      def finished?
+        completed? || failed?
       end
     end
   end
