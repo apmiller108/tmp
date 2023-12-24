@@ -112,7 +112,7 @@ describe TranscriptionService::AWS::Client do
 
     before do
       allow(aws_lib_client).to receive(:get_transcription_job)
-                                 .with(transcription_job_name: job_id).and_return(raw_response)
+        .with(transcription_job_name: job_id).and_return(raw_response)
       allow(TranscriptionService::AWS::BatchTranscriptionResponse).to(
         receive(:new).with(raw_response).and_return(response)
       )
@@ -120,6 +120,33 @@ describe TranscriptionService::AWS::Client do
 
     it 'returns a batch trascription response' do
       expect(client.get_batch_transcribe_job(job_id)).to eq response
+    end
+  end
+
+  describe '#delete_batch_transcribe_job' do
+    subject(:client) { described_class.new }
+
+    let(:job_id) { 20 }
+
+    before do
+      allow(aws_lib_client).to receive(:delete_transcription_job)
+    end
+
+    it 'delegates to the aws lib client' do
+      client.delete_batch_transcription_job(job_id)
+      expect(aws_lib_client).to have_received(:delete_transcription_job).with(transcription_job_name: job_id)
+    end
+
+    context 'with a BadRequestException' do
+      it 're-raises' do
+        allow(aws_lib_client).to(
+          receive(:delete_transcription_job)
+            .and_raise(Aws::TranscribeService::Errors::BadRequestException.new(nil, nil))
+        )
+        expect { client.delete_batch_transcription_job(job_id) }.to(
+          raise_error TranscriptionService::InvalidRequestError
+        )
+      end
     end
   end
 end

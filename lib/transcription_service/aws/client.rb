@@ -20,8 +20,14 @@ class TranscriptionService
 
       def get_batch_transcribe_job(job_id)
         @response = BatchTranscriptionResponse.new(
-            get_transcription_job(transcription_job_name: job_id)
-          )
+          get_transcription_job(transcription_job_name: job_id)
+        )
+      end
+
+      def delete_batch_transcription_job(job_id)
+        delete_transcription_job(transcription_job_name: job_id)
+      rescue Aws::TranscribeService::Errors::BadRequestException
+        raise InvalidRequestError
       end
 
       private

@@ -4,7 +4,8 @@ class TranscriptionService
 
   attr_reader :client
 
-  delegate :blob, :get_batch_transcribe_job, :request, :response, to: :client
+  delegate :blob, :get_batch_transcribe_job, :delete_batch_transcription_job,
+           :request, :response, to: :client
   delegate :job_id, :status, to: :response
   delegate :params, to: :request
 
@@ -13,7 +14,7 @@ class TranscriptionService
     JSON.parse(conn.get(uri).body)
   end
 
-  def initialize(client)
+  def initialize(client = AWS::Client.new)
     @client = client
   end
 
