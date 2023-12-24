@@ -18,6 +18,7 @@
   CLOSED: [2023-12-23 Sat 11:10]
 * DONE Create index for transcription_jobs.status
   CLOSED: [2023-12-23 Sat 11:11]
-* TODO Add a chron lib and schedule the status check job one a min
+* DONE Add a chron lib and schedule the status check job one a min
+  CLOSED: [2023-12-23 Sat 21:11]
 * TODO Create TranscriptionRemovalJob
 * TODO enqueue TranscriptionRemovalJob after transcription_job is updated

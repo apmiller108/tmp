@@ -1,4 +1,6 @@
-require 'sidekiq_unique_jobs/web' # this already requires 'sidekiq/web'
+require 'sidekiq/web'
+require 'sidekiq_unique_jobs/web'
+require 'sidekiq/cron/web'
 
 Rails.application.routes.draw do
   devise_for :users, controllers: {

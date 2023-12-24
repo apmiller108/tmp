@@ -1,0 +1,4 @@
+transcription_status_check:
+  class: 'TranscriptionStatusCheckJob'
+  cron: '* * * * *'
+  queue: 'default'
