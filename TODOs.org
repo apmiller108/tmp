@@ -1,13 +1,23 @@
 * DONE add get_transciption_job method to AWS client
   CLOSED: [2023-12-22 Fri 20:48]
-* TODO Create TranscriptionRetrievalJob
-* TODO Create TranscriptionStatusCheckJob
-* TODO For for any jobs not completed or failed
-* TODO Enqueue a retrieval job
-* TODO Call get_transcription_job with the job name
-* TODO if status is COMPLETED, download the file (URI is in TranscriptFileUri field)
-* TODO Save transcript on the transcription_job response field
-* TODO Create a transcription record and save the transcription content
-* TODO If status is FAILED, save the FailureReason on the transcription_job record
-* TODO Create index for transcription_jobs.status
-* TODO Add a chron lib
+* DONE Create TranscriptionRetrievalJob
+  CLOSED: [2023-12-23 Sat 11:10]
+* DONE Create TranscriptionStatusCheckJob
+  CLOSED: [2023-12-23 Sat 16:06]
+* DONE For for any jobs not completed or failed Enqueue a retrieval job
+  CLOSED: [2023-12-23 Sat 16:06]
+* DONE Call get_transcription_job with the job name
+  CLOSED: [2023-12-23 Sat 11:11]
+* DONE if status is COMPLETED, download the file (URI is in TranscriptFileUri field)
+  CLOSED: [2023-12-23 Sat 11:11]
+* DONE Save transcript on the transcription_job response field
+  CLOSED: [2023-12-23 Sat 11:16]
+* DONE Create a transcription record and save the transcription content
+  CLOSED: [2023-12-23 Sat 15:38]
+* DONE If status is FAILED, save the FailureReason on the transcription_job record
+  CLOSED: [2023-12-23 Sat 11:10]
+* DONE Create index for transcription_jobs.status
+  CLOSED: [2023-12-23 Sat 11:11]
+* TODO Add a chron lib and schedule the status check job one a min
+* TODO Create TranscriptionRemovalJob
+* TODO enqueue TranscriptionRemovalJob after transcription_job is updated

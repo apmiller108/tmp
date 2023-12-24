@@ -64,4 +64,17 @@ describe TranscriptionService do
       expect(service.batch_transcribe(blob, **options)).to eq transcription_job
     end
   end
+
+  describe '.get_transcription' do
+    subject(:get_transcription) { described_class.get_transcription(uri) }
+
+    let(:uri) { 'http://example.com/transcriptions/1' }
+    let(:transcript) { { id: 1 }.to_json }
+
+    before do
+      stub_request(:get, uri).to_return(status: 200, body: transcript)
+    end
+
+    it { is_expected.to eq JSON.parse transcript }
+  end
 end

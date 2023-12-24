@@ -8,6 +8,11 @@ class TranscriptionService
   delegate :job_id, :status, to: :response
   delegate :params, to: :request
 
+  def self.get_transcription(uri)
+    conn = Faraday.new { |f| f.response :raise_error }
+    JSON.parse(conn.get(uri).body)
+  end
+
   def initialize(client)
     @client = client
   end
