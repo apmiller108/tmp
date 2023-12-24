@@ -205,13 +205,19 @@ Use custom RSpec matcher `have_turbo_stream` in request specs. It is a wrapper f
 it { is_expected.to have_turbo_stream(action: 'prepend', target: 'messages') }
 ```
 ## System Tests
-- [Cuprite](https://github.com/rubycdp/cuprite "cuprite")
-  - See also https://evilmartians.com/chronicles/system-of-a-test-setting-up-end-to-end-rails-testing
-  - See also https://vtc.hatenablog.com/entry/2022/02/26/175431 (giving cuprite a try using a basic Rack app)
-- Docker
-  - Uses [browserless' Chrome image](https://www.browserless.io/docs/docker-quickstart)
-  - To start chrome, run `docker compose up -d chrome`
-  - visit http://localhost:3333/
+[What are system tests anyway?](https://medium.com/table-xi/a-quick-guide-to-rails-system-tests-in-rspec-b6e9e8a8b5f6)
+
+System tests are driven by [Cuprite](https://github.com/rubycdp/cuprite "cuprite"), a Capybara driver
+See also
+- https://evilmartians.com/chronicles/system-of-a-test-setting-up-end-to-end-rails-testing
+- https://vtc.hatenablog.com/entry/2022/02/26/175431 (giving cuprite a try using a basic Rack app)
+
+This Uses [browserless' Chrome image](https://www.browserless.io/docs/docker-quickstart)
+
+Running system tests
+- To start chrome, run `docker compose up -d chrome`
+- Run `rspec spec/system` on the web container
+- visit http://localhost:3333/
 
 ## CI
 CI run on Github Actions. The following actions comprise the CI pipeline:

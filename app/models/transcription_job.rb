@@ -13,6 +13,8 @@ class TranscriptionJob < ApplicationRecord
   validates :status, inclusion: { in: statuses.values, message: "%<value>s must be one of #{statuses.values}" }
   validates_with ReferencesAudioBlobValidator
 
+  after_destroy_commit :remove_remote_batch_transcription_job
+
   scope :unfinished, -> { where.not(status: %i[failed completed]) }
 
   def self.create_for(transcription_service:)
@@ -28,23 +30,29 @@ class TranscriptionJob < ApplicationRecord
     response.dig('results', 'transcripts')[0]['transcript']
   end
 
-  # TODO: refactor this
-  # TODO: determine from the request is results are diarized return otherwize
-  def diarized_results
-    response.dig('results', 'items')
-            .map { |i| { i['speaker_label'] => i['alternatives'][0]['content'] } }
-            .each_with_object([]) do |item, a|
-      if a.empty?
-        a.push(item)
-      else
-        prev_speech = a.last
-        prev_speaker = prev_speech.keys.first
-        if prev_speaker == item.keys.first
-          prev_speech[prev_speaker] += (item[prev_speaker] =~ /\A[[:punct:]]\z/ ? item[prev_speaker] : " #{item[prev_speaker]}")
-        else
-          a.push(item)
-        end
-      end
-    end
+  private
+
+  def remove_remote_batch_transcription_job
+    TranscriptionDeletionJob.perform_async(remote_job_id)
   end
+
+  # TODO: This is not intended to be used yet. This is the bare minium to represent diarization.
+  # TODO: determine from the request if results are diarized return otherwize
+  # def diarized_results
+  #   response.dig('results', 'items')
+  #           .map { |i| { i['speaker_label'] => i['alternatives'][0]['content'] } }
+  #           .each_with_object([]) do |item, a|
+  #     if a.empty?
+  #       a.push(item)
+  #     else
+  #       prev_speech = a.last
+  #       prev_speaker = prev_speech.keys.first
+  #       if prev_speaker == item.keys.first
+  #         prev_speech[prev_speaker] += (item[prev_speaker] =~ /\A[[:punct:]]\z/ ? item[prev_speaker] : " #{item[prev_speaker]}")
+  #       else
+  #         a.push(item)
+  #       end
+  #     end
+  #   end
+  # end
 end

@@ -8,6 +8,21 @@ RSpec.describe TranscriptionJob, type: :model do
     })
   end
 
+  describe 'callbacks' do
+    describe 'after_destroy_commit' do
+      before do
+        allow(TranscriptionDeletionJob).to receive(:perform_async)
+      end
+
+      let(:transcription_job) { create :transcription_job, :with_blob, remote_job_id: '20_resdogs.wav' }
+
+      it 'enqueues a job to delete the remote job' do
+        transcription_job.destroy
+        expect(TranscriptionDeletionJob).to have_received(:perform_async).with(transcription_job.remote_job_id)
+      end
+    end
+  end
+
   describe '.create_for' do
     let(:params) { { transcription_job_name: 'job-name' } }
     let(:job_id) { 'job-id' }

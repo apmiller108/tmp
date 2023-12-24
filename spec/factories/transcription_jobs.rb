@@ -6,5 +6,9 @@ FactoryBot.define do
     trait :with_transcription do
       transcription
     end
+
+    trait :with_blob do
+      active_storage_blob
+    end
   end
 end
