@@ -1,0 +1,4 @@
+%div
+  = link_to t('memos'), user_memos_path(current_user)
+%div
+  = render MemoFormComponent.new(memo: @memo)

@@ -6,7 +6,7 @@ class User < ApplicationRecord
          :registerable, :recoverable, :rememberable, :trackable, :validatable,
          jwt_revocation_strategy: self, omniauth_providers: %i[github]
 
-  has_many :messages, dependent: :destroy
+  has_many :memos, dependent: :destroy
 
   def self.from_omniauth(auth)
     find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|

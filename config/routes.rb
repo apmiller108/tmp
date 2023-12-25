@@ -25,6 +25,6 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: %i[show] do
-    resources :messages
+    resources :memos
   end
 end

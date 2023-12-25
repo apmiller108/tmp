@@ -35,13 +35,13 @@ en:
   edit: 'Edit'
   cancel: 'Cancel'
   content: 'Content'
-  message:
-    new: "New Message"
-    create: "Create Message"
+  memo:
+    new: "New Memo"
+    create: "Create Memo"
     index: "Messages"
-    edit: "Edit Message"
-    update: "Update Message"
+    edit: "Edit Memo"
+    update: "Update Memo"
     content: 'Content'
-  messages: "Messages"
+  memos: "Messages"
   transcribe: 'Transcribe'
   transcribe_and_summarize: 'Transcribe & Summarize'

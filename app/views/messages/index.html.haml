@@ -1,6 +1,0 @@
-.messages-index
-  .container
-    = link_to t('message.new'), new_user_message_path(current_user), data: { turbo_stream: 'true'}, class: 'btn btn-primary mb-3'
-  .container
-    .list-group#messages
-      = render(MessageComponent.with_collection(@messages))

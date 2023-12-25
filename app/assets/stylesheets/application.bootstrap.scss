@@ -17,6 +17,6 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 // View component style sheets
 @import 'inline_edit_component/inline_edit_component';
 @import 'inline_field_component/inline_field_component';
-@import 'message_component/message_component';
+@import 'memo_component/memo_component';
 @import 'blob_component/blob_component';
 

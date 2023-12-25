@@ -34,7 +34,7 @@ RSpec.describe InlineEditComponent, type: :component do
   end
 
   describe 'render' do
-    let(:model) { [build_stubbed(:user), build_stubbed(:message)] }
+    let(:model) { [build_stubbed(:user), build_stubbed(:memo)] }
     let(:turbo_frame_id) { 'turbo_frame_id' }
 
     before do
