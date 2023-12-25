@@ -43,6 +43,8 @@ module Tmp
     # to_prepare block runs once at application startup and before reloading
     config.to_prepare do
       ActiveStorage::Blob.include(ActiveStorageBlobExtension)
+      ActiveStorage::Attachment.include(ActiveStorageAttachmentExtension)
+      ActionText::RichText.include(ActionTextRichTextExtension)
     end
   end
 end
