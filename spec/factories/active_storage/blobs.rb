@@ -4,5 +4,9 @@ FactoryBot.define do
     content_type { 'audio/wav' }
     checksum { 'checksum' }
     byte_size { 5_000_000 }
+
+    trait :audio do
+      content_type { 'audio/mp3' }
+    end
   end
 end
