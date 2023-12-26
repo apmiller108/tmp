@@ -1,18 +1,26 @@
-.c-blob{data: { controller: :blob }}
+.c-blob.d-inline-block{id: id, data: { controller: :blob }, class: [audio? && 'w-50']}
   %figure{class:  "attachment attachment--#{representable? ? 'preview' : 'file'} attachment--#{filename.extension}"}
     - if audio?
       .audio-player.d-flex
-        %div
-          %audio{controls: true, preload: :metadata, width: "100%", data: { 'blob-target' => :audio }}
+        %div.w-100
+          %audio.w-100{controls: true, preload: :metadata, data: { 'blob-target' => :audio }}
             %source{src: url, type: content_type}
           = fig_caption
-        .audio-menu.dropend
-          %button.btn.btn-primary.dropdown-toggle{ type: :button, data: { 'bs-toggle' => :dropdown }, 'aria-expanded' => false }
-            %i.bi-file-text.fs-2.p-pulse
-          %ul.dropdown-menu.py-2
-            %li
-              %a.dropdown-item{ href: '#' }= t('transcribe')
-              %a.dropdown-item{ href: '#' }= t('transcribe_and_summarize')
+          #transcription
+            - if transcription_job_status
+              %p
+                %button.btn.btn-secondary.px-2.py-1.text-white{
+                  id: dom_id(transcription_job),
+                  class: [transcription_job_status, ('p-pulse' if transcription_job_status.in?(%w[queued, in_progress]))],
+                  type: :button,
+                  data: { 'bs-toggle' => 'collapse', 'bs-target' => "##{transcription_dom_id}" },
+                  'aria-expanded' => false,
+                  'aria-controls' => transcription_dom_id
+                  }
+                  = "Transcription #{blob.transcription_job&.status}".humanize
+            - if transcription_job.completed? && transcription.present?
+              .collapse.mt-3{ id: transcription_dom_id }
+                .card.card-body.p-3= transcription_content
 
     - elsif representable?
       = image_tag representation(resize_to_limit: resize_to_limit)

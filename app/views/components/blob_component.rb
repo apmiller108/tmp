@@ -6,11 +6,23 @@ class BlobComponent < ApplicationViewComponent
 
   attr_reader :blob, :in_gallery
 
-  delegate :audio?, :byte_size, :content_type, :filename, :representable?, :representation, :url, to: :blob
+  delegate :audio?, :byte_size, :content_type, :filename, :representable?, :representation,
+           :transcription, :transcription_job, :url, to: :blob
 
-  def initialize(blob:, in_gallery:)
+  delegate :status, to: :transcription_job, allow_nil: true, prefix: true
+  delegate :content, to: :transcription, allow_nil: true, prefix: true
+
+  def initialize(blob:, in_gallery: true)
     @blob = blob
     @in_gallery = in_gallery
+  end
+
+  def id
+    dom_id(blob)
+  end
+
+  def transcription_dom_id
+    transcription.present? ? dom_id(transcription) : 'no-transcription'
   end
 
   def caption
