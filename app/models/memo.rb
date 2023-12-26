@@ -1,6 +1,6 @@
 class Memo < ApplicationRecord
   # Associations:
-  #   has_one :content, class_name: 'ActionText::RichText'
+  #   has_one :rich_text_content, class_name: 'ActionText::RichText'
   # Attachments:
   #   content.embeds_attachments
   # Blobs:
