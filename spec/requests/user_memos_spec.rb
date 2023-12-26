@@ -27,9 +27,9 @@ RSpec.describe 'Memos', type: :request do
     let(:memo) { create :memo, user: }
     let(:headers) {}
 
-    it_behaves_like 'an authenticated route'
-
     before { sign_in user }
+
+    it_behaves_like 'an authenticated route'
 
     context 'with HTML format' do
       let(:headers) { { 'ACCEPT' => 'text/html' } }
@@ -45,9 +45,9 @@ RSpec.describe 'Memos', type: :request do
     let(:request) { get "/users/#{user.id}/memos/new", headers: }
     let(:headers) {}
 
-    it_behaves_like 'an authenticated route'
-
     before { sign_in user }
+
+    it_behaves_like 'an authenticated route'
 
     context 'with HTML format' do
       let(:headers) { { 'ACCEPT' => 'text/html' } }
@@ -72,9 +72,12 @@ RSpec.describe 'Memos', type: :request do
     let(:headers) {}
     let(:params) { { memo: { content: '<div>Foo</div>' } } }
 
-    it_behaves_like 'an authenticated route'
+    before do
+      allow(TranscribableContentHandlerJob).to receive(:perform_async)
+      sign_in user
+    end
 
-    before { sign_in user }
+    it_behaves_like 'an authenticated route'
 
     context 'with HTML format' do
       let(:headers) { { 'Accept' => 'text/html' } }
@@ -84,10 +87,18 @@ RSpec.describe 'Memos', type: :request do
 
       it { is_expected.to redirect_to user_memo_path(user, memo) }
 
+      it 'enqueues a TranscribableContentHandlerJob' do
+        expect(TranscribableContentHandlerJob).to have_received(:perform_async).with(memo.id)
+      end
+
       context 'when memo is invalid' do
         let(:params) { { memo: { content: '' } } }
 
         it { is_expected.to have_http_status :unprocessable_entity }
+
+        it 'does not enqueue a TranscribableContentHandlerJob' do
+          expect(TranscribableContentHandlerJob).not_to have_received(:perform_async)
+        end
       end
     end
 
@@ -95,6 +106,7 @@ RSpec.describe 'Memos', type: :request do
       subject { response }
 
       let(:headers) { { 'Accept' => 'text/vnd.turbo-stream.html' } }
+      let(:memo) { Memo.last }
 
       before { request }
 
@@ -106,6 +118,10 @@ RSpec.describe 'Memos', type: :request do
         }
       end
 
+      it 'enqueues a TranscribableContentHandlerJob' do
+        expect(TranscribableContentHandlerJob).to have_received(:perform_async).with(memo.id)
+      end
+
       context 'when memo is invalid' do
         let(:params) { { memo: { content: nil } } }
 
@@ -115,6 +131,10 @@ RSpec.describe 'Memos', type: :request do
           expect(response).to have_turbo_stream(action: 'replace', target: 'new_memo') {
             assert_select '.c-memo-form .form-errors'
           }
+        end
+
+        it 'does not enqueue a TranscribableContentHandlerJob' do
+          expect(TranscribableContentHandlerJob).not_to have_received(:perform_async)
         end
       end
     end
@@ -144,9 +164,12 @@ RSpec.describe 'Memos', type: :request do
     let(:headers) {}
     let(:params) { { memo: { content: '<div>Foo</div>' } } }
 
-    it_behaves_like 'an authenticated route'
+    before do
+      allow(TranscribableContentHandlerJob).to receive(:perform_async)
+      sign_in user
+    end
 
-    before { sign_in user }
+    it_behaves_like 'an authenticated route'
 
     context 'with HTML format' do
       subject { response }
@@ -157,10 +180,18 @@ RSpec.describe 'Memos', type: :request do
 
       it { is_expected.to redirect_to user_memo_path(user, memo) }
 
+      it 'enqueues a TranscribableContentHandlerJob' do
+        expect(TranscribableContentHandlerJob).to have_received(:perform_async).with(memo.id)
+      end
+
       context 'when memo is invalid' do
         let(:params) { { memo: { content: '' } } }
 
         it { is_expected.to have_http_status :unprocessable_entity }
+
+        it 'does not enqueue a TranscribableContentHandlerJob' do
+          expect(TranscribableContentHandlerJob).not_to have_received(:perform_async)
+        end
       end
     end
   end

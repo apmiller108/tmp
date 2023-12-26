@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :memo do
-    content { association :action_text_rich_text }
+    content { '<h1>Content</h1>' }
+
     trait :with_user do
       user
     end

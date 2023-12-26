@@ -33,6 +33,7 @@ class MemosController < ApplicationController
         end
       end
     end
+    TranscribableContentHandlerJob.perform_async(@memo.id) if @memo.persisted?
   end
 
   def edit
@@ -44,6 +45,7 @@ class MemosController < ApplicationController
 
     if @memo.update(memo_params)
       redirect_to user_memo_path(current_user, @memo)
+      TranscribableContentHandlerJob.perform_async(@memo.id)
     else
       render :edit, status: :unprocessable_entity
     end
