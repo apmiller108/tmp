@@ -8,8 +8,8 @@
 - [x] Add user message destroy action
 - [x] On index, use stimulus to remove new message form on cancel
 - [x] Add request specs for user messages
-- [ ] 🚧 Transcription for audio files added to message 🚧
-- [ ] Rename message to memo
+- [x] Transcription for audio files added to message
+- [x] Rename message to memo
 - [ ] Add support for diaraized transcriptions
 - [ ] Create toxicity detection feature
 - [ ] Add web health check with pinglish
