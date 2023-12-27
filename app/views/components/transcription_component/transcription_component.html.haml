@@ -2,7 +2,7 @@
   %p
     %button.btn.btn-secondary.px-2.py-1.text-white{
       id: dom_id(transcription_job),
-      class: [status, ('p-pulse' if status.in?(%w[queued, in_progress]))],
+      class: [status, 'mb-3', ('p-pulse' if status.in?(%w[queued, in_progress]))],
       type: :button,
       data: { 'bs-toggle' => 'collapse', 'bs-target' => "##{transcription_dom_id}" },
       'aria-expanded' => false,
@@ -10,5 +10,21 @@
       }
       = "Transcription #{status}".humanize
   - if completed_transcription?
-    .collapse.mt-3{ id: transcription_dom_id }
-      .card.card-body.p-3= transcription_content
+    .collapse.mb-3{ id: transcription_dom_id }
+      .card
+        .card-header
+          .row
+            .col-9
+              %h5.card-title= "Transcription of #{filename}"
+              %p.card-subtitle.text-body-secondary.mb-2= 'Download to save a copy'
+            .col-3.position-relative
+              %button#download-transcript.btn.btn-outline-secondary.position-absolute.end-0 Download
+          .row
+            %ul.nav.nav-tabs.card-header-tabs
+              %li.nav-item
+                %a.nav-link.active{ href: '#', data: { 'bs-toggle' => 'tab', 'bs-target' => '#transcription-text' } } Text
+              %li.nav-item
+                %a.nav-link{ href: '#', data: { 'bs-toggle' => 'tab', 'bs-target' => '#transcription-speakers' } } Speaker ID
+        .card-body.tab-content.p-3
+          #transcription-text.card-text.tab-pane.fade.active.show= transcription_content
+          #transcription-speakers.card-text.tab-pane.fade TRANSCRIPTION SPEAKERS

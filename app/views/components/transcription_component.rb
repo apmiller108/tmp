@@ -3,7 +3,7 @@
 class TranscriptionComponent < ApplicationViewComponent
   attr_reader :transcription_job
 
-  delegate :status, :transcription, to: :transcription_job
+  delegate :status, :transcription, :active_storage_blob, to: :transcription_job
   delegate :content, to: :transcription, allow_nil: true, prefix: true
 
   def initialize(transcription_job:)
@@ -16,5 +16,9 @@ class TranscriptionComponent < ApplicationViewComponent
 
   def completed_transcription?
     transcription_job.completed? && transcription.present?
+  end
+
+  def filename
+    active_storage_blob.filename
   end
 end
