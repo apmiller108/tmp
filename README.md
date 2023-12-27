@@ -1,3 +1,15 @@
+# TMP "The Memo Pad"
+AI infused note taking application.
+
+## Features
+- Add and transcribe audio
+
+## Planned
+- Summaries
+- Text to Image
+- Export
+- Sharing
+
 # TODOs
 - [x] Implement API authentication
 - [x] Implement jti jwt_revocation_strategy
@@ -31,6 +43,7 @@
 - [ ] Create public message view
 - [ ] Add ability to comment on messages (with other message?)
 - [ ] Add lograge
+- [ ] Export memo
 
 ![main workflow](https://github.com/apmiller108/tmp/actions/workflows/main.yml/badge.svg)
 
