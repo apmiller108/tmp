@@ -30,6 +30,12 @@ class TranscriptionJob < ApplicationRecord
     response.dig('results', 'transcripts')[0]['transcript']
   end
 
+  def remote_job
+    @remote_job ||= TranscriptionService.new(
+      TranscriptionService::AWS::Client.new
+    ).get_batch_transcribe_job(remote_job_id)
+  end
+
   private
 
   def remove_remote_batch_transcription_job

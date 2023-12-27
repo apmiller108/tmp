@@ -59,4 +59,22 @@ RSpec.describe TranscriptionJob, type: :model do
       it { is_expected.to be_nil }
     end
   end
+
+  describe '#remote_job' do
+    subject { described_class.new }
+
+    let(:client) { instance_double(TranscriptionService::AWS::Client) }
+    let(:transcription_service) { instance_double(TranscriptionService) }
+    let(:remote_job) { instance_double TranscriptionService::AWS::BatchTranscriptionResponse }
+
+    before do
+      allow(TranscriptionService::AWS::Client).to receive(:new).and_return(client)
+      allow(TranscriptionService).to receive(:new).with(client).and_return(transcription_service)
+      allow(transcription_service).to receive(:get_batch_transcribe_job).and_return(remote_job)
+    end
+
+    it 'returns the remote job' do
+      expect(subject.remote_job).to equal remote_job
+    end
+  end
 end

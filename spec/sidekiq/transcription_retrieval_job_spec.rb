@@ -4,36 +4,37 @@ RSpec.describe TranscriptionRetrievalJob, type: :job do
   subject(:job) { described_class.new }
 
   let(:transcription_job) do
-    build_stubbed :transcription_job, status:, remote_job_id:, id: 100, active_storage_blob_id: 101
+    build_stubbed :transcription_job, status:, id: 100, active_storage_blob:
   end
+  let(:memo) { build_stubbed :memo, :with_user }
+  let(:active_storage_blob) { build_stubbed :active_storage_blob }
   let(:transcription_job_results) { double }
-  let(:transcription_service) { instance_double(TranscriptionService) }
   let(:remote_job) do
     instance_double(TranscriptionService::AWS::BatchTranscriptionResponse,
                     failure_reason:, transcript_file_uri:, finished?: finished?, status: remote_status)
   end
   let(:finished?) { true }
-  let(:remote_job_id) { 'remote job id' }
   let(:transcript_file_uri) { 'http://example.com/job1' }
   let(:transcript_response) { JSON.parse file_fixture('transcription/response_diarized.json').read }
   let(:failure_reason) { nil }
-  let(:client) { instance_double(TranscriptionService::AWS::Client) }
   let(:status) { TranscriptionJob.statuses[:in_progress] }
   let(:remote_status) { TranscriptionJob.statuses[:completed] }
+  let(:blob_component) { instance_double(BlobComponent) }
 
   it { expect(described_class).to have_valid_sidekiq_options }
 
   describe '#perform' do
     before do
-      allow(TranscriptionService::AWS::Client).to receive(:new).and_return(client)
-      allow(TranscriptionService).to receive(:new).with(client).and_return(transcription_service)
       allow(TranscriptionJob).to receive(:find).with(transcription_job.id).and_return(transcription_job)
-      allow(transcription_service).to receive(:get_batch_transcribe_job).with(remote_job_id).and_return(remote_job)
       allow(transcription_job).to receive(:update!)
       allow(transcription_job).to receive(:results).and_return(transcription_job_results)
+      allow(transcription_job).to receive(:remote_job).and_return(remote_job)
       allow(TranscriptionService).to receive(:get_transcription).with(transcript_file_uri).and_return(transcript_response)
       allow(Transcription).to receive(:create!)
       allow(Rails.logger).to receive(:warn)
+      allow(BlobComponent).to receive(:new).with(blob: active_storage_blob).and_return(blob_component)
+      allow(ViewComponentBroadcaster).to receive(:call)
+      allow(active_storage_blob).to receive(:memo).and_return(memo)
     end
 
     context 'when the transcription already exists' do
@@ -47,6 +48,11 @@ RSpec.describe TranscriptionRetrievalJob, type: :job do
       it 'does not create the transcription' do
         job.perform(transcription_job.id)
         expect(Transcription).not_to have_received(:create!)
+      end
+
+      it 'does not broadcast the blob component' do
+        job.perform(transcription_job.id)
+        expect(ViewComponentBroadcaster).not_to have_received(:call)
       end
 
       it 'logs a warning' do
@@ -77,6 +83,14 @@ RSpec.describe TranscriptionRetrievalJob, type: :job do
           )
         )
       end
+
+      it 'broadcasts the blob component' do
+        job.perform(transcription_job.id)
+        expect(ViewComponentBroadcaster).to(
+          have_received(:call)
+            .with([memo.user, TurboStreams::STREAMS[:blobs]], component: blob_component, action: :replace)
+        )
+      end
     end
 
     context 'when the remote job failed' do
@@ -98,6 +112,14 @@ RSpec.describe TranscriptionRetrievalJob, type: :job do
         job.perform(transcription_job.id)
         expect(Transcription).not_to have_received(:create!)
       end
+
+      it 'broadcasts the blob component' do
+        job.perform(transcription_job.id)
+        expect(ViewComponentBroadcaster).to(
+          have_received(:call)
+            .with([memo.user, TurboStreams::STREAMS[:blobs]], component: blob_component, action: :replace)
+        )
+      end
     end
 
     context 'when the remote job is not finished' do
@@ -111,6 +133,11 @@ RSpec.describe TranscriptionRetrievalJob, type: :job do
       it 'does not create the transcription' do
         job.perform(transcription_job.id)
         expect(Transcription).not_to have_received(:create!)
+      end
+
+      it 'does not broadcast the blob component' do
+        job.perform(transcription_job.id)
+        expect(ViewComponentBroadcaster).not_to have_received(:call)
       end
 
       it 'logs a warning' do
