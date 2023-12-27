@@ -25,6 +25,10 @@ class BlobComponent < ApplicationViewComponent
     transcription.present? ? dom_id(transcription) : 'no-transcription'
   end
 
+  def completed_transcription?
+    transcription_job&.completed? && transcription.present?
+  end
+
   def caption
     return @caption if defined? @caption
 

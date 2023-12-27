@@ -18,7 +18,7 @@
                   'aria-controls' => transcription_dom_id
                   }
                   = "Transcription #{blob.transcription_job&.status}".humanize
-            - if transcription_job.completed? && transcription.present?
+            - if completed_transcription?
               .collapse.mt-3{ id: transcription_dom_id }
                 .card.card-body.p-3= transcription_content
 

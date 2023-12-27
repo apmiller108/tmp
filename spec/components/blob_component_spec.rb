@@ -59,10 +59,30 @@ RSpec.describe BlobComponent, type: :component do
   context 'when the blob is audio' do
     let(:audio?) { true }
     let(:url) { 'http://example.com/sample.wav' }
+    let(:transcription) { build_stubbed :transcription }
 
     it { is_expected.to have_css 'audio' }
     it { is_expected.to have_css "source[src='#{url}'][type='#{blob.content_type}']" }
-    it { is_expected.to have_css 'a.dropdown-item', text: I18n.t('transcribe') }
-    it { is_expected.to have_css 'a.dropdown-item', text: I18n.t('transcribe_and_summarize') }
+    it { is_expected.to have_css '#transcription' }
+
+    context 'with a transcription_job' do
+      let(:blob) { build_stubbed :active_storage_blob, id: 1, transcription_job: }
+      let(:status) { TranscriptionJob.statuses[:in_progress] }
+      let(:transcription_job) { build_stubbed :transcription_job, status: }
+
+      it 'shows the transcription status button' do
+        expect(page).to have_css("button[id='transcription_job_#{transcription_job.id}']", text: 'Transcription in progress')
+      end
+    end
+
+    context 'with a completed transcription' do
+      let(:blob) { build_stubbed :active_storage_blob, id: 1, transcription_job:, transcription: }
+      let(:transcription_job) { build_stubbed :transcription_job, :completed, transcription: }
+      let(:transcription) { build_stubbed :transcription }
+
+      it 'shows the transcript' do
+        expect(page).to have_content(transcription.content)
+      end
+    end
   end
 end

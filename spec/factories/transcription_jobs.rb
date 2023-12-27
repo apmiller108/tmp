@@ -3,6 +3,10 @@ FactoryBot.define do
     status { 'created' }
     active_storage_blob { nil }
 
+    trait :completed do
+      status { TranscriptionJob.statuses[:completed] }
+    end
+
     trait :with_transcription do
       transcription
     end
