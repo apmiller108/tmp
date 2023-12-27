@@ -7,6 +7,7 @@ RSpec.describe TranscribeAudioJob, type: :job do
   let(:blob_id) { 1 }
   let(:content_type) { 'audio/mp3' }
   let(:blob) { build_stubbed :active_storage_blob, id: blob_id, content_type: }
+  let(:memo) { build_stubbed :memo, :with_user }
   let(:response) { { transciption_name: 'foo' } }
 
   before do
@@ -14,6 +15,9 @@ RSpec.describe TranscribeAudioJob, type: :job do
     allow(TranscriptionService).to receive(:new).with(aws_client).and_return(transcription_service)
     allow(ActiveStorage::Blob).to receive(:find).with(blob_id).and_return(blob)
     allow(transcription_service).to receive(:batch_transcribe).and_return(transcription_job)
+    allow(ViewComponentBroadcaster).to receive(:call)
+    allow(blob).to receive(:memo).and_return(memo)
+    allow(User).to receive(:find).with(memo.user_id).and_return(memo.user)
   end
 
   it { expect(described_class).to have_valid_sidekiq_options }
@@ -31,8 +35,12 @@ RSpec.describe TranscribeAudioJob, type: :job do
       expect(transcription_service).to have_received(:batch_transcribe).with(blob, toxicity_detection: false)
     end
 
-    it 'returns the transcription_job' do
-      expect(job.perform(blob.id)).to eq transcription_job
+    it 'broadcasts the blob' do
+      component = instance_double(BlobComponent)
+      allow(BlobComponent).to receive(:new).with(blob:).and_return(component)
+      job.perform(blob.id)
+      expect(ViewComponentBroadcaster).to have_received(:call)
+        .with([memo.user, TurboStreams::STREAMS[:blobs]], component:, action: :replace)
     end
 
     context 'when the blob is not an audio file' do
@@ -48,10 +56,6 @@ RSpec.describe TranscribeAudioJob, type: :job do
                                                     "transcribe non-audio blob. id: #{blob.id}, "\
                                                     "content_type: #{content_type}")
         job.perform(blob.id)
-      end
-
-      it 'returns nil' do
-        expect(job.perform(blob.id)).to be_nil
       end
     end
 
@@ -72,10 +76,6 @@ RSpec.describe TranscribeAudioJob, type: :job do
         job.perform(blob_id)
         expect(Rails.logger).to have_received(:warn).with('TranscribeAudioJob: TranscriptionService::InvalidRequestError : ')
       end
-
-      it 'returns nil' do
-        expect(job.perform(blob.id)).to be_nil
-      end
     end
 
     context 'when the blob cannot be found' do
@@ -87,10 +87,6 @@ RSpec.describe TranscribeAudioJob, type: :job do
       it 'rescues and logs the error' do
         job.perform(blob_id)
         expect(Rails.logger).to have_received(:warn).with('TranscribeAudioJob: ActiveRecord::RecordNotFound : ')
-      end
-
-      it 'returns nil' do
-        expect(job.perform(blob.id)).to be_nil
       end
     end
   end

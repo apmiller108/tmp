@@ -35,6 +35,7 @@ RSpec.describe TranscriptionRetrievalJob, type: :job do
       allow(BlobComponent).to receive(:new).with(blob: active_storage_blob).and_return(blob_component)
       allow(ViewComponentBroadcaster).to receive(:call)
       allow(active_storage_blob).to receive(:memo).and_return(memo)
+      allow(User).to receive(:find).with(memo.user_id).and_return(memo.user)
     end
 
     context 'when the transcription already exists' do

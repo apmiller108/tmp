@@ -40,7 +40,8 @@ class TranscriptionRetrievalJob
 
   def broadcast_blob(transcription_job)
     blob = transcription_job.active_storage_blob
-    component = BlobComponent.new(blob:)
-    ViewComponentBroadcaster.call([blob.memo.user, TurboStreams::STREAMS[:blobs]], component:, action: :replace)
+    user = User.find(blob.memo.user_id) # user cannot be lazily loaded
+    ViewComponentBroadcaster.call([user, TurboStreams::STREAMS[:blobs]],
+                                  component: BlobComponent.new(blob:), action: :replace)
   end
 end
