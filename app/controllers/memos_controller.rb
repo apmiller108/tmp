@@ -1,6 +1,8 @@
 class MemosController < ApplicationController
   def index
-    @memos = current_user.memos.order(created_at: :desc)
+    @memos = current_user.memos
+                         .with_rich_text_content_and_embeds
+                         .order(created_at: :desc)
   end
 
   def show
