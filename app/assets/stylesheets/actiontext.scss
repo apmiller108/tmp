@@ -28,7 +28,7 @@
     .attachment__caption {
       @extend .fw-light, .text-center, .text-black-50;
     }
-    .attachment--wav {
+    .attachment--wav, .attachment--mp3 {
       border: none;
     }
   }
