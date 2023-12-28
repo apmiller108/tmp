@@ -22,9 +22,24 @@
           .row
             %ul.nav.nav-tabs.card-header-tabs
               %li.nav-item
-                %a.nav-link.active{ href: '#', data: { 'bs-toggle' => 'tab', 'bs-target' => '#transcription-text' } } Text
+                %a.nav-link.active#text-tab{
+                    data: { 'bs-toggle' => 'tab', 'bs-target' => "##{text_dom_id}" },
+                    type: :button,
+                    role: :tab,
+                    aria: { controls: 'text-tab', selected: true }
+                  } Text
               %li.nav-item
-                %a.nav-link{ href: '#', data: { 'bs-toggle' => 'tab', 'bs-target' => '#transcription-speakers' } } Speaker ID
+                %a.nav-link#speaker-tab{
+                  data: { 'bs-toggle' => 'tab', 'bs-target' => "##{speakers_dom_id}" },
+                  type: :button,
+                  role: :tab,
+                  aria: { controls: 'text-tab', selected: false },
+                } Speaker ID
         .card-body.tab-content.p-3
-          #transcription-text.card-text.tab-pane.fade.active.show= transcription_content
-          #transcription-speakers.card-text.tab-pane.fade TRANSCRIPTION SPEAKERS
+          .card-text.tab-pane.fade.active.show{ id: text_dom_id }= content
+          .card-text.tab-pane.fade{ id: speakers_dom_id }
+            - diarized_results.each do |result|
+              .row
+                .col-2= speaker_from_label(result.speaker)
+                .col-10= result.content
+
