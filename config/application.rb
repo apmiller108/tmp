@@ -34,7 +34,7 @@ module Tmp
     config.after_initialize do
       ActionText::ContentHelper.sanitizer.class.allowed_attributes += %w[
         style controls poster preload type data-controller data-blob-target data-bs-toggle
-        data-bs-target aria-expanded aria-controls id
+        data-bs-target aria-expanded aria-controls id data-turbo
       ]
       ActionText::ContentHelper.sanitizer.class.allowed_tags += %w[
         audio embed iframe source video button

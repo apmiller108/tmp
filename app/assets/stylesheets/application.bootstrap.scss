@@ -19,4 +19,5 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 @import 'inline_field_component/inline_field_component';
 @import 'memo_component/memo_component';
 @import 'blob_component/blob_component';
+@import 'transcription_component/transcription_component';
 

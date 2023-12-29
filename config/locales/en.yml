@@ -30,18 +30,24 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  new: 'New'
-  create: 'Create'
-  edit: 'Edit'
   cancel: 'Cancel'
   content: 'Content'
+  create: 'Create'
+  download: 'Download'
+  download_to_save: 'Download to save a copy'
+  edit: 'Edit'
   memo:
-    new: "New Memo"
-    create: "Create Memo"
-    index: "Messages"
-    edit: "Edit Memo"
-    update: "Update Memo"
+    new: 'New Memo'
+    create: 'Create Memo'
+    index: "Memos"
+    edit: 'Edit Memo'
+    update: 'Update Memo'
     content: 'Content'
-  memos: "Messages"
-  transcribe: 'Transcribe'
-  transcribe_and_summarize: 'Transcribe & Summarize'
+  memos: "Memos"
+  new: 'New'
+  speaker_id: 'Speaker ID'
+  transcription:
+    status: "Transcription %{status}"
+    title: "Transcription of %{filename}"
+  text: 'Text'
+

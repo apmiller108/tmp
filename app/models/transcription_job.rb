@@ -25,9 +25,15 @@ class TranscriptionJob < ApplicationRecord
   end
 
   def results
-    return if response.blank?
+    return {} if response.blank?
 
     response.dig('results', 'transcripts')[0]['transcript']
+  end
+
+  def items
+    return [] if response.blank?
+
+    response.dig('results', 'items')
   end
 
   def remote_job
@@ -41,24 +47,4 @@ class TranscriptionJob < ApplicationRecord
   def remove_remote_batch_transcription_job
     TranscriptionDeletionJob.perform_async(remote_job_id)
   end
-
-  # TODO: This is not intended to be used yet. This is the bare minium to represent diarization.
-  # TODO: determine from the request if results are diarized return otherwize
-  # def diarized_results
-  #   response.dig('results', 'items')
-  #           .map { |i| { i['speaker_label'] => i['alternatives'][0]['content'] } }
-  #           .each_with_object([]) do |item, a|
-  #     if a.empty?
-  #       a.push(item)
-  #     else
-  #       prev_speech = a.last
-  #       prev_speaker = prev_speech.keys.first
-  #       if prev_speaker == item.keys.first
-  #         prev_speech[prev_speaker] += (item[prev_speaker] =~ /\A[[:punct:]]\z/ ? item[prev_speaker] : " #{item[prev_speaker]}")
-  #       else
-  #         a.push(item)
-  #       end
-  #     end
-  #   end
-  # end
 end

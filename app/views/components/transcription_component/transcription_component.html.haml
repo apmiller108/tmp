@@ -1,0 +1,45 @@
+.c-transcription#transcription
+  %p
+    %button.btn.btn-secondary.px-2.py-1.text-white{
+      id: dom_id(transcription_job),
+      class: [status, 'mb-3', ('p-pulse' if status.in?(%w[queued, in_progress]))],
+      type: :button,
+      data: { 'bs-toggle' => 'collapse', 'bs-target' => "##{transcription_dom_id}" },
+      'aria-expanded' => false,
+      'aria-controls' => transcription_dom_id
+      }
+      = t('transcription.status', status: status).humanize
+  - if completed_transcription?
+    .collapse.mb-3{ id: transcription_dom_id }
+      .card
+        .card-header
+          .row
+            .col-9
+              %h5.card-title= t('transcription.title', filename: filename)
+              %p.card-subtitle.text-body-secondary.mb-2= t('download_to_save')
+            .col-3.position-relative
+              = link_to t('download'), download_path, class: 'download-link position-absolute end-0', data: { turbo: false }
+          .row
+            %ul.nav.nav-tabs.card-header-tabs
+              %li.nav-item
+                %a.nav-link.active#text-tab{
+                    data: { 'bs-toggle' => 'tab', 'bs-target' => "##{text_dom_id}" },
+                    type: :button,
+                    role: :tab,
+                    aria: { controls: 'text-tab', selected: true }
+                  }= t('text')
+              %li.nav-item
+                %a.nav-link#speaker-tab{
+                  data: { 'bs-toggle' => 'tab', 'bs-target' => "##{speakers_dom_id}" },
+                  type: :button,
+                  role: :tab,
+                  aria: { controls: 'text-tab', selected: false },
+                }= t('speaker_id')
+        .card-body.tab-content.p-3
+          .card-text.tab-pane.fade.active.show{ id: text_dom_id }= content
+          .card-text.tab-pane.fade{ id: speakers_dom_id }
+            - diarized_results.each do |result|
+              .row
+                .col-3= "#{result.speaker_humanized}: "
+                .col-9= result.content
+

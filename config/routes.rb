@@ -26,5 +26,6 @@ Rails.application.routes.draw do
 
   resources :users, only: %i[show] do
     resources :memos
+    resources :transcription_downloads, param: :transcription_id, only: %i[show]
   end
 end

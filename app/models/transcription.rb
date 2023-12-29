@@ -3,4 +3,22 @@ class Transcription < ApplicationRecord
   belongs_to :transcription_job
 
   validates_with ReferencesAudioBlobValidator
+
+  delegate :items, to: :transcription_job
+
+  def diarized_results
+    SpeakerContent.new(items).squash
+  end
+
+  def to_text
+    <<~TEXT
+      Text:
+
+      #{content}
+
+      Speaker ID:
+
+      #{diarized_results.map(&:to_text).join("\n")}
+    TEXT
+  end
 end

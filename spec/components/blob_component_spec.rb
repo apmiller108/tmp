@@ -15,12 +15,21 @@ RSpec.describe BlobComponent, type: :component do
   let(:caption) { nil }
   let(:in_gallery) { false }
 
+  let(:transcription_component) do
+    Class.new(ApplicationViewComponent) do
+      haml_template <<~HAML
+        TranscriptionComponent
+      HAML
+    end
+  end
+
   before do
     allow(attachment).to receive(:audio?).and_return(audio?)
     allow(attachment).to receive(:representable?).and_return(representable?)
     allow(attachment).to receive(:representation).and_return(representation)
     allow(attachment).to receive(:caption).and_return(caption)
     allow(attachment).to receive(:url).and_return(url)
+    stub_const('TranscriptionComponent', transcription_component)
     render_inline(component)
   end
 
@@ -59,29 +68,17 @@ RSpec.describe BlobComponent, type: :component do
   context 'when the blob is audio' do
     let(:audio?) { true }
     let(:url) { 'http://example.com/sample.wav' }
-    let(:transcription) { build_stubbed :transcription }
 
     it { is_expected.to have_css 'audio' }
     it { is_expected.to have_css "source[src='#{url}'][type='#{blob.content_type}']" }
-    it { is_expected.to have_css '#transcription' }
+    it { is_expected.not_to have_content 'TranscriptionComponent' }
 
     context 'with a transcription_job' do
       let(:blob) { build_stubbed :active_storage_blob, id: 1, transcription_job: }
-      let(:status) { TranscriptionJob.statuses[:in_progress] }
-      let(:transcription_job) { build_stubbed :transcription_job, status: }
+      let(:transcription_job) { build_stubbed :transcription_job }
 
-      it 'shows the transcription status button' do
-        expect(page).to have_css("button[id='transcription_job_#{transcription_job.id}']", text: 'Transcription in progress')
-      end
-    end
-
-    context 'with a completed transcription' do
-      let(:blob) { build_stubbed :active_storage_blob, id: 1, transcription_job:, transcription: }
-      let(:transcription_job) { build_stubbed :transcription_job, :completed, transcription: }
-      let(:transcription) { build_stubbed :transcription }
-
-      it 'shows the transcript' do
-        expect(page).to have_content(transcription.content)
+      it 'renders the TranscriptionComponent' do
+        expect(page).to have_content('TranscriptionComponent')
       end
     end
   end

@@ -23,11 +23,13 @@ AI infused note taking application.
 - [x] Transcription for audio files added to message
 - [x] Rename message to memo
 - [ ] Add support for diaraized transcriptions
+- [ ] LLM summary of text selection
+- [ ] Add emoji support (gemoji https://afomera.dev/posts/2022-10-11-combined-mentions-part-one)
+- [ ] Add support for youtube video embedding (https://blog.corsego.com/action-text-embed-youtube)
 - [ ] Create toxicity detection feature
 - [ ] Add web health check with pinglish
 - [ ] Sentiment analysis
 - [ ] Text to image
-- [ ] LLM summary of text selection
 - [ ] Add feature specs for user messages
 - [ ] Registration via API
 - [ ] Add request specs for registration via API

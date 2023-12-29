@@ -1,0 +1,31 @@
+// Most of these style declarations override the action text styles to revert them back to bootstrap styles
+.c-transcription {
+   line-height: var(--bs-body-line-height);
+  .card-header {
+    padding: var(--bs-card-cap-padding-y) var(--bs-card-cap-padding-x);
+    button {
+      padding: var(--bs-btn-padding-y) var(--bs-btn-padding-x);
+    }
+    .download-link {
+      text-decoration: underline;
+	    color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
+    }
+  }
+  .card-header-tabs {
+    margin-right: calc(-0.5 * var(--bs-card-cap-padding-x));
+    margin-bottom: calc(-1 * var(--bs-card-cap-padding-y));
+    margin-left: calc(-0.5 * var(--bs-card-cap-padding-x));
+    padding-left: 0;
+  }
+  .nav-link {
+    padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);
+  }
+  .card-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
+  }
+  .row > * {
+    padding-right: calc(var(--bs-gutter-x) * 0.5);
+  }
+}

@@ -6,21 +6,8 @@
           %audio.w-100{controls: true, preload: :metadata, data: { 'blob-target' => :audio }}
             %source{src: url, type: content_type}
           = fig_caption
-          #transcription
-            - if transcription_job_status
-              %p
-                %button.btn.btn-secondary.px-2.py-1.text-white{
-                  id: dom_id(transcription_job),
-                  class: [transcription_job_status, ('p-pulse' if transcription_job_status.in?(%w[queued, in_progress]))],
-                  type: :button,
-                  data: { 'bs-toggle' => 'collapse', 'bs-target' => "##{transcription_dom_id}" },
-                  'aria-expanded' => false,
-                  'aria-controls' => transcription_dom_id
-                  }
-                  = "Transcription #{blob.transcription_job&.status}".humanize
-            - if completed_transcription?
-              .collapse.mt-3{ id: transcription_dom_id }
-                .card.card-body.p-3= transcription_content
+          - if transcription_job.present?
+            = render TranscriptionComponent.new(transcription_job:)
 
     - elsif representable?
       = image_tag representation(resize_to_limit: resize_to_limit)

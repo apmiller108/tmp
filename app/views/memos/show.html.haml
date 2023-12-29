@@ -1,4 +1,4 @@
 %div
-  = link_to t('memos.index'), user_memo_path(current_user)
+  = link_to t('memos.index'), user_memos_path(current_user)
 %div
   = render MemoComponent.new(memo: @memo)
