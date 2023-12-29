@@ -36,3 +36,7 @@
 .p-pulse {
   @include glowingPulse($primary);
 }
+
+.i-pulse {
+  @include glowingPulse($info);
+}

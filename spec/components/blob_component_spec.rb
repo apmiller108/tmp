@@ -15,10 +15,10 @@ RSpec.describe BlobComponent, type: :component do
   let(:caption) { nil }
   let(:in_gallery) { false }
 
-  let(:transcription_component) do
+  let(:transcription_job_component) do
     Class.new(ApplicationViewComponent) do
       haml_template <<~HAML
-        TranscriptionComponent
+        TranscriptionJobComponent
       HAML
     end
   end
@@ -29,7 +29,7 @@ RSpec.describe BlobComponent, type: :component do
     allow(attachment).to receive(:representation).and_return(representation)
     allow(attachment).to receive(:caption).and_return(caption)
     allow(attachment).to receive(:url).and_return(url)
-    stub_const('TranscriptionComponent', transcription_component)
+    stub_const('TranscriptionJobComponent', transcription_job_component)
     render_inline(component)
   end
 
@@ -71,14 +71,14 @@ RSpec.describe BlobComponent, type: :component do
 
     it { is_expected.to have_css 'audio' }
     it { is_expected.to have_css "source[src='#{url}'][type='#{blob.content_type}']" }
-    it { is_expected.not_to have_content 'TranscriptionComponent' }
+    it { is_expected.not_to have_content 'TranscriptionJobComponent' }
 
     context 'with a transcription_job' do
       let(:blob) { build_stubbed :active_storage_blob, id: 1, transcription_job: }
       let(:transcription_job) { build_stubbed :transcription_job }
 
-      it 'renders the TranscriptionComponent' do
-        expect(page).to have_content('TranscriptionComponent')
+      it 'renders the TranscriptionJobComponent' do
+        expect(page).to have_content('TranscriptionJobComponent')
       end
     end
   end

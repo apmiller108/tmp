@@ -7,8 +7,7 @@
             %source{src: url, type: content_type}
           = fig_caption
           - if transcription_job.present?
-            = render TranscriptionComponent.new(transcription_job:)
-
+            = render TranscriptionJobComponent.new(transcription_job:)
     - elsif representable?
       = image_tag representation(resize_to_limit: resize_to_limit)
       = fig_caption

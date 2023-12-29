@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
 class TranscriptionComponent < ApplicationViewComponent
-  attr_reader :transcription_job
+  attr_reader :transcription
 
-  delegate :status, :transcription, :active_storage_blob, to: :transcription_job
-  delegate :content, :diarized_results, to: :transcription, allow_nil: true
+  delegate :status, to: :transcription_job
+  delegate :content, :diarized_results, :active_storage_blob, :transcription_job, to: :transcription
 
-  def initialize(transcription_job:)
-    @transcription_job = transcription_job
+  def initialize(transcription:)
+    @transcription = transcription
   end
 
   def transcription_dom_id
-    transcription.present? ? dom_id(transcription) : 'no-transcription'
+    dom_id(transcription)
   end
 
   def text_dom_id
@@ -24,10 +24,6 @@ class TranscriptionComponent < ApplicationViewComponent
 
   def download_path
     user_transcription_download_path(current_user, transcription_id: transcription.id)
-  end
-
-  def completed_transcription?
-    transcription_job.completed? && transcription.present?
   end
 
   def filename
