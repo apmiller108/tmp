@@ -56,7 +56,7 @@ RSpec.describe TranscriptionJob, type: :model do
     context 'when there is no response' do
       subject(:job) { described_class.new.results }
 
-      it { is_expected.to be_nil }
+      it { is_expected.to eq({}) }
     end
   end
 

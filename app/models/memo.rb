@@ -9,5 +9,7 @@ class Memo < ApplicationRecord
 
   validates :content, presence: true
 
-  belongs_to :user, required: true, strict_loading: true
+  belongs_to :user, optional: false
+  has_many :audio_blobs, -> { audio }, through: :rich_text_content, source: :embeds_blobs
+  has_many :transcriptions, through: :audio_blobs
 end

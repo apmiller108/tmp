@@ -19,6 +19,15 @@ class Transcription
         item_data['speaker_label']
       end
 
+      # Humanized speaker name
+      #
+      # @param [String] spk_0, spk_1, ...etc
+      # @return [String] Speaker 1, Speaker 2, ...etc
+      def speaker_humanized
+        speaker_num = speaker.split('_').last.to_i + 1
+        "Speaker #{speaker_num}"
+      end
+
       def speaker_same_as?(other)
         speaker == other.speaker
       end
@@ -37,6 +46,10 @@ class Transcription
 
       def combine_with(other)
         self.content += other.combinable_value
+      end
+
+      def to_text
+        "#{speaker_humanized}: #{content}"
       end
     end
   end

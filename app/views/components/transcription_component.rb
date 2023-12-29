@@ -22,13 +22,8 @@ class TranscriptionComponent < ApplicationViewComponent
     "transcription_speakers_#{transcription.id}"
   end
 
-  # Presentation friendly speaker name
-  #
-  # @param [String] spk_0, spk_1, ...etc
-  # @return [String]
-  def speaker_from_label(label)
-    speaker_num = label.split('_').last.to_i + 1
-    "Speaker #{speaker_num}: "
+  def download_path
+    user_transcription_download_path(current_user, transcription_id: transcription.id)
   end
 
   def completed_transcription?

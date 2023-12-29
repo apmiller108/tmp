@@ -9,4 +9,16 @@ class Transcription < ApplicationRecord
   def diarized_results
     SpeakerContent.new(items).squash
   end
+
+  def to_text
+    <<~TEXT
+      Text:
+
+      #{content}
+
+      Speaker ID:
+
+      #{diarized_results.map(&:to_text).join("\n")}
+    TEXT
+  end
 end
