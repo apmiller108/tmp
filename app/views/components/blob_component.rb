@@ -18,6 +18,10 @@ class BlobComponent < ApplicationViewComponent
     dom_id(blob)
   end
 
+  def transcription_container_id
+    "#{id}_transcription_container"
+  end
+
   def caption
     return @caption if defined? @caption
 

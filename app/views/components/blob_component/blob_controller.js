@@ -1,10 +1,11 @@
 import { Controller } from "@hotwired/stimulus"
+import autoAnimate from '@formkit/auto-animate'
 
 export default class extends Controller {
-  static targets = ['audio']
+  static targets = ['audio', 'transcriptionSection']
   connect() {
-    if (this.hasAudioTarget) {
-      console.log(this.audioTarget);
+    if (this.hasTranscriptionSectionTarget) {
+      autoAnimate(this.transcriptionSectionTarget)
     }
   }
 }

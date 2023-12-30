@@ -22,14 +22,13 @@ AI infused note taking application.
 - [x] Add request specs for user messages
 - [x] Transcription for audio files added to message
 - [x] Rename message to memo
-- [ ] Add support for diaraized transcriptions
+- [x] Add support for diaraized transcriptions
 - [ ] LLM summary of text selection
 - [ ] Add emoji support (gemoji https://afomera.dev/posts/2022-10-11-combined-mentions-part-one)
 - [ ] Add support for youtube video embedding (https://blog.corsego.com/action-text-embed-youtube)
-- [ ] Create toxicity detection feature
-- [ ] Add web health check with pinglish
-- [ ] Sentiment analysis
 - [ ] Text to image
+- [ ] Sentiment analysis
+- [ ] Add web health check with pinglish
 - [ ] Add feature specs for user messages
 - [ ] Registration via API
 - [ ] Add request specs for registration via API
@@ -41,7 +40,7 @@ AI infused note taking application.
 - [ ] Add `self_destructs_at` to messages
 - [ ] Create schedule job to destroy messages
 - [ ] Push message destuction turbo stream via web sockets
-- [ ] Add public / private message
+- [ ] Add public / private message (sharing, @ing)
 - [ ] Create public message view
 - [ ] Add ability to comment on messages (with other message?)
 - [ ] Add lograge
