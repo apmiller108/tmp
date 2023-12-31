@@ -11,31 +11,23 @@ AI infused note taking application.
 - Sharing
 
 # TODOs
-- [x] Implement API authentication
-- [x] Implement jti jwt_revocation_strategy
-- [x] Create message model
-- [x] Learn about and use view_component library
-- [x] Setup Cuprite
-- [x] Add a header to the layout
-- [x] Add user message destroy action
-- [x] On index, use stimulus to remove new message form on cancel
-- [x] Add request specs for user messages
 - [x] Transcription for audio files added to message
 - [x] Rename message to memo
 - [x] Add support for diaraized transcriptions
+- [ ] LLM summary of audio transcript
+- [ ] Move items to transcript model, drop response column, persist failure reason only
 - [ ] LLM summary of text selection
+- [ ] Card index view with inline modal creating and editing.
 - [ ] Add emoji support (gemoji https://afomera.dev/posts/2022-10-11-combined-mentions-part-one)
 - [ ] Add support for youtube video embedding (https://blog.corsego.com/action-text-embed-youtube)
 - [ ] Text to image
 - [ ] Sentiment analysis
+- [ ] Custom audio player
 - [ ] Add web health check with pinglish
 - [ ] Add feature specs for user messages
 - [ ] Registration via API
 - [ ] Add request specs for registration via API
 - [ ] Add auth helper for request specs
-- [x] Setup CI
-- [x] Setup ActionCable
-- [x] Setup hot reloading
 - [ ] Figure out better cors config https://github.com/cyu/rack-cors
 - [ ] Add `self_destructs_at` to messages
 - [ ] Create schedule job to destroy messages
