@@ -1,4 +1,4 @@
-module LLMService
+class LLMService
   module AWS
     class Client
       class EventStreamHandler
@@ -27,7 +27,7 @@ module LLMService
           # {"outputText"=>"final part of stream", "index"=>0, "totalOutputTextTokenCount"=>104, "completionReason"=>"FINISH",
           #  "inputTextTokenCount"=>nil, "amazon-bedrock-invocationMetrics"=>{"inputTokenCount"=>9, "outputTokenCount"=>104,
           #  "invocationLatency"=>3407, "firstByteLatency"=>2440}}
-          @block.call(event)
+          @block.call(JSON.parse(event.bytes))
         end
 
         def on_exception(event)

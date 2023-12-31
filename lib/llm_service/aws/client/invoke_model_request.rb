@@ -1,4 +1,4 @@
-module LLMService
+class LLMService
   module AWS
     class Client
       class InvokeModelRequest
@@ -19,7 +19,7 @@ module LLMService
             content_type: 'application/json',
             accept: 'application/json',
             body:
-          }
+          }.merge(event_stream_options)
         end
 
         private
@@ -37,6 +37,14 @@ module LLMService
             'stopSequences' => params.fetch(:stop_sequences, []),
             'temperature' => params.fetch(:temp, TEMP),
             'topP' => params.fetch(:top_p, TOP_P)
+          }
+        end
+
+        def event_stream_options
+          return {} if params[:event_stream_handler].blank?
+
+          {
+            event_stream_handler: params[:event_stream_handler]
           }
         end
       end

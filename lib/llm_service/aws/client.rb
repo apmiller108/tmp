@@ -1,6 +1,6 @@
 require 'aws-sdk-bedrockruntime'
 
-module LLMService
+class LLMService
   module AWS
     class Client
       delegate :invoke_model, :invoke_model_with_response_stream, to: :@client
@@ -15,9 +15,10 @@ module LLMService
         )
       end
 
-      def invoke_model_stream(params, &block)
-        event_stream_handler = EventStreamHandler.new(&block).to_proc
-        invoke_model_with_response_stream(params.merge(event_stream_handler:))
+      def invoke_model_stream(prompt:, **params, &block)
+        params.merge!(event_stream_handler: EventStreamHandler.new(&block).to_proc)
+        params = InvokeModelRequest.new(prompt:, **params).to_h
+        invoke_model_with_response_stream(params)
       end
     end
   end

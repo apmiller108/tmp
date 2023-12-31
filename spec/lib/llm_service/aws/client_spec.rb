@@ -42,19 +42,25 @@ RSpec.describe LLMService::AWS::Client do
   describe 'invoke_model_stream' do
     subject(:client) { described_class.new }
 
+    let(:prompt) { 'tell me something awesme' }
     let(:handler_proc) { proc {} }
     let(:handler) { instance_double(LLMService::AWS::Client::EventStreamHandler, to_proc: handler_proc) }
-    let(:params) { { a: 1, event_stream_handler: handler_proc } }
+    let(:request) { instance_double(LLMService::AWS::Client::InvokeModelRequest, to_h: request_params) }
+    let(:request_params) { { b: 2 }}
+    let(:params) { { a: 1 } }
 
     before do
       allow(LLMService::AWS::Client::EventStreamHandler).to receive(:new).and_return(handler)
+      allow(LLMService::AWS::Client::InvokeModelRequest).to(
+        receive(:new).with(prompt:, **params.merge(event_stream_handler: handler_proc)).and_return(request)
+      )
     end
 
     it 'delegates to the aws client with the proper params' do
       block = proc {}
-      client.invoke_model_stream(params, &block)
+      client.invoke_model_stream(prompt:, **params, &block)
 
-      expect(aws_client).to have_received(:invoke_model_with_response_stream).with(params)
+      expect(aws_client).to have_received(:invoke_model_with_response_stream).with(request_params)
     end
   end
 end
