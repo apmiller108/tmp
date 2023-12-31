@@ -19,9 +19,9 @@ describe TranscriptionService::AWS::Client do
   end
 
   describe '#initialize' do
-    it 'sets the aws config' do
+    it 'sets the client' do
       client = described_class.new
-      expect(client.instance_variable_get(:@config)).to eq Rails.application.credentials.fetch(:aws)
+      expect(client.instance_variable_get(:@client)).to eq aws_lib_client
     end
   end
 

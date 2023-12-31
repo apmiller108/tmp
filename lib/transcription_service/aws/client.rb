@@ -6,10 +6,16 @@ class TranscriptionService
       attr_reader :operation
 
       delegate :request, :response, :blob, to: :operation, allow_nil: true
-      delegate_missing_to :client
+      delegate_missing_to :@client
 
       def initialize
-        @config = Rails.application.credentials.fetch(:aws)
+        config = Rails.application.credentials.fetch(:aws)
+        @client ||= Aws::TranscribeService::Client.new(
+          region: config[:region],
+          credentials: Aws::Credentials.new(
+            config.fetch(:access_key_id), config.fetch(:secret_access_key)
+          )
+        )
       end
 
       def batch_transcribe(blob, **options)
@@ -28,19 +34,6 @@ class TranscriptionService
         delete_transcription_job(transcription_job_name: job_id)
       rescue Aws::TranscribeService::Errors::BadRequestException
         raise InvalidRequestError
-      end
-
-      private
-
-      attr_reader :config
-
-      def client
-        @client ||= Aws::TranscribeService::Client.new(
-          region: config[:region],
-          credentials: Aws::Credentials.new(
-            config.fetch(:access_key_id), config.fetch(:secret_access_key)
-          )
-        )
       end
     end
   end
