@@ -2,7 +2,7 @@ module LLMService
   module AWS
     class Client
       class InvokeModelRequest
-        MAX_TOKENS = 515
+        MAX_TOKENS = 512
         TEMP = 0.2
         TOP_P = 0.8
 
