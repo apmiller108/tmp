@@ -22,6 +22,8 @@ class LLMService
         end
 
         def final_chunk?
+          # completionReason could be one of ["LENGTH", "FINISH"]. The latter
+          # meaning the response was truncated per the max_tokens.
           response_data.fetch('completionReason').present?
         end
 
