@@ -22,11 +22,14 @@ RSpec.describe LLMService::AWS::Client::EventStreamHandler do
 
   describe '#on_chunk_event' do
     it 'calls the provided block with the event' do
-      event = {}
+      bytes = double
+      event = instance_double(Aws::BedrockRuntime::Types::PayloadPart, bytes:)
+      response = instance_double(LLMService::AWS::Client::InvokeModelStreamResponse)
+      allow(LLMService::AWS::Client::InvokeModelStreamResponse).to receive(:new).with(bytes).and_return(response)
       block = proc { |e| e }
       handler = described_class.new(&block)
 
-      expect(block).to receive(:call).with(event)
+      expect(block).to receive(:call).with(response)
       handler.on_chunk_event(event)
     end
   end

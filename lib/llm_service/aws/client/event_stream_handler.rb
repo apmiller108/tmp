@@ -19,15 +19,7 @@ class LLMService
         end
 
         def on_chunk_event(event)
-          # A series of event bytes will look like this:
-          #
-          # {"outputText"=>"0..-2 parts of stream", "index"=>0, "totalOutputTextTokenCount"=>nil, "completionReason"=>nil,
-          #  "inputTextTokenCount"=>9}
-          #
-          # {"outputText"=>"final part of stream", "index"=>0, "totalOutputTextTokenCount"=>104, "completionReason"=>"FINISH",
-          #  "inputTextTokenCount"=>nil, "amazon-bedrock-invocationMetrics"=>{"inputTokenCount"=>9, "outputTokenCount"=>104,
-          #  "invocationLatency"=>3407, "firstByteLatency"=>2440}}
-          @block.call(JSON.parse(event.bytes))
+          @block.call(InvokeModelStreamResponse.new(event.bytes))
         end
 
         def on_exception(event)
