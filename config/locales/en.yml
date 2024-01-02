@@ -45,9 +45,12 @@ en:
     content: 'Content'
   memos: "Memos"
   new: 'New'
-  speaker_id: 'Speaker ID'
+  summary:
+    create: 'Create Summary'
   transcription:
+    speaker_id: 'Speaker ID'
+    summary: "Summary"
     status: "Transcription %{status}"
+    text: 'Text'
     title: "Transcription of %{filename}"
-  text: 'Text'
 

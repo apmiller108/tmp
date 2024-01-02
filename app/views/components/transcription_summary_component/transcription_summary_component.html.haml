@@ -1,0 +1,15 @@
+.c-transcription-summary{ id: id }
+  - if summary
+    - if generating_summary?
+      .alert.alert-info.py-1.my-1.text-center{role: :alert, class: [summary.status, 'i-pulse']} Generating summary
+    - if bullet_points?
+      %ul
+        - bullet_points.each do |bp|
+          %li= bp
+    - else
+      = content
+  - else
+    = button_to(user_transcription_summaries_path(current_user),
+    { method: :post, params: { transcription_summary: { transcription_id: transcription.id } },
+      class: 'btn btn-secondary text-white px-2 py-1' }) do
+      = t('summary.create')
