@@ -30,5 +30,6 @@ Rails.application.routes.draw do
       resources :transcriptions, only: %i[index]
     end
     resources :transcription_downloads, param: :transcription_id, only: %i[show]
+    resources :transcription_summaries, only: %i[create]
   end
 end
