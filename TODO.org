@@ -4,3 +4,4 @@
 * TODO add request spec for transcription_download endpoint
 * TODO add gin index to active_storage_blobs.content_type
 * TODO work around memoized bullet points
+* TODO Try summarizing diaraized content
