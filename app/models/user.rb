@@ -8,6 +8,7 @@ class User < ApplicationRecord
 
   has_many :memos, dependent: :destroy
   has_many :transcriptions, through: :memos
+  has_many :transcription_summaries, through: :transcriptions, source: :summary
 
   def self.from_omniauth(auth)
     find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|
