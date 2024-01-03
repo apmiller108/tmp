@@ -1,4 +1,4 @@
-.c-blob.d-inline-block{id: id, data: { controller: :blob }, class: [audio? && 'w-50']}
+.c-blob{id: id, data: { controller: :blob }, class: [audio? && 'w-50 d-inline-block']}
   %figure{class:  "attachment attachment--#{representable? ? 'preview' : 'file'} attachment--#{filename.extension}"}
     - if audio?
       .audio-player.d-flex
