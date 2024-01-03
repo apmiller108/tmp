@@ -18,8 +18,9 @@
       .container-fluid.justify-content-end
         - if current_user
           = button_to 'Sign Out', destroy_user_session_path, method: :delete, data: { turbo: false }, class: ['btn', 'btn-sm', 'btn-outline-secondary']
-
     .container-sm
-      %p.notice= notice
-      %p.alert= alert
+      .flash-message.d-flex.justify-content-center
+        %p.alert-info= notice
+        %p.alert-warning= alert
+      #alert-stream
       = yield

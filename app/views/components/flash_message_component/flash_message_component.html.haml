@@ -1,0 +1,7 @@
+.c-flash-message.text-center.alert.alert-dismissible{ class: alert_class, role: :alert }
+  = message
+  %button.btn-close{type: :button, data: { 'bs-dismiss' => :alert }, aria: { label: :close }}
+  - if validation_errors?
+    %ul.validation-messages.list-group
+      - errors.full_messages.each do |m|
+        %li.list-group-item.list-group-item-warning= m

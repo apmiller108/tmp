@@ -23,7 +23,7 @@ class MemosController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         render(
-          inline: turbo_stream.replace('new_memo', component_for(memo: @memo).render_in(view_context)),
+          turbo_stream: turbo_stream.replace('new_memo', component_for(memo: @memo).render_in(view_context)),
           status:
         )
       end

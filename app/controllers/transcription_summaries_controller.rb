@@ -6,23 +6,29 @@ class TranscriptionSummariesController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         if summary.persisted?
+          enqueue_transcription_summary_job(transcription, summary)
           render(
-            inline: turbo_stream.update(
+            turbo_stream: turbo_stream.update(
               "transcription_summary_#{transcription.id}",
-               TranscriptionSummaryComponent.new(transcription:).render_in(view_context)
+              TranscriptionSummaryComponent.new(transcription:).render_in(view_context)
             ),
             status: :created
           )
-          TranscriptionSummaryJob.perform_async(current_user.id, transcription.id)
-          summary.queued!
         else
-          # TODO render flash messages
+          flash.now.alert = 'Unable to create transcription summary'
+          render turbo_stream: turbo_stream.update('alert-stream', FlashMessageComponent.new(flash:, record: summary)),
+                 status: :unprocessable_entity
         end
       end
     end
   end
 
   private
+
+  def enqueue_transcription_summary_job(transcription, summary)
+    TranscriptionSummaryJob.perform_async(current_user.id, transcription.id)
+    summary.queued!
+  end
 
   def transcription_summary_params
     params.require(:transcription_summary).permit(:transcription_id)

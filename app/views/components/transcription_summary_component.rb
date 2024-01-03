@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class TranscriptionSummaryComponent < ApplicationViewComponent
   attr_reader :transcription
 
@@ -17,9 +15,6 @@ class TranscriptionSummaryComponent < ApplicationViewComponent
     else
       "no_summary_#{transcription.id}"
     end
-  end
-
-  def content
   end
 
   def generating_summary?
