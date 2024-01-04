@@ -11,6 +11,7 @@ class TranscriptionJob < ApplicationRecord
   }
 
   validates :status, inclusion: { in: statuses.values, message: "%<value>s must be one of #{statuses.values}" }
+  validates :remote_job_id, presence: true
   validates_with ReferencesAudioBlobValidator
 
   after_destroy_commit :remove_remote_batch_transcription_job

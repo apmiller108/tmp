@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Transcription, type: :model do
   describe '#to_text' do
     subject(:transcription) do
-      build(:transcription, :with_job, content: 'Sample content', summary:)
+      build(:transcription, content: 'Sample content', summary:)
     end
 
     let(:summary) { build_stubbed :summary, content: 'Sample summary' }
