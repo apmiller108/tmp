@@ -12,14 +12,34 @@ class Transcription < ApplicationRecord
   end
 
   def to_text
-    <<~TEXT
+    [content_section, speaker_id_section, summary_section].compact.join("\n\n")
+  end
+
+  private
+
+  def content_section
+    <<~TEXT.strip
       Text:
 
       #{content}
+    TEXT
+  end
 
+  def speaker_id_section
+    <<~TEXT.strip
       Speaker ID:
 
       #{diarized_results.map(&:to_text).join("\n")}
+    TEXT
+  end
+
+  def summary_section
+    return unless summary
+
+    <<~TEXT.strip
+      Summary:
+
+      #{summary.content}
     TEXT
   end
 end
