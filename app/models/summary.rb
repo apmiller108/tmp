@@ -1,13 +1,7 @@
 class Summary < ApplicationRecord
-  belongs_to :summarizable, polymorphic: true, optional: false
+  include StatusEnumable
 
-  enum :status, {
-    created: 'created',
-    queued: 'queued',
-    in_progress: 'in_progress',
-    failed: 'failed',
-    completed: 'completed'
-  }, default: 'created'
+  belongs_to :summarizable, polymorphic: true, optional: false
 
   attribute :content, :string, default: ''
 

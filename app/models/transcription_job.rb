@@ -1,16 +1,9 @@
 class TranscriptionJob < ApplicationRecord
+  include StatusEnumable
+
   belongs_to :active_storage_blob, class_name: 'ActiveStorage::Blob'
   has_one :transcription, dependent: :destroy
 
-  enum :status, {
-    created: 'created',
-    queued: 'queued',
-    in_progress: 'in_progress',
-    failed: 'failed',
-    completed: 'completed'
-  }
-
-  validates :status, inclusion: { in: statuses.values, message: "%<value>s must be one of #{statuses.values}" }
   validates :remote_job_id, presence: true
   validates_with ReferencesAudioBlobValidator
 
