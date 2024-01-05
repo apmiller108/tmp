@@ -47,6 +47,7 @@ en:
   new: 'New'
   summary:
     create: 'Create Summary'
+    generating: 'Generating summary'
   transcription:
     speaker_id: 'Speaker ID'
     summary: "Summary"

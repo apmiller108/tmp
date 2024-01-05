@@ -1,7 +1,7 @@
 .c-transcription-summary{ id: id }
   - if summary
     - if generating_summary?
-      .alert.alert-info.py-1.my-1.text-center{role: :alert, class: [summary.status, 'i-pulse']} Generating summary
+      .alert.alert-info.py-1.my-1.text-center{role: :alert, class: [summary.status, 'i-pulse']}= t('summary.generating')
     - if bullet_points?
       %ul
         - bullet_points.each do |bp|

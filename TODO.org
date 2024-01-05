@@ -2,10 +2,18 @@
   CLOSED: [2024-01-02 Tue 20:41]
 * DONE render flash message when error on transcription summary
   CLOSED: [2024-01-02 Tue 20:41]
-* TODO add summary to download if it exists
-* TODO add request spec for transcription_download endpoint
-* TODO add gin index to active_storage_blobs.content_type
-* TODO work around memoized bullet points
-* TODO Try summarizing diaraized content
-* TODO extract statuses to concern
+* DONE add summary to download if it exists
+  CLOSED: [2024-01-04 Thu 19:40]
+* DONE add request spec for transcription_download endpoint
+  CLOSED: [2024-01-04 Thu 19:40]
+* DONE extract statuses to concern
+  CLOSED: [2024-01-04 Thu 19:46]
+* DONE add specs for transcription summary job
+  CLOSED: [2024-01-04 Thu 21:43]
+* DONE add specs for transcription summary component
+  CLOSED: [2024-01-04 Thu 22:18]
+* TODO Handle failed status in transcription summary component
 * TODO extract transcription_summary_#{transcription.id} to helper
+* TODO work around memoized bullet points
+* TODO add gin index to active_storage_blobs.content_type
+* TODO Try summarizing diaraized content

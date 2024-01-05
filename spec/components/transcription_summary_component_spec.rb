@@ -3,13 +3,53 @@
 require "rails_helper"
 
 RSpec.describe TranscriptionSummaryComponent, type: :component do
-  pending "add some examples to (or delete) #{__FILE__}"
+  subject { page }
 
-  # it "renders something useful" do
-  #   expect(
-  #     render_inline(described_class.new(attr: "value")) { "Hello, components!" }.css("p").to_html
-  #   ).to include(
-  #     "Hello, components!"
-  #   )
-  # end
+  let(:user) { build_stubbed :user }
+  let(:transcription) { build_stubbed :transcription, summary: }
+  let(:summary) { build_stubbed :summary, status: }
+  let(:bullet_points?) { false }
+  let(:bullet_points) { [] }
+  let(:component) { described_class.new(transcription:) }
+
+  context 'with a summary' do
+    before do
+      allow(summary).to receive(:bullet_points?).and_return(bullet_points?)
+      allow(summary).to receive(:bullet_points).and_return(bullet_points)
+      with_current_user(user) { render_inline(component) }
+    end
+
+    context 'when summary is being generated' do
+      let(:status) { Summary.statuses.slice(:created, :queued, :in_progress).values.sample }
+
+      it { is_expected.to have_css '.alert-info', text: I18n.t('summary.generating') }
+    end
+
+    context 'when the summary is completed' do
+      let(:status) { Summary.statuses[:completed] }
+
+      it 'shows the summary content' do
+        expect(page).to have_content(summary.content)
+      end
+
+      context 'with bullet points' do
+        let(:bullet_points?) { true }
+        let(:bullet_points) { ['bullet 1', 'bullet 2'] }
+
+        it 'shows each bullet point' do
+          bullet_points.each do |bp|
+            expect(page).to have_content bp
+          end
+        end
+      end
+    end
+  end
+
+  context 'when a summary does not exit' do
+    let(:summary) { nil }
+
+    before { with_current_user(user) { render_inline(component) } }
+
+    it { is_expected.to have_button I18n.t('summary.create') }
+  end
 end
