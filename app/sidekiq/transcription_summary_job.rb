@@ -29,5 +29,7 @@ class TranscriptionSummaryJob
         action: :replace
       )
     end
+  rescue ActiveRecord::RecordNotFound => e
+    Rails.logger.warn("#{self.class}: #{e} : transcription_id: #{transcription_id}; user_id: #{user_id}")
   end
 end
