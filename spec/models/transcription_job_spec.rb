@@ -14,7 +14,7 @@ RSpec.describe TranscriptionJob, type: :model do
         allow(TranscriptionDeletionJob).to receive(:perform_async)
       end
 
-      let(:transcription_job) { create :transcription_job, :with_blob, remote_job_id: '20_resdogs.wav' }
+      let(:transcription_job) { create :transcription_job, remote_job_id: '20_resdogs.wav' }
 
       it 'enqueues a job to delete the remote job' do
         transcription_job.destroy

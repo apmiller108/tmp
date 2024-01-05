@@ -4,7 +4,7 @@ RSpec.describe TranscriptionComponent, type: :component do
   let(:user) { build :user, id: 1 }
   let(:component) { described_class.new(transcription:) }
   let(:transcription_job) { build_stubbed :transcription_job, :completed }
-  let(:transcription) { build_stubbed :transcription, :with_blob, transcription_job:, id: 2 }
+  let(:transcription) { build_stubbed :transcription, transcription_job:, id: 2 }
 
   before do
     with_current_user(user) do

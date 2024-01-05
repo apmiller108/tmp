@@ -4,8 +4,8 @@ FactoryBot.define do
     content { Faker::Lorem.paragraph }
     association :transcription_job
 
-    trait :with_blob do
-      active_storage_blob
+    trait :with_summary do
+      summary
     end
   end
 end
