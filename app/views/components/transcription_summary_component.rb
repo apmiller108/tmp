@@ -2,19 +2,19 @@ class TranscriptionSummaryComponent < ApplicationViewComponent
   attr_reader :transcription
 
   delegate :summary, to: :transcription
-  delegate :bullet_points?, :bullet_points, :content, :completed?, :created?, :queued?, :in_progress?,
+  delegate :bullet_points?, :bullet_points, :content, :completed?, :created?, :queued?, :in_progress?, :failed?,
            to: :summary, allow_nil: true
+
+  def self.id(transcription:)
+    "transcription_summary_#{transcription.id}"
+  end
 
   def initialize(transcription:)
     @transcription = transcription
   end
 
   def id
-    if summary
-      dom_id(summary)
-    else
-      "no_summary_#{transcription.id}"
-    end
+    self.class.id(transcription:)
   end
 
   def generating_summary?

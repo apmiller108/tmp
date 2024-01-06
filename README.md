@@ -14,7 +14,8 @@ AI infused note taking application.
 - [x] Transcription for audio files added to message
 - [x] Rename message to memo
 - [x] Add support for diaraized transcriptions
-- [ ] LLM summary of audio transcript
+- [x] LLM summary of audio transcript
+- [ ] Retry failed summary btn
 - [ ] Move items to transcript model, drop response column, persist failure reason only
 - [ ] LLM summary of text selection
 - [ ] Card index view with inline modal creating and editing.

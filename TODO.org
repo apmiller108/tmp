@@ -12,7 +12,8 @@
   CLOSED: [2024-01-04 Thu 21:43]
 * DONE add specs for transcription summary component
   CLOSED: [2024-01-04 Thu 22:18]
-* TODO Handle failed status in transcription summary component
+* DONE Handle failed status in transcription summary component
+  CLOSED: [2024-01-05 Fri 20:32]
 * TODO extract transcription_summary_#{transcription.id} to helper
 * TODO work around memoized bullet points
 * TODO add gin index to active_storage_blobs.content_type

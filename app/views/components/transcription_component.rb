@@ -23,7 +23,7 @@ class TranscriptionComponent < ApplicationViewComponent
   end
 
   def summary_dom_id
-    "transcription_summary_#{transcription.id}"
+    TranscriptionSummaryComponent.id(transcription:)
   end
 
   def download_path

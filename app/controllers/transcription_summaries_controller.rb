@@ -8,8 +8,8 @@ class TranscriptionSummariesController < ApplicationController
         if summary.persisted?
           enqueue_transcription_summary_job(transcription, summary)
           render(
-            turbo_stream: turbo_stream.update(
-              "transcription_summary_#{transcription.id}",
+            turbo_stream: turbo_stream.replace(
+              TranscriptionSummaryComponent.id(transcription:),
               TranscriptionSummaryComponent.new(transcription:).render_in(view_context)
             ),
             status: :created
