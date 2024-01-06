@@ -48,6 +48,7 @@ en:
   summary:
     create: 'Create Summary'
     generating: 'Generating summary'
+    failed: 'Summary failed'
   transcription:
     speaker_id: 'Speaker ID'
     summary: "Summary"

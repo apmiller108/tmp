@@ -2,7 +2,9 @@
   - if summary
     - if generating_summary?
       .alert.alert-info.py-1.my-1.text-center{role: :alert, class: [summary.status, 'i-pulse']}= t('summary.generating')
-    - if bullet_points?
+    - elsif failed?
+      .alert.alert-warning.py-1.my-1.text-center{role: :alert, class: [summary.status]}= t('summary.failed')
+    - elsif bullet_points?
       %ul
         - bullet_points.each do |bp|
           %li= bp
