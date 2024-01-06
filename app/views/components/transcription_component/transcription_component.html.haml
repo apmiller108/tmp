@@ -1,4 +1,4 @@
-.c-transcription#transcription
+.c-transcription#transcription{ data: { controller: 'transcription' } }
   %p.d-flex.justify-content-center
     %button.btn.btn-secondary.px-2.py-1.mb-3.mt-1.text-white{
       id: dom_id(transcription_job),
@@ -47,5 +47,5 @@
             .row
               .col-3= "#{result.speaker_humanized}: "
               .col-9= result.content
-        .card-text.tab-pane.fade{ id: summary_dom_id }
+        .card-text.tab-pane.fade{ id: summary_dom_id, data: { 'transcription-target' => 'transcriptionSummaryTab'} }
           = render TranscriptionSummaryComponent.new(transcription:)

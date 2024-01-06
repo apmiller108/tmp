@@ -14,7 +14,8 @@
   CLOSED: [2024-01-04 Thu 22:18]
 * DONE Handle failed status in transcription summary component
   CLOSED: [2024-01-05 Fri 20:32]
-* TODO extract transcription_summary_#{transcription.id} to helper
+* DONE extract transcription_summary_#{transcription.id} to helper
+  CLOSED: [2024-01-05 Fri 21:46]
 * TODO work around memoized bullet points
 * TODO add gin index to active_storage_blobs.content_type
 * TODO Try summarizing diaraized content

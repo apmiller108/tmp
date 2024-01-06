@@ -34,7 +34,7 @@ module Tmp
     config.after_initialize do
       ActionText::ContentHelper.sanitizer.class.allowed_attributes += %w[
         aria-controls aria-expanded controls data-blob-target data-controller
-        data-bs-target data-bs-toggle data-turbo data-turbo-stream disabled
+        data-bs-target data-bs-toggle data-transcription-target data-turbo data-turbo-stream disabled
         id poster preload style type
       ]
       ActionText::ContentHelper.sanitizer.class.allowed_tags += %w[

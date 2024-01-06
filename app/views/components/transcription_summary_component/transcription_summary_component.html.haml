@@ -1,4 +1,4 @@
-.c-transcription-summary{ id: id }
+.c-transcription-summary{ id: id, data: { controller: 'transcription-summary' } }
   - if summary
     - if generating_summary?
       .alert.alert-info.py-1.my-1.text-center{role: :alert, class: [summary.status, 'i-pulse']}= t('summary.generating')
