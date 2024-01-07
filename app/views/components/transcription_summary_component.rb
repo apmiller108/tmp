@@ -18,6 +18,6 @@ class TranscriptionSummaryComponent < ApplicationViewComponent
   end
 
   def generating_summary?
-    created? || queued? || in_progress?
+    created? || queued? || (in_progress? && content.blank?)
   end
 end
