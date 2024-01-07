@@ -19,7 +19,8 @@ class Transcription
         prev_item = squashed.last
 
         if prev_item.speaker_same_as?(item)
-          prev_item.combine_with(item)
+          prev_item_index = squashed.size - 1
+          squashed[prev_item_index] = prev_item.combine_with(item)
         else
           squashed.push(item)
         end
