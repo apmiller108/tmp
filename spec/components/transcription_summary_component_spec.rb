@@ -7,7 +7,7 @@ RSpec.describe TranscriptionSummaryComponent, type: :component do
 
   let(:user) { build_stubbed :user }
   let(:transcription) { build_stubbed :transcription, summary: }
-  let(:summary) { build_stubbed :summary, status: }
+  let(:summary) { build_stubbed :summary, content:, status: }
   let(:bullet_points?) { false }
   let(:bullet_points) { [] }
   let(:component) { described_class.new(transcription:) }
@@ -20,13 +20,15 @@ RSpec.describe TranscriptionSummaryComponent, type: :component do
     end
 
     context 'when summary is being generated' do
+      let(:content) { '' }
       let(:status) { Summary.statuses.slice(:created, :queued, :in_progress).values.sample }
 
       it { is_expected.to have_css '.alert-info', text: I18n.t('summary.generating') }
     end
 
-    context 'when the summary is completed' do
-      let(:status) { Summary.statuses[:completed] }
+    context 'when the summary has displayable content' do
+      let(:content) { 'summary content' }
+      let(:status) { Summary.statuses.slice(:completed, :in_progress).values.sample }
 
       it 'shows the summary content' do
         expect(page).to have_content(summary.content)
