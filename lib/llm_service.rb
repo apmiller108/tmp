@@ -1,6 +1,10 @@
 class LLMService
   InvalidRequestError = Class.new(StandardError)
 
+  def self.summary_prompt_for(transcription:)
+    Prompt.transcription_summary_prompt(transcription)
+  end
+
   attr_reader :client
 
   def initialize(client = AWS::Client.new)

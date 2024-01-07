@@ -5,7 +5,11 @@ class Transcription
     end
 
     def content
-      @speaker_data.map { |i| Item.new(i) }
+      @content ||= @speaker_data.map { |i| Item.new(i) }
+    end
+
+    def speakers
+      content.map(&:speaker_humanized).uniq
     end
 
     def squash

@@ -6,9 +6,18 @@ class Transcription < ApplicationRecord
   validates_with ReferencesAudioBlobValidator
 
   delegate :items, to: :transcription_job
+  delegate :speakers, to: :speaker_content
 
   def diarized_results
-    SpeakerContent.new(items).squash
+    speaker_content.squash
+  end
+
+  def diarized_results_to_text
+    diarized_results.map(&:to_text).join("\n")
+  end
+
+  def speaker_content
+    @speaker_content ||= SpeakerContent.new(items)
   end
 
   def to_text
@@ -29,7 +38,7 @@ class Transcription < ApplicationRecord
     <<~TEXT.strip
       Speaker ID:
 
-      #{diarized_results.map(&:to_text).join("\n")}
+      #{diarized_results_to_text}
     TEXT
   end
 

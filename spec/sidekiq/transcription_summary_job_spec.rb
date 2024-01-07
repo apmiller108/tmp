@@ -13,7 +13,7 @@ RSpec.describe TranscriptionSummaryJob, type: :job do
                     content: 'response content', final_chunk?: final_chunk?
   end
   let(:final_chunk?) { false }
-  let(:prompt) { format(described_class::SUMMARY_PROMPT, transcription.content) }
+  let(:prompt) { 'transcription summary prompt' }
   let(:transcription_summary_component) { instance_double(TranscriptionSummaryComponent) }
 
   before do
@@ -23,6 +23,7 @@ RSpec.describe TranscriptionSummaryJob, type: :job do
     allow(summary).to receive(:in_progress!)
     allow(summary).to receive(:save!)
     allow(LLMService).to receive(:new).and_return(llm_service)
+    allow(LLMService).to receive(:summary_prompt_for).with(transcription:).and_return(prompt)
     allow(llm_service).to receive(:invoke_model_stream).with(prompt:).and_yield(invoke_model_stream_response)
     allow(ViewComponentBroadcaster).to receive(:call)
     allow(TranscriptionSummaryComponent).to receive(:new).with(transcription:).and_return(transcription_summary_component)
