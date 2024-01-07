@@ -16,6 +16,8 @@
   CLOSED: [2024-01-05 Fri 20:32]
 * DONE extract transcription_summary_#{transcription.id} to helper
   CLOSED: [2024-01-05 Fri 21:46]
+* DONE add gin index to active_storage_blobs.content_type
+  CLOSED: [2024-01-06 Sat 18:48]
+* TODO Try summarizing diaraized content.
+  Only ask for bullets if the transcription is more than n words (n TBD)
 * TODO work around memoized bullet points
-* TODO add gin index to active_storage_blobs.content_type
-* TODO Try summarizing diaraized content

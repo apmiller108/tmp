@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_01_201037) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_07_003530) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_trgm"
   enable_extension "plpgsql"
 
   create_table "action_text_rich_texts", force: :cascade do |t|
@@ -43,6 +44,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_01_201037) do
     t.bigint "byte_size", null: false
     t.string "checksum"
     t.datetime "created_at", null: false
+    t.index ["content_type"], name: "index_active_storage_blobs_on_content_type", opclass: :gin_trgm_ops, using: :gin
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
