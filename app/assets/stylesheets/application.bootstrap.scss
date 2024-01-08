@@ -15,10 +15,11 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 @import 'nav';
 
 // View component style sheets
+@import 'blob_component/blob_component';
+@import 'flash_message_component/flash_message_component';
 @import 'inline_edit_component/inline_edit_component';
 @import 'inline_field_component/inline_field_component';
 @import 'memo_component/memo_component';
-@import 'blob_component/blob_component';
+@import 'memo_card_component/memo_card_component';
 @import 'transcription_component/transcription_component';
-@import 'flash_message_component/flash_message_component';
 

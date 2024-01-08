@@ -1,7 +1,7 @@
 .memos-index
   .container
-    = link_to t('memos.new'), new_user_memo_path(current_user), data: { turbo_stream: 'true'}, class: 'btn btn-primary mb-3'
+    = link_to t('memo.new'), new_user_memo_path(current_user), data: { turbo_stream: 'true'}, class: 'btn btn-primary mb-3'
   .container
     = turbo_stream_from current_user, TurboStreams::STREAMS[:blobs]
-    .list-group#memos
-      = render(MemoComponent.with_collection(@memos))
+    #memos.d-flex.align-items-stretch.justify-content-start.flex-wrap
+      = render(MemoCardComponent.with_collection(@memos))
