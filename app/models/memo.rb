@@ -7,9 +7,10 @@ class Memo < ApplicationRecord
   #   content.embeds_blobs (this is through embeds_attachments)
   has_rich_text :content
 
-  validates :content, presence: true
+  validates :content, :title, presence: true
 
   belongs_to :user, optional: false
   has_many :audio_blobs, -> { audio }, through: :rich_text_content, source: :embeds_blobs
+  has_many :image_blobs, -> { image }, through: :rich_text_content, source: :embeds_blobs
   has_many :transcriptions, through: :audio_blobs
 end

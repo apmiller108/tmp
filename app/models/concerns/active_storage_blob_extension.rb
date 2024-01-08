@@ -11,6 +11,7 @@ module ActiveStorageBlobExtension
     has_one :memo, through: :rich_text
 
     scope :audio, -> { where("content_type like 'audio/%'") }
+    scope :image, -> { where("content_type like 'image/%'") }
     scope :not_transcribed_for, ->(memo_id:) {
       audio
         .joins(attachments: { rich_text: :memo })
