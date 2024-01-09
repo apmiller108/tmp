@@ -1,6 +1,6 @@
 .container
-  .row.justify-content-md-center
-    .col.col-3
+  .grid
+    .g-col-4.g-start-5
       %h2 Log in
       = form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: false }) do |f|
         .field

@@ -1,6 +1,6 @@
 .container
-  .row.justify-content-md-center
-    .col.col-3
+  .grid
+    .g-col-4.g-start-5
       %h2 Sign up
       = form_for(resource, as: resource_name, url: registration_path(resource_name), data: { turbo: false }) do |f|
         = render "users/shared/error_messages", resource: resource
