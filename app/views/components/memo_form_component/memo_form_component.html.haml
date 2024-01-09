@@ -5,7 +5,10 @@
         %ul
           - memo.errors.each do |e|
             %li= e.full_message
-    = form.rich_text_area :content
+    = form.label :title, class: 'form-label'
+    = form.text_field :title, class: 'form-control'
+    %div.mt-3
+      = form.rich_text_area :content
     .inline-action.btn-group.d-flex.justify-content-end.my-3{'role' => :group, 'aria-label' => 'Memo Form'}
       = form.submit submit_value, class: 'btn btn-outline-primary flex-grow-0'
       - if memo.persisted?

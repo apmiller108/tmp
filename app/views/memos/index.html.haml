@@ -3,5 +3,5 @@
     = link_to t('memo.new'), new_user_memo_path(current_user), data: { turbo_stream: 'true'}, class: 'btn btn-primary mb-3'
   .container
     = turbo_stream_from current_user, TurboStreams::STREAMS[:blobs]
-    #memos.d-flex.align-items-stretch.justify-content-start.flex-wrap
+    #memos.grid.grid-auto-height
       = render(MemoCardComponent.with_collection(@memos))

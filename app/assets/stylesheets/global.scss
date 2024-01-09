@@ -40,3 +40,6 @@
 .i-pulse {
   @include glowingPulse($info);
 }
+.grid-auto-height {
+  grid-auto-rows: 1fr;
+}
