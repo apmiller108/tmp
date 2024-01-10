@@ -1,7 +1,9 @@
 :PROPERTIES:
 :CATEGORY: tmp
 :END:
+* TODO Extract a memo modal component
 * TODO remove modal footer
 * TODO Add stimulus controller to memo card component
-* TODO Update the memo body t-frame src attr with the memo show path
+* TODO Update the memo modal body t-frame src attr with the memo show path
+* TODO Update the memo modal title
 * TODO autoAnimate modal content
