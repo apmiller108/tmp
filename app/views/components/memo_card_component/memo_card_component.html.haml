@@ -1,11 +1,14 @@
-.c-memo-card.card.text-bg-light.g-col-4
+.c-memo-card.card.text-bg-light.g-col-4{ data: { controller: 'memo-card' }}
   .card-body
     .grid
       .g-col-9
-        %h4.card-title= title
+        %h4.card-title{ data: { 'memo-card-target' => 'title' }}= title
         %h6.card-subtitle.text-body-secondary.mb-2= "Created #{created_at} ago"
         %h6.card-subtitle.text-body-secondary.mb-2= "Updated #{updated_at} ago"
       .g-col-3.text-end
-        %button.btn.btn-outline-secondary{data: { "bs-toggle" => "modal", "bs-target" => "#memo-modal" }}
+        %button.btn.btn-outline-secondary{data: { "bs-toggle" => "modal",
+                                                  "bs-target" => "#memo-modal",
+                                                   action: 'click->memo-card#expand',
+                                                   path: user_memo_path(current_user, memo.id) }}
           %i.bi-arrows-angle-expand
     %p.card-text= preview_text
