@@ -1,4 +1,5 @@
 %div
   = link_to t('memos.index'), user_memos_path(current_user)
 %div
-  = render MemoComponent.new(memo: @memo)
+  = tag.turbo_frame id: 'memo-modal-body', loading: :lazy do
+    = render MemoComponent.new(memo: @memo)
