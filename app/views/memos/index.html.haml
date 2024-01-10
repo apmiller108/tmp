@@ -7,14 +7,16 @@
       = render(MemoCardComponent.with_collection(@memos))
 
 #memo-modal.modal.fade{aria: { hidden: true, labelledby: "memo-modal-label" }, tabindex: -1}
-  .modal-dialog
+  .modal-dialog.modal-xl
     .modal-content
       .modal-header
         %h1#memo-modal-label.modal-title.fs-5 Modal title
         %button.btn-close{aria: { label: "Close"}, data: { "bs-dismiss" => "modal" }, type: :button}
       .modal-body
-        = tag.turbo_frame id: 'memo-modal-body', loading: :lazy, src: user_memo_path(current_user, 16)
-
+        = tag.turbo_frame id: 'memo-modal-body', loading: :lazy, src: user_memo_path(current_user, 16) do
+          .d-flex.justify-content-center
+            .spinner-border.text-primary{ role: :status }
+              %span.visually-hidden Loading memo...
       .modal-footer
         %button.btn.btn-secondary{data: { "bs-dismiss" => "modal" }, type: :button} Close
         %button.btn.btn-primary{type: :button} Edit
