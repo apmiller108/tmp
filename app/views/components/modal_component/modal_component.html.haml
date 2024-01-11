@@ -1,0 +1,14 @@
+.c-modal.modal.fade{aria: { hidden: true, labelledby: "memo-modal-label" }, tabindex: -1, id: id}
+  .modal-dialog{ class: bs_size_class }
+    .modal-content
+      .modal-header
+        %h1.modal-title.fs-5 Modal title
+        %button.btn-close{aria: { label: "Close"}, data: { "bs-dismiss" => "modal" }, type: :button}
+      .modal-body
+        = tag.turbo_frame id: body_turbo_frame_id, loading: :lazy, src: nil do
+          .d-flex.justify-content-center
+            .spinner-border.text-primary{ role: :status }
+              %span.visually-hidden Loading...
+      .modal-footer
+        %button.btn.btn-secondary{data: { "bs-dismiss" => "modal" }, type: :button} Close
+        %button.btn.btn-primary{type: :button} Edit
