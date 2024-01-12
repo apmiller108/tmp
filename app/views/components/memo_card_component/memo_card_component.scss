@@ -1,4 +1,5 @@
 .c-memo-card {
+  @include clickableThing;
   .card-title {
     white-space: nowrap;
     overflow: hidden;

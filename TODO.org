@@ -7,9 +7,12 @@
   - [X] listen for event to populate title and src
 * DONE autoAnimate modal content
   CLOSED: [2024-01-11 Thu 18:13]
-* TODO switch from memo card to just card component
 * DONE Add stimulus controller to memo card component
   CLOSED: [2024-01-10 Wed 21:22]
+* DONE Remove expand button. Make the entire card open the modal.
+  CLOSED: [2024-01-11 Thu 18:56]
+* TODO Add tooltip to show more of the memo content
+* TODO switch from memo card to just card component
 * TODO update card when memo is updated
 * TODO add spec for card component
 * TODO add spec for modal component
