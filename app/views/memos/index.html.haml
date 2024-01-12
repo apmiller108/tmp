@@ -1,5 +1,6 @@
 .memos-index
   .container
+    -# %button.btn.btn-primary.mb-3{ data: { 'bs-toggle' } }
     = link_to t('memo.new'), new_user_memo_path(current_user), data: { turbo_stream: 'true'}, class: 'btn btn-primary mb-3'
   .container
     = turbo_stream_from current_user, TurboStreams::STREAMS[:blobs]
