@@ -19,23 +19,27 @@ class MemosController < ApplicationController
 
   def create
     @memo = current_user.memos.create(memo_params)
-    status = @memo.persisted? ? :created : :unprocessable_entity
     respond_to do |format|
-      format.turbo_stream do
-        render(
-          turbo_stream: turbo_stream.replace('new_memo', component_for(memo: @memo).render_in(view_context)),
-          status:
-        )
-      end
-      format.html do
-        if @memo.persisted?
-          redirect_to user_memo_path(current_user, @memo)
-        else
-          render :new, status:
+      if @memo.persisted?
+        format.turbo_stream do
+          render(
+            turbo_stream: [
+              turbo_stream.replace('new_memo', memo_component.render_in(view_context)),
+              turbo_stream.prepend('memos', memo_card_component.render_in(view_context))
+            ],
+            status: :created
+          )
         end
+        format.html { redirect_to user_memo_path(current_user, @memo) }
+        TranscribableContentHandlerJob.perform_async(@memo.id)
+      else
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace('new_memo', memo_form_component.render_in(view_context)),
+                 status: :unprocessable_entity
+        end
+        format.html { render :new, status: :unprocessable_entity }
       end
     end
-    TranscribableContentHandlerJob.perform_async(@memo.id) if @memo.persisted?
   end
 
   def edit
