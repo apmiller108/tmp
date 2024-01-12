@@ -2,6 +2,7 @@
 
 class ModalComponent < ApplicationViewComponent
   renders_one :footer
+  renders_one :title
 
   attr_reader :id, :size
 

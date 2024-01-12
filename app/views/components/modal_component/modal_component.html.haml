@@ -5,7 +5,9 @@
   .modal-dialog{ class: bs_size_class }
     .modal-content
       .modal-header
-        %h1.modal-title.fs-5{ data: { 'modal-target' => 'title' }} Modal title
+        -if title?
+          %h1.modal-title.fs-5
+            = title
         %button.btn-close{aria: { label: "Close"}, data: { "bs-dismiss" => "modal" }, type: :button}
       .modal-body
         = tag.turbo_frame id: body_turbo_frame_id, loading: :lazy, src: nil, data: { 'modal-target' => 'bodyTurboFrame' } do

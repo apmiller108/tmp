@@ -1,4 +1,5 @@
 = tag.turbo_frame(id: id, class: 'c-memo') do
+  %h1= memo.title
   = memo.content
   .btn-group.d-flex.justify-content-end.my-3{'role' => :group, 'aria-label' => 'Memo Actions'}
     = link_to t('memo.edit'), edit_user_memo_path(current_user, memo), class: 'btn btn-outline-primary flex-grow-0'
