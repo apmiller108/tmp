@@ -70,7 +70,7 @@ RSpec.describe 'Memos', type: :request do
   describe 'POST /create' do
     let(:request) { post "/users/#{user.id}/memos", headers:, params: }
     let(:headers) {}
-    let(:params) { { memo: { content: '<div>Foo</div>' } } }
+    let(:params) { { memo: { content: '<div>Foo</div>', title: 'memo title' } } }
 
     before do
       allow(TranscribableContentHandlerJob).to receive(:perform_async)
@@ -114,7 +114,7 @@ RSpec.describe 'Memos', type: :request do
 
       it 'renders the memo component' do
         expect(response).to have_turbo_stream(action: 'replace', target: 'new_memo') {
-          assert_select 'div.c-memo'
+          assert_select '.c-memo'
         }
       end
 
