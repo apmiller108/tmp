@@ -15,7 +15,11 @@ export default class extends Controller {
   connect() {
     this.element.dataset.action = 'modal-opener:openModal@window->modal#onOpenModal modal-closer:closeModal@window->modal#onCloseModal'
     autoAnimate(this.bodyTurboFrameTarget)
-    this.observer.observe(this.bodyTurboFrameTarget, { childList: true, subtree: true });
+    this.observer.observe(this.bodyTurboFrameTarget, { childList: true, subtree: true })
+
+    this.element.addEventListener('hide.bs.modal', (event) => {
+      this.reset()
+    });
   }
 
   onOpenModal({ detail: { src }}) {
@@ -23,6 +27,14 @@ export default class extends Controller {
   }
 
   onCloseModal() {
-    this.closeButtonTarget.click();
+    this.closeButtonTarget.click()
+  }
+
+  onCloseButtonClick(e) {
+  }
+
+  reset() {
+    delete this.bodyTurboFrameTarget.src
+    this.bodyTurboFrameTarget.innerHTML = ''
   }
 }

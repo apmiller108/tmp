@@ -1,8 +1,7 @@
-.c-transcription-job{ id: dom_id(transcription_job) }
+.c-transcription-job
   - if completed?
     .d-flex.justify-content-center.mb-3.mt-1
-      = link_to status_message, transcriptions_path,
-        class: 'btn btn-secondary text-white px-2 py-1', data: { 'turbo-stream' => true }
+      = link_to status_message, transcriptions_path, class: 'btn btn-secondary text-white px-2 py-1'
   - elsif failed?
     .alert.alert-warning{role: :alert, class: [status]}= status_message
   - else
