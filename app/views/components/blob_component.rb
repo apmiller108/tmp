@@ -4,14 +4,15 @@ class BlobComponent < ApplicationViewComponent
   DEFAULT_IMAGE_SIZE = [1024, 768].freeze
   GALLERY_IMAGE_SIZE = [800, 600].freeze
 
-  attr_reader :blob, :in_gallery
+  attr_reader :blob, :in_gallery, :user
 
   delegate :audio?, :byte_size, :content_type, :filename, :representable?, :representation,
            :transcription_job, :url, to: :blob
 
-  def initialize(blob:, in_gallery: true)
+  def initialize(blob:, in_gallery: true, user: current_user)
     @blob = blob
     @in_gallery = in_gallery
+    @user = user
   end
 
   def id
