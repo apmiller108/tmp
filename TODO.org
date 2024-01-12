@@ -11,8 +11,14 @@
   CLOSED: [2024-01-10 Wed 21:22]
 * DONE Remove expand button. Make the entire card open the modal.
   CLOSED: [2024-01-11 Thu 18:56]
+* TODO remote title from modal. Render title as part of memo component.
+* TODO Render new in modal [0/3]
+  - [ ] Render the new form in the modal
+  - [ ] On create replace the new form with the show
+  - [ ] prepend a modal card to the list
 * TODO Add tooltip to show more of the memo content
+* DONE update card when memo is updated
+  CLOSED: [2024-01-11 Thu 22:02]
 * TODO switch from memo card to just card component
-* TODO update card when memo is updated
 * TODO add spec for card component
 * TODO add spec for modal component

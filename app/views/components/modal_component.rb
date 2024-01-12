@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ModalComponent < ApplicationViewComponent
+  renders_one :footer
+
   attr_reader :id, :size
 
   def initialize(id:, size: nil)

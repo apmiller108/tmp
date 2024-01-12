@@ -12,6 +12,6 @@
           .d-flex.justify-content-center
             .spinner-border.text-primary{ role: :status }
               %span.visually-hidden Loading...
-      .modal-footer
-        %button.btn.btn-secondary{data: { "bs-dismiss" => "modal" }, type: :button} Close
-        %button.btn.btn-primary{type: :button} Edit
+      - if footer?
+        .modal-footer
+          = footer

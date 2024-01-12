@@ -45,11 +45,27 @@ class MemosController < ApplicationController
   def update
     @memo = current_user.memos.find(params[:id])
 
-    if @memo.update(memo_params)
-      redirect_to user_memo_path(current_user, @memo)
-      TranscribableContentHandlerJob.perform_async(@memo.id)
-    else
-      render :edit, status: :unprocessable_entity
+    respond_to do |format|
+      if @memo.update(memo_params)
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.replace(memo_component.id, memo_component.render_in(view_context)),
+            turbo_stream.replace(memo_card_component.id, memo_card_component.render_in(view_context))
+          ], status: :ok
+        end
+
+        format.html do
+          redirect_to user_memo_path(current_user, @memo)
+        end
+        TranscribableContentHandlerJob.perform_async(@memo.id)
+      else
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(memo_card.component.id, memo_card_component.render_in(view_context))
+        end
+        format.html do
+          render :edit, status: :unprocessable_entity
+        end
+      end
     end
   end
 
@@ -71,11 +87,23 @@ class MemosController < ApplicationController
   private
 
   def component_for(memo:)
-    if memo.persisted?
+    if memo.valid?
       MemoComponent.new(memo: @memo)
     else
       MemoFormComponent.new(memo: @memo)
     end
+  end
+
+  def memo_component
+    @memo_component ||= MemoComponent.new(memo: @memo)
+  end
+
+  def memo_form_component
+    @memo_form_component ||= MemoFormComponent.new(memo: @memo)
+  end
+
+  def memo_card_component
+    @memo_card_component ||= MemoCardComponent.new(memo: @memo)
   end
 
   def memo_params

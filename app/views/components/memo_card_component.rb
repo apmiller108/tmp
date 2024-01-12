@@ -11,6 +11,10 @@ class MemoCardComponent < ApplicationViewComponent
     @memo = memo
   end
 
+  def id
+    "card_#{dom_id(memo)}"
+  end
+
   def preview_text
     content.to_plain_text.truncate_words(10)
   end
