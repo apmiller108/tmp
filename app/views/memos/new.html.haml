@@ -1,4 +1,5 @@
 %div
   = link_to t('memos'), user_memos_path(current_user)
 %div
-  = render MemoFormComponent.new(memo: @memo)
+  = tag.turbo_frame id: ModalComponent.turbo_frame_body_id do
+    = render MemoFormComponent.new(memo: @memo)

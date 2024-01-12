@@ -1,9 +1,9 @@
 .memos-index
   .container
-    -# %button.btn.btn-primary.mb-3{ data: { 'bs-toggle' } }
-    = link_to t('memo.new'), new_user_memo_path(current_user), data: { turbo_stream: 'true'}, class: 'btn btn-primary mb-3'
+    %button.btn.btn-primary.mb-3{ data: { controller: 'modal-opener', modal: ModalComponent.id, src: new_user_memo_path(current_user) } }
+      = t('memo.new')
   .container
     = turbo_stream_from current_user, TurboStreams::STREAMS[:blobs]
     #memos.grid.grid-auto-height
       = render(MemoCardComponent.with_collection(@memos))
-= render ModalComponent.new(id: 'memo-modal', size: :xl)
+= render ModalComponent.new(size: :xl)

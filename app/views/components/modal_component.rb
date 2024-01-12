@@ -4,10 +4,17 @@ class ModalComponent < ApplicationViewComponent
   renders_one :footer
   renders_one :title
 
-  attr_reader :id, :size
+  def self.id
+    'tmp-modal'
+  end
 
-  def initialize(id:, size: nil)
-    @id = id
+  def self.turbo_frame_body_id
+    "#{id}-body"
+  end
+
+  attr_reader :size
+
+  def initialize(size: nil)
     @size = size
   end
 
@@ -15,9 +22,5 @@ class ModalComponent < ApplicationViewComponent
     return '' if size.blank?
 
     "modal-#{size}"
-  end
-
-  def body_turbo_frame_id
-    "#{id}-body"
   end
 end
