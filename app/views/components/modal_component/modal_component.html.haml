@@ -1,14 +1,14 @@
 .c-modal.modal.fade{aria: { hidden: true, labelledby: "memo-modal-label" },
                     tabindex: -1,
                     id: self.class.id,
-                    data: { controller: :modal, action: 'modal-opener:openModal@window->modal#onOpenModal' }}
+                    data: { controller: :modal }}
   .modal-dialog{ class: bs_size_class }
     .modal-content
       .modal-header
         -if title?
           %h1.modal-title.fs-5
             = title
-        %button.btn-close{aria: { label: "Close"}, data: { "bs-dismiss" => "modal" }, type: :button}
+        %button.btn-close{aria: { label: "Close"}, data: { "bs-dismiss" => "modal", 'modal-target' => 'closeButton' }, type: :button}
       .modal-body
         = tag.turbo_frame id: self.class.turbo_frame_body_id, loading: :lazy, src: nil, data: { 'modal-target' => 'bodyTurboFrame' } do
           .d-flex.justify-content-center
