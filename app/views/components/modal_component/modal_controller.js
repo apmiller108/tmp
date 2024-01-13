@@ -4,6 +4,8 @@ import autoAnimate from '@formkit/auto-animate'
 export default class extends Controller {
   static targets = ['bodyTurboFrame', 'closeButton']
 
+  onOpenLister = 'modal-opener:openModal@window->modal#onOpenModal'
+  onCloseListner = 'modal-closer:closeModal@window->modal#onCloseModal'
   observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
       if (this.bodyTurboFrameTarget.innerHTML.trim() === '') {
@@ -13,13 +15,11 @@ export default class extends Controller {
   })
 
   connect() {
-    this.element.dataset.action = 'modal-opener:openModal@window->modal#onOpenModal modal-closer:closeModal@window->modal#onCloseModal'
-    autoAnimate(this.bodyTurboFrameTarget)
+    this.element.dataset.action = [this.onOpenLister, this.onCloseListner].join(' ')
+    this.element.addEventListener('hide.bs.modal', e => this.reset(e));
     this.observer.observe(this.bodyTurboFrameTarget, { childList: true, subtree: true })
 
-    this.element.addEventListener('hide.bs.modal', (event) => {
-      this.reset()
-    });
+    autoAnimate(this.bodyTurboFrameTarget)
   }
 
   onOpenModal({ detail: { src }}) {
@@ -30,10 +30,7 @@ export default class extends Controller {
     this.closeButtonTarget.click()
   }
 
-  onCloseButtonClick(e) {
-  }
-
-  reset() {
+  reset(_e) {
     delete this.bodyTurboFrameTarget.src
     this.bodyTurboFrameTarget.innerHTML = ''
   }

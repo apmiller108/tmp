@@ -9,7 +9,7 @@
           %h1.modal-title.fs-5
             = title
         %button.btn-close{aria: { label: "Close"},
-                          data: { "bs-dismiss" => "modal", 'modal-target' => 'closeButton', 'action' => 'click->modal#onCloseButtonClick' },
+                          data: { "bs-dismiss" => "modal", 'modal-target' => 'closeButton' },
                           type: :button}
       .modal-body
         = tag.turbo_frame id: self.class.turbo_frame_body_id, loading: :lazy, src: nil, data: { 'modal-target' => 'bodyTurboFrame' } do
