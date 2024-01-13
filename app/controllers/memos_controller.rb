@@ -1,8 +1,14 @@
 class MemosController < ApplicationController
+  include Pagy::Backend
+
   def index
-    @memos = current_user.memos
-                         .with_rich_text_content_and_embeds
-                         .order(created_at: :desc)
+    @pagy, @memos = pagy_countless(current_user.memos
+                                               .with_rich_text_content_and_embeds
+                                               .order(created_at: :desc), items: 10)
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 
   def show
@@ -74,12 +80,12 @@ class MemosController < ApplicationController
   end
 
   def destroy
-    memo = current_user.memos.find(params[:id])
-    memo.destroy
+    @memo = current_user.memos.find(params[:id])
+    @memo.destroy
     respond_to do |format|
       format.turbo_stream do
         if request.referrer == user_memos_url(current_user)
-          render turbo_stream: turbo_stream.remove(memo)
+          render turbo_stream: [turbo_stream.remove(@memo), turbo_stream.remove(memo_card_component.id)]
         else
           redirect_to user_memos_path(current_user), status: :see_other, notice: 'Memo was deleted'
         end

@@ -13,13 +13,18 @@
   CLOSED: [2024-01-11 Thu 18:56]
 * DONE remote title from modal. Render title as part of memo component.
   CLOSED: [2024-01-12 Fri 12:28]
-* TODO Render new in modal [0/3]
-  - [ ] Render the new form in the modal
-  - [ ] On create replace the new form with the show
-  - [ ] prepend a modal card to the list
-* TODO Add tooltip to show more of the memo content
+* DONE Render new in modal [3/3]
+  CLOSED: [2024-01-12 Fri 19:42]
+  - [X] Render the new form in the modal
+  - [X] On create replace the new form with the show
+  - [X] prepend a modal card to the list
 * DONE update card when memo is updated
   CLOSED: [2024-01-11 Thu 22:02]
-* TODO switch from memo card to just card component
-* TODO add spec for card component
+* DONE Remove card from the list on delete
+  CLOSED: [2024-01-12 Fri 19:52]
+* DONE Infinite scroll
+  CLOSED: [2024-01-13 Sat 00:42]
+* TODO animate index
+* TODO Add tooltip to show more of the memo content
+* TODO add spec for memo card component
 * TODO add spec for modal component

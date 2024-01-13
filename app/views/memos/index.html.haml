@@ -1,9 +1,11 @@
 .memos-index
+  = turbo_stream_from current_user, TurboStreams::STREAMS[:blobs]
+  = render ModalComponent.new(size: :xl)
   .container
-    %button.btn.btn-primary.mb-3{ data: { controller: 'modal-opener', modal: ModalComponent.id, src: new_user_memo_path(current_user) } }
+    %button.btn.btn-primary.mb-3{ data: { controller: 'modal-opener',
+                                          modal: ModalComponent.id,
+                                          src: new_user_memo_path(current_user) } }
       = t('memo.new')
   .container
-    = turbo_stream_from current_user, TurboStreams::STREAMS[:blobs]
     #memos.grid.grid-auto-height
-      = render(MemoCardComponent.with_collection(@memos))
-= render ModalComponent.new(size: :xl)
+    = turbo_frame_tag "pagination", src: user_memos_path(current_user, format: :turbo_stream), loading: :lazy
