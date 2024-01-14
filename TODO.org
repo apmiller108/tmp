@@ -24,7 +24,9 @@
   CLOSED: [2024-01-12 Fri 19:52]
 * DONE Infinite scroll
   CLOSED: [2024-01-13 Sat 00:42]
-* TODO animate index
+* DONE extract infinite scroll component
+  CLOSED: [2024-01-14 Sun 11:09]
 * TODO Add tooltip to show more of the memo content
 * TODO add spec for memo card component
 * TODO add spec for modal component
+* TODO add spec for pagination component

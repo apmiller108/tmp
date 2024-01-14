@@ -1,5 +1,4 @@
-= turbo_stream.append "memos" do
-  = render(MemoCardComponent.with_collection(@memos))
-- if @pagy.next.present?
-  = turbo_stream.replace "pagination" do
-    = turbo_frame_tag "pagination", src: user_memos_path(current_user, page: @pagy.next, format: :turbo_stream), loading: :lazy
+= render PaginationComponent.new(pagy: @pagy, container_id: :memos,
+                                 path: [:user_memos_path, current_user]) do |pagination|
+  = pagination.with_component do
+    = render MemoCardComponent.with_collection(@memos)

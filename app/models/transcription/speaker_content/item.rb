@@ -29,7 +29,6 @@ class Transcription
 
       # Humanized speaker name
       #
-      # @param [String] spk_0, spk_1, ...etc
       # @return [String] Speaker 1, Speaker 2, ...etc
       def speaker_humanized
         speaker_num = speaker.split('_').last.to_i + 1

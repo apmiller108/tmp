@@ -7,5 +7,7 @@
                                           src: new_user_memo_path(current_user) } }
       = t('memo.new')
   .container
-    #memos.grid.grid-auto-height
-    = turbo_frame_tag "pagination", src: user_memos_path(current_user, format: :turbo_stream), loading: :lazy
+    = render PaginationComponent.new(path: [:user_memos_path, current_user]) do |pagination|
+      = pagination.with_container do
+        #memos.grid.grid-auto-height
+
