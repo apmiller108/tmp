@@ -1,5 +1,5 @@
 - if container && !component
-  #pagination-container
+  #pagination-container{ data: { controller: :pagination }}
     = container
     = pagination_turbo_frame
 - elsif component && !container
