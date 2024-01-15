@@ -22,7 +22,11 @@ class PaginationComponent < ApplicationViewComponent
   end
 
   def pagination_turbo_frame
-    turbo_frame_tag 'pagination', src: collection_path, loading: :lazy
+    turbo_frame_tag 'pagination', class: 'd-flex justify-content-center', src: collection_path, loading: :lazy do
+      tag.div(class: 'spinner-border text-primary my-3', role: :status) do
+        tag.span('Loading...', class: 'visually-hidden')
+      end
+    end
   end
 
   private
