@@ -1,12 +1,12 @@
 - if container && !component
-  #pagination-container{data: { controller: :pagination }}
+  #pagination-container
     = container
     = pagination_turbo_frame
 - elsif component && !container
   %turbo-stream{action: :append, target: container_id}
     %template
       = component
-  - if pagy.next.present?
     %turbo-stream{action: :replace, target: :pagination}
       %template
-        = pagination_turbo_frame
+        - if cursor.present?
+          = pagination_turbo_frame

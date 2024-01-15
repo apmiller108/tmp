@@ -4,17 +4,16 @@ class PaginationComponent < ApplicationViewComponent
   renders_one :container
   renders_one :component
 
-  attr_reader :container_id, :pagy, :path
+  attr_reader :container_id, :cursor, :path
 
   # @param path [Array] contains method name and args for path helper to
   #   generate the path to the resource.
   # @param container_id [String] the DOM id of the element containing the items.
   #   Required when using the component slot.
-  # @param pagy [Pagy] pagy pagination library (obj that responds to `next`).
-  #   Required when using the component slot.
-  def initialize(path:, container_id: nil, pagy: nil)
+  # @param cursor [Integer] cursor for paginating the query. Used a query param.
+  def initialize(path:, container_id: nil, cursor: nil)
     @container_id = container_id
-    @pagy = pagy
+    @cursor = cursor
     @path = path
   end
 
@@ -29,6 +28,6 @@ class PaginationComponent < ApplicationViewComponent
   private
 
   def path_options
-    { page: (pagy&.next if component), format: :turbo_stream }.compact
+    { c: (cursor if component), format: :turbo_stream }.compact
   end
 end

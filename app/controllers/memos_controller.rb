@@ -1,10 +1,7 @@
 class MemosController < ApplicationController
-  include Pagy::Backend
-
   def index
-    @pagy, @memos = pagy_countless(current_user.memos
-                                               .with_rich_text_content_and_embeds
-                                               .order(created_at: :desc), items: 10)
+    @memos = current_user.memos.with_rich_text_content_and_embeds.order(created_at: :desc)
+    @memos, @cursor = Paginate.call(relation: @memos, limit: 20, cursor: params[:c])
     respond_to do |format|
       format.html
       format.turbo_stream

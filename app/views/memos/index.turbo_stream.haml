@@ -1,4 +1,4 @@
-= render PaginationComponent.new(pagy: @pagy, container_id: :memos,
+= render PaginationComponent.new(cursor: @cursor, container_id: :memos,
                                  path: [:user_memos_path, current_user]) do |pagination|
   = pagination.with_component do
     = render MemoCardComponent.with_collection(@memos)
