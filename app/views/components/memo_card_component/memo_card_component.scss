@@ -1,4 +1,5 @@
 .c-memo-card {
+  background-color: $light;
   @include clickableThing;
   .card-title {
     white-space: nowrap;

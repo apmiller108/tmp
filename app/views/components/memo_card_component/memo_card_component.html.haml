@@ -1,11 +1,13 @@
-.c-memo-card.card.text-bg-light.g-col-12.g-col-md-6.g-col-lg-4{ id: id,
-                                                                data: { controller: 'modal-opener',
-                                                                        modal: ModalComponent.id,
-                                                                        src: user_memo_path(current_user, memo.id) }}
+.c-memo-card.card.g-col-12.g-col-md-6.g-col-lg-4{ id: id,
+                                                  data: { controller: 'modal-opener memo-card',
+                                                          modal: ModalComponent.id,
+                                                          src: user_memo_path(current_user, memo.id) }}
   .card-body
     .grid
       .g-col-12
         %h4.card-title= title
         %h6.card-subtitle.text-body-secondary.mb-2= "Created #{created_at} ago"
         %h6.card-subtitle.text-body-secondary.mb-2= "Updated #{updated_at} ago"
-    %p.card-text= preview_text
+    %p.card-text{data: { 'bs-toggle' => 'tooltip',
+                         'bs-title' => expanded_preview_text,
+                         'memo-card-target' => 'cardText' }}= preview_text

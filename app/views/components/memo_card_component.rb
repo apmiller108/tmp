@@ -19,6 +19,10 @@ class MemoCardComponent < ApplicationViewComponent
     content.to_plain_text.truncate_words(10)
   end
 
+  def expanded_preview_text
+    content.to_plain_text.truncate_words(30)
+  end
+
   def created_at
     time_ago_in_words(memo.created_at)
   end
