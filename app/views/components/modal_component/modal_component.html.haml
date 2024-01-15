@@ -12,7 +12,8 @@
                           data: { "bs-dismiss" => "modal", 'modal-target' => 'closeButton' },
                           type: :button}
       .modal-body
-        = tag.turbo_frame id: self.class.turbo_frame_body_id, loading: :lazy, src: nil, data: { 'modal-target' => 'bodyTurboFrame' } do
+        = tag.turbo_frame(id: self.class.turbo_frame_body_id, src: nil,
+                          data: { 'modal-target' => 'bodyTurboFrame' }, loading: :lazy) do
           .d-flex.justify-content-center
             .spinner-border.text-primary{ role: :status }
               %span.visually-hidden Loading...

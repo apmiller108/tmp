@@ -3,10 +3,13 @@ AI infused note taking application.
 
 ## Features
 - Add and transcribe audio
+- Summarize audio transcriptions
 
 ## Planned
-- Summaries
 - Text to Image
+- Generate text
+- Video playback
+- PDF rendering
 - Export
 - Sharing
 

@@ -1,12 +1,16 @@
-- if container && !component
+- if container && !list
   #pagination-container{ data: { controller: :pagination }}
     = container
-    = pagination_turbo_frame
-- elsif component && !container
+    %turbo-frame#pagination.d-flex.justify-content-center{ src: collection_path, loading: :lazy }
+      .spinner-border.text-primary.my-3{ role: :status}
+        %span.visually-hidden Loading...
+- elsif list && !container
   %turbo-stream{action: :append, target: container_id}
     %template
-      = component
-    %turbo-stream{action: :replace, target: :pagination}
-      %template
-        - if cursor.present?
-          = pagination_turbo_frame
+      = list
+  %turbo-stream{action: :replace, target: :pagination}
+    %template
+      - if cursor.present?
+        %turbo-frame#pagination.d-flex.justify-content-center{ src: collection_path, loading: :lazy }
+          .spinner-border.text-primary.my-3{ role: :status}
+            %span.visually-hidden Loading...
