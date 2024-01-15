@@ -16,7 +16,7 @@ RSpec.describe MemoCardComponent, type: :component do
   end
 
   it 'is a modal opener' do
-    expect(page).to have_css ".c-memo-card[data-controller='modal-opener'][data-modal='#{ModalComponent.id}']"\
+    expect(page).to have_css ".c-memo-card[data-controller='modal-opener memo-card'][data-modal='#{ModalComponent.id}']"\
                              "[data-src='#{user_memo_path(user, memo)}']"
   end
 

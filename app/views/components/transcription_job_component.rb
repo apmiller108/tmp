@@ -12,6 +12,8 @@ class TranscriptionJobComponent < ApplicationViewComponent
     t('transcription.status', status: transcription_job.status).humanize
   end
 
+  # Explicitly calling path helper on the url_helpers module so this can be
+  # broadcast from a background job.
   def transcriptions_path
     Rails.application.routes.url_helpers.user_transcription_job_transcriptions_path(user, transcription_job)
   end
