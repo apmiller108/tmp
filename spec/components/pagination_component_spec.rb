@@ -9,7 +9,7 @@ RSpec.describe PaginationComponent, type: :component do
   let(:path) { [:user_memos_path, user] }
 
   before do
-    puts render_inline component
+    render_inline component
   end
 
   context 'with container slot content' do
@@ -23,7 +23,7 @@ RSpec.describe PaginationComponent, type: :component do
     it { is_expected.to have_css '#pagination-container[data-controller="pagination"]' }
     it { is_expected.to have_css "##{container_id}" }
     it { is_expected.to have_css "turbo-frame#pagination[src='#{src}'][loading='lazy']" }
-    it { is_expceded.to have_css '.spinner-border' }
+    it { is_expected.to have_css '.spinner-border' }
   end
 
   context 'with list slot content' do

@@ -32,7 +32,7 @@ RSpec.describe TranscriptionRetrievalJob, type: :job do
       allow(TranscriptionService).to receive(:get_transcription).with(transcript_file_uri).and_return(transcript_response)
       allow(Transcription).to receive(:create!)
       allow(Rails.logger).to receive(:warn)
-      allow(BlobComponent).to receive(:new).with(blob: active_storage_blob).and_return(blob_component)
+      allow(BlobComponent).to receive(:new).with(blob: active_storage_blob, user: memo.user).and_return(blob_component)
       allow(ViewComponentBroadcaster).to receive(:call)
       allow(active_storage_blob).to receive(:memo).and_return(memo)
       allow(User).to receive(:find).with(memo.user_id).and_return(memo.user)
