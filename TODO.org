@@ -31,5 +31,6 @@
   CLOSED: [2024-01-15 Mon 11:08]
 * DONE add spec for modal component
   CLOSED: [2024-01-15 Mon 11:39]
-* TODO add spec for pagination component
+* DONE add spec for pagination component
+  CLOSED: [2024-01-15 Mon 13:44]
 * TODO add spec for Paginate

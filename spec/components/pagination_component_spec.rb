@@ -20,7 +20,7 @@ RSpec.describe PaginationComponent, type: :component do
     end
     let(:src) { "/users/#{user.id}/memos.turbo_stream" }
 
-    it { is_expected.to have_css '#pagination-container[data-controller="pagination"]'}
+    it { is_expected.to have_css '#pagination-container[data-controller="pagination"]' }
     it { is_expected.to have_css "##{container_id}" }
     it { is_expected.to have_css "turbo-frame#pagination[src='#{src}'][loading='lazy']" }
     it { is_expceded.to have_css '.spinner-border' }
