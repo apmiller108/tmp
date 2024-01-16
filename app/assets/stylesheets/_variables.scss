@@ -25,5 +25,8 @@ $custom-colors: (
   "accent3": $accent3,
 );
 
+// Disable traditional Bootstrap grid; Enable CSS grid based Bootstrap grid.
 $enable-grid-classes: false;
 $enable-cssgrid: true;
+
+$tooltip-max-width: 20rem;
