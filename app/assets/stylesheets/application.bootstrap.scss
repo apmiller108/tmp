@@ -22,4 +22,5 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 @import 'memo_component/memo_component';
 @import 'memo_card_component/memo_card_component';
 @import 'transcription_component/transcription_component';
+@import 'wysiwyg_editor_component/wysiwyg_editor_component';
 

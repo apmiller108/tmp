@@ -38,7 +38,7 @@ module Tmp
         id poster preload style type
       ]
       ActionText::ContentHelper.sanitizer.class.allowed_tags += %w[
-        audio embed iframe source video button turbo-frame
+        audio embed iframe source video button turbo-frame mark
       ]
     end
 
