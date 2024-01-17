@@ -4,4 +4,19 @@
       text-indent: 0;
     }
   }
+  .trix-dialogs {
+    .trix-dialog--heading {
+      &.trix-custom-heading {
+        max-width: 14rem;
+        .trix-button-group {
+          margin: 0;
+        }
+        .trix-dialog-hidden__input {
+          z-index: -1;
+          opacity: 0;
+          position: absolute;
+        }
+      }
+    }
+  }
 }

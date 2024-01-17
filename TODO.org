@@ -1,0 +1,7 @@
+:PROPERTIES:
+:CATEGORY: tmp
+:END:
+* TODO Move trix config out of event handler
+* TODO add color picker
+* TODO add text generation button and dialog
+* TODO Move magic strings to Trix lookup object
