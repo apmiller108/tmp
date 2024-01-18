@@ -16,7 +16,28 @@
           opacity: 0;
           position: absolute;
         }
+        .trix-button-group {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          border: none;
+        }
+        .trix-button {
+          font-size: 1rem;
+          border-top: 1px solid #ccc;
+          border-bottom: 1px solid #888;
+          border-left: 1px solid #bbb;
+          &:last-child {
+            border-right: 1px solid #bbb;
+          }
+        }
       }
+    }
+  }
+  trix-editor {
+    // Overrides the trix editor's style for H1 to match Bootstrap.
+    h1 {
+      @extend .h1;
     }
   }
 }

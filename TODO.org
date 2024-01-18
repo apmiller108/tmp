@@ -5,3 +5,5 @@
 * TODO add color picker
 * TODO add text generation button and dialog
 * TODO Move magic strings to Trix lookup object
+* DONE fix trix h1 style to match bs
+  CLOSED: [2024-01-17 Wed 20:12]

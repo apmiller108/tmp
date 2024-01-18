@@ -32,4 +32,8 @@
       border: none;
     }
   }
+  // Overrides the trix content's style for H1 to match Bootstrap (eg, .h1)
+  h1 {
+    font-size: 2.5rem !important;
+  }
 }
