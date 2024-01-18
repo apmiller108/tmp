@@ -7,9 +7,9 @@ import * as ActionCable from '@rails/actioncable'
 
 import "./controllers"
 import "./channels/hello_channel"
-import TrixHandler from './wysiwyg/TrixHandler'
+import TrixConfiguration from './wysiwyg/TrixConfiguration'
 
 // ActionCable.logger.enabled = true;
 
-const trixHandler = new TrixHandler
-trixHandler.initialize()
+const trixConfiguration = new TrixConfiguration
+trixConfiguration.initialize()

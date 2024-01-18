@@ -1,9 +1,11 @@
 :PROPERTIES:
 :CATEGORY: tmp
 :END:
-* TODO Move trix config out of event handler
+* DONE Move trix config out of event handler
+  CLOSED: [2024-01-17 Wed 21:02]
 * TODO add color picker
 * TODO add text generation button and dialog
-* TODO Move magic strings to Trix lookup object
+* DONE Move magic strings to Trix lookup object
+  CLOSED: [2024-01-17 Wed 21:10]
 * DONE fix trix h1 style to match bs
   CLOSED: [2024-01-17 Wed 20:12]

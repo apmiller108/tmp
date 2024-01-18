@@ -1,5 +1,6 @@
+import TrixSelectors from './TrixSelectors'
+
 export default class TrixCustomizer {
-  config = Trix.config
   editor;
   textTools;
   blockTools;
@@ -7,29 +8,24 @@ export default class TrixCustomizer {
 
   constructor(editorElem) {
     this.editor = editorElem
-    this.textTools = this.editor.toolbarElement.querySelector('[data-trix-button-group="text-tools"]')
-    this.blockTools = this.editor.toolbarElement.querySelector('[data-trix-button-group="block-tools"]')
-    this.dialogs = this.editor.toolbarElement.querySelector('[data-trix-dialogs]')
-
-    this.initHighlightButton()
-
-    Array.from(["h1", "h2", "h3", "h4", "h5", "h6"]).forEach((tagName, i) => {
-      this.config.blockAttributes[`heading${(i + 1)}`] = {
-        tagName: tagName,
-        terminal: true,
-        breakOnReturn: true,
-        group: false
-      }
-    })
-
-    this.editor.toolbarElement.querySelector('[data-trix-attribute="heading1"]').remove()
-    this.blockTools.insertAdjacentHTML("afterbegin", this.headingsButton)
-    this.dialogs.insertAdjacentHTML("beforeend", this.headingsDialog)
+    this.textTools = this.editor.toolbarElement.querySelector(TrixSelectors.TEXT_TOOLS)
+    this.blockTools = this.editor.toolbarElement.querySelector(TrixSelectors.BLOCK_TOOLS)
+    this.dialogs = this.editor.toolbarElement.querySelector(TrixSelectors.DIALOGS)
   }
 
-  initHighlightButton() {
-    this.config.textAttributes.highlight = { tagName: 'mark', inheritable: 1 }
+  applyCustomizations() {
+    this.createHighlightButton()
+    this.createHeadingButtons()
+  }
+
+  createHighlightButton() {
     this.textTools.insertAdjacentHTML('beforeend', this.highlightButton)
+  }
+
+  createHeadingButtons() {
+    this.editor.toolbarElement.querySelector(TrixSelectors.HEADING_ATTR).remove()
+    this.blockTools.insertAdjacentHTML("afterbegin", this.headingButtons)
+    this.dialogs.insertAdjacentHTML("beforeend", this.headingsDialog)
   }
 
   get highlightButton() {
@@ -41,7 +37,7 @@ export default class TrixCustomizer {
     `
   }
 
-  get headingsButton() {
+  get headingButtons() {
     return`
       <button class="trix-button trix-button--icon trix-button-custom" type="button"
               data-trix-action="headingsGroup" title="Heading" tabindex="-1">
@@ -80,5 +76,4 @@ export default class TrixCustomizer {
       </div>
     `
   }
-
 }
