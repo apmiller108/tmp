@@ -5,7 +5,22 @@
     }
   }
   .trix-dialogs {
-    .trix-dialog--heading {
+    .trix-custom-dialog {
+      .trix-button-group {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        border: none;
+      }
+      .trix-button {
+        font-size: 1rem;
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #888;
+        border-left: 1px solid #bbb;
+        &:last-child {
+          border-right: 1px solid #bbb;
+        }
+      }
       &.trix-custom-heading {
         max-width: 14rem;
         .trix-button-group {
@@ -16,20 +31,16 @@
           opacity: 0;
           position: absolute;
         }
-        .trix-button-group {
+      }
+      &.trix-custom-generate-text {
+        max-width: 25rem;
+        .generate-text-btn {
           width: 100%;
-          display: flex;
-          justify-content: center;
-          border: none;
+          margin-right: 1rem;
         }
-        .trix-button {
-          font-size: 1rem;
-          border-top: 1px solid #ccc;
-          border-bottom: 1px solid #888;
-          border-left: 1px solid #bbb;
-          &:last-child {
-            border-right: 1px solid #bbb;
-          }
+        .trix-button-group {
+          margin: 0;
+          flex-shrink: 3;
         }
       }
     }
