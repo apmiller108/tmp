@@ -98,18 +98,16 @@ export default class TrixCustomizer {
   get generateTextDialog() {
     return `
       <div class="trix-dialog trix-dialog--heading trix-custom-dialog trix-custom-generate-text" data-trix-dialog="generateText"
-            data-trix-dialog-attribute="generateText">
-        <form class="d-flex align-items-baseline" data-action="submit->wysiwyg-editor#submitGenerateText:prevent">
-          <input type="hidden" name="" value=""
-                 data-wysiwyg-editor-target="generateTextAuthToken" autocomplete="off">
+            data-trix-dialog-attribute="generateText" data-wysiwyg-editor-target="generateTextDialog">
+        <div class="d-flex align-items-baseline" >
           <input type="hidden" name="generate_text_id" value="" data-wysiwyg-editor-target="generateTextId" autocomplete="off">
           <input type="text" class="generate-text-btn" name="generateText"
-                 data-wysiwyg-editor-target="generateTextInput" data-trix-input>
+                 data-wysiwyg-editor-target="generateTextInput" data-trix-input required>
           <div class="trix-button-group">
-            <input type="submit" class="trix-button trix-button--dialog"
-                   data-wysiwyg-editor-target="generateTextSubmit" value="Submit">
+            <input type="button" class="trix-button trix-button--dialog"
+                   value="Submit" data-action="click->wysiwyg-editor#submitGenerateText:prevent">
           </div>
-        </form>
+        </div>
       </div>
     `
   }

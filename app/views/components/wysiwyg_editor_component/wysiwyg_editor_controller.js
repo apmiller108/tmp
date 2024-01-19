@@ -1,8 +1,8 @@
 import { Controller } from '@hotwired/stimulus'
+import { post } from '@rails/request.js'
 
 export default class WysiwygEditor extends Controller {
-  static targets = ['generateTextBtn', 'generateTextForm', 'generateTextAuthToken',
-                    'generateTextId', 'generateTextInput', 'generateTextSubmit']
+  static targets = ['generateTextBtn', 'generateTextDialog', 'generateTextId', 'generateTextInput', 'generateTextSubmit']
 
   editor;
 
@@ -11,26 +11,46 @@ export default class WysiwygEditor extends Controller {
     console.log(this.editor);
   }
 
-  generateTextBtnTargetConnected(elem) {
-    console.log(elem)
-  }
-
-  submitGenerateText(e) {
+  async submitGenerateText(e) {
     const id = this.generateTextId('gentext');
-    const placeHolder = new Trix.Attachment({ content: this.generatedTextContainer(id) })
+    const placeHolder = new Trix.Attachment({ content: this.generatedTextContainer(id), contentType: 'tmp/generate-text-placeholder' })
 
-    this.generateTextAuthTokenTarget.value = document.querySelector('meta[name="csrf-token"]').content
-    this.generateTextAuthTokenTarget.name = document.querySelector('meta[name="csrf-param"]').content
     this.generateTextIdTarget.value = id
 
     this.editor.insertLineBreak()
     this.editor.insertAttachment(placeHolder)
     this.editor.insertLineBreak()
 
-    // close the dialog
-    // submit the form
-    console.log(this.editor.getPosition())
-    // e.target.submit()
+    this.generateTextDialogTarget.classList.remove('trix-active')
+    delete this.generateTextDialogTarget.dataset.trixActive
+
+    const body = JSON.stringify({
+      generative_text: {
+        input: this.generateTextInputTarget.value,
+        text_id: this.generateTextIdTarget.value
+      }
+    });
+    const headers = {
+      'Content-Type': 'application/json',
+      Accept: 'text/vnd.turbo-stream.html',
+      'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+    }
+
+    const response = await fetch('/generative_texts', {
+      method: 'POST',
+      body,
+      headers,
+    })
+
+    // Remove the placeholder div
+    const placeHolderDiv = document.getElementById(id)
+    placeHolderDiv.parentElement.remove()
+
+    const text = await response.text()
+    Turbo.renderStreamMessage(text) // if 400 response
+    this.editor.insertString(text) // if 201 response
+    // if successful reset the imput
+
   }
 
   generateTextId(prefix) {

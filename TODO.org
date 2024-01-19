@@ -3,9 +3,20 @@
 :END:
 * DONE Move trix config out of event handler
   CLOSED: [2024-01-17 Wed 21:02]
-* TODO add color picker
-* TODO add text generation button and dialog
 * DONE Move magic strings to Trix lookup object
   CLOSED: [2024-01-17 Wed 21:10]
 * DONE fix trix h1 style to match bs
   CLOSED: [2024-01-17 Wed 20:12]
+
+* TODO add text generation button and dialog
+* TODO replace text at current position at the time the request is made
+* TODO return LLM service response at once (no streaming)
+* TODO animate placeholder
+* TODO don't insert text if placeholder was deleted
+* TODO strip out the placeholder attachment before save
+  #+begin_src 
+  data-trix-content-type="tmp/generate-text-placeholder
+  #+end_src
+* TODO rename blobs channel to memos
+* TODO set highest z index on flash messages so the appear on top of modals
+* TODO add color picker
