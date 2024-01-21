@@ -21,6 +21,7 @@ export default class WysiwygEditor extends Controller {
 
   onOpenGenerateTextDialog() {
     this.generateTextInputTarget.value = this.selectedText;
+    this.generateTextInputTarget.focus()
   }
 
   onSelectionChange() {
@@ -28,10 +29,10 @@ export default class WysiwygEditor extends Controller {
     this.selectedText = window.getSelection().toString()
   }
 
-  async submitGenerateText(e) {
+  async submitGenerateText(_e) {
     const id = this.generateTextId('gentext')
     const selectedRange = this.editor.getSelectedRange()
-    const placeHolder = new Trix.Attachment({
+    const placeholder = new Trix.Attachment({
       content: this.generatedTextContainer(id), contentType: 'tmp/generate-text-placeholder'
     })
 
@@ -40,28 +41,42 @@ export default class WysiwygEditor extends Controller {
     }
 
     this.generateTextIdTarget.value = id
-    this.editor.insertAttachment(placeHolder)
+    this.editor.recordUndoEntry("InsertGenTextPlaceholder")
+    this.editor.insertAttachment(placeholder)
+
+    // Clear the selection so the placeholder figure is not selected.
+    // Also remove the undo entry that would let the user put the placeholder back.
+    // I could only get these things to work by pushing it to the end of the stack.
+    setTimeout(() => {
+      this.editor.undoManager.undoEntries.pop()
+      window.getSelection().empty()
+    }, 0)
 
     let response;
+    let placeHolderDiv
     try {
       response = await generateText({
         input: this.generateTextInputTarget.value,
         text_id: this.generateTextIdTarget.value
       })
+      // This is used to determine if the placeholder is still present. It could
+      // have been removed by the user by this point in which case inserting the
+      // generated text is aborted below.
+      placeHolderDiv = document.getElementById(id)
     } catch (err) {
       console.log(err)
     } finally {
-      const placeHolderDiv = document.getElementById(id)
-      placeHolderDiv.parentElement.remove() // Remove the placeholder attachment figure
+      placeHolderDiv?.parentElement?.remove() // Remove the placeholder attachment figure
     }
 
     const responseBody = await response.text()
     Turbo.renderStreamMessage(responseBody)
 
-    if (response.ok) {
-      this.editor.recordUndoEntry("Insert gen text")
+    if (response.ok && placeHolderDiv) {
+      this.editor.recordUndoEntry("InsertGenText")
       this.editor.setSelectedRange(selectedRange[0])
       this.editor.insertString(responseBody)
+      console.dir(this.editor.undoManager.undoEntries)
       this.generateTextInputTarget.value = ''
     }
   }
@@ -72,9 +87,18 @@ export default class WysiwygEditor extends Controller {
     return `${prefix}_${timestamp}_${random}`
   }
 
+  get genTextClassName() {
+    return 'gentext-placeholder'
+  }
+
   generatedTextContainer(id) {
     return`
-      <div id=${id}>Generating text...</div>
+      <div id=${id} class="${this.genTextClassName} alert alert-info i-pulse p-1">Generating text...</div>
     `
+  }
+
+  removeAllPlaceholders() {
+    const placeholders = document.querySelectorAll(`.${this.genTextClassName}`)
+    placeholders.forEach(p => p.parentElement.remove())
   }
 }

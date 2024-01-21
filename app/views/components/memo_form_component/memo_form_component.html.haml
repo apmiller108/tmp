@@ -1,5 +1,5 @@
 = tag.turbo_frame(id: id, class: 'c-memo-form') do
-  = form_with model: [current_user, memo] do |form|
+  = form_with model: [current_user, memo], data: { controller: 'memo-form' } do |form|
     - if memo.errors.any?
       .form-errors
         %ul
@@ -10,7 +10,7 @@
     %div.mt-3
       = render WysiwygEditorComponent.new(form:, rich_text_field: :content)
     .btn-group.d-flex.justify-content-end.my-3{'role' => :group, 'aria-label' => 'Memo Form'}
-      = form.submit submit_value, class: 'btn btn-outline-primary flex-grow-0'
+      = form.submit submit_value, class: 'btn btn-outline-primary flex-grow-0', data: { action: 'click->memo-form#onSubmit:prevent' }
       - if memo.persisted?
         = link_to "Cancel", user_memo_path(current_user, memo), class: 'btn btn-outline-secondary flex-grow-0'
       - else
