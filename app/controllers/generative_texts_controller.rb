@@ -3,7 +3,8 @@ class GenerativeTextsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         if true
-          render turbo_stream: 'Here is your text, dummy!',
+          llm_response = LLMService.new.invoke_model(prompt: generative_text_params[:input])
+          render turbo_stream: llm_response.content,
                  status: :created
         else
           flash.now.alert = 'Unable to generate text'

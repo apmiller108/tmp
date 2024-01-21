@@ -14,4 +14,8 @@ class LLMService
   def invoke_model_stream(prompt:, **opts, &block)
     client.invoke_model_stream(prompt:, **opts, &block)
   end
+
+  def invoke_model(prompt:, **opts)
+    client.invoke_model(prompt:, **opts)
+  end
 end
