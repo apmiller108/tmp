@@ -1,6 +1,11 @@
 import path from 'path'
+import { URL } from 'url'
 import esbuild from 'esbuild'
 import rails from 'esbuild-rails'
+import { aliasPath } from 'esbuild-plugin-alias-path'
+
+// __dirname is not defined in ES modules
+const __dirname = new URL('.', import.meta.url).pathname
 
 const options = {
   bundle: true,
@@ -12,8 +17,7 @@ const options = {
   chunkNames: 'chunks/[name]-[hash]',
   treeShaking: true,
   sourcemap: process.argv.includes('--development'),
-  // Compresses bundle
-  // More information: https://esbuild.github.io/api/#minify
+  // See also https://esbuild.github.io/api/#minify
   minify: process.argv.includes('--production'),
   // Build command log output: https://esbuild.github.io/api/#log-level
   logLevel: 'info',
@@ -21,6 +25,10 @@ const options = {
     // Plugin to import JS files by route globbing(eg Stimulus controllers)
     // See also https://github.com/excid3/esbuild-rails
     rails(),
+    // See also https://github.com/LinbuduLab/esbuild-plugins/tree/main/packages/esbuild-plugin-alias-path
+    aliasPath({
+      alias: { '@javascript/*': path.resolve(__dirname, './app/javascript') }
+    })
   ]
 }
 
