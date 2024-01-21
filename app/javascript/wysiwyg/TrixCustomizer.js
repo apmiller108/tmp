@@ -89,6 +89,7 @@ export default class TrixCustomizer {
     return`
       <button class="trix-button trix-button--icon trix-button-custom" type="button"
               data-trix-action="generateText" data-wysiwyg-editor-target="generateTextBtn"
+              data-action="click->wysiwyg-editor#onOpenGenerateTextDialog"
               title="Generate Text" tabindex="-1">
         <i class="bi bi-body-text"></i>
       </button>
@@ -102,10 +103,12 @@ export default class TrixCustomizer {
         <div class="d-flex align-items-baseline" >
           <input type="hidden" name="generate_text_id" value="" data-wysiwyg-editor-target="generateTextId" autocomplete="off">
           <input type="text" class="generate-text-btn" name="generateText"
+                 data-action="keydown.enter->wysiwyg-editor#submitGenerateText:prevent"
                  data-wysiwyg-editor-target="generateTextInput" data-trix-input required>
           <div class="trix-button-group">
-            <input type="button" class="trix-button trix-button--dialog"
-                   value="Submit" data-action="click->wysiwyg-editor#submitGenerateText:prevent">
+            <input type="button" class="trix-button trix-button--dialog" data-trix-method="setAttribute"
+                   value="Submit"
+                   data-action="click->wysiwyg-editor#submitGenerateText:prevent">
           </div>
         </div>
       </div>

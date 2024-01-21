@@ -3,5 +3,6 @@ export default Object.freeze({
   BLOCK_TOOLS: '[data-trix-button-group="block-tools"]',
   FILE_TOOLS: '[data-trix-button-group="file-tools"]',
   DIALOGS: '[data-trix-dialogs]',
-  HEADING_ATTR: '[data-trix-attribute="heading1"]'
+  HEADING_ATTR: '[data-trix-attribute="heading1"]',
+  EDITOR: 'trix-editor'
 })

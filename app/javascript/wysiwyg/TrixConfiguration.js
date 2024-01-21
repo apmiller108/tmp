@@ -2,6 +2,7 @@ import TrixCustomizer from './TrixCustomizer'
 
 export default class TrixConfiguration {
   static beforeInitialize = 'trix-before-initialize'
+  static selectionChange = 'trix-selection-change'
   static headings = ["h1", "h2", "h3", "h4", "h5", "h6"]
 
   config = Trix.config

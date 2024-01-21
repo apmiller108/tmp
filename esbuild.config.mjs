@@ -27,7 +27,10 @@ const options = {
     rails(),
     // See also https://github.com/LinbuduLab/esbuild-plugins/tree/main/packages/esbuild-plugin-alias-path
     aliasPath({
-      alias: { '@javascript/*': path.resolve(__dirname, './app/javascript') }
+      alias: {
+        '@javascript/*': path.resolve(__dirname, './app/javascript'),
+        '@wysiwyg/*': path.resolve(__dirname, './app/javascript/wysiwyg')
+      }
     })
   ]
 }

@@ -7,16 +7,21 @@
   CLOSED: [2024-01-17 Wed 21:10]
 * DONE fix trix h1 style to match bs
   CLOSED: [2024-01-17 Wed 20:12]
-
-* TODO add text generation button and dialog
-* TODO replace text at current position at the time the request is made
-* TODO return LLM service response at once (no streaming)
+* DONE add text generation button and dialog
+  CLOSED: [2024-01-20 Sat 14:42]
+* DONE replace text at current position at the time the request is made
+  CLOSED: [2024-01-20 Sat 19:08]
+* DONE set input value to the selected range
+  CLOSED: [2024-01-20 Sat 19:08]
+* DONE submit on enter key
+  CLOSED: [2024-01-20 Sat 19:28]
 * TODO animate placeholder
 * TODO don't insert text if placeholder was deleted
 * TODO strip out the placeholder attachment before save
-  #+begin_src 
+  #+begin_src
   data-trix-content-type="tmp/generate-text-placeholder
   #+end_src
+* TODO return LLM service response at once (no streaming)
 * TODO rename blobs channel to memos
 * TODO set highest z index on flash messages so the appear on top of modals
 * TODO add color picker

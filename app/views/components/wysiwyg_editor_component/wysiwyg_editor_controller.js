@@ -1,56 +1,69 @@
 import { Controller } from '@hotwired/stimulus'
-import { post } from '@rails/request.js'
+import TrixSelectors from '@wysiwyg/TrixSelectors'
+import TrixConfiguration from '@wysiwyg/TrixConfiguration'
+import TrixCustomizer from '@wysiwyg/TrixCustomizer'
+import { generateText } from '@javascript/http'
 
 export default class WysiwygEditor extends Controller {
   static targets = ['generateTextBtn', 'generateTextDialog', 'generateTextId', 'generateTextInput', 'generateTextSubmit']
 
   editor;
+  selectedText;
 
   connect() {
-    this.editor = this.element.querySelector('trix-editor').editor
-    console.log(this.editor);
+    this.editor = this.element.querySelector(TrixSelectors.EDITOR).editor
+    document.addEventListener(TrixConfiguration.selectionChange, this.onSelectionChange.bind(this))
+  }
+
+  disconnect() {
+    document.removeEventListener(TrixConfiguration.selectionChange, this.onSelectionChange.bind(this))
+  }
+
+  onOpenGenerateTextDialog() {
+    this.generateTextInputTarget.value = this.selectedText;
+  }
+
+  onSelectionChange() {
+    // Store the currently mouse-selected text
+    this.selectedText = window.getSelection().toString()
   }
 
   async submitGenerateText(e) {
-    const id = this.generateTextId('gentext');
-    const placeHolder = new Trix.Attachment({ content: this.generatedTextContainer(id), contentType: 'tmp/generate-text-placeholder' })
-
-    this.generateTextIdTarget.value = id
-
-    this.editor.insertLineBreak()
-    this.editor.insertAttachment(placeHolder)
-    this.editor.insertLineBreak()
-
-    this.generateTextDialogTarget.classList.remove('trix-active')
-    delete this.generateTextDialogTarget.dataset.trixActive
-
-    const body = JSON.stringify({
-      generative_text: {
-        input: this.generateTextInputTarget.value,
-        text_id: this.generateTextIdTarget.value
-      }
-    });
-    const headers = {
-      'Content-Type': 'application/json',
-      Accept: 'text/vnd.turbo-stream.html',
-      'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
-    }
-
-    const response = await fetch('/generative_texts', {
-      method: 'POST',
-      body,
-      headers,
+    const id = this.generateTextId('gentext')
+    const selectedRange = this.editor.getSelectedRange()
+    const placeHolder = new Trix.Attachment({
+      content: this.generatedTextContainer(id), contentType: 'tmp/generate-text-placeholder'
     })
 
-    // Remove the placeholder div
-    const placeHolderDiv = document.getElementById(id)
-    placeHolderDiv.parentElement.remove()
+    if (!this.generateTextInputTarget.value.length) {
+      return
+    }
 
-    const text = await response.text()
-    Turbo.renderStreamMessage(text) // if 400 response
-    this.editor.insertString(text) // if 201 response
-    // if successful reset the imput
+    this.generateTextIdTarget.value = id
+    this.editor.insertAttachment(placeHolder)
 
+    let response;
+    try {
+      response = await generateText({
+        input: this.generateTextInputTarget.value,
+        text_id: this.generateTextIdTarget.value
+      })
+    } catch (err) {
+      console.log(err)
+    } finally {
+      const placeHolderDiv = document.getElementById(id)
+      placeHolderDiv.parentElement.remove() // Remove the placeholder attachment figure
+    }
+
+    const responseBody = await response.text()
+    Turbo.renderStreamMessage(responseBody)
+
+    if (response.ok) {
+      this.editor.recordUndoEntry("Insert gen text")
+      this.editor.setSelectedRange(selectedRange[0])
+      this.editor.insertString(responseBody)
+      this.generateTextInputTarget.value = ''
+    }
   }
 
   generateTextId(prefix) {
