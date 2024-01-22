@@ -29,7 +29,7 @@ class LLMService
         end
 
         def token_count
-          (response_data['inputTokenCount'] || 0) + (results['outputTokenCount'] || 0)
+          (response_data['inputTextTokenCount'] || 0) + (results['tokenCount'] || 0)
         end
       end
     end
