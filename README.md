@@ -4,27 +4,32 @@ AI infused note taking application.
 ## Features
 - Add and transcribe audio
 - Summarize audio transcriptions
+- Generate text
 
 ## Planned
 - Text to Image
-- Generate text
 - Video playback
 - PDF rendering
 - Export
 - Sharing
 
 # TODOs
+- [x] Card index view with inline modal creating and editing.
 - [x] Transcription for audio files added to message
 - [x] Rename message to memo
 - [x] Add support for diaraized transcriptions
 - [x] LLM summary of audio transcript
-- [ ] Retry failed summary btn
-- [ ] Move items to transcript model, drop response column, persist failure reason only
-- [ ] LLM summary of text selection
-- [ ] Card index view with inline modal creating and editing.
+- [x] Generate text
+- [ ] Text to image
 - [ ] Add emoji support (gemoji https://afomera.dev/posts/2022-10-11-combined-mentions-part-one)
 - [ ] Add support for youtube video embedding (https://blog.corsego.com/action-text-embed-youtube)
-- [ ] Text to image
+- [ ] More details on memo cards (image, audio indicators, icons for attachments in plain text)
+- [ ] Add public / private message (sharing, @ing)
+- [ ] Create public message view
+- [ ] Add ability to comment on messages (with other message?)
+- [ ] Switch to LLAMA for generative text
+- [ ] Retry failed summary btn
+- [ ] Move items to transcript model, drop response column, persist failure reason only
 - [ ] Sentiment analysis
 - [ ] Custom audio player
 - [ ] Add web health check with pinglish
@@ -33,12 +38,6 @@ AI infused note taking application.
 - [ ] Add request specs for registration via API
 - [ ] Add auth helper for request specs
 - [ ] Figure out better cors config https://github.com/cyu/rack-cors
-- [ ] Add `self_destructs_at` to messages
-- [ ] Create schedule job to destroy messages
-- [ ] Push message destuction turbo stream via web sockets
-- [ ] Add public / private message (sharing, @ing)
-- [ ] Create public message view
-- [ ] Add ability to comment on messages (with other message?)
 - [ ] Add lograge
 - [ ] Export memo
 
