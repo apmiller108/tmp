@@ -17,5 +17,7 @@ class LLMService
 
   def invoke_model(prompt:, **opts)
     client.invoke_model(prompt:, **opts)
+  rescue Aws::BedrockRuntime::Errors
+    raise InvalidRequestError
   end
 end
