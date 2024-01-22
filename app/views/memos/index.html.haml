@@ -1,5 +1,5 @@
 .memos-index
-  = turbo_stream_from current_user, TurboStreams::STREAMS[:blobs]
+  = turbo_stream_from current_user, TurboStreams::STREAMS[:memos]
   = render ModalComponent.new(size: :xl)
   .container
     %button.btn.btn-primary.mb-3{ data: { controller: 'modal-opener',

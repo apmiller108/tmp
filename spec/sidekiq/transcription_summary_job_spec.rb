@@ -43,7 +43,7 @@ RSpec.describe TranscriptionSummaryJob, type: :job do
     job.perform(user.id, transcription.id)
     expect(ViewComponentBroadcaster).to(
       have_received(:call).with(
-        [user, TurboStreams::STREAMS[:blobs]], component: transcription_summary_component, action: :replace
+        [user, TurboStreams::STREAMS[:memos]], component: transcription_summary_component, action: :replace
       )
     )
   end

@@ -89,7 +89,7 @@ RSpec.describe TranscriptionRetrievalJob, type: :job do
         job.perform(transcription_job.id)
         expect(ViewComponentBroadcaster).to(
           have_received(:call)
-            .with([memo.user, TurboStreams::STREAMS[:blobs]], component: blob_component, action: :replace)
+            .with([memo.user, TurboStreams::STREAMS[:memos]], component: blob_component, action: :replace)
         )
       end
     end
@@ -118,7 +118,7 @@ RSpec.describe TranscriptionRetrievalJob, type: :job do
         job.perform(transcription_job.id)
         expect(ViewComponentBroadcaster).to(
           have_received(:call)
-            .with([memo.user, TurboStreams::STREAMS[:blobs]], component: blob_component, action: :replace)
+            .with([memo.user, TurboStreams::STREAMS[:memos]], component: blob_component, action: :replace)
         )
       end
     end

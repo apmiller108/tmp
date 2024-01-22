@@ -40,7 +40,7 @@ RSpec.describe TranscribeAudioJob, type: :job do
       allow(BlobComponent).to receive(:new).with(blob:).and_return(component)
       job.perform(blob.id)
       expect(ViewComponentBroadcaster).to have_received(:call)
-        .with([memo.user, TurboStreams::STREAMS[:blobs]], component:, action: :replace)
+        .with([memo.user, TurboStreams::STREAMS[:memos]], component:, action: :replace)
     end
 
     context 'when the blob is not an audio file' do

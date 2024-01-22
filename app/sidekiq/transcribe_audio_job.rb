@@ -15,7 +15,7 @@ class TranscribeAudioJob
 
     component = BlobComponent.new(blob:)
     user = User.find(blob.memo.user_id) # user cannot be lazily loaded
-    ViewComponentBroadcaster.call([user, TurboStreams::STREAMS[:blobs]], component:, action: :replace)
+    ViewComponentBroadcaster.call([user, TurboStreams::STREAMS[:memos]], component:, action: :replace)
   rescue TranscriptionService::InvalidRequestError, ActiveRecord::RecordNotFound => e
     Rails.logger.warn("#{self.class}: #{e} : #{e.cause}")
   end

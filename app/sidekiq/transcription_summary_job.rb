@@ -20,7 +20,7 @@ class TranscriptionSummaryJob
       end
 
       ViewComponentBroadcaster.call(
-        [user, TurboStreams::STREAMS[:blobs]],
+        [user, TurboStreams::STREAMS[:memos]],
         component: TranscriptionSummaryComponent.new(transcription:),
         action: :replace
       )
