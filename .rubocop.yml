@@ -1,5 +1,15 @@
 require: rubocop-rspec
 
+AllCops:
+  TargetRubyVersion: 3.3
+  Exclude:
+    - bin/**/*
+    - config/**/*
+    - db/**/*
+    - script/**/*
+    - vendor/**/*
+    - log/**/*
+
 Layout/FirstHashElementIndentation:
   EnforcedStyle: consistent
 
