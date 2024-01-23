@@ -31,22 +31,37 @@ RSpec.describe LLMService::AWS::Client do
     end
   end
 
-  describe 'invoke_model' do
-    it 'delegates to the aws client' do
-      client = described_class.new
-      client.invoke_model
-      expect(aws_client).to have_received(:invoke_model)
+  describe '#invoke_model' do
+    subject(:client) { described_class.new }
+
+    let(:prompt) { 'List 18.5 fruits' }
+    let(:params) { { a: 1, b: 2 } }
+    let(:request) { instance_double LLMService::AWS::Client::InvokeModelRequest, to_h: request_hash }
+    let(:request_hash) { double }
+    let(:response_string) { double }
+    let(:body) { instance_double StringIO, read: response_string }
+    let(:client_response) { instance_double Aws::BedrockRuntime::Types::InvokeModelResponse, body: }
+    let(:response) { instance_double LLMService::AWS::Client::InvokeModelResponse }
+
+    before do
+      allow(LLMService::AWS::Client::InvokeModelRequest).to receive(:new).with(prompt:, **params).and_return(request)
+      allow(aws_client).to receive(:invoke_model).with(request_hash).and_return(client_response)
+      allow(LLMService::AWS::Client::InvokeModelResponse).to receive(:new).with(response_string).and_return(response)
+    end
+
+    it 'returns the InvokeModelResponse object' do
+      expect(client.invoke_model(prompt:, **params)).to eq response
     end
   end
 
-  describe 'invoke_model_stream' do
+  describe '#invoke_model_stream' do
     subject(:client) { described_class.new }
 
     let(:prompt) { 'tell me something awesme' }
     let(:handler_proc) { proc {} }
     let(:handler) { instance_double(LLMService::AWS::Client::EventStreamHandler, to_proc: handler_proc) }
     let(:request) { instance_double(LLMService::AWS::Client::InvokeModelRequest, to_h: request_params) }
-    let(:request_params) { { b: 2 }}
+    let(:request_params) { { b: 2 } }
     let(:params) { { a: 1 } }
 
     before do

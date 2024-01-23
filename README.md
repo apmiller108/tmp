@@ -20,6 +20,7 @@ AI infused note taking application.
 - [x] Add support for diaraized transcriptions
 - [x] LLM summary of audio transcript
 - [x] Generate text
+- [ ] Make memo content scrollable (always have the toolbar in view)
 - [ ] Text to image
 - [ ] Add emoji support (gemoji https://afomera.dev/posts/2022-10-11-combined-mentions-part-one)
 - [ ] Add support for youtube video embedding (https://blog.corsego.com/action-text-embed-youtube)
