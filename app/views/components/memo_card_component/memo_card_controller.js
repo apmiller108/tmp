@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
-import * as bootstrap from "bootstrap"
+import { Tooltip } from "bootstrap"
 
 export default class extends Controller {
   static targets = ['cardText']
@@ -7,7 +7,7 @@ export default class extends Controller {
 
   connect() {
     try {
-      this.toolTippable = this.toolTippable.map(elem => new bootstrap.Tooltip(elem))
+      this.toolTippable = this.toolTippable.map(elem => new Tooltip(elem))
     } catch (error) {
       if (error.stack.includes("_Tooltip._setListeners")) {
         // this error happens when a new controller is instantiated (eg after a

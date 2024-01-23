@@ -7,7 +7,7 @@ export default class extends Controller {
   onOpenLister = 'modal-opener:openModal@window->modal#onOpenModal'
   onCloseListner = 'modal-closer:closeModal@window->modal#onCloseModal'
   observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
+    mutations.forEach(() => {
       if (this.bodyTurboFrameTarget.innerHTML.trim() === '') {
         this.onCloseModal()
       }
@@ -17,6 +17,7 @@ export default class extends Controller {
   connect() {
     this.element.dataset.action = [this.onOpenLister, this.onCloseListner].join(' ')
     this.element.addEventListener('hide.bs.modal', e => this.reset(e));
+    // Automatically close the modal if the body is blank (eg, on turbo deletion of a resource)
     this.observer.observe(this.bodyTurboFrameTarget, { childList: true, subtree: true })
 
     autoAnimate(this.bodyTurboFrameTarget)
@@ -30,7 +31,7 @@ export default class extends Controller {
     this.closeButtonTarget.click()
   }
 
-  reset(_e) {
+  reset() {
     delete this.bodyTurboFrameTarget.src
     this.bodyTurboFrameTarget.innerHTML = ''
   }

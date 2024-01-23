@@ -9,7 +9,7 @@ import componentControllers from '../../views/components/**/*_controller.js'
 //   app/assets/javascript/home_controller.js -> home
 const controllerName = (defaultName) => {
   const namespaces = [
-    ...new Set(defaultName.split("--").filter((pathSegment) => !["..", "views", "components"].includes(pathSegment))),
+    ...new Set(defaultName.split("--").filter((pathSegment) => !["..", "views", "components"].includes(pathSegment)))
   ];
   return namespaces.pop()
 };

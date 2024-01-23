@@ -1,7 +1,6 @@
 import { Controller } from '@hotwired/stimulus'
 import TrixSelectors from '@wysiwyg/TrixSelectors'
 import TrixConfiguration from '@wysiwyg/TrixConfiguration'
-import TrixCustomizer from '@wysiwyg/TrixCustomizer'
 import { generateText } from '@javascript/http'
 
 export default class WysiwygEditor extends Controller {
@@ -29,7 +28,7 @@ export default class WysiwygEditor extends Controller {
     this.selectedText = window.getSelection().toString()
   }
 
-  async submitGenerateText(_e) {
+  async submitGenerateText() {
     const id = this.generateTextId('gentext')
     const selectedRange = this.editor.getSelectedRange()
     const placeholder = new Trix.Attachment({

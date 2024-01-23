@@ -13,6 +13,6 @@ export const generateText = ({ input, text_id }) => {
   return fetch('/generative_texts', {
     method: 'POST',
     body,
-    headers,
+    headers
   })
 }
