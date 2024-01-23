@@ -12,7 +12,6 @@ export default class TrixConfiguration {
       const customizer = new TrixCustomizer(e.target)
       customizer.applyCustomizations()
     })
-
     this.configureHeadings()
     this.configureHighlight()
   }
@@ -32,7 +31,7 @@ export default class TrixConfiguration {
   configureHighlight() {
     this.config.textAttributes.highlight = {
       tagName: 'mark',
-      inheritable: true,
+      inheritable: true
     }
   }
 }

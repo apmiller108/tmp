@@ -23,6 +23,7 @@
   "packageManager": "yarn@1.22.19",
   "devDependencies": {
     "esbuild-plugin-alias-path": "^2.0.2",
-    "esbuild-rails": "^1.0.7"
+    "esbuild-rails": "^1.0.7",
+    "eslint": "^8.56.0"
   }
 }
