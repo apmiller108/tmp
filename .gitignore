@@ -43,3 +43,5 @@ yarn-error.log
 
 .irb_history
 /config/credentials/test.key
+
+spec/examples.txt

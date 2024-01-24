@@ -9,6 +9,7 @@ AllCops:
     - script/**/*
     - vendor/**/*
     - log/**/*
+    - .irbrc
 
 Layout/FirstHashElementIndentation:
   EnforcedStyle: consistent
@@ -16,12 +17,22 @@ Layout/FirstHashElementIndentation:
 Lint/MissingSuper:
   Enabled: false
 
+Metrics/AbcSize:
+  Exclude:
+    - 'app/controllers/**/*'
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
+Metrics/MethodLength:
+  Exclude:
+    - 'app/controllers/**/*'
 
 RSpec/ExampleLength:
   Enabled: false
+RSpec/MessageSpies:
+  Enabled: false
+RSpec/MultipleExpectations:
+  Max: 2
 RSpec/MultipleMemoizedHelpers:
   Enabled: false
 

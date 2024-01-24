@@ -26,7 +26,8 @@ RSpec.describe TranscriptionSummaryJob, type: :job do
     allow(LLMService).to receive(:summary_prompt_for).with(transcription:).and_return(prompt)
     allow(llm_service).to receive(:invoke_model_stream).with(prompt:).and_yield(invoke_model_stream_response)
     allow(ViewComponentBroadcaster).to receive(:call)
-    allow(TranscriptionSummaryComponent).to receive(:new).with(transcription:).and_return(transcription_summary_component)
+    allow(TranscriptionSummaryComponent).to receive(:new).with(transcription:)
+                                                         .and_return(transcription_summary_component)
   end
 
   it 'sets the summary to in progress' do
