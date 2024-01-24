@@ -1,4 +1,4 @@
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe TranscriptionJobComponent, type: :component do
   subject { page }
@@ -23,7 +23,8 @@ RSpec.describe TranscriptionJobComponent, type: :component do
     let(:status) { TranscriptionJob.statuses[:completed] }
 
     it 'has a link to the transcription' do
-      expect(page).to have_link 'Transcription completed', href: user_transcription_job_transcriptions_path(user, transcription_job)
+      expect(page).to have_link 'Transcription completed',
+                                href: user_transcription_job_transcriptions_path(user, transcription_job)
     end
   end
 

@@ -19,7 +19,7 @@ RSpec.describe MemoFormComponent, type: :component do
 
   it 'renders a cancel inline action' do
     within('.inline-action') do
-      expect(subject).to have_link I18n.t('cancel'), user_memo_path(user, memo)
+      expect(page).to have_link I18n.t('cancel'), user_memo_path(user, memo)
     end
   end
 end

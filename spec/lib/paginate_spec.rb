@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Paginate do
   describe '.call' do
     let(:relation) { Memo.none }
-    let(:collection) { (1..(limit + 1)).map { |i| double(id: i) } }
+    let(:collection) { (1..(limit + 1)).map { |i| double(id: i) } } # rubocop:disable RSpec/VerifiedDoubles
     let(:limit) { 10 }
     let(:cursor) { 5 }
 
@@ -38,7 +38,7 @@ RSpec.describe Paginate do
     end
 
     context 'when collection size is smaller than the limit' do
-      let(:collection) { (1..(limit - 1)).map { |i| double(id: i) } }
+      let(:collection) { (1..(limit - 1)).map { |i| double(id: i) } } # rubocop:disable RSpec/VerifiedDoubles
 
       it 'returns nil for the cursor' do
         result = described_class.call(relation:, limit:, cursor:)

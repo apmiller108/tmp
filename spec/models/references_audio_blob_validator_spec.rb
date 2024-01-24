@@ -1,36 +1,60 @@
 require 'rails_helper'
 
 RSpec.describe ReferencesAudioBlobValidator do
-  class MyModel
-    include ActiveModel::Model
-    validates_with ReferencesAudioBlobValidator
+  let(:dummy_model) do
+    Class.new do
+      include ActiveModel::Model
+      validates_with ReferencesAudioBlobValidator
+    end
   end
 
-  subject { MyModel.new }
+  before do
+    stub_const('DummyModel', dummy_model)
+  end
 
   context 'when the model does not reference a blob' do
     it 'is not valid' do
-      subject.validate
-      expect(subject.errors.full_messages).to include 'Attachment must have audio content'
+      model = DummyModel.new
+      model.validate
+      expect(model.errors.full_messages).to include 'Attachment must have audio content'
     end
   end
 
   context 'when the model references a blob' do
-    blob = FactoryBot.build_stubbed :active_storage_blob
-    before do
-      subject.define_singleton_method(:active_storage_blob) { blob }
-    end
-
     context 'when the blob does not have an audio content type' do
+      let(:dummy_model) do
+        Class.new do
+          include ActiveModel::Model
+          validates_with ReferencesAudioBlobValidator
+          def active_storage_blob
+            FactoryBot.build_stubbed :active_storage_blob, :image
+          end
+        end
+      end
+
       it 'is not valid' do
-        allow(blob).to receive(:audio?).and_return(false)
-        subject.validate
-        expect(subject.errors.full_messages).to include 'Attachment must have audio content'
+        model = DummyModel.new
+        model.validate
+        expect(model.errors.full_messages).to include 'Attachment must have audio content'
       end
     end
 
     context 'when the blob has an audio content type' do
-      it { is_expected.to be_valid }
+      let(:dummy_model) do
+        Class.new do
+          include ActiveModel::Model
+          validates_with ReferencesAudioBlobValidator
+          def active_storage_blob
+            FactoryBot.build_stubbed :active_storage_blob, :audio
+          end
+        end
+      end
+
+      it 'is not valid' do
+        stub_const('DummyModel', dummy_model)
+        model = DummyModel.new
+        expect(model).to be_valid
+      end
     end
   end
 end

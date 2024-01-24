@@ -4,7 +4,7 @@ RSpec.describe Transcription::SpeakerContent::Item do
   subject(:item) { described_class.new(item_data) }
 
   let(:content) { 'crucial' }
-  let(:speaker) { 'spk_0'}
+  let(:speaker) { 'spk_0' }
   let(:item_data) do
     {
       'type' => 'pronunciation',
@@ -81,7 +81,7 @@ RSpec.describe Transcription::SpeakerContent::Item do
           'type' => 'combined',
           'start_time' => item_data['start_time'],
           'end_time' => other_item_data['end_time'],
-          'alternatives' => [{ 'confidence' => '0.97', 'content' => 'crucial test'}],
+          'alternatives' => [{ 'confidence' => '0.97', 'content' => 'crucial test' }],
           'speaker_label' => speaker
         )
       )
@@ -90,7 +90,9 @@ RSpec.describe Transcription::SpeakerContent::Item do
     context 'when the speakers do not match' do
       it 'raises an argument error' do
         other_item = described_class.new(other_item_data.merge('speaker_label' => 'spk_1'))
-        expect { item.combine_with(other_item) }.to raise_error ArgumentError, 'Speakers must match in order to combine items'
+        expect do
+          item.combine_with(other_item)
+        end.to raise_error ArgumentError, 'Speakers must match in order to combine items'
       end
     end
   end

@@ -81,7 +81,7 @@ class MemosController < ApplicationController
     @memo.destroy
     respond_to do |format|
       format.turbo_stream do
-        if request.referrer == user_memos_url(current_user)
+        if request.referer == user_memos_url(current_user)
           render turbo_stream: [turbo_stream.remove(@memo), turbo_stream.remove(memo_card_component.id)]
         else
           redirect_to user_memos_path(current_user), status: :see_other, notice: 'Memo was deleted'

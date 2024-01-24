@@ -7,7 +7,7 @@ gem 'anycable-rails'
 gem 'aws-sdk-bedrockruntime', require: false
 gem 'aws-sdk-s3', require: false
 gem 'aws-sdk-transcribeservice', require: false
-gem 'bootsnap', require: false # Reduces boot times through caching; required in config/boot.rb
+gem 'bootsnap', require: false
 gem 'cssbundling-rails'
 gem 'devise'
 gem 'devise-jwt'
@@ -30,14 +30,13 @@ gem 'sidekiq-unique-jobs', '~> 8.0'
 gem 'sprockets-rails'
 gem 'stimulus-rails'
 gem 'turbo-rails'
-gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby] # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby] # For platforms without zoneinfo files
 gem 'view_component'
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
 
 group :development, :test do
-  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails', '~> 6.2'
   gem 'rspec-rails', '~> 6.0'

@@ -25,9 +25,9 @@ RSpec.describe LLMService::AWS::Client do
     it 'creates an instance of Aws::BedrockRuntime::Client' do
       described_class.new
       expect(Aws::BedrockRuntime::Client).to have_received(:new).with(
-                                               region: aws_config[:region],
-                                               credentials:
-                                             )
+        region: aws_config[:region],
+        credentials:
+      )
     end
   end
 

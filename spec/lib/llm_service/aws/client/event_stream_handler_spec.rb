@@ -71,4 +71,3 @@ RSpec.describe LLMService::AWS::Client::EventStreamHandler do
     end
   end
 end
-

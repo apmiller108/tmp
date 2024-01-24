@@ -6,7 +6,7 @@ RSpec.describe 'users/sign_in', type: :request do
 
   describe 'POST /users/sign_in.json' do
     before do
-      post '/users/sign_in.json', params: { user: { email: user.email, password: password } }
+      post '/users/sign_in.json', params: { user: { email: user.email, password: } }
     end
 
     it 'returns a success response' do
@@ -32,10 +32,10 @@ RSpec.describe 'users/sign_in', type: :request do
 
   describe 'POST /users/sign_in' do
     before do
-      post '/users/sign_in', params: { user: { email: user.email, password: password } }
+      post '/users/sign_in', params: { user: { email: user.email, password: } }
     end
 
-    it { is_expected.to redirect_to "/" }
+    it { is_expected.to redirect_to '/' }
 
     it 'shows a success message' do
       expect(flash[:notice]).to eq 'Signed in successfully.'

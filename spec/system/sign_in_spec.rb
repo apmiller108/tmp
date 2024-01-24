@@ -1,4 +1,4 @@
-require "system_helper"
+require 'system_helper'
 
 RSpec.describe 'signing in', type: :system do
   let(:password) { 'Password' }

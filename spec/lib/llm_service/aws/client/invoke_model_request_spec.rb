@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe LLMService::AWS::Client::InvokeModelRequest do
-  subject(:request) { described_class.new(prompt: prompt, **params) }
+  subject(:request) { described_class.new(prompt:, **params) }
 
   let(:prompt) { 'Generate something interesting.' }
   let(:params) do

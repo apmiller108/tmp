@@ -44,7 +44,9 @@ RSpec.describe BlobComponent, type: :component do
 
     it 'displays the default caption' do
       figcaption = page.find('figcaption')
-      expect(figcaption).to have_text "#{blob.filename}#{ActiveSupport::NumberHelper.number_to_human_size(blob.byte_size)}"
+      expect(figcaption).to(
+        have_text("#{blob.filename}#{ActiveSupport::NumberHelper.number_to_human_size(blob.byte_size)}")
+      )
     end
 
     context 'with a caption' do

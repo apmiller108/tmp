@@ -51,6 +51,7 @@ class Transcription
         item_data['type'] == 'punctuation'
       end
 
+      # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       # Combines two items into a single Item of type `combined`.
       #
       # @param [SpeakerContent::Item]
@@ -72,6 +73,7 @@ class Transcription
         }
         self.class.new(combined_data)
       end
+      # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
       def to_text
         "#{speaker_humanized}: #{content}"

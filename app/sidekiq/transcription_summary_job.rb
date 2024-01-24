@@ -1,6 +1,7 @@
 class TranscriptionSummaryJob
   include Sidekiq::Job
 
+  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
   def perform(user_id, transcription_id)
     user = User.find(user_id)
     transcription = user.transcriptions.find(transcription_id)
@@ -28,4 +29,5 @@ class TranscriptionSummaryJob
   rescue ActiveRecord::RecordNotFound => e
     Rails.logger.warn("#{self.class}: #{e} : transcription_id: #{transcription_id}; user_id: #{user_id}")
   end
+  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 end

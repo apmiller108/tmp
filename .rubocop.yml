@@ -26,6 +26,9 @@ Metrics/BlockLength:
 Metrics/MethodLength:
   Exclude:
     - 'app/controllers/**/*'
+Metrics/ClassLength:
+  Exclude:
+    - 'app/controllers/**/*'
 
 RSpec/ExampleLength:
   Enabled: false
@@ -33,8 +36,12 @@ RSpec/MessageSpies:
   Enabled: false
 RSpec/MultipleExpectations:
   Max: 2
+  Exclude:
+    - 'spec/system/**/*'
 RSpec/MultipleMemoizedHelpers:
   Enabled: false
+RSpec/NestedGroups:
+  Max: 4
 
 Style/Documentation:
   Enabled: false

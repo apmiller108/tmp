@@ -27,7 +27,7 @@ RSpec.describe Transcription, type: :model do
 
     it 'retuns the text representation of each item joins by a newline' do
       transcription = build :transcription
-      expect(transcription.diarized_results_to_text).to eq ("#{item1.to_text}\n#{item2.to_text}")
+      expect(transcription.diarized_results_to_text).to eq("#{item1.to_text}\n#{item2.to_text}")
     end
   end
 

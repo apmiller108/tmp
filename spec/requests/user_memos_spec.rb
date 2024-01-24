@@ -9,9 +9,9 @@ RSpec.describe 'Memos', type: :request do
     let(:request) { get "/users/#{user.id}/memos", headers: }
     let(:headers) {}
 
-    it_behaves_like 'an authenticated route'
-
     before { sign_in user }
+
+    it_behaves_like 'an authenticated route'
 
     context 'with HTML format' do
       let(:headers) { { 'ACCEPT' => 'text/html' } }
@@ -145,9 +145,9 @@ RSpec.describe 'Memos', type: :request do
     let(:memo) { create :memo, user: }
     let(:headers) {}
 
-    it_behaves_like 'an authenticated route'
-
     before { sign_in user }
+
+    it_behaves_like 'an authenticated route'
 
     context 'with HTML format' do
       let(:headers) { { 'ACCEPT' => 'text/html' } }
@@ -201,9 +201,9 @@ RSpec.describe 'Memos', type: :request do
     let(:request) { delete "/users/#{user.id}/memos/#{memo.id}", headers: }
     let(:headers) {}
 
-    it_behaves_like 'an authenticated route'
-
     before { sign_in user }
+
+    it_behaves_like 'an authenticated route'
 
     context 'with an HTML format' do
       before { request }
@@ -221,6 +221,7 @@ RSpec.describe 'Memos', type: :request do
 
       context 'when the referrer is memos index' do
         let(:headers) { { 'Accept' => 'text/vnd.turbo-stream.html', 'Referer' => user_memos_url(user) } }
+
         it { is_expected.to have_http_status :ok }
         it { is_expected.to have_turbo_stream(action: 'remove', target: "memo_#{memo.id}") }
       end

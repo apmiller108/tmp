@@ -8,5 +8,9 @@ FactoryBot.define do
     trait :audio do
       content_type { 'audio/mp3' }
     end
+
+    trait :image do
+      content_type { 'image/png' }
+    end
   end
 end

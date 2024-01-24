@@ -61,7 +61,7 @@ RSpec.describe TranscriptionJob, type: :model do
   end
 
   describe '#remote_job' do
-    subject { described_class.new }
+    subject(:job) { described_class.new }
 
     let(:client) { instance_double(TranscriptionService::AWS::Client) }
     let(:transcription_service) { instance_double(TranscriptionService) }
@@ -74,7 +74,7 @@ RSpec.describe TranscriptionJob, type: :model do
     end
 
     it 'returns the remote job' do
-      expect(subject.remote_job).to equal remote_job
+      expect(job.remote_job).to equal remote_job
     end
   end
 end

@@ -3,6 +3,7 @@ class TranscriptionRetrievalJob
 
   sidekiq_options lock: :until_executed
 
+  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
   def perform(transcription_job_id)
     transcription_job = TranscriptionJob.find(transcription_job_id)
     remote_job = transcription_job.remote_job
@@ -11,7 +12,7 @@ class TranscriptionRetrievalJob
     return log_skipped('remote transcription job not finished') unless remote_job.finished?
 
     if remote_job.completed?
-      get_and_create_transcription(transcription_job, remote_job)
+      create_transcription(transcription_job, remote_job)
     elsif remote_job.failed?
       transcription_job.update!(response: { failure_reason: remote_job.failure_reason },
                                 status: remote_job.status)
@@ -21,6 +22,7 @@ class TranscriptionRetrievalJob
   rescue ActiveRecord::RecordNotFound => e
     Rails.logger.warn("#{self.class}: #{e} : transcription_job_id: #{transcription_job_id}")
   end
+  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
   private
 
@@ -28,7 +30,7 @@ class TranscriptionRetrievalJob
     Rails.logger.warn("#{self.class}: skipped job : #{message}")
   end
 
-  def get_and_create_transcription(transcription_job, remote_job)
+  def create_transcription(transcription_job, remote_job)
     response = TranscriptionService.get_transcription(remote_job.transcript_file_uri)
     transcription_job.update!(response:, status: remote_job.status)
     Transcription.create!(

@@ -8,7 +8,7 @@ RSpec.describe LLMService do
     end
 
     it 'sets a custom client if provided' do
-      custom_client = double('CustomClient')
+      custom_client = double('CustomClient') # rubocop:disable RSpec/VerifiedDoubles
       llm_service = described_class.new(custom_client)
       expect(llm_service.client).to eq(custom_client)
     end

@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
     request.format.json?
   end
 
-  def provide_current_user
-    with_current_user(current_user) { yield }
+  def provide_current_user(&block)
+    with_current_user(current_user, &block)
   end
 end

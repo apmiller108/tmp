@@ -13,9 +13,7 @@ class TranscribeAudioJob
     transcription_service = TranscriptionService.new(client)
     transcription_service.batch_transcribe(blob, **options)
 
-    component = BlobComponent.new(blob:)
-    user = User.find(blob.memo.user_id) # user cannot be lazily loaded
-    ViewComponentBroadcaster.call([user, TurboStreams::STREAMS[:memos]], component:, action: :replace)
+    broadcast_blob(blob)
   rescue TranscriptionService::InvalidRequestError, ActiveRecord::RecordNotFound => e
     Rails.logger.warn("#{self.class}: #{e} : #{e.cause}")
   end
@@ -26,6 +24,11 @@ class TranscribeAudioJob
     {
       toxicity_detection: false
     }
+  end
+
+  def broadcast_blob(blob)
+    component = BlobComponent.new(blob:)
+    ViewComponentBroadcaster.call([blob.memo.user, TurboStreams::STREAMS[:memos]], component:, action: :replace)
   end
 
   def log_skipped(blob)

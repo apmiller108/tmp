@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe MemoCardComponent, type: :component do
   subject { page }
@@ -16,7 +16,8 @@ RSpec.describe MemoCardComponent, type: :component do
   end
 
   it 'is a modal opener' do
-    expect(page).to have_css ".c-memo-card[data-controller='modal-opener memo-card'][data-modal='#{ModalComponent.id}']"\
+    expect(page).to have_css ".c-memo-card[data-controller='modal-opener memo-card']"\
+                             "[data-modal='#{ModalComponent.id}']"\
                              "[data-src='#{user_memo_path(user, memo)}']"
   end
 

@@ -9,7 +9,7 @@ RSpec.describe TranscriptionService::AWS::BatchTranscriptionResponse do
   let(:transcription_job) do
     instance_double(Aws::TranscribeService::Types::TranscriptionJob, transcription_job_name:, transcription_job_status:)
   end
-  let(:start_job_response) { double(transcription_job:) }
+  let(:start_job_response) { double(transcription_job:) } # rubocop:disable RSpec/VerifiedDoubles
 
   describe '#job_id' do
     it 'delegates to transcription_job' do
@@ -30,6 +30,7 @@ RSpec.describe TranscriptionService::AWS::BatchTranscriptionResponse do
 
   describe '#completed?' do
     subject(:completed?) { described_class.new(start_job_response).completed? }
+
     context 'when completed' do
       let(:transcription_job_status) { 'COMPLETED' }
 

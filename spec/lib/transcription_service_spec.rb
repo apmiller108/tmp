@@ -5,7 +5,9 @@ describe TranscriptionService do
 
   let(:client) { instance_double(TranscriptionService::AWS::Client, batch_transcribe: nil, request:, response:) }
   let(:request) { instance_double(TranscriptionService::AWS::BatchTranscriptionRequest, params: { foo: :bar }) }
-  let(:response) { instance_double(TranscriptionService::AWS:: BatchTranscriptionResponse, job_id: 'job-id', status: 'job-status') }
+  let(:response) do
+    instance_double(TranscriptionService::AWS::BatchTranscriptionResponse, job_id: 'job-id', status: 'job-status')
+  end
   let(:blob) { build_stubbed :active_storage_blob }
 
   describe '#request' do

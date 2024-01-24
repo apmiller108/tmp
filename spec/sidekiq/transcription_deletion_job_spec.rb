@@ -23,6 +23,7 @@ RSpec.describe TranscriptionDeletionJob, type: :job do
           receive(:delete_batch_transcription_job).and_raise(TranscriptionService::InvalidRequestError)
         )
       end
+
       it 'resuces and logs the error' do
         job.perform(remote_job_id)
         expect(Rails.logger).to(

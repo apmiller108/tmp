@@ -5,7 +5,7 @@ require_relative '../config/environment'
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 
 require 'rspec/rails'
-require "sidekiq_unique_jobs/testing"
+require 'sidekiq_unique_jobs/testing'
 require 'view_component/test_helpers'
 require 'view_component/system_test_helpers'
 require 'capybara/rspec'

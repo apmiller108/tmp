@@ -74,7 +74,9 @@ RSpec.describe TranscribeAudioJob, type: :job do
 
       it 'resuces and logs the error' do
         job.perform(blob_id)
-        expect(Rails.logger).to have_received(:warn).with('TranscribeAudioJob: TranscriptionService::InvalidRequestError : ')
+        expect(Rails.logger).to(
+          have_received(:warn).with('TranscribeAudioJob: TranscriptionService::InvalidRequestError : ')
+        )
       end
     end
 
