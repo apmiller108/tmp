@@ -13,7 +13,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   eslint:
-    name: eslint
+    name: Eslint
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repo
@@ -29,6 +29,19 @@ jobs:
           yarn install
       - name: Run ESlint
         run: node_modules/.bin/eslint --ext .js ./app
+
+  yarn_audit:
+    name: Yarn audit
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Include node and yarn
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Run yarn audit
+        run: yarn audit
 
   brakeman:
     name: Brakeman
