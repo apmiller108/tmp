@@ -44,6 +44,25 @@ jobs:
         with:
           name: brakeman-results
           path: brakeman_results.html
+
+  bundle_audit:
+    name: Bundler audit
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Setup ruby
+        uses: ruby/setup-ruby@v1 # https://github.com/ruby/setup-ruby
+        with:
+          bundler-cache: true
+          ruby-version: 3.3
+      - name: Install bundler-audit
+        run: |
+          gem install bundler-audit
+      - name: Run bundler-audit
+        run: |
+          bundler-audit check --update
+
   test:
     name: Tests
     runs-on: ubuntu-22.04
