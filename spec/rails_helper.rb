@@ -21,6 +21,8 @@ rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
 
+Rails.application.default_url_options[:host] = 'http://www.example.com'
+
 WebMock.disable_net_connect!(
   allow_localhost: true,
   allow: ENV.fetch('CHROME_URL', 'http://chrome:3333')
