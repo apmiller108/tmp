@@ -14,7 +14,7 @@ shared_examples 'an authenticated route' do
   it 'redirects to sign_in' do
     sign_out :user
     request
-    expect(response).to redirect_to '/users/sign_in'
+    expect(response).to redirect_to %r{/users/sign_in}
   end
 
   it 'shows an error message' do
