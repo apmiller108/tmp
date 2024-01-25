@@ -58,6 +58,11 @@ export default class WysiwygEditor extends Controller {
         input: this.generateTextInputTarget.value,
         text_id: this.generateTextIdTarget.value
       })
+
+      if (response.status === 401 || response.status === 403) {
+        window.location = '/'
+      }
+
       // This is used to determine if the placeholder is still present. It could
       // have been removed by the user by this point in which case inserting the
       // generated text is aborted below.
