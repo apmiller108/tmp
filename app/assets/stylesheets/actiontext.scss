@@ -32,6 +32,9 @@
       border: none;
     }
   }
+  .attachment[data-trix-content-type='tmp/generate-text-placeholder'] {
+    margin: 0.5rem 0;
+  }
   // Overrides the trix content's style for H1 to match Bootstrap (eg, .h1)
   h1 {
     font-size: 2.5rem !important;
