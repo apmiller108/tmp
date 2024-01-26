@@ -102,7 +102,7 @@ export default class TrixCustomizer {
             data-trix-dialog-attribute="generateText" data-wysiwyg-editor-target="generateTextDialog">
         <div class="d-flex align-items-baseline" >
           <input type="hidden" name="generate_text_id" value="" data-wysiwyg-editor-target="generateTextId" autocomplete="off">
-          <input type="text" class="generate-text-btn" name="generateText"
+          <input type="text" class="generate-text-input" name="generateText"
                  data-action="keydown.enter->wysiwyg-editor#submitGenerateText:prevent"
                  data-wysiwyg-editor-target="generateTextInput" data-trix-input required>
           <div class="trix-button-group">

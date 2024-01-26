@@ -1,7 +1,7 @@
 require 'capybara/cuprite'
 
 # Configure a driver
-Capybara.register_driver(:better_cuprite) do |app|
+Capybara.register_driver(:cuprite_driver) do |app|
   Capybara::Cuprite::Driver.new(
     app,
     window_size: [1200, 800],
@@ -15,8 +15,7 @@ Capybara.register_driver(:better_cuprite) do |app|
   )
 end
 
-# Use the driver by default
-Capybara.default_driver = Capybara.javascript_driver = :better_cuprite
+Capybara.default_driver = Capybara.javascript_driver = :cuprite_driver
 
 module CupriteHelpers
   def pause
