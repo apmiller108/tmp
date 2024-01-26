@@ -5,10 +5,11 @@ require 'rails_helper'
 RSpec.describe WysiwygEditorComponent, type: :component do
   subject { page }
 
-  let(:obj_name) { 'obj_name' }
   method = 'content'
   value = 'obj value'
 
+  let(:obj_name) { 'obj_name' }
+  let(:component) { described_class.new(object:, method:) }
   let(:object) do
     name = instance_double(ActiveModel::Name, element: obj_name)
     Class.new do
@@ -21,8 +22,6 @@ RSpec.describe WysiwygEditorComponent, type: :component do
       end
     end.new
   end
-
-  let(:component) { described_class.new(object:, method:) }
 
   before do
     render_inline component

@@ -1,0 +1,2 @@
+= form_with model: [user, memo] do
+  = render WysiwygEditorComponent.new(object: memo, method: :content)

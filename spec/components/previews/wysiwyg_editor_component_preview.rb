@@ -1,14 +1,26 @@
 class WysiwygEditorComponentPreview < ViewComponent::Preview
+  NEW_PATH = 'rails/view_components/wysiwyg_editor_component/new'.freeze
+  EDIT_PATH = 'rails/view_components/wysiwyg_editor_component/edit'.freeze
 
-  # rails/view_components/wysiwyg_editor_component/new
+  # View templates in sidecar folder
   def new
-    render WysiwygEditorComponent.new(object: Memo.new, method: 'content')
+    render_with_template(
+      locals: {
+        user: User.new(id: 1),
+        memo: Memo.new
+      }
+    )
   end
 
-  # rails/view_components/wysiwyg_editor_component/edit
   def edit
     memo = Memo.last
     raise 'No memos found. See at least one memo to view the edit version' if memo.blank?
-    render WysiwygEditorComponent.new(object: memo, method: 'content')
+
+    render_with_template(
+      locals: {
+        user: User.new(id: 1),
+        memo:
+      }
+    )
   end
 end
