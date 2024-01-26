@@ -1,3 +1,5 @@
+![main workflow](https://github.com/apmiller108/tmp/actions/workflows/main.yml/badge.svg)
+
 # TMP "The Memo Pad"
 AI infused note taking application.
 
@@ -12,37 +14,6 @@ AI infused note taking application.
 - PDF rendering
 - Export
 - Sharing
-
-# TODOs
-- [x] Card index view with inline modal creating and editing.
-- [x] Transcription for audio files added to message
-- [x] Rename message to memo
-- [x] Add support for diaraized transcriptions
-- [x] LLM summary of audio transcript
-- [x] Generate text
-- [ ] Make memo content scrollable (always have the toolbar in view)
-- [ ] Text to image
-- [ ] Add emoji support (gemoji https://afomera.dev/posts/2022-10-11-combined-mentions-part-one)
-- [ ] Add support for youtube video embedding (https://blog.corsego.com/action-text-embed-youtube)
-- [ ] More details on memo cards (image, audio indicators, icons for attachments in plain text)
-- [ ] Add public / private message (sharing, @ing)
-- [ ] Create public message view
-- [ ] Add ability to comment on messages (with other message?)
-- [ ] Switch to LLAMA for generative text
-- [ ] Retry failed summary btn
-- [ ] Move items to transcript model, drop response column, persist failure reason only
-- [ ] Sentiment analysis
-- [ ] Custom audio player
-- [ ] Add web health check with pinglish
-- [ ] Add feature specs for user messages
-- [ ] Registration via API
-- [ ] Add request specs for registration via API
-- [ ] Add auth helper for request specs
-- [ ] Figure out better cors config https://github.com/cyu/rack-cors
-- [ ] Add lograge
-- [ ] Export memo
-
-![main workflow](https://github.com/apmiller108/tmp/actions/workflows/main.yml/badge.svg)
 
 # Start
 
