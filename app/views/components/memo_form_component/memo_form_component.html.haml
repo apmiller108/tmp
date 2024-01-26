@@ -8,7 +8,7 @@
     = form.label :title, class: 'form-label'
     = form.text_field :title, class: 'form-control'
     %div.mt-3
-      = render WysiwygEditorComponent.new(form:, rich_text_field: :content)
+      = render WysiwygEditorComponent.new(object: memo, method: :content)
     .btn-group.d-flex.justify-content-end.my-3{'role' => :group, 'aria-label' => 'Memo Form'}
       = form.submit submit_value, class: 'btn btn-outline-primary flex-grow-0', data: { action: 'click->memo-form#onSubmit:prevent' }
       - if memo.persisted?

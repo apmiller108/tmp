@@ -5,22 +5,32 @@ require 'rails_helper'
 RSpec.describe WysiwygEditorComponent, type: :component do
   subject { page }
 
-  let(:form) { instance_double(ActionView::Helpers::FormBuilder) }
-  let(:rich_text_field_id) { 'obj_content_trix_input_obj_1' }
-  let(:rich_text_field) { :content }
-  let(:rich_text_area) do
-    "<input type='hidden' name='obj[content]' id='#{rich_text_field_id}'>".html_safe
+  let(:obj_name) { 'obj_name' }
+  method = 'content'
+  value = 'obj value'
+
+  let(:object) do
+    name = instance_double(ActiveModel::Name, element: obj_name)
+    Class.new do
+      define_method(:model_name) do
+        name
+      end
+
+      define_method(method) do
+        value
+      end
+    end.new
   end
-  let(:component) { described_class.new(form:, rich_text_field:) }
+
+  let(:component) { described_class.new(object:, method:) }
 
   before do
-    allow(form).to receive(:rich_text_area).with(rich_text_field).and_return(rich_text_area)
     render_inline component
   end
 
   it { is_expected.to have_css '.c-wysiwyg-editor' }
 
-  it 'renders the rich text field' do
-    expect(page).to have_css "input##{rich_text_field_id}", visible: :hidden
+  it 'renders rich text hidden input with the proper attributes' do
+    expect(page).to have_css "input[name='#{obj_name}[#{method}]'][value='#{value}']", visible: :hidden
   end
 end
