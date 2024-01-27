@@ -16,11 +16,11 @@ class MemoCardComponent < ApplicationViewComponent
   end
 
   def preview_text
-    content.to_plain_text.truncate_words(10)
+    content.to_plain_text.truncate_words(20, omission: '')
   end
 
-  def expanded_preview_text
-    content.to_plain_text.truncate_words(30)
+  def continued_preview_text
+    content.to_plain_text.gsub(preview_text, '').truncate_words(30)
   end
 
   def created_at
