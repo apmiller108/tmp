@@ -50,5 +50,6 @@
     h1 {
       @extend .h1;
     }
+    @include modalTrixContent
   }
 }

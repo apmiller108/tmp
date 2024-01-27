@@ -1,2 +1,5 @@
 .c-memo {
+  .trix-content {
+    @include modalTrixContent
+  }
 }
