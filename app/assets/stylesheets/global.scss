@@ -49,3 +49,15 @@
     background-color: rgba($light, 0.5);
   }
 }
+
+.icon-btn {
+  height: 3rem;
+  width: 3rem;
+  padding: 0;
+  font-size: 2rem;
+  &.icon-btn-sm {
+    height: 2rem;
+    width: 2rem;
+    font-size: 1.33rem;
+  }
+}

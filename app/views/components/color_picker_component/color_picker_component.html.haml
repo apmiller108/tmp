@@ -1,6 +1,6 @@
 .c-color-picker.position-relative{ data: { controller: 'color-picker' } }
   %input{ name: input_name, type: :hidden, value: default_color, data: { 'color-picker-target' => 'input' } }
-  %button.btn.color-picker-opener{ style: "background: ##{default_color}",
+  %button.btn.icon-btn.color-picker-opener{ style: "background: ##{default_color}",
                                    data: { 'color-picker-target' => 'swatchesButton',
                                            action: 'click->color-picker#toggleSwatches:prevent blur->color-picker#onBlur' } }
     %i.bi.bi-palette-fill
