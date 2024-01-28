@@ -1,0 +1,13 @@
+.c-color-picker.position-relative{ data: { controller: 'color-picker' } }
+  %input{ type: :hidden, value: default_color, data: { 'color-picker-target' => 'input' } }
+  %button.btn.color-picker-opener{ style: "background: ##{default_color}",
+                                   data: { 'color-picker-target' => 'swatchesButton',
+                                           action: 'click->color-picker#toggleSwatches blur->color-picker#onBlur' } }
+    %i.bi.bi-palette-fill
+  .swatches.position-absolute.hide{ data: { 'color-picker-target' => 'swatches' }}
+    - swatches.each do |swatch, colors|
+      .swatch.d-flex{ id: swatch }
+        - colors.each do |color|
+          %button.btn.color-picker-btn.d-flex{ id: color, style: "background: ##{color}",
+                                               data: { color: color,
+                                                       action: 'click->color-picker#onChoose blur->color-picker#onBlur focus->color-picker#onFocus' } }
