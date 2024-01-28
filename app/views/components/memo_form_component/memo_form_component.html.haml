@@ -6,17 +6,19 @@
           - memo.errors.each do |e|
             %li= e.full_message
     .grid
-      .g-col-9
+      .g-col-10
         = form.label :title, class: 'form-label'
         = form.text_field :title, class: 'form-control'
-      .g-col-3.d-flex.justify-content-end.align-items-center
+      .g-col-2.d-flex.justify-content-between.align-items-end
         = render ColorPickerComponent.new(swatches:, default_color:, **color_picker_options)
+        %button.btn.btn-primary.icon-btn{type: :submit, name: :commit, data: { action: 'click->memo-form#onSubmit:prevent' } }
+          %i.bi.bi-floppy-fill.text-white
+        - if memo.persisted?
+          = link_to user_memo_path(current_user, memo), class: 'btn btn-secondary icon-btn' do
+            %i.bi.bi-x-lg.text-white
+        - else
+          %button.btn.btn-secondary.icon-btn.flex-grow-0{data: { controller: 'modal-closer' }}
+            %i.bi.bi-x-lg.text-white
     %div.mt-3
       = render WysiwygEditorComponent.new(object: memo, method: :content)
-    .btn-group.d-flex.justify-content-end.my-3{'role' => :group, 'aria-label' => 'Memo Form'}
-      = form.submit submit_value, class: 'btn btn-outline-primary flex-grow-0', data: { action: 'click->memo-form#onSubmit:prevent' }
-      - if memo.persisted?
-        = link_to "Cancel", user_memo_path(current_user, memo), class: 'btn btn-outline-secondary flex-grow-0'
-      - else
-        %button.btn.btn-outline-secondary.flex-grow-0{data: { controller: 'modal-closer' }} Cancel
 
