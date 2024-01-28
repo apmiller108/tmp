@@ -5,7 +5,8 @@ export default class ColorPicker extends Controller {
 
   toggleSwatches() {
     const swatches = this.swatchesTarget
-    if (swatches.classList.contains('show')) {
+    const swatchesOpacity = window.getComputedStyle(this.swatchesTarget).opacity
+    if (swatches.classList.contains('show') || swatchesOpacity !== '0') {
       return this.hideSwatches()
     }
     this.showSwatches()
