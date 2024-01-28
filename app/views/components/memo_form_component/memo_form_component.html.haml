@@ -5,8 +5,12 @@
         %ul
           - memo.errors.each do |e|
             %li= e.full_message
-    = form.label :title, class: 'form-label'
-    = form.text_field :title, class: 'form-control'
+    .grid
+      .g-col-9
+        = form.label :title, class: 'form-label'
+        = form.text_field :title, class: 'form-control'
+      .g-col-3.d-flex.justify-content-end.align-items-center
+        = render ColorPickerComponent.new(swatches:, default_color:, **color_picker_options)
     %div.mt-3
       = render WysiwygEditorComponent.new(object: memo, method: :content)
     .btn-group.d-flex.justify-content-end.my-3{'role' => :group, 'aria-label' => 'Memo Form'}
