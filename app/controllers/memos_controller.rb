@@ -54,10 +54,12 @@ class MemosController < ApplicationController
 
     respond_to do |format|
       if @memo.update(memo_params)
+        flash.now.notice = 'Memo saved'
         format.turbo_stream do
           render turbo_stream: [
-            turbo_stream.replace(memo_component.id, memo_component.render_in(view_context)),
-            turbo_stream.replace(memo_card_component.id, memo_card_component.render_in(view_context))
+            turbo_stream.replace(memo_component.id, memo_form_component.render_in(view_context)),
+            turbo_stream.replace(memo_card_component.id, memo_card_component.render_in(view_context)),
+            turbo_stream.update('alert-stream', FlashMessageComponent.new(flash:, auto_dismiss: 2))
           ], status: :ok
         end
 
