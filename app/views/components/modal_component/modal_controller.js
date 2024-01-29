@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 import autoAnimate from '@formkit/auto-animate'
 
 export default class extends Controller {
-  static targets = ['bodyTurboFrame', 'closeButton']
+  static targets = ['bodyTurboFrame', 'closeButton', 'header']
 
   onOpenLister = 'modal-opener:openModal@window->modal#onOpenModal'
   onCloseListner = 'modal-closer:closeModal@window->modal#onCloseModal'
@@ -23,8 +23,12 @@ export default class extends Controller {
     autoAnimate(this.bodyTurboFrameTarget)
   }
 
-  onOpenModal({ detail: { src }}) {
-    this.bodyTurboFrameTarget.src = src
+  onOpenModal({ detail: { modalSrc, modalHideHeader }}) {
+    console.log(modalHideHeader)
+    if (modalHideHeader) {
+      this.headerTarget.classList.add('d-none')
+    }
+    this.bodyTurboFrameTarget.src = modalSrc
   }
 
   onCloseModal() {
@@ -33,6 +37,7 @@ export default class extends Controller {
 
   reset() {
     delete this.bodyTurboFrameTarget.src
+    this.headerTarget.classList.remove('d-none')
     this.bodyTurboFrameTarget.innerHTML = ''
   }
 }

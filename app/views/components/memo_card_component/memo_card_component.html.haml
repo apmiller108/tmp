@@ -1,7 +1,8 @@
 .c-memo-card.card.g-col-12.g-col-md-6.g-col-lg-4{ id: id,
                                                   data: { controller: 'modal-opener memo-card',
                                                           modal: ModalComponent.id,
-                                                          src: user_memo_path(current_user, memo.id) }}
+                                                          'modal-hide-header': true,
+                                                          'modal-src': user_memo_path(current_user, memo.id) }}
   .card-header
     %h4.card-title.m-0= title
   .card-body

@@ -8,7 +8,7 @@ export default class extends Controller {
   }
 
   openModal() {
-    const { src } = this.element.dataset
-    this.dispatch("openModal", { detail: { src } })
+    const { modalSrc, modalHideHeader } = this.element.dataset
+    this.dispatch("openModal", { detail: { modalSrc, modalHideHeader: modalHideHeader !== null } })
   }
 }

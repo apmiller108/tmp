@@ -4,7 +4,7 @@
                     data: { controller: :modal }}
   .modal-dialog{ class: bs_size_class }
     .modal-content
-      .modal-header
+      .modal-header{ data: { 'modal-target' => 'header' } }
         -if title?
           %h1.modal-title.fs-5
             = title

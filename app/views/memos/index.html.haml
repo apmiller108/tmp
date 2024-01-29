@@ -4,7 +4,7 @@
   .container
     %button.btn.btn-primary.mb-3{ data: { controller: 'modal-opener',
                                           modal: ModalComponent.id,
-                                          src: new_user_memo_path(current_user) } }
+                                          'modal-src': new_user_memo_path(current_user) } }
       = t('memo.new')
   .container
     = render PaginationComponent.new(path: [:user_memos_path, current_user]) do |pagination|
