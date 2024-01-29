@@ -58,11 +58,16 @@ env unless they're the same key. See also [#secrets](secrets).
 This depends on AWS services. A user will need to be created in the AWS portal with the following permissions:
 - AmazonS3FullAccess
 - AmazonTranscribeFullAccess
+- AmazonBedrockFullAccess
 The user's access key and secret needs to be added to the applications credentials.
 ### AWS s3
 See also [#activestorage-configuration](ActiveStorage Configuration)
 ### AWS Transcribe
 This uses AWS Transcription Jobs for speech to text
+### AWS Titan
+LLM used for summaries and generative text features
+
+See also https://aws.amazon.com/bedrock/titan/
 
 # Application
 ## Authentication
@@ -208,30 +213,5 @@ CI run on Github Actions. The following actions comprise the CI pipeline:
 - rspec tests
 
 # Deployments
-## Fly.io
-- The deployments use the `Dockerfile` and `fly.toml`.
-- Use the [flyctl](https://fly.io/docs/hands-on/install-flyctl/) commandline utility to manage deployments and production environment.
-- Staging hosted at https://cold-dream-5563.fly.dev/
 
-```shell
-flyctl deploy
-```
-
-```shell
-fly ssh console --pty -C '/bin/bash'
-```
-### Issues with fly
-#### Server won't start since it things there is one already running.
-The pid should be dockerignored, but had to do `rm tmp/pids/server.pid` locally and then redeployed.
-### I'm cheap and using free stuff...
-So everything goes into suspend and need to wake stuff up.
-
-#### Start a machine
-```shell
-flyctl machine start -a cold-dream-5563-db 17811120c55748
-```
-
-#### Restart an application
-```shell
-flyctl apps restart cold-dream-5563
-```
+TBD
