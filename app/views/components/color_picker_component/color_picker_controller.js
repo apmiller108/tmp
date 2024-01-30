@@ -22,11 +22,11 @@ export default class ColorPicker extends Controller {
     this.swatchesButtonTarget.classList.add('active')
   }
 
-  onBlur(e) {
+  onBlur() {
     this.hideSwatches()
   }
 
-  onFocus(e) {
+  onFocus() {
     this.showSwatches()
   }
 

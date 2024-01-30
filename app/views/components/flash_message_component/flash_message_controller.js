@@ -1,5 +1,4 @@
 import { Controller } from '@hotwired/stimulus'
-import autoAnimate from '@formkit/auto-animate'
 
 export default class FlashMessage extends Controller {
   static targets = ['closeButton']
