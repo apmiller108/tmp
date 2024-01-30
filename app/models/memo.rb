@@ -7,6 +7,10 @@ class Memo < ApplicationRecord
     swatch5: %w[ef6351 f38375 f7a399 fbc3bc ffe3e0]
   }.freeze
 
+  COLORS = SWATCHES.inject([]) do |colors, (_, hex_values)|
+    colors + hex_values
+  end.freeze
+
   # Rich text:
   #  Associations:
   #    has_one :rich_text_content, class_name: 'ActionText::RichText'
@@ -17,6 +21,7 @@ class Memo < ApplicationRecord
   has_rich_text :content
 
   validates :content, :title, presence: true
+  validates :color, inclusion: { in: COLORS, allow_blank: true }
 
   belongs_to :user, optional: false
   has_many :audio_blobs, -> { audio }, through: :rich_text_content, source: :embeds_blobs
