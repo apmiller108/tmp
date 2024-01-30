@@ -1,10 +1,5 @@
 = tag.turbo_frame(id: id) do
   = form_with model: [current_user, memo], data: { controller: 'memo-form' }, html: { class: 'c-memo-form' } do |form|
-    - if memo.errors.any?
-      .form-errors
-        %ul
-          - memo.errors.each do |e|
-            %li= e.full_message
     .grid
       .g-col-10
         = form.text_field :title, class: 'form-control', placeholder: 'Title'
@@ -16,8 +11,8 @@
           = link_to user_memo_path(current_user, memo), class: 'btn btn-secondary icon-btn' do
             %i.bi.bi-backspace.text-white
         - else
-          %button.btn.btn-secondary.icon-btn.flex-grow-0{data: { controller: 'modal-closer' }}
-            %i.bi.bi-x-lg.text-white
-    %div.mt-3
+          %button.btn.icon-btn.flex-grow-0{data: { controller: 'modal-closer' }}
+            %i.bi.bi-x-lg
+    %div.mt-3{ class: [memo.errors[:content].present? && 'field_with_errors'] }
       = render WysiwygEditorComponent.new(object: memo, method: :content)
 

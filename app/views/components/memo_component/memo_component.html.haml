@@ -4,8 +4,8 @@
       .g-col-10
         %h1= memo.title
       .g-col-2.d-flex.justify-content-end.align-items-start
-        %button.btn.btn-secondary.icon-btn.flex-grow-0{data: { controller: 'modal-closer' }}
-          %i.bi.bi-x-lg.text-white
+        %button.btn.icon-btn.flex-grow-0{data: { controller: 'modal-closer' }}
+          %i.bi.bi-x-lg
     = memo.content
     .d-flex.justify-content-end.mt-3
       = link_to edit_user_memo_path(current_user, memo), class: 'btn btn-primary edit-memo-link icon-btn me-3' do

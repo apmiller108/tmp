@@ -5,13 +5,14 @@
   CLOSED: [2024-01-28 Sun 11:03]
   remove edit memo button
   change delete button to icon button
-* Add save icon to right of color picker [4/5]
+* DONE Add save icon to right of color picker [5/5]
+  CLOSED: [2024-01-29 Mon 21:03]
   - [X] On save return the updated memo form
   - [X] Remove the update memo button
   - [X] remove top bar from modal (make it an option somehow, maybe from the
     modal opener)
   - [X] prevent modal from closing on blur
-  - [ ] better colors and icons for notice/success
+  - [X] better colors and icons for notice/success
 * TODO Add color field to memos
   - permit color param
   - validate color value
@@ -19,3 +20,4 @@
 * TODO set memo heading background color
 * TODO show confirmation if there are unsaved changes
 * TODO add tooltips to icon buttons
+* TODO add flash message component test

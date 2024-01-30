@@ -1,8 +1,10 @@
 .c-flash-message.text-center.alert.alert-dismissible{ class: alert_class, role: :alert,
                                                       data: { controller: 'flash-message', auto_dismiss: auto_dismiss } }
-  = message
+  .d-flex.justify-content-center
+    %i.bi.me-2{ class: icon_class }
+    %div= message
   %button.btn-close{type: :button, data: { 'bs-dismiss' => :alert, 'flash-message-target' => 'closeButton' }, aria: { label: :close }}
   - if validation_errors?
-    %ul.validation-messages.list-group
-      - errors.full_messages.each do |m|
-        %li.list-group-item.list-group-item-warning= m
+    %hr
+    - errors.full_messages.each do |m|
+      %p.mb-0= m

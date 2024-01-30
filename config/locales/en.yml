@@ -36,6 +36,8 @@ en:
   download: 'Download'
   download_to_save: 'Download to save a copy'
   edit: 'Edit'
+  unable_to_save: "Unable to save %{model_name}"
+  successfully_saved: "%{model_name} saved"
   memo:
     new: 'New Memo'
     create: 'Create Memo'
@@ -43,7 +45,6 @@ en:
     edit: 'Edit Memo'
     update: 'Update Memo'
     content: 'Content'
-  memos: "Memos"
   new: 'New'
   summary:
     create: 'Create Summary'

@@ -1,6 +1,12 @@
 class FlashMessageComponent < ApplicationViewComponent
   attr_reader :flash, :record, :auto_dismiss
 
+  CSS_CLASSES = {
+    info: { alert: 'alert-info', icon: 'bi-info-square' },
+    warning: { alert: 'alert-warning', icon: 'bi-exclamation-triangle' },
+    success: { alert: 'alert-success', icon: 'bi-check-circle' }
+  }.freeze
+
   delegate :alert, :notice, to: :flash
   delegate :errors, to: :record, allow_nil: true
 
@@ -15,14 +21,30 @@ class FlashMessageComponent < ApplicationViewComponent
   end
 
   def message
-    notice || alert
+    notice || alert || flash[:success]
   end
 
   def alert_class
+    css_classes.fetch(:alert)
+  end
+
+  def icon_class
+    css_classes.fetch(:icon)
+  end
+
+  private
+
+  def css_classes
+    CSS_CLASSES.fetch(type, :info)
+  end
+
+  def type
     if notice
-      'alert-info'
-    else
-      'alert-warning'
+      :info
+    elsif alert
+      :warning
+    elsif flash[:success]
+      :success
     end
   end
 end

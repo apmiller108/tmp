@@ -29,16 +29,18 @@ class MemosController < ApplicationController
             turbo_stream: [
               turbo_stream.replace('new_memo', memo_component.render_in(view_context)),
               turbo_stream.prepend('memos', memo_card_component.render_in(view_context))
-            ],
-            status: :created
+            ], status: :created
           )
         end
         format.html { redirect_to user_memo_path(current_user, @memo) }
         TranscribableContentHandlerJob.perform_async(@memo.id)
       else
+        flash.now.alert = t('unable_to_save', model_name: :memo)
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace('new_memo', memo_form_component.render_in(view_context)),
-                 status: :unprocessable_entity
+          render turbo_stream: [
+            turbo_stream.replace('new_memo', memo_form_component.render_in(view_context)),
+            turbo_stream.update('alert-stream', FlashMessageComponent.new(flash:, record: @memo))
+          ], status: :unprocessable_entity
         end
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -54,7 +56,7 @@ class MemosController < ApplicationController
 
     respond_to do |format|
       if @memo.update(memo_params)
-        flash.now.notice = 'Memo saved'
+        flash.now[:success] = t('successfully_saved', model_name: 'Memo')
         format.turbo_stream do
           render turbo_stream: [
             turbo_stream.replace(memo_component.id, memo_form_component.render_in(view_context)),
@@ -68,8 +70,12 @@ class MemosController < ApplicationController
         end
         TranscribableContentHandlerJob.perform_async(@memo.id)
       else
+        flash.now.alert = t('unable_to_save', model_name: :memo)
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace(memo_card.component.id, memo_card_component.render_in(view_context))
+          render turbo_stream: [
+            turbo_stream.replace(memo_card.component.id, memo_card_component.render_in(view_context)),
+            turbo_stream.update('alert-stream', FlashMessageComponent.new(flash:, record: @memo))
+          ]
         end
         format.html do
           render :edit, status: :unprocessable_entity

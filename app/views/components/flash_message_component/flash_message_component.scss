@@ -1,8 +1,9 @@
 .c-flash-message {
   position: fixed;
   width: 50%;
-  top: 7%;
+  top: 9%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: $zindex-toast // 1090
+  z-index: $zindex-toast; // 1090
+  max-width: 30rem;
 }
