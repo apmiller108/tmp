@@ -13,11 +13,16 @@
     modal opener)
   - [X] prevent modal from closing on blur
   - [X] better colors and icons for notice/success
-* TODO Add color field to memos
+* DONE Add color field to memos
+  CLOSED: [2024-01-30 Tue 19:19]
   - permit color param
   - validate color value
-* TODO set card heading background color
-* TODO set memo heading background color
-* TODO show confirmation if there are unsaved changes
+* DONE set card heading background color
+  CLOSED: [2024-01-30 Tue 19:28]
+* DONE set memo title background color
+  CLOSED: [2024-01-30 Tue 21:13]
+* TODO Clean up duplication
 * TODO add tooltips to icon buttons
-* TODO add flash message component test
+* TODO update flash message component test
+* TODO update memo card component test
+* TODO add memo card component preview and system test

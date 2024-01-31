@@ -1,4 +1,4 @@
-.c-modal.modal.fade{aria: { hidden: true, labelledby: "memo-modal-label" },
+.c-modal.modal.fade.p-0{aria: { hidden: true, labelledby: "memo-modal-label" },
                     tabindex: -1,
                     id: self.class.id,
                     data: { controller: :modal, 'bs-backdrop' => :static, 'bs-keyboard' => 'false' }}
@@ -11,7 +11,7 @@
         %button.btn-close{aria: { label: "Close"},
                           data: { "bs-dismiss" => "modal", 'modal-target' => 'closeButton' },
                           type: :button}
-      .modal-body
+      .modal-body.p-0
         = tag.turbo_frame(id: self.class.turbo_frame_body_id, src: nil,
                           data: { 'modal-target' => 'bodyTurboFrame' }, loading: :lazy) do
           .d-flex.justify-content-center

@@ -44,9 +44,9 @@
 
 @mixin clickableThing {
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: opacity 0.3s ease;
   &:hover {
-    background-color: rgba($light, 0.5);
+    opacity: 0.8;
   }
 }
 
