@@ -4,7 +4,6 @@ class MemoFormComponent < ApplicationViewComponent
   attr_reader :memo
 
   delegate :color, to: :memo
-  alias default_color color
 
   def initialize(memo:)
     @memo = memo
@@ -16,6 +15,10 @@ class MemoFormComponent < ApplicationViewComponent
 
   def submit_value
     memo.persisted? ? t('memo.update') : t('memo.create')
+  end
+
+  def default_color
+    color || swatches[:swatch1].first
   end
 
   def swatches
