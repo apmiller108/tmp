@@ -5,7 +5,7 @@ class MemoCardComponent < ApplicationViewComponent
 
   attr_reader :memo
 
-  delegate :content, :title, to: :memo
+  delegate :color, :content, :title, to: :memo
 
   def initialize(memo:)
     @memo = memo
@@ -29,5 +29,9 @@ class MemoCardComponent < ApplicationViewComponent
 
   def updated_at
     time_ago_in_words(memo.updated_at)
+  end
+
+  def background_style
+    "background-color: ##{color};" if color.present?
   end
 end

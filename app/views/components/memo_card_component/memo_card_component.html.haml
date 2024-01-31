@@ -2,8 +2,8 @@
                                                   data: { controller: 'modal-opener memo-card',
                                                           modal: ModalComponent.id,
                                                           'modal-hide-header': true,
-                                                          'modal-src': user_memo_path(current_user, memo.id) }}
-  .card-header
+                                                          'modal-src': user_memo_path(current_user, memo.id) } }
+  .card-header{ style: background_style }
     %h4.card-title.m-0= title
   .card-body
     .grid
