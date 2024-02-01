@@ -21,8 +21,14 @@
   CLOSED: [2024-01-30 Tue 19:28]
 * DONE set memo title background color
   CLOSED: [2024-01-30 Tue 21:13]
+* TODO set text to white when color is darker
+* TODO allow color to be unset
+  maybe default the button to black icon white background when unset
+  if color is set, show a "remove color" link at the bottom of the picker
 * TODO Clean up duplication
 * TODO add tooltips to icon buttons
 * TODO update flash message component test
 * TODO update memo card component test
 * TODO add memo card component preview and system test
+* TODO update memo form component spec
+* TODO add memo form component system test

@@ -3,14 +3,14 @@
                                                           modal: ModalComponent.id,
                                                           'modal-hide-header': true,
                                                           'modal-src': user_memo_path(current_user, memo.id) } }
-  .card-header{ style: background_style }
+  .card-header{ style: background_style, class: font_class }
     %h4.card-title.m-0= title
-  .card-body
+  .card-body{ style: background_body_style, class: font_class }
     .grid
       .g-col-6
-        %p.card-subtitle.text-body-secondary.fs-6= "Created #{created_at} ago"
+        %p.card-subtitle= "Created #{created_at} ago"
       .g-col-6
-        %p.card-subtitle.text-body-secondary.fs-6= "Updated #{updated_at} ago"
+        %p.card-subtitle= "Updated #{updated_at} ago"
     %p.card-text.mt-2{data: { 'bs-toggle' => 'tooltip',
                               'bs-title' => continued_preview_text,
                               'bs-placement' => 'bottom',

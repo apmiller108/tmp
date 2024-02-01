@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class MemoCardComponent < ApplicationViewComponent
+  include MemoColor
+
   with_collection_parameter :memo
 
   attr_reader :memo
@@ -16,7 +18,7 @@ class MemoCardComponent < ApplicationViewComponent
   end
 
   def preview_text
-    content.to_plain_text.truncate_words(20, omission: '')
+    content.to_plain_text.truncate_words(25, omission: '')
   end
 
   def continued_preview_text
@@ -32,6 +34,24 @@ class MemoCardComponent < ApplicationViewComponent
   end
 
   def background_style
-    "background-color: ##{color};" if color.present?
+    return unless color.present?
+
+    "background-color: rgba(#{rgb.join(',')}, 0.8);"
+  end
+
+  def background_body_style
+    return unless color.present?
+
+    "background-color: rgba(#{rgb.join(',')}, 0.5);"
+  end
+
+  def font_class
+    return unless color.present?
+
+    if rgb.sum < (255 * 3) / 3.7
+      'text-white'
+    else
+      'text-dark'
+    end
   end
 end
