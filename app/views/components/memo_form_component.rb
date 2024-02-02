@@ -3,11 +3,10 @@
 class MemoFormComponent < ApplicationViewComponent
   attr_reader :memo
 
-  delegate :to_rgb, to: :@color
+  delegate :color, to: :memo
 
   def initialize(memo:)
     @memo = memo
-    @color = Color.new(memo.color)
   end
 
   def id
@@ -18,25 +17,23 @@ class MemoFormComponent < ApplicationViewComponent
     memo.persisted? ? t('memo.update') : t('memo.create')
   end
 
-  def default_color
-    @color.hex unless @color.default?
-  end
-
-  def swatches
-    memo.class::SWATCHES
+  def color_picker_color
+    color.hex unless color.default?
   end
 
   def color_picker_options
     {
+      swatches: memo.class::SWATCHES,
+      default_color: color_picker_color,
       align: :left,
       input_name: "#{memo.model_name.element}[color]"
     }
   end
 
   def border_styles
-    return if @color.default?
+    return if color.default?
 
-    "box-shadow: 0 0 0.5rem 0.5rem rgba(#{to_rgb.join(',')}, 0.5); "\
-    "border: 0.25rem solid rgba(#{to_rgb.join(',')}, 0.8);"
+    "box-shadow: 0 0 0.5rem 0.5rem rgba(#{color.to_rgb.join(',')}, 0.5); "\
+    "border: 0.25rem solid rgba(#{color.to_rgb.join(',')}, 0.8);"
   end
 end

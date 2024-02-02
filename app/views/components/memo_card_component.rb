@@ -5,11 +5,10 @@ class MemoCardComponent < ApplicationViewComponent
 
   attr_reader :memo
 
-  delegate :content, :title, to: :memo
+  delegate :color, :content, :title, to: :memo
 
   def initialize(memo:)
     @memo = memo
-    @color = Color.new(memo.color)
   end
 
   def id
@@ -33,15 +32,15 @@ class MemoCardComponent < ApplicationViewComponent
   end
 
   def background_style
-    "background-color: rgba(#{@color.to_rgb.join(',')}, 0.8);"
+    "background-color: rgba(#{color.to_rgb.join(',')}, 0.8);"
   end
 
   def background_body_style
-    "background-color: rgba(#{@color.to_rgb.join(',')}, 0.5);"
+    "background-color: rgba(#{color.to_rgb.join(',')}, 0.5);"
   end
 
   def font_class
-    if @color.to_rgb.sum < (255 * 3) / 3.7
+    if color.darkish?
       'text-white'
     else
       'text-dark'

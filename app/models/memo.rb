@@ -20,6 +20,8 @@ class Memo < ApplicationRecord
   #    content.embeds_blobs (this is through embeds_attachments)
   has_rich_text :content
 
+  attribute :color, :color_type
+
   validates :content, :title, presence: true
   validates :color, inclusion: { in: COLORS, allow_blank: true }
 

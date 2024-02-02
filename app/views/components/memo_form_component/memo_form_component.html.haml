@@ -5,7 +5,7 @@
       .g-col-10
         = form.text_field :title, class: 'form-control', placeholder: 'Title'
       .g-col-2.d-flex.justify-content-between.align-items-end
-        = render ColorPickerComponent.new(swatches:, default_color:, **color_picker_options)
+        = render ColorPickerComponent.new(**color_picker_options)
         %button.btn.btn-primary.icon-btn{type: :submit, name: :commit, data: { action: 'click->memo-form#onSubmit:prevent' } }
           %i.bi.bi-floppy-fill.text-white
         - if memo.persisted?

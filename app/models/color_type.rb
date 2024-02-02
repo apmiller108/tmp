@@ -1,10 +1,18 @@
-class Color
+class ColorType < ActiveRecord::Type::String
   DEFAULT = 'e4f2fe'.freeze
 
   attr_reader :hex
 
   def initialize(hex = nil)
     @hex = hex || DEFAULT
+  end
+
+  def serialize(value) = value
+
+  def cast(value) = value
+
+  def deserialize(value)
+    self.class.new(value)
   end
 
   def to_rgb
@@ -16,7 +24,7 @@ class Color
   def b = hex[4..5].to_i(16)
 
   def darkish?
-    rgb.sum < (255 * 3) / 3.7
+    to_rgb.sum < (255 * 3) / 3.7
   end
 
   def default?
