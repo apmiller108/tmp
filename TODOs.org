@@ -21,9 +21,9 @@
   CLOSED: [2024-01-30 Tue 19:28]
 * DONE set memo title background color
   CLOSED: [2024-01-30 Tue 21:13]
-* TODO set text to white when color is darker
+* DONE set text to white when color is darker
+  CLOSED: [2024-02-01 Thu 21:30]
 * TODO allow color to be unset
-  maybe default the button to black icon white background when unset
   if color is set, show a "remove color" link at the bottom of the picker
 * TODO Clean up duplication
 * TODO add tooltips to icon buttons

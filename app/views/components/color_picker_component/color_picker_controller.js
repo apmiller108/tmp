@@ -34,6 +34,7 @@ export default class ColorPicker extends Controller {
     const color = e.target.dataset.color
     this.inputTarget.value = color
     this.swatchesButtonTarget.style.background = `#${color}`
+    this.swatchesButtonTarget.style.color = ''
     this.dispatch("colorChosen", { detail: { color } })
   }
 

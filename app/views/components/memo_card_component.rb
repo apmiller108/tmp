@@ -1,16 +1,15 @@
 # frozen_string_literal: true
 
 class MemoCardComponent < ApplicationViewComponent
-  include MemoColor
-
   with_collection_parameter :memo
 
   attr_reader :memo
 
-  delegate :color, :content, :title, to: :memo
+  delegate :content, :title, to: :memo
 
   def initialize(memo:)
     @memo = memo
+    @color = Color.new(memo.color)
   end
 
   def id
@@ -34,21 +33,15 @@ class MemoCardComponent < ApplicationViewComponent
   end
 
   def background_style
-    return unless color.present?
-
-    "background-color: rgba(#{rgb.join(',')}, 0.8);"
+    "background-color: rgba(#{@color.to_rgb.join(',')}, 0.8);"
   end
 
   def background_body_style
-    return unless color.present?
-
-    "background-color: rgba(#{rgb.join(',')}, 0.5);"
+    "background-color: rgba(#{@color.to_rgb.join(',')}, 0.5);"
   end
 
   def font_class
-    return unless color.present?
-
-    if rgb.sum < (255 * 3) / 3.7
+    if @color.to_rgb.sum < (255 * 3) / 3.7
       'text-white'
     else
       'text-dark'
