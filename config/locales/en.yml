@@ -30,30 +30,34 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
+  back: 'Back'
   cancel: 'Cancel'
+  color: 'Color'
   content: 'Content'
   create: 'Create'
   download: 'Download'
   download_to_save: 'Download to save a copy'
   edit: 'Edit'
-  unable_to_save: "Unable to save %{model_name}"
-  successfully_saved: "%{model_name} saved"
   memo:
-    new: 'New Memo'
-    create: 'Create Memo'
-    index: "Memos"
-    edit: 'Edit Memo'
-    update: 'Update Memo'
     content: 'Content'
+    create: 'Create Memo'
+    delete: 'Delete Memo'
+    edit: 'Edit Memo'
+    index: "Memos"
+    new: 'New Memo'
+    update: 'Update Memo'
   new: 'New'
+  save: 'Save'
+  successfully_saved: "%{model_name} saved"
   summary:
     create: 'Create Summary'
-    generating: 'Generating summary'
     failed: 'Summary failed'
+    generating: 'Generating summary'
   transcription:
     speaker_id: 'Speaker ID'
     summary: "Summary"
     status: "Transcription %{status}"
     text: 'Text'
     title: "Transcription of %{filename}"
+  unable_to_save: "Unable to save %{model_name}"
 

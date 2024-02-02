@@ -2,6 +2,7 @@
   %input{ name: input_name, type: :hidden, value: selected_color, data: { 'color-picker-target' => 'input' } }
   %button.btn.icon-btn.color-picker-opener{ style: button_styles,
                                             data: { 'color-picker-target' => 'swatchesButton',
+                                                    'bs-toggle' => 'tooltip', 'bs-title' => t('color'),
                                                      action: 'click->color-picker#toggleSwatches:prevent blur->color-picker#onBlur' } }
     %i.bi.bi-palette-fill
   .swatches.position-absolute.hide{ data: { 'color-picker-target' => 'swatches' }, style: swatch_styles}

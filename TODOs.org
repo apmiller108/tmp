@@ -23,12 +23,18 @@
   CLOSED: [2024-01-30 Tue 21:13]
 * DONE set text to white when color is darker
   CLOSED: [2024-02-01 Thu 21:30]
-* TODO allow color to be unset
+* DONE allow color to be unset
+  CLOSED: [2024-02-02 Fri 14:54]
   if color is set, show a "remove color" link at the bottom of the picker
-* TODO Clean up duplication
-* TODO add tooltips to icon buttons
+* DONE Clean up duplication
+  CLOSED: [2024-02-02 Fri 14:54]
+* DONE add tooltips to icon buttons
+  CLOSED: [2024-02-02 Fri 15:57]
+* TODO extract a mixin for the tooltip initialization
+  https://javascript.info/mixins
 * TODO update flash message component test
 * TODO update memo card component test
 * TODO add memo card component preview and system test
 * TODO update memo form component spec
 * TODO add memo form component system test
+* TODO add color picker spec

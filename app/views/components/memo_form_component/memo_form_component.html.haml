@@ -7,10 +7,14 @@
         = form.text_field :title, class: 'form-control', placeholder: 'Title'
       .g-col-2.d-flex.justify-content-between.align-items-end
         = render ColorPickerComponent.new(**color_picker_options)
-        %button.btn.btn-primary.icon-btn{type: :submit, name: :commit, data: { action: 'click->memo-form#onSubmit:prevent' } }
+        %button.btn.btn-primary.icon-btn{type: :submit, name: :commit,
+                                         data: { action: 'click->memo-form#onSubmit:prevent',
+                                                 'bs-toggle' => 'tooltip',
+                                                 'bs-title' => t('save'),  } }
           %i.bi.bi-floppy-fill.text-white
         - if memo.persisted?
-          = link_to user_memo_path(current_user, memo), class: 'btn btn-secondary icon-btn' do
+          = link_to user_memo_path(current_user, memo), class: 'btn btn-secondary icon-btn',
+          data: { 'bs-toggle' => 'tooltip', 'bs-title' => t('back'), action: 'click->memo-form#onBack'} do
             %i.bi.bi-backspace.text-white
         - else
           %button.btn.icon-btn.flex-grow-0{data: { controller: 'modal-closer' }}

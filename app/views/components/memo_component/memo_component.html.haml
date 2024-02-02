@@ -1,15 +1,17 @@
 = tag.turbo_frame(id: id) do
-  .c-memo.p-3{style: border_styles}
+  .c-memo.p-3{style: border_styles, data: { controller: 'memo' }}
     .grid.mb-1
       .g-col-10
         %h1= memo.title
       .g-col-2.d-flex.justify-content-end.align-items-start
-        %button.btn.icon-btn.flex-grow-0{data: { controller: 'modal-closer' }}
+        %button.btn.icon-btn.flex-grow-0{data: { controller: 'modal-closer' } }
           %i.bi.bi-x-lg
     = memo.content
     .d-flex.justify-content-end.mt-3
-      = link_to edit_user_memo_path(current_user, memo), class: 'btn btn-primary edit-memo-link icon-btn me-3' do
+      = link_to edit_user_memo_path(current_user, memo), class: 'btn btn-primary edit-memo-link icon-btn me-3',
+      data: { 'bs-toggle' => 'tooltip', 'bs-title' => t('memo.edit') }  do
         %i.bi.bi-pencil-square
-      = link_to [current_user, memo], data: { turbo_method: 'delete', turbo_confirm: 'Are you sure?' },
-                                      class: 'btn btn-danger icon-btn' do
+      = link_to [current_user, memo], data: { turbo_method: 'delete', turbo_confirm: 'Are you sure?',
+                                              'bs-toggle' => 'tooltip', 'bs-title' => t('memo.delete') },
+                                      class: 'btn btn-danger icon-btn', title: t('memo.delete') do
         %i.bi.bi-trash3.text-white
