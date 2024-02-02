@@ -1,5 +1,6 @@
 = tag.turbo_frame(id: id) do
-  = form_with model: [current_user, memo], data: { controller: 'memo-form', action: 'color-picker:colorChosen->memo-form#onColorChosen' },
+  = form_with model: [current_user, memo],
+    data: { controller: 'memo-form', action: 'color-picker:colorChosen->memo-form#onColorChosen color-picker:colorRemoved->memo-form#onColorRemoved' },
     html: { class: 'c-memo-form p-3', style: border_styles } do |form|
     .grid
       .g-col-10

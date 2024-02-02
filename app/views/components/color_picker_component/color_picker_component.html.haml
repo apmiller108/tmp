@@ -1,8 +1,8 @@
 .c-color-picker.position-relative{ data: { controller: 'color-picker' } }
-  %input{ name: input_name, type: :hidden, value: default_color, data: { 'color-picker-target' => 'input' } }
+  %input{ name: input_name, type: :hidden, value: selected_color, data: { 'color-picker-target' => 'input' } }
   %button.btn.icon-btn.color-picker-opener{ style: button_styles,
                                             data: { 'color-picker-target' => 'swatchesButton',
-                                            action: 'click->color-picker#toggleSwatches:prevent blur->color-picker#onBlur' } }
+                                                     action: 'click->color-picker#toggleSwatches:prevent blur->color-picker#onBlur' } }
     %i.bi.bi-palette-fill
   .swatches.position-absolute.hide{ data: { 'color-picker-target' => 'swatches' }, style: swatch_styles}
     - swatches.each do |swatch, colors|
@@ -12,3 +12,6 @@
                                                data: { color: color,
                                                        action: 'click->color-picker#onChoose:prevent '\
                                                                'blur->color-picker#onBlur focus->color-picker#onFocus' } }
+    %a.remove-color.link-secondary.link-underline-opacity-75.float-end{ href: '#', class: [selected_color.blank? && 'd-none'],
+        data: { 'color-picker-target' => 'removeColorLink', action: 'click->color-picker#reset:prevent' }
+      } Remove color

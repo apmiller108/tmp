@@ -14,4 +14,9 @@ export default class extends Controller {
     this.element.style.border = `0.25rem solid rgba(${rgb}, 0.8)`
     this.element.style.boxShadow = `0 0 0.5rem 0.5rem rgba(${rgb}, 0.5)`
   }
+
+  onColorRemoved() {
+    this.element.style.border = ''
+    this.element.style.boxShadow = ''
+  }
 }

@@ -17,14 +17,14 @@ class MemoFormComponent < ApplicationViewComponent
     memo.persisted? ? t('memo.update') : t('memo.create')
   end
 
-  def color_picker_color
+  def selected_color
     color.hex unless color.default?
   end
 
   def color_picker_options
     {
       swatches: memo.class::SWATCHES,
-      default_color: color_picker_color,
+      selected_color:,
       align: :left,
       input_name: "#{memo.model_name.element}[color]"
     }

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class ColorPickerComponent < ApplicationViewComponent
-  attr_reader :swatches, :default_color, :opts
+  attr_reader :swatches, :selected_color, :opts
 
-  def initialize(swatches:, default_color: nil, **opts)
+  def initialize(swatches:, selected_color: nil, **opts)
     @swatches = swatches
-    @default_color = default_color
+    @selected_color = selected_color
     @opts = opts
   end
 
@@ -20,8 +20,8 @@ class ColorPickerComponent < ApplicationViewComponent
   end
 
   def button_styles
-    if default_color
-      "background: ##{default_color};"
+    if selected_color
+      "background: ##{selected_color};"
     else
       'color: #000;'
     end

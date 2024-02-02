@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class ColorPicker extends Controller {
-  static targets = ['input', 'swatchesButton', 'swatches']
+  static targets = ['input', 'swatchesButton', 'swatches', 'removeColorLink']
 
   toggleSwatches() {
     const swatches = this.swatchesTarget
@@ -35,7 +35,16 @@ export default class ColorPicker extends Controller {
     this.inputTarget.value = color
     this.swatchesButtonTarget.style.background = `#${color}`
     this.swatchesButtonTarget.style.color = ''
-    this.dispatch("colorChosen", { detail: { color } })
+    this.removeColorLinkTarget.classList.remove('d-none')
+    this.dispatch('colorChosen', { detail: { color } })
+  }
+
+  reset() {
+    this.inputTarget.value = ''
+    this.swatchesButtonTarget.style.background = ''
+    this.swatchesButtonTarget.style.color = '#000'
+    this.removeColorLinkTarget.classList.add('d-none')
+    this.dispatch('colorRemoved')
   }
 
   get colorPickerButtons() {
