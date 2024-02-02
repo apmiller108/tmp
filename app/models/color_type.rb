@@ -4,7 +4,7 @@ class ColorType < ActiveRecord::Type::String
   attr_reader :hex
 
   def initialize(hex = nil)
-    @hex = hex || DEFAULT
+    @hex = hex.presence || DEFAULT
   end
 
   def serialize(value) = value
