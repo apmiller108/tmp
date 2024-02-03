@@ -30,11 +30,13 @@
   CLOSED: [2024-02-02 Fri 14:54]
 * DONE add tooltips to icon buttons
   CLOSED: [2024-02-02 Fri 15:57]
-* TODO extract a mixin for the tooltip initialization
+* DONE extract a mixin for the tooltip initialization
+  CLOSED: [2024-02-02 Fri 18:16]
   https://javascript.info/mixins
 * TODO update flash message component test
 * TODO update memo card component test
 * TODO add memo card component preview and system test
 * TODO update memo form component spec
 * TODO add memo form component system test
-* TODO add color picker spec
+* DONE add color picker spec
+  CLOSED: [2024-02-02 Fri 18:51]

@@ -1,6 +1,6 @@
 class ColorPickerComponentPreview < ViewComponent::Preview
-  # rails/view_components/color_picker_component/default
+  DEFAULT_PATH = 'rails/view_components/color_picker_component/default'.freeze
   def default
-    render ColorPickerComponent.new(swatches: Memo::SWATCHES, default_color: Memo::SWATCHES[:swatch1][0])
+    render ColorPickerComponent.new(swatches: Memo::SWATCHES, selected_color: nil)
   end
 end
