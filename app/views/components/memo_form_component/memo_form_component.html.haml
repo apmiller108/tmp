@@ -14,7 +14,7 @@
           %i.bi.bi-floppy-fill.text-white
         - if memo.persisted?
           = link_to user_memo_path(current_user, memo), class: 'btn btn-secondary icon-btn',
-          data: { 'bs-toggle' => 'tooltip', 'bs-title' => t('back'), action: 'click->memo-form#onBack'} do
+          data: { 'bs-toggle' => 'tooltip', 'bs-title' => t('back') } do
             %i.bi.bi-backspace.text-white
         - else
           %button.btn.icon-btn.flex-grow-0{data: { controller: 'modal-closer' }}

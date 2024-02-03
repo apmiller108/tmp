@@ -1,14 +1,9 @@
 import { Controller } from '@hotwired/stimulus'
-import { Tooltip } from 'bootstrap'
+import ToolTippable from '@javascript/mixins/ToolTippable'
 
-export default class MemoController extends Controller {
-  toolTippable = []
-
-  connect() {
-    this.toolTippable = Array.from(this.element.querySelectorAll('[data-bs-toggle="tooltip"]')).map(e => new Tooltip(e))
-  }
-
-  disconnect() {
-    this.toolTippable.forEach(tt => tt.hide())
-  }
+class MemoController extends Controller {
 }
+
+Object.assign(MemoController.prototype, ToolTippable)
+
+export default MemoController
