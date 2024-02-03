@@ -35,6 +35,9 @@
   https://javascript.info/mixins
 * DONE update flash message component test
   CLOSED: [2024-02-02 Fri 19:34]
+* DONE Fix generative text turbo stream content
+  CLOSED: [2024-02-03 Sat 15:37]
+  it get appended to the document root
 * TODO update memo card component test
 * TODO add memo card component preview and system test
 * TODO update memo form component spec

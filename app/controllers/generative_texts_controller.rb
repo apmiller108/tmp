@@ -4,7 +4,7 @@ class GenerativeTextsController < ApplicationController
       format.turbo_stream do
         llm_response = invoke_llm
         if llm_response
-          render turbo_stream: llm_response.content, status: :created
+          render turbo_stream: turbo_stream.replace(text_id, llm_response.content), status: :created
         else
           flash.now.alert = 'Unable to generate text'
           render turbo_stream: turbo_stream.update('alert-stream', FlashMessageComponent.new(flash:)),

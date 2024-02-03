@@ -73,14 +73,21 @@ export default class WysiwygEditor extends Controller {
       placeHolderDiv?.parentElement?.remove() // Remove the placeholder attachment figure
     }
 
+    // Unable to render turbo streams into the Trix editor. Instead the text
+    // content is inserted into the editor programatically. The use of
+    // renderStreamMessage is for any other turbo streams in the response (ie,
+    // flash message)
     const responseBody = await response.text()
+    const tempTemplate = document.createElement('template')
+    tempTemplate.innerHTML = responseBody
+    const responseText = tempTemplate.content.querySelector('template').content.textContent
+
     Turbo.renderStreamMessage(responseBody)
 
     if (response.ok && placeHolderDiv) {
       this.editor.recordUndoEntry("InsertGenText")
       this.editor.setSelectedRange(selectedRange[0])
-      this.editor.insertString(responseBody)
-      console.dir(this.editor.undoManager.undoEntries)
+      this.editor.insertString(responseText)
       this.generateTextInputTarget.value = ''
     }
   }
