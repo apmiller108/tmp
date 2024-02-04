@@ -28,7 +28,7 @@ class ColorType < ActiveRecord::Type::String
   def b = hex[4..5].to_i(16)
 
   def darkish?
-    to_rgb.sum < (255 * 3) / 3.7
+    to_rgb.sum < (255 * 3) / 3.6
   end
 
   def default?

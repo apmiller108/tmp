@@ -1,10 +1,10 @@
 class Memo < ApplicationRecord
   SWATCHES = {
     swatch1: %w[03045e 0077b6 00b4d8 90e0ef caf0f8],
-    swatch2: %w[03071E 6A040F D00000 E85D04 FAA307],
-    swatch3: %w[1a4301 245501 538d22 73a942 aad576],
-    swatch4: %w[0d1b2a 1b263b 415a77 778da9 e0e1dd],
-    swatch5: %w[ef6351 f38375 f7a399 fbc3bc ffe3e0]
+    swatch2: %w[036666 248277 469d89 67b99a 88d4ab],
+    swatch3: %w[590d22 a4133c ff4d6d ff8fa3 ff8fa3],
+    swatch4: %w[ff4800 ff6000 ff7900 ff9100 ffaa00],
+    swatch5: %w[0d1b2a 1b263b 415a77 778da9 e0e1dd]
   }.freeze
 
   COLORS = SWATCHES.inject([ColorType::DEFAULT]) do |colors, (_, hex_values)|
