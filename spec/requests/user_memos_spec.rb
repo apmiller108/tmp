@@ -129,8 +129,11 @@ RSpec.describe 'Memos', type: :request do
 
         it 'renders the form with errors' do
           expect(response).to have_turbo_stream(action: 'replace', target: 'new_memo') {
-            assert_select '.c-memo-form .form-errors'
+            assert_select '.c-memo-form'
           }
+          expect(response).to have_turbo_stream(action: 'update', target: 'alert-stream') do
+            assert_select '.validation-errors'
+          end
         end
 
         it 'does not enqueue a TranscribableContentHandlerJob' do

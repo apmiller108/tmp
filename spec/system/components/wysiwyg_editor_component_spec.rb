@@ -4,6 +4,7 @@ RSpec.describe 'WysiwygEditorComponent', type: :system do
   context 'with new object' do
     specify 'using the custom editor buttons' do
       visit(WysiwygEditorComponentPreview::NEW_PATH)
+
       expect(page).to have_css 'trix-toolbar'
 
       # Generate text dialog

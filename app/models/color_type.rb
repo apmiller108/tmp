@@ -7,9 +7,13 @@ class ColorType < ActiveRecord::Type::String
     @hex = hex.presence || DEFAULT
   end
 
-  def serialize(value) = value
+  def serialize(value)
+    value.hex
+  end
 
-  def cast(value) = value
+  def cast(value)
+    self.class.new(value)
+  end
 
   def deserialize(value)
     self.class.new(value)

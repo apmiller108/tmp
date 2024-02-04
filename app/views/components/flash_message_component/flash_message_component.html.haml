@@ -6,5 +6,6 @@
   %button.btn-close{type: :button, data: { 'bs-dismiss' => :alert, 'flash-message-target' => 'closeButton' }, aria: { label: :close }}
   - if validation_errors?
     %hr
-    - errors.full_messages.each do |m|
-      %p.mb-0= m
+    .validation-errors
+      - errors.full_messages.each do |m|
+        %p.mb-0= m

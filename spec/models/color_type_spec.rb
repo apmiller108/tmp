@@ -22,9 +22,9 @@ RSpec.describe ColorType, type: :model do
   end
 
   describe '#serialize' do
-    it 'returns the value unchanged' do
+    it 'returns the hex string' do
       color_type = described_class.new
-      expect(color_type.serialize(hex)).to eq(hex)
+      expect(color_type.serialize(color_type)).to eq(color_type.hex)
     end
   end
 

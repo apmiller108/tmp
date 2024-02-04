@@ -7,7 +7,7 @@ class Memo < ApplicationRecord
     swatch5: %w[ef6351 f38375 f7a399 fbc3bc ffe3e0]
   }.freeze
 
-  COLORS = SWATCHES.inject([]) do |colors, (_, hex_values)|
+  COLORS = SWATCHES.inject([ColorType::DEFAULT]) do |colors, (_, hex_values)|
     colors + hex_values
   end.freeze
 
@@ -23,10 +23,18 @@ class Memo < ApplicationRecord
   attribute :color, :color_type
 
   validates :content, :title, presence: true
-  validates :color, inclusion: { in: COLORS, allow_blank: true }
+  validate :color_inclusion
 
   belongs_to :user, optional: false
   has_many :audio_blobs, -> { audio }, through: :rich_text_content, source: :embeds_blobs
   has_many :image_blobs, -> { image }, through: :rich_text_content, source: :embeds_blobs
   has_many :transcriptions, through: :audio_blobs
+
+  private
+
+  def color_inclusion
+    return if color.blank? || color.hex.in?(COLORS)
+
+    errors.add(:color, 'Color is not included in the list')
+  end
 end
