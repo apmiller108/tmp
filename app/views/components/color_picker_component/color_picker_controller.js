@@ -46,9 +46,4 @@ export default class ColorPicker extends Controller {
     this.removeColorLinkTarget.classList.add('d-none')
     this.dispatch('colorRemoved')
   }
-
-  get colorPickerButtons() {
-    return Array.from(this.element.querySelectorAll('.color-picker-btn'))
-  }
-
 }
