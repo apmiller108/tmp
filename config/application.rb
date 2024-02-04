@@ -25,6 +25,7 @@ module Tmp
     config.view_component.view_component_path = 'app/views/components'
     # view component path for previews
     config.view_component.preview_paths << "#{Rails.root}/spec/components/previews"
+    config.view_component.preview_controller = 'ComponentPreviewController'
     # generate view component templates in a sub directory (eg, user_component/user_component.html.haml)
     config.view_component.generate.sidecar = true
     config.view_component.component_parent_class = 'ApplicationViewComponent'

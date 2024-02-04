@@ -6,6 +6,7 @@ class MemoFormComponent < ApplicationViewComponent
   delegate :color, to: :memo
 
   def initialize(memo:)
+    puts "CURRENT_USER: #{current_user}"
     @memo = memo
   end
 
