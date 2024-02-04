@@ -13,5 +13,5 @@
         %i.bi.bi-pencil-square
       = link_to [current_user, memo], data: { turbo_method: 'delete', turbo_confirm: 'Are you sure?',
                                               'bs-toggle' => 'tooltip', 'bs-title' => t('memo.delete') },
-                                      class: 'btn btn-danger icon-btn', title: t('memo.delete') do
+                                      class: 'btn btn-danger icon-btn' do
         %i.bi.bi-trash3.text-white
