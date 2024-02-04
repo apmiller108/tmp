@@ -11,7 +11,7 @@
         %p.card-subtitle= "Created #{created_at} ago"
       .g-col-6
         %p.card-subtitle= "Updated #{updated_at} ago"
-    %p.card-text.mt-2{data: { 'bs-toggle' => 'tooltip',
-                              'bs-title' => continued_preview_text,
+    %p.card-text.mt-2{data: { 'bs-toggle' => (continued_preview_text.present? && 'tooltip'),
+                              'bs-title' => continued_preview_text.presence,
                               'bs-placement' => 'bottom',
-                              'memo-card-target' => 'cardText' }} #{preview_text}...
+                              'memo-card-target' => 'cardText' }.compact } #{preview_text}...

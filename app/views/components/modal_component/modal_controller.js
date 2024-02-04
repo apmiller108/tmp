@@ -24,7 +24,6 @@ export default class extends Controller {
   }
 
   onOpenModal({ detail: { modalSrc, modalHideHeader }}) {
-    console.log(modalHideHeader)
     if (modalHideHeader) {
       this.headerTarget.classList.add('d-none')
     }
