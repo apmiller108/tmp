@@ -15,6 +15,9 @@ class LLMService
     client.invoke_model_stream(prompt:, **opts, &block)
   end
 
+  # @param prompt [String]
+  # See InvokeModelRequest for available options
+  # @return [InvokeModelResponse] the object containing the generated text.
   def invoke_model(prompt:, **opts)
     client.invoke_model(prompt:, **opts)
   rescue Aws::BedrockRuntime::Errors
