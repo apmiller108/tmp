@@ -6,16 +6,20 @@ import { generateText } from '@javascript/http'
 export default class WysiwygEditor extends Controller {
   static targets = ['generateTextBtn', 'generateTextDialog', 'generateTextId', 'generateTextInput', 'generateTextSubmit']
 
-  editor;
+  editorElem;
   selectedText;
 
-  connect() {
-    this.editor = this.element.querySelector(TrixSelectors.EDITOR).editor
+  connect () {
+    this.editorElem = this.element.querySelector(TrixSelectors.EDITOR)
     document.addEventListener(TrixConfiguration.selectionChange, this.onSelectionChange.bind(this))
   }
 
   disconnect() {
     document.removeEventListener(TrixConfiguration.selectionChange, this.onSelectionChange.bind(this))
+  }
+
+  get editor() {
+    return this.editorElem.editor
   }
 
   onOpenGenerateTextDialog() {
