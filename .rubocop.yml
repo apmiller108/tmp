@@ -30,6 +30,9 @@ Metrics/ClassLength:
   Exclude:
     - 'app/controllers/**/*'
 
+Naming/VariableNumber:
+  Enabled: false
+
 RSpec/ExampleLength:
   Enabled: false
 RSpec/MessageSpies:
