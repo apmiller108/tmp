@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe LLMService::AWS::Client::EventStreamHandler do
+RSpec.describe GenerativeText::AWS::Client::EventStreamHandler do
   describe '#initialize' do
     it 'stores the block' do
       block = proc { |event| puts event }
@@ -24,8 +24,8 @@ RSpec.describe LLMService::AWS::Client::EventStreamHandler do
     it 'calls the provided block with the event' do
       bytes = double
       event = instance_double(Aws::BedrockRuntime::Types::PayloadPart, bytes:)
-      response = instance_double(LLMService::AWS::Client::InvokeModelStreamResponse)
-      allow(LLMService::AWS::Client::InvokeModelStreamResponse).to receive(:new).with(bytes).and_return(response)
+      response = instance_double(GenerativeText::AWS::Client::InvokeModelStreamResponse)
+      allow(GenerativeText::AWS::Client::InvokeModelStreamResponse).to receive(:new).with(bytes).and_return(response)
       block = proc { |e| e }
       handler = described_class.new(&block)
 
@@ -40,7 +40,7 @@ RSpec.describe LLMService::AWS::Client::EventStreamHandler do
       event = OpenStruct.new({ 'event_type' => 'some_event', 'message' => 'Some error message' })
 
       expect { handler.on_exception(event) }.to(
-        raise_error(LLMService::InvalidRequestError, 'some_event: Some error message')
+        raise_error(GenerativeText::InvalidRequestError, 'some_event: Some error message')
       )
     end
   end
@@ -53,7 +53,7 @@ RSpec.describe LLMService::AWS::Client::EventStreamHandler do
                                'original_message' => 'Original message' })
 
       expect { handler.on_model_stream_error(event) }.to(
-        raise_error(LLMService::InvalidRequestError, 'model_stream_error: Model stream error : Original message')
+        raise_error(GenerativeText::InvalidRequestError, 'model_stream_error: Model stream error : Original message')
       )
     end
   end
@@ -66,7 +66,7 @@ RSpec.describe LLMService::AWS::Client::EventStreamHandler do
                                'error_message' => 'Error message' })
 
       expect { handler.on_generic_error(event) }.to(
-        raise_error(LLMService::InvalidRequestError, 'generic_error: ERROR_CODE : Error message')
+        raise_error(GenerativeText::InvalidRequestError, 'generic_error: ERROR_CODE : Error message')
       )
     end
   end

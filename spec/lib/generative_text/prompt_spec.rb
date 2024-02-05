@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe LLMService::Prompt do
+RSpec.describe GenerativeText::Prompt do
   describe '.transcription_summary_prompt' do
     let(:transcription) { build(:transcription, content: 'Sample transcription') }
 

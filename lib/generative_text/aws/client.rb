@@ -1,6 +1,6 @@
 require 'aws-sdk-bedrockruntime'
 
-class LLMService
+class GenerativeText
   module AWS
     class Client
       delegate :invoke_model_with_response_stream, to: :@client

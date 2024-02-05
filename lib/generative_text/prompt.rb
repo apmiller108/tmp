@@ -1,4 +1,4 @@
-class LLMService
+class GenerativeText
   module Prompt
     SUMMARY_TEMPLATE = <<~PROMPT.strip.freeze
       %<preamble>sSummarize the %<description>s below.

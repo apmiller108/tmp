@@ -2,9 +2,9 @@ class GenerativeTextsController < ApplicationController
   def create
     respond_to do |format|
       format.turbo_stream do
-        llm_response = invoke_llm
-        if llm_response
-          render turbo_stream: turbo_stream.replace(text_id, llm_response.content), status: :created
+        model_response = invoke_model
+        if model_response
+          render turbo_stream: turbo_stream.replace(text_id, model_response.content), status: :created
         else
           flash.now.alert = 'Unable to generate text'
           render turbo_stream: turbo_stream.update('alert-stream', FlashMessageComponent.new(flash:)),
@@ -24,8 +24,8 @@ class GenerativeTextsController < ApplicationController
     generative_text_params[:text_id]
   end
 
-  def invoke_llm
-    LLMService.new.invoke_model(
+  def invoke_model
+    GenerativeText.new.invoke_model(
       prompt: generative_text_params[:input],
       temp: 0.3,
       max_tokens: 500

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe LLMService::AWS::Client::InvokeModelRequest do
+RSpec.describe GenerativeText::AWS::Client::InvokeModelRequest do
   subject(:request) { described_class.new(prompt:, **params) }
 
   let(:prompt) { 'Generate something interesting.' }
@@ -16,7 +16,7 @@ RSpec.describe LLMService::AWS::Client::InvokeModelRequest do
   describe '#to_h' do
     it 'returns the request as a hash' do
       expected_hash = {
-        model_id: LLMService::AWS::TITAN_EXPRESS,
+        model_id: GenerativeText::AWS::TITAN_EXPRESS,
         content_type: 'application/json',
         accept: 'application/json',
         body: {
@@ -38,7 +38,7 @@ RSpec.describe LLMService::AWS::Client::InvokeModelRequest do
 
       it 'sets default values for each of the text gen config params' do
         expected_hash = {
-          model_id: LLMService::AWS::TITAN_EXPRESS,
+          model_id: GenerativeText::AWS::TITAN_EXPRESS,
           content_type: 'application/json',
           accept: 'application/json',
           body: {

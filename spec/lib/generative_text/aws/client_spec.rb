@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'aws-sdk-bedrockruntime'
 
-RSpec.describe LLMService::AWS::Client do
+RSpec.describe GenerativeText::AWS::Client do
   let(:aws_config) do
     {
       region: 'us-east-1',
@@ -36,17 +36,17 @@ RSpec.describe LLMService::AWS::Client do
 
     let(:prompt) { 'List 18.5 fruits' }
     let(:params) { { a: 1, b: 2 } }
-    let(:request) { instance_double LLMService::AWS::Client::InvokeModelRequest, to_h: request_hash }
+    let(:request) { instance_double GenerativeText::AWS::Client::InvokeModelRequest, to_h: request_hash }
     let(:request_hash) { double }
     let(:response_string) { double }
     let(:body) { instance_double StringIO, read: response_string }
     let(:client_response) { instance_double Aws::BedrockRuntime::Types::InvokeModelResponse, body: }
-    let(:response) { instance_double LLMService::AWS::Client::InvokeModelResponse }
+    let(:response) { instance_double GenerativeText::AWS::Client::InvokeModelResponse }
 
     before do
-      allow(LLMService::AWS::Client::InvokeModelRequest).to receive(:new).with(prompt:, **params).and_return(request)
+      allow(GenerativeText::AWS::Client::InvokeModelRequest).to receive(:new).with(prompt:, **params).and_return(request)
       allow(aws_client).to receive(:invoke_model).with(request_hash).and_return(client_response)
-      allow(LLMService::AWS::Client::InvokeModelResponse).to receive(:new).with(response_string).and_return(response)
+      allow(GenerativeText::AWS::Client::InvokeModelResponse).to receive(:new).with(response_string).and_return(response)
     end
 
     it 'returns the InvokeModelResponse object' do
@@ -59,14 +59,14 @@ RSpec.describe LLMService::AWS::Client do
 
     let(:prompt) { 'tell me something awesme' }
     let(:handler_proc) { proc {} }
-    let(:handler) { instance_double(LLMService::AWS::Client::EventStreamHandler, to_proc: handler_proc) }
-    let(:request) { instance_double(LLMService::AWS::Client::InvokeModelRequest, to_h: request_params) }
+    let(:handler) { instance_double(GenerativeText::AWS::Client::EventStreamHandler, to_proc: handler_proc) }
+    let(:request) { instance_double(GenerativeText::AWS::Client::InvokeModelRequest, to_h: request_params) }
     let(:request_params) { { b: 2 } }
     let(:params) { { a: 1 } }
 
     before do
-      allow(LLMService::AWS::Client::EventStreamHandler).to receive(:new).and_return(handler)
-      allow(LLMService::AWS::Client::InvokeModelRequest).to(
+      allow(GenerativeText::AWS::Client::EventStreamHandler).to receive(:new).and_return(handler)
+      allow(GenerativeText::AWS::Client::InvokeModelRequest).to(
         receive(:new).with(prompt:, **params.merge(event_stream_handler: handler_proc)).and_return(request)
       )
     end

@@ -1,4 +1,4 @@
-class LLMService
+class GenerativeText
   InvalidRequestError = Class.new(StandardError)
 
   def self.summary_prompt_for(transcription:)

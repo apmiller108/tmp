@@ -1,4 +1,4 @@
-class LLMService
+class GenerativeText
   module AWS
     class Client
       class InvokeModelStreamResponse

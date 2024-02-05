@@ -7,9 +7,9 @@ RSpec.describe TranscriptionSummaryJob, type: :job do
   let(:summary) { build_stubbed :summary, content: 'summary content ' }
   let(:transcription) { build_stubbed :transcription, summary: }
   let(:transcriptions) { Transcription.none }
-  let(:llm_service) { instance_double(LLMService) }
+  let(:generative_text) { instance_double(GenerativeText) }
   let(:invoke_model_stream_response) do
-    instance_double LLMService::AWS::Client::InvokeModelStreamResponse,
+    instance_double GenerativeText::AWS::Client::InvokeModelStreamResponse,
                     content: 'response content', final_chunk?: final_chunk?
   end
   let(:final_chunk?) { false }
@@ -22,9 +22,9 @@ RSpec.describe TranscriptionSummaryJob, type: :job do
     allow(transcriptions).to receive(:find).with(transcription.id).and_return(transcription)
     allow(summary).to receive(:in_progress!)
     allow(summary).to receive(:save!)
-    allow(LLMService).to receive(:new).and_return(llm_service)
-    allow(LLMService).to receive(:summary_prompt_for).with(transcription:).and_return(prompt)
-    allow(llm_service).to receive(:invoke_model_stream).with(prompt:).and_yield(invoke_model_stream_response)
+    allow(GenerativeText).to receive(:new).and_return(generative_text)
+    allow(GenerativeText).to receive(:summary_prompt_for).with(transcription:).and_return(prompt)
+    allow(generative_text).to receive(:invoke_model_stream).with(prompt:).and_yield(invoke_model_stream_response)
     allow(ViewComponentBroadcaster).to receive(:call)
     allow(TranscriptionSummaryComponent).to receive(:new).with(transcription:)
                                                          .and_return(transcription_summary_component)
