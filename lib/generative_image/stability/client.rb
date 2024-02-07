@@ -10,6 +10,7 @@ class GenerativeImage
         JSON.parse(response.body)
       end
 
+      # @return [String] png file binary
       def text_to_image(prompt:, **opts)
         request = TextToImageRequest.new(prompt:, **opts)
 
@@ -17,7 +18,9 @@ class GenerativeImage
           req.body = request.to_json
           req.headers['Accept'] = 'image/png'
         end
-        response
+        response.body
+      rescue Faraday::ClientError => e
+        raise Stability::ClientError, "#{e.response_status}: #{e.response_body}"
       end
 
       private

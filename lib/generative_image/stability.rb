@@ -2,6 +2,8 @@ class GenerativeImage
   module Stability
     # See https://platform.stability.ai/docs/api-reference
 
+    ClientError = Class.new(StandardError)
+
     HOST = 'https://api.stability.ai'.freeze
     ENGINES_ENDPOINT = '/v1/engines/list'.freeze
     GENERATION_ENDPOINT = '/v1/generation/%<engine>s/text-to-image'.freeze

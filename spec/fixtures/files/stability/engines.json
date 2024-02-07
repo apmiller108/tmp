@@ -1,0 +1,31 @@
+[{
+    "description": "Real-ESRGAN_x2plus upscaler model",
+    "id": "esrgan-v1-x2plus",
+    "name": "Real-ESRGAN x2",
+    "type": "PICTURE"
+}, {
+    "description": "Stability-AI Stable Diffusion XL v0.9",
+    "id": "stable-diffusion-xl-1024-v0-9",
+    "name": "Stable Diffusion XL v0.9",
+    "type": "PICTURE"
+}, {
+    "description": "Stability-AI Stable Diffusion XL v1.0",
+    "id": "stable-diffusion-xl-1024-v1-0",
+    "name": "Stable Diffusion XL v1.0",
+    "type": "PICTURE"
+}, {
+    "description": "Stability-AI Stable Diffusion v1.6",
+    "id": "stable-diffusion-v1-6",
+    "name": "Stable Diffusion v1.6",
+    "type": "PICTURE"
+}, {
+    "description": "Stability-AI Stable Diffusion v2.1",
+    "id": "stable-diffusion-512-v2-1",
+    "name": "Stable Diffusion v2.1",
+    "type": "PICTURE"
+}, {
+    "description": "Stability-AI Stable Diffusion XL Beta v2.2.2",
+    "id": "stable-diffusion-xl-beta-v2-2-2",
+    "name": "Stable Diffusion v2.2.2-XL Beta",
+    "type": "PICTURE"
+}]
