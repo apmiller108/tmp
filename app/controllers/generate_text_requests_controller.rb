@@ -1,9 +1,10 @@
-class GenerativeTextsController < ApplicationController
+class GenerateTextRequestsController < ApplicationController
   def create
     respond_to do |format|
       format.turbo_stream do
-        model_response = invoke_model
-        if model_response
+        generatate_text_request = current_user.generate_text_requests.create(generate_text_request_params)
+        if generatate_text_request
+          # GenerateTextJob.perform_async(text_id, current_user.id)
           render turbo_stream: turbo_stream.replace(text_id, model_response.content), status: :created
         else
           flash.now.alert = 'Unable to generate text'
@@ -16,12 +17,8 @@ class GenerativeTextsController < ApplicationController
 
   private
 
-  def generative_text_params
-    params.require(:generative_text).permit(:input, :text_id)
-  end
-
-  def text_id
-    generative_text_params[:text_id]
+  def generate_text_request_params
+    params.require(:generate_text_request).permit(:prompt, :text_id)
   end
 
   def invoke_model

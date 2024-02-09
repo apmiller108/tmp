@@ -59,7 +59,7 @@ export default class WysiwygEditor extends Controller {
     let placeHolderDiv
     try {
       response = await generateText({
-        input: this.generateTextInputTarget.value,
+        prompt: this.generateTextInputTarget.value,
         text_id: this.generateTextIdTarget.value
       })
 

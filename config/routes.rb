@@ -33,5 +33,5 @@ Rails.application.routes.draw do
     resources :transcription_summaries, only: %i[create]
   end
 
-  resources :generative_texts, only: :create
+  resources :generate_text_requests, only: :create
 end

@@ -1,7 +1,7 @@
-export const generateText = ({ input, text_id }) => {
+export const generateText = ({ prompt, text_id }) => {
   const body = JSON.stringify({
-    generative_text: {
-      input, text_id
+    generate_text_request: {
+      prompt, text_id
     }
   });
   const headers = {
@@ -10,7 +10,7 @@ export const generateText = ({ input, text_id }) => {
     'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.content
   }
 
-  return fetch('/generative_texts', {
+  return fetch('/generate_text_requests', {
     method: 'POST',
     body,
     headers
