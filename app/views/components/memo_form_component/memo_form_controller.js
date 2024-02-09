@@ -1,7 +1,14 @@
 import { Controller } from "@hotwired/stimulus"
 import ToolTippable from '@javascript/mixins/ToolTippable'
 
-class MemoFormController extends Controller {
+export default class MemoFormController extends Controller {
+  disconnect() {
+    ToolTippable.disconnect.bind(this)()
+  }
+  connect() {
+    ToolTippable.connect.bind(this)()
+  }
+
   async onSubmit() {
     await this.dispatch('memoFormSubmit')
     this.element.requestSubmit()
@@ -21,7 +28,3 @@ class MemoFormController extends Controller {
     this.element.style.boxShadow = ''
   }
 }
-
-Object.assign(MemoFormController.prototype, ToolTippable)
-
-export default MemoFormController
