@@ -9,7 +9,10 @@
 
 * DONE create the generate_text_job
   CLOSED: [2024-02-08 Thu 21:24]
-* TODO update controller to kick off job
+* DONE update controller to kick off job
+  CLOSED: [2024-02-09 Fri 17:01]
+* TODO create users stimulus controller to init channel stream
+  on generate text message, dispatch event
 * TODO update client JS to keep placeholder
 * TODO Make sure flash messages still work
 * TODO create a custom turbo stream channel to handle the async response

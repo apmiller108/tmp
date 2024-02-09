@@ -3,7 +3,7 @@ import "@hotwired/turbo-rails"
 import "@rails/actiontext"
 import "trix"
 import "./controllers"
-import "./channels/hello_channel"
+import "./channels/my_channel"
 import TrixConfiguration from './wysiwyg/TrixConfiguration'
 
 // import * as ActionCable from '@rails/actioncable'

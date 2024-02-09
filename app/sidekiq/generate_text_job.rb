@@ -17,12 +17,9 @@ class GenerateTextJob
   private
 
   def broadcast_content(generate_text_request, model_response)
-    Turbo::StreamsChannel.broadcast_action_to(
-      [generate_text_request.user, TurboStreams::STREAMS[:memos]],
-      target: generate_text_request.text_id,
-      content: model_response.content,
-      action: :replace
-    )
+    MyChannel.broadcast_to(generate_text_request.user, {
+      generate_text: { text_id: generate_text_request.text_id, content: model_response.content }
+    })
   end
 
   def broadcast_flash(user)
