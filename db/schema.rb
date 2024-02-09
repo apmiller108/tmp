@@ -55,8 +55,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_09_022852) do
   end
 
   create_table "generate_text_requests", force: :cascade do |t|
-    t.string "text_id", limit: 50
-    t.text "prompt"
+    t.string "text_id", limit: 50, null: false
+    t.text "prompt", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

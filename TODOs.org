@@ -9,7 +9,6 @@
 
 * DONE create the generate_text_job
   CLOSED: [2024-02-08 Thu 21:24]
-
 * TODO update controller to kick off job
 * TODO update client JS to keep placeholder
 * TODO Make sure flash messages still work
