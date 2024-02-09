@@ -6,6 +6,7 @@ class User < ApplicationRecord
          :registerable, :recoverable, :rememberable, :trackable, :validatable,
          jwt_revocation_strategy: self, omniauth_providers: %i[github]
 
+  has_many :generate_text_requests
   has_many :memos, dependent: :destroy
   has_many :transcriptions, through: :memos
   has_many :transcription_summaries, through: :transcriptions, source: :summary
