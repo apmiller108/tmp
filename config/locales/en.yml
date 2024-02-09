@@ -60,4 +60,5 @@ en:
     text: 'Text'
     title: "Transcription of %{filename}"
   unable_to_save: "Unable to save %{model_name}"
+  unable_to_generate_text: 'Unable to generate text'
 

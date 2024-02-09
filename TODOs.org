@@ -1,0 +1,16 @@
+:PROPERTIES:
+:CATEGORY: tmp
+:END:
+* DONE persist generate_text_request
+  CLOSED: [2024-02-08 Thu 20:52]
+  - store text_id, prompt and reference user
+* DONE rename controller to generate_texts_controller
+  CLOSED: [2024-02-08 Thu 20:52]
+
+* DONE create the generate_text_job
+  CLOSED: [2024-02-08 Thu 21:24]
+
+* TODO update controller to kick off job
+* TODO update client JS to keep placeholder
+* TODO Make sure flash messages still work
+* TODO create a custom turbo stream channel to handle the async response
