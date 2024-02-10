@@ -9,8 +9,9 @@
     - swatches.each do |swatch, colors|
       .swatch.d-flex{ id: swatch }
         - colors.each do |color|
-          %button.btn.color-picker-btn.d-flex{ id: color, style: "background: ##{color}",
+          %button.btn.color-picker-btn.d-flex{ id: color, style: "background: ##{color}; pointer-events: none;",
                                                data: { color: color,
+                                                       'color-picker-target' => 'colorButton',
                                                        action: 'click->color-picker#onChoose:prevent '\
                                                                'blur->color-picker#onBlur focus->color-picker#onFocus' } }
     %a.remove-color.link-secondary.link-underline-opacity-75.float-end{ href: '#', class: [selected_color.blank? && 'd-none'],
