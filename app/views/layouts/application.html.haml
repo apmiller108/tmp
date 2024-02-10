@@ -17,7 +17,8 @@
           = render inline: Rails.application.assets.find_asset('tmp.svg').source
       .container-fluid.justify-content-end
         - if current_user
-          = button_to 'Sign Out', destroy_user_session_path, method: :delete, data: { turbo: false }, class: ['btn', 'btn-sm', 'btn-outline-secondary']
+          = button_to 'Sign Out', destroy_user_session_path, method: :delete, data: { turbo: false, controller: 'my-channel' },
+          class: ['btn', 'btn-sm', 'btn-outline-secondary']
     .container-sm
       .flash-message.d-flex.justify-content-center
         %p.alert-info= notice

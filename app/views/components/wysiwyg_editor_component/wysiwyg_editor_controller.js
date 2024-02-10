@@ -73,8 +73,9 @@ export default class WysiwygEditor extends Controller {
       placeHolderDiv = document.getElementById(id)
     } catch (err) {
       console.log(err)
-    } finally {
       placeHolderDiv?.parentElement?.remove() // Remove the placeholder attachment figure
+    } finally {
+      // placeHolderDiv?.parentElement?.remove() // Remove the placeholder attachment figure
     }
 
     // Unable to render turbo streams into the Trix editor. Instead the text
@@ -82,18 +83,22 @@ export default class WysiwygEditor extends Controller {
     // renderStreamMessage is for any other turbo streams in the response (ie,
     // flash message)
     const responseBody = await response.text()
-    const tempTemplate = document.createElement('template')
-    tempTemplate.innerHTML = responseBody
-    const responseText = tempTemplate.content.querySelector('template').content.textContent
+    // const tempTemplate = document.createElement('template')
+    // tempTemplate.innerHTML = responseBody
+    // const responseText = tempTemplate.content.querySelector('template').content.textContent
 
     Turbo.renderStreamMessage(responseBody)
 
-    if (response.ok && placeHolderDiv) {
-      this.editor.recordUndoEntry("InsertGenText")
-      this.editor.setSelectedRange(selectedRange[0])
-      this.editor.insertString(responseText)
-      this.generateTextInputTarget.value = ''
-    }
+    // if (response.ok && placeHolderDiv) {
+    //   this.editor.recordUndoEntry("InsertGenText")
+    //   this.editor.setSelectedRange(selectedRange[0])
+    //   this.editor.insertString(responseText)
+    //   this.generateTextInputTarget.value = ''
+    // }
+  }
+
+  onGenerateText(event) {
+    console.log(event.detail)
   }
 
   generateTextId(prefix) {
