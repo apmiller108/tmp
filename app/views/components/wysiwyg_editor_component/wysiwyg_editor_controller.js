@@ -34,7 +34,6 @@ export default class WysiwygEditor extends Controller {
 
   async submitGenerateText() {
     const id = this.generateTextId('gentext')
-    const selectedRange = this.editor.getSelectedRange()
     const placeholder = new Trix.Attachment({
       content: this.generatedTextContainer(id), contentType: 'tmp/generate-text-placeholder'
     })
@@ -67,38 +66,44 @@ export default class WysiwygEditor extends Controller {
         window.location = '/'
       }
 
-      // This is used to determine if the placeholder is still present. It could
-      // have been removed by the user by this point in which case inserting the
-      // generated text is aborted below.
-      placeHolderDiv = document.getElementById(id)
+      if (response.ok) {
+        this.generateTextInputTarget.value = ''
+      }
     } catch (err) {
       console.log(err)
       placeHolderDiv?.parentElement?.remove() // Remove the placeholder attachment figure
-    } finally {
-      // placeHolderDiv?.parentElement?.remove() // Remove the placeholder attachment figure
     }
 
-    // Unable to render turbo streams into the Trix editor. Instead the text
-    // content is inserted into the editor programatically. The use of
-    // renderStreamMessage is for any other turbo streams in the response (ie,
-    // flash message)
+    // Text is generated asychronously. The use of renderStreamMessage is for
+    // any turbo streams in the response (ie, flash message)
     const responseBody = await response.text()
-    // const tempTemplate = document.createElement('template')
-    // tempTemplate.innerHTML = responseBody
-    // const responseText = tempTemplate.content.querySelector('template').content.textContent
-
-    Turbo.renderStreamMessage(responseBody)
-
-    // if (response.ok && placeHolderDiv) {
-    //   this.editor.recordUndoEntry("InsertGenText")
-    //   this.editor.setSelectedRange(selectedRange[0])
-    //   this.editor.insertString(responseText)
-    //   this.generateTextInputTarget.value = ''
-    // }
+    if (responseBody.length) {
+      Turbo.renderStreamMessage(responseBody)
+    }
   }
 
   onGenerateText(event) {
-    console.log(event.detail)
+    const { generate_text: { text_id, content }} = event.detail
+    const selectedRange = this.editor.getSelectedRange()
+    const placeHolderDiv = document.getElementById(text_id)
+    try {
+      // Unable to render turbo streams into the Trix editor. Instead the text
+      // content is inserted into the editor programatically. First, determine if
+      // the placeholder is still present. It could have been removed by the user
+      // by this point in which case inserting the generated text is aborted.
+      if (placeHolderDiv) {
+        this.editor.recordUndoEntry("InsertGenText")
+        this.editor.setSelectedRange(selectedRange[0])
+        this.editor.insertString(content)
+      }
+    } catch (err) {
+      console.log(err)
+      alert('Unable to generate text')
+    } finally {
+      // Remove the placeholder attachment figure. The element must be re-selected.
+      document.getElementById(text_id).parentElement.remove()
+    }
+
   }
 
   generateTextId(prefix) {

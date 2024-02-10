@@ -6,13 +6,18 @@
   - store text_id, prompt and reference user
 * DONE rename controller to generate_texts_controller
   CLOSED: [2024-02-08 Thu 20:52]
-
 * DONE create the generate_text_job
   CLOSED: [2024-02-08 Thu 21:24]
 * DONE update controller to kick off job
   CLOSED: [2024-02-09 Fri 17:01]
-* TODO create users stimulus controller to init channel stream
+* DONE create users stimulus controller to init channel stream
+  CLOSED: [2024-02-10 Sat 09:46]
   on generate text message, dispatch event
-* TODO update client JS to keep placeholder
+* DONE update client JS to keep placeholder
+  CLOSED: [2024-02-10 Sat 09:46]
+* DONE Show alert when async handler fails
+  CLOSED: [2024-02-10 Sat 09:49]
 * TODO Make sure flash messages still work
-* TODO create a custom turbo stream channel to handle the async response
+  handle render flash messages sent over custom channel
+* DONE create a custom turbo stream channel to handle the async response
+  CLOSED: [2024-02-10 Sat 09:47]
