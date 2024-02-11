@@ -19,6 +19,7 @@ export default class TrixCustomizer {
     this.createHighlightButton()
     this.createHeadingsButton()
     this.createGenerateTextButton()
+    this.createGenerateImageButton()
   }
 
   createHighlightButton() {
@@ -33,7 +34,12 @@ export default class TrixCustomizer {
 
   createGenerateTextButton() {
     this.fileTools.insertAdjacentHTML('beforeend', this.generateTextButton)
-    this.dialogs.insertAdjacentHTML('beforeend', this.generateTextDialog)
+    this.dialogs.insertAdjacentHTML('beforeend', this.generativeAiDialog('Text'))
+  }
+
+  createGenerateImageButton() {
+    this.fileTools.insertAdjacentHTML('beforeend', this.generateImageButton)
+    this.dialogs.insertAdjacentHTML('beforeend', this.generativeAiDialog('Image'))
   }
 
   get highlightButton() {
@@ -96,19 +102,32 @@ export default class TrixCustomizer {
     `
   }
 
-  get generateTextDialog() {
+  get generateImageButton() {
+    return`
+      <button class="trix-button trix-button--icon trix-button-custom" type="button"
+              data-trix-action="generateImage" data-wysiwyg-editor-target="generateImageBtn"
+              data-action="click->wysiwyg-editor#onOpenGenerateImageDialog"
+              title="Generate Image" tabindex="-1">
+        <i class="bi bi-image-alt"></i>
+      </button>
+    `
+  }
+
+  generativeAiDialog(name) {
+    const action = `generate${name}`
+    const lowerCase = name.toLowerCase()
     return `
-      <div class="trix-dialog trix-dialog--heading trix-custom-dialog trix-custom-generate-text" data-trix-dialog="generateText"
-            data-trix-dialog-attribute="generateText" data-wysiwyg-editor-target="generateTextDialog">
-        <div class="d-flex align-items-baseline" >
-          <input type="hidden" name="generate_text_id" value="" data-wysiwyg-editor-target="generateTextId" autocomplete="off">
-          <input type="text" class="generate-text-input" name="generateText"
-                 data-action="keydown.enter->wysiwyg-editor#submitGenerateText:prevent"
-                 data-wysiwyg-editor-target="generateTextInput" data-trix-input required>
-          <div class="trix-button-group">
+      <div class="trix-dialog trix-dialog--heading trix-custom-dialog trix-custom-generate-${lowerCase}" data-trix-dialog="${action}"
+            data-trix-dialog-attribute="${action}" data-wysiwyg-editor-target="${action}Dialog">
+        <div class="d-flex" >
+          <input type="hidden" name="generate_${lowerCase}_id" value="" data-wysiwyg-editor-target="${action}Id" autocomplete="off">
+          <input type="text" class="generate-${lowerCase}-input form-control form-control-lg" name="${action}"
+                 data-action="keydown.enter->wysiwyg-editor#submitGenerate${name}:prevent"
+                 data-wysiwyg-editor-target="${action}Input" data-trix-input required>
+          <div class="trix-button-group d-inline-flex">
             <input type="button" class="trix-button trix-button--dialog" data-trix-method="setAttribute"
                    value="Submit"
-                   data-action="click->wysiwyg-editor#submitGenerateText:prevent">
+                   data-action="click->wysiwyg-editor#submitGenerate${name}:prevent">
           </div>
         </div>
       </div>

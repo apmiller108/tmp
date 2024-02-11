@@ -4,7 +4,10 @@ import TrixConfiguration from '@wysiwyg/TrixConfiguration'
 import { generateText } from '@javascript/http'
 
 export default class WysiwygEditor extends Controller {
-  static targets = ['generateTextBtn', 'generateTextDialog', 'generateTextId', 'generateTextInput', 'generateTextSubmit']
+  static targets = [
+    'generateTextBtn', 'generateTextDialog', 'generateTextId', 'generateTextInput', 'generateTextSubmit',
+    'generateImageBtn', 'generateImageDialog', 'generateImageId', 'generateImageInput', 'generateImageSubmit',
+  ];
 
   editorElem;
   selectedText;
@@ -25,6 +28,11 @@ export default class WysiwygEditor extends Controller {
   onOpenGenerateTextDialog() {
     this.generateTextInputTarget.value = this.selectedText;
     this.generateTextInputTarget.focus()
+  }
+
+  onOpenGenerateImageDialog() {
+    this.generateImageInputTarget.value = this.selectedText;
+    this.generateImageInputTarget.focus()
   }
 
   onSelectionChange() {
@@ -120,6 +128,10 @@ export default class WysiwygEditor extends Controller {
     return`
       <div id=${id} class="${this.genTextClassName} alert alert-info i-pulse p-1">Generating text...</div>
     `
+  }
+
+  async submitGenerateImage() {
+    console.log('submit genereate image')
   }
 
   removeAllPlaceholders() {
