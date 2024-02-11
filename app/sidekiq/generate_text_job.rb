@@ -1,6 +1,8 @@
 class GenerateTextJob
   include Sidekiq::Job
 
+  Flash = Struct.new('Flash', :alert, :notice)
+
   sidekiq_options retry: false
 
   def perform(generate_text_request_id)
@@ -10,6 +12,7 @@ class GenerateTextJob
     if response
       broadcast_content(generate_text_request, response)
     else
+      broadcast_error(generate_text_request)
       broadcast_flash(generate_text_request.user)
     end
   end
@@ -18,7 +21,13 @@ class GenerateTextJob
 
   def broadcast_content(generate_text_request, model_response)
     MyChannel.broadcast_to(generate_text_request.user, {
-      generate_text: { text_id: generate_text_request.text_id, content: model_response.content }
+      generate_text: { text_id: generate_text_request.text_id, content: model_response.content, error: nil }
+    })
+  end
+
+  def broadcast_error(generate_text_request)
+    MyChannel.broadcast_to(generate_text_request.user, {
+      generate_text: { text_id: generate_text_request.text_id, content: nil, error: true }
     })
   end
 
@@ -32,7 +41,7 @@ class GenerateTextJob
   end
 
   def flash
-    @flash ||= Struct.new('Flashy', :alert).new
+    @flash ||= Flash.new
   end
 
   def invoke_model(prompt:)

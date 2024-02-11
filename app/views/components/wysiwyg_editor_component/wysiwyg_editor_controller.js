@@ -91,7 +91,7 @@ export default class WysiwygEditor extends Controller {
   }
 
   onGenerateText(event) {
-    const { generate_text: { text_id, content }} = event.detail
+    const { generate_text: { text_id, content, error }} = event.detail
     const selectedRange = this.editor.getSelectedRange()
     const placeHolderDiv = document.getElementById(text_id)
     try {
@@ -99,7 +99,7 @@ export default class WysiwygEditor extends Controller {
       // content is inserted into the editor programatically. First, determine if
       // the placeholder is still present. It could have been removed by the user
       // by this point in which case inserting the generated text is aborted.
-      if (placeHolderDiv) {
+      if (placeHolderDiv && !error) {
         this.editor.recordUndoEntry("InsertGenText")
         this.editor.setSelectedRange(selectedRange[0])
         this.editor.insertString(content)

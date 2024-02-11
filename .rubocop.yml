@@ -23,6 +23,7 @@ Metrics/AbcSize:
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
+    - 'app/controllers/**/*'
 Metrics/MethodLength:
   Exclude:
     - 'app/controllers/**/*'
