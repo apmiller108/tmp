@@ -1,14 +1,17 @@
 class GenerateTextRequestsController < ApplicationController
   def create
+    generatate_text_request = current_user.generate_text_requests.create(generate_text_request_params)
+
     respond_to do |format|
       format.turbo_stream do
-        generatate_text_request = current_user.generate_text_requests.create(generate_text_request_params)
         if generatate_text_request
           GenerateTextJob.perform_async(generatate_text_request.id)
           head :created
         else
           flash.now.alert = t('unable_to_generate_text')
-          render turbo_stream: turbo_stream.update('alert-stream', FlashMessageComponent.new(flash:)),
+          flash_component = FlashMessageComponent.new(flash:)
+
+          render turbo_stream: turbo_stream.update(flash_component.id, flash_component),
                  status: :unprocessable_entity
         end
       end

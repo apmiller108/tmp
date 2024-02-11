@@ -34,4 +34,5 @@ Rails.application.routes.draw do
   end
 
   resources :generate_text_requests, only: :create
+  resources :generate_image_requests, only: :create
 end
