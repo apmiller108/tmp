@@ -36,10 +36,12 @@ class MemosController < ApplicationController
         TranscribableContentHandlerJob.perform_async(@memo.id)
       else
         flash.now.alert = t('unable_to_save', model_name: :memo)
+        flash_component = FlashMessageComponent.new(flash:, record: @memo)
+
         format.turbo_stream do
           render turbo_stream: [
             turbo_stream.replace('new_memo', memo_form_component.render_in(view_context)),
-            turbo_stream.update('alert-stream', FlashMessageComponent.new(flash:, record: @memo))
+            turbo_stream.update(flash_component.id, flash_component)
           ], status: :unprocessable_entity
         end
         format.html { render :new, status: :unprocessable_entity }
@@ -57,11 +59,13 @@ class MemosController < ApplicationController
     respond_to do |format|
       if @memo.update(memo_params)
         flash.now[:success] = t('successfully_saved', model_name: 'Memo')
+        flash_component = FlashMessageComponent.new(flash:, auto_dismiss: 2)
+
         format.turbo_stream do
           render turbo_stream: [
             turbo_stream.replace(memo_component.id, memo_form_component.render_in(view_context)),
             turbo_stream.replace(memo_card_component.id, memo_card_component.render_in(view_context)),
-            turbo_stream.update('alert-stream', FlashMessageComponent.new(flash:, auto_dismiss: 2))
+            turbo_stream.update(flash_component.id, flash_component)
           ], status: :ok
         end
 
@@ -71,10 +75,12 @@ class MemosController < ApplicationController
         TranscribableContentHandlerJob.perform_async(@memo.id)
       else
         flash.now.alert = t('unable_to_save', model_name: :memo)
+        flash_component = FlashMessageComponent.new(flash:, record: @memo)
+
         format.turbo_stream do
           render turbo_stream: [
             turbo_stream.replace(memo_card.component.id, memo_card_component.render_in(view_context)),
-            turbo_stream.update('alert-stream', FlashMessageComponent.new(flash:, record: @memo))
+            turbo_stream.update(flash_component.id, flash_component)
           ]
         end
         format.html do

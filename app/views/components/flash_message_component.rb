@@ -1,4 +1,6 @@
 class FlashMessageComponent < ApplicationViewComponent
+  ID = 'alert-stream'.freeze
+
   attr_reader :flash, :record, :auto_dismiss
 
   CSS_CLASSES = {
@@ -14,6 +16,10 @@ class FlashMessageComponent < ApplicationViewComponent
     @flash = flash
     @record = record
     @auto_dismiss = auto_dismiss
+  end
+
+  def id
+    ID
   end
 
   def validation_errors?
