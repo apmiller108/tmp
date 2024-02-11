@@ -18,6 +18,8 @@ class GenerativeImage
       }
     }.freeze
 
+    DIMENSIONS = ENGINES.values.flat_map { |e| e[:dimensions] }
+
     STYLE_PRESETS = {
       '3d_model': '3d-model',
       analog_film: 'analog-film',

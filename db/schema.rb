@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_09_022852) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_11_182801) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -54,6 +54,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_09_022852) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "generate_image_requests", force: :cascade do |t|
+    t.string "image_id", limit: 50, null: false
+    t.string "style", limit: 50
+    t.string "dimensions", limit: 25, null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_generate_image_requests_on_user_id"
+  end
+
   create_table "generate_text_requests", force: :cascade do |t|
     t.string "text_id", limit: 50, null: false
     t.text "prompt", null: false
@@ -70,6 +80,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_09_022852) do
     t.string "title", limit: 100, null: false
     t.string "color", limit: 6
     t.index ["user_id"], name: "index_memos_on_user_id"
+  end
+
+  create_table "prompts", force: :cascade do |t|
+    t.text "text", null: false
+    t.integer "weight", default: 1, null: false
+    t.bigint "generate_image_requests_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["generate_image_requests_id"], name: "index_prompts_on_generate_image_requests_id"
+    t.check_constraint "weight >= '-10'::integer AND weight <= 10", name: "weight_check"
   end
 
   create_table "summaries", force: :cascade do |t|
@@ -130,8 +150,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_09_022852) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "generate_image_requests", "users"
   add_foreign_key "generate_text_requests", "users"
   add_foreign_key "memos", "users", on_delete: :cascade
+  add_foreign_key "prompts", "generate_image_requests", column: "generate_image_requests_id"
   add_foreign_key "transcription_jobs", "active_storage_blobs"
   add_foreign_key "transcriptions", "active_storage_blobs"
   add_foreign_key "transcriptions", "transcription_jobs"
