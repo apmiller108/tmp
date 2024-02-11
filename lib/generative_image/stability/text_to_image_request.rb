@@ -14,8 +14,8 @@ class GenerativeImage
         {
           text_prompts: [{ text: prompt, weight: 1 }],
           style_preset: opts[:style],
-          height: dimensions[0],
-          width: dimensions[1],
+          height: dimensions[1],
+          width: dimensions[0],
           **opts.slice(:cfg_scale, :samples, :seed, :steps)
         }
       end
@@ -30,7 +30,7 @@ class GenerativeImage
         {
           dimensions: ENGINES.dig(:v1_6, :dimensions).first,
           style: STYLE_PRESETS.fetch(:photographic),
-          cfg_scale: 10, # 0..35
+          cfg_scale: 10, # Number (10..35). How strictly to adhere to the prompt.
           samples: 1, # Number of images to generate
           seed: 0, # 0 represents random seed
           steps: 30 # 10..50
