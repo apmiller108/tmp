@@ -25,9 +25,12 @@
 
 * DONE Add generate images controller
   CLOSED: [2024-02-11 Sun 13:23]
-* TODO Add request spec for generate texts controller
-* TODO Add request spec for generate images controller
+* DONE Update request spec for generate texts controller
+  CLOSED: [2024-02-11 Sun 14:37]
+* TODO create form object
 * TODO Add generate images background job
+* TODO Add request spec for generate images controller
+* TODO create and implement method to submit the generate text requests turbo stream request
 * TODO Handle custom action cable message for generate image
   dispatch event
 * TODO Insert file into trix editor
