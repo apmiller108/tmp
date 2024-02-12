@@ -4,7 +4,7 @@ class GenerateTextRequestsController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream do
-        if generatate_text_request
+        if generatate_text_request.persisted?
           GenerateTextJob.perform_async(generatate_text_request.id)
           head :created
         else
