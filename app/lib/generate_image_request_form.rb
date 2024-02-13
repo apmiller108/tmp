@@ -9,20 +9,37 @@ class GenerateImageRequestForm
   attribute :user
   attribute :generate_image_request
 
-  validates :prompts, :image_id, :dimensions, presence: true
   validate :prompts_must_have_text
+  validate :generate_image_request_valid
+
+  def initialize(attrs)
+    super(attrs)
+    self.generate_image_request = GenerateImageRequest.new(attrs.slice(:image_id, :style, :dimensions, :user))
+  end
 
   def submit
+    return false if invalid?
+
     ActiveRecord::Base.transaction do
-      self.generate_image_request = GenerateImageRequest.create!(image_id:, style:, dimensions:)
+      generate_image_request.save!
       prompts.each { |attrs| generate_image_request.prompts.create!(attrs) }
     end
+
+    self
   end
 
   private
 
+  def generate_image_request_valid
+    return if generate_image_request.valid?
+
+    generate_image_request.errors.each do |error|
+      errors.add(error.attribute, error.message)
+    end
+  end
+
   def prompts_must_have_text
-    return if prompts.all? { |p| p['text'].present? }
+    return if prompts&.all? { |p| p[:text].present? }
 
     errors.add(:prompts, "can't be blank")
   end

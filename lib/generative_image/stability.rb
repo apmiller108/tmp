@@ -20,24 +20,26 @@ class GenerativeImage
 
     DIMENSIONS = ENGINES.values.flat_map { |e| e[:dimensions] }
 
-    STYLE_PRESETS = {
-      '3d_model': '3d-model',
-      analog_film: 'analog-film',
-      anime: 'anime',
-      cinematic: 'cinematic',
-      comic_book: 'comic-book',
-      digital_art: 'digital-art',
-      enhance: 'enhance',
-      fantasy_art: 'fantasy-art',
-      isometric: 'isometric',
-      line_art: 'line-art',
-      low_poly: 'low-poly',
-      modeling_compound: 'modeling-compound',
-      neon_punk: 'neon-punk',
-      origami: 'origami',
-      photographic: 'photographic',
-      pixel_art: 'pixel-art',
-      tile_texture: 'tile-texture'
-    }.freeze
+    STYLE_PRESETS = [
+      '3d-model',
+      'analog-film',
+      'anime',
+      'cinematic',
+      'comic-book',
+      'digital-art',
+      'enhance',
+      'fantasy-art',
+      'isometric',
+      'line-art',
+      'low-poly',
+      'modeling-compound',
+      'neon-punk',
+      'origami',
+      'photographic',
+      'pixel-art',
+      'tile-texture'
+    ].freeze
+
+    DEFAULT_STYLE = 'photographic'.freeze
   end
 end

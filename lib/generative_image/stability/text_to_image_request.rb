@@ -29,7 +29,7 @@ class GenerativeImage
       def default_opts
         {
           dimensions: ENGINES.dig(:v1_6, :dimensions).first,
-          style: STYLE_PRESETS.fetch(:photographic),
+          style: DEFAULT_STYLE,
           cfg_scale: 10, # Number (10..35). How strictly to adhere to the prompt.
           samples: 1, # Number of images to generate
           seed: 0, # 0 represents random seed

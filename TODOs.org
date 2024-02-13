@@ -27,7 +27,8 @@
   CLOSED: [2024-02-11 Sun 13:23]
 * DONE Update request spec for generate texts controller
   CLOSED: [2024-02-11 Sun 14:37]
-* TODO create form object
+* DONE create form object
+  CLOSED: [2024-02-12 Mon 22:06]
 * TODO Add generate images background job
 * TODO Add request spec for generate images controller
 * TODO create and implement method to submit the generate text requests turbo stream request

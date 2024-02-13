@@ -13,6 +13,6 @@ class Prompt < ApplicationRecord
   def truncate_text
     return if text.blank?
 
-    self.text = text[1, MAX_LENGTH]
+    self.text = text[0, MAX_LENGTH]
   end
 end
