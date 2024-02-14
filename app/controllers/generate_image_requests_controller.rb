@@ -1,6 +1,6 @@
 class GenerateImageRequestsController < ApplicationController
   def create
-    form = GenerateImageRequestForm.new(generate_image_request_params)
+    form = GenerateImageRequestForm.new(generate_image_request_params.merge(user: current_user))
 
     respond_to do |format|
       format.turbo_stream do
@@ -9,7 +9,7 @@ class GenerateImageRequestsController < ApplicationController
           head :created
         else
           flash.now.alert = t('unable_to_generate_image')
-          flash_component = FlashMessageComponent.new(flash:)
+          flash_component = FlashMessageComponent.new(flash:, record: form)
 
           render turbo_stream: turbo_stream.update(flash_component.id, flash_component),
                  status: :unprocessable_entity
