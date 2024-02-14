@@ -1,18 +1,18 @@
 class GenerativeImage
   module Stability
     class TextToImageRequest
-      attr_reader :prompt, :opts
+      attr_reader :prompts, :opts
 
-      def initialize(prompt:, **opts)
-        @prompt = prompt
-        @opts = default_opts.merge(opts)
+      def initialize(prompts:, **opts)
+        @prompts = prompts
+        @opts = default_opts.merge(opts).symbolize_keys
       end
 
       # Optionally add prompts with different weights to (de)emphasize concepts.
       # Weights can be negative in order to suppress concepts.
       def as_json
         {
-          text_prompts: [{ text: prompt, weight: 1 }],
+          text_prompts: prompts,
           style_preset: opts[:style],
           height: dimensions[1],
           width: dimensions[0],
@@ -28,7 +28,7 @@ class GenerativeImage
 
       def default_opts
         {
-          dimensions: ENGINES.dig(:v1_6, :dimensions).first,
+          dimensions: DIMENSIONS.first,
           style: DEFAULT_STYLE,
           cfg_scale: 10, # Number (10..35). How strictly to adhere to the prompt.
           samples: 1, # Number of images to generate

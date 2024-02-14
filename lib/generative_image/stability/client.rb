@@ -11,8 +11,8 @@ class GenerativeImage
       end
 
       # @return [String] png file binary
-      def text_to_image(prompt:, **opts)
-        request = TextToImageRequest.new(prompt:, **opts)
+      def text_to_image(prompts:, **opts)
+        request = TextToImageRequest.new(prompts:, **opts)
 
         response = conn.post(request.path) do |req|
           req.body = request.to_json

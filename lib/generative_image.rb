@@ -5,8 +5,8 @@ class GenerativeImage
     @client = client
   end
 
-  def text_to_image(prompt:, **opts)
-    @client.text_to_image(prompt:, **opts)
+  def text_to_image(prompts:, **opts)
+    @client.text_to_image(prompts:, **opts)
   rescue Stability::ClientError
     raise InvalidRequestError
   end
