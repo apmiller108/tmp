@@ -2,7 +2,7 @@ class Memo < ApplicationRecord
   SWATCHES = {
     swatch1: %w[03045e 0077b6 00b4d8 90e0ef caf0f8],
     swatch2: %w[036666 248277 469d89 67b99a 88d4ab],
-    swatch3: %w[590d22 a4133c ff4d6d ff8fa3 ff8fa3],
+    swatch3: %w[590d22 a4133c ff4d6d ff8fa3 ffccd5],
     swatch4: %w[ff4800 ff6000 ff7900 ff9100 ffaa00],
     swatch5: %w[0d1b2a 1b263b 415a77 778da9 e0e1dd]
   }.freeze
