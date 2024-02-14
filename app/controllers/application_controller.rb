@@ -21,6 +21,6 @@ class ApplicationController < ActionController::Base
   end
 
   def forbidden
-    head 403
+    head :forbidden
   end
 end

@@ -5,7 +5,10 @@ module ActionTextRichTextExtension
     # This supports doing active record joins to memo polymorphic
     # association (via record_id/record_type)
     # ex: `ActionText::RichText.joins(:memo))`
-    has_one :self_ref, class_name: 'ActionText::RichText', foreign_key: :id
+
+    # rubocop:disable Rails/InverseOf
+    has_one :self_ref, class_name: 'ActionText::RichText', foreign_key: :id, dependent: nil
     has_one :memo, through: :self_ref, source: :record, source_type: 'Memo'
+    # rubocop:enabled Rails/InverseOf
   end
 end
