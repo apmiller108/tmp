@@ -8,6 +8,10 @@ class Prompt < ApplicationRecord
 
   before_validation :truncate_text
 
+  def parameterize
+    attributes.slice('text', 'weight')
+  end
+
   private
 
   def truncate_text

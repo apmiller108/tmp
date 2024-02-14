@@ -5,4 +5,11 @@ class GenerateImageRequest < ApplicationRecord
 
   belongs_to :user
   has_many :prompts, dependent: :destroy
+
+  def parameterize
+    {
+      **attributes.slice('style', 'dimensions'),
+      prompts: prompts.map(&:parameterize)
+    }.symbolize_keys
+  end
 end
