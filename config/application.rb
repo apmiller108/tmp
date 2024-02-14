@@ -30,9 +30,9 @@ module Tmp
     config.view_component.generate.sidecar = true
     config.view_component.component_parent_class = 'ApplicationViewComponent'
 
-    # config.eager_load_paths << Rails.root.join("extras")
     config.autoload_lib(ignore: %w[assets tasks])
     config.eager_load_paths << Rails.root.join('app', 'views', 'components')
+    config.eager_load_paths << Rails.root.join('app', 'sidekiq', 'concerns')
 
     config.after_initialize do
       ActionText::ContentHelper.sanitizer.class.allowed_attributes += %w[

@@ -1,7 +1,6 @@
 class GenerateTextJob
   include Sidekiq::Job
-
-  Flash = Struct.new('Flash', :alert, :notice)
+  include Flashable
 
   sidekiq_options retry: false
 
@@ -38,10 +37,6 @@ class GenerateTextJob
       component: FlashMessageComponent.new(flash:),
       action: :replace
     )
-  end
-
-  def flash
-    @flash ||= Flash.new
   end
 
   def invoke_model(prompt:)
