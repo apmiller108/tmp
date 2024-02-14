@@ -1,4 +1,7 @@
-require: rubocop-rspec
+require:
+  - rubocop-rspec
+  - rubocop-capybara
+  - rubocop-rails
 
 AllCops:
   TargetRubyVersion: 3.3

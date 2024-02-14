@@ -6,7 +6,7 @@ import { generateText } from '@javascript/http'
 export default class WysiwygEditor extends Controller {
   static targets = [
     'generateTextBtn', 'generateTextDialog', 'generateTextId', 'generateTextInput', 'generateTextSubmit',
-    'generateImageBtn', 'generateImageDialog', 'generateImageId', 'generateImageInput', 'generateImageSubmit',
+    'generateImageBtn', 'generateImageDialog', 'generateImageId', 'generateImageInput', 'generateImageSubmit'
   ];
 
   editorElem;

@@ -16,6 +16,7 @@
     "trix": "^2.0.7"
   },
   "scripts": {
+    "lint": "eslint --ext .js ./app",
     "build": "node esbuild.config.mjs --production",
     "build:dev": "node esbuild.config.mjs --development",
     "build:css": "sass ./app/assets/stylesheets/application.bootstrap.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules --load-path=app/views/components"

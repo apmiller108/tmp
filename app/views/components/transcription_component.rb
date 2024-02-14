@@ -5,6 +5,7 @@ class TranscriptionComponent < ApplicationViewComponent
 
   delegate :status, to: :transcription_job
   delegate :content, :diarized_results, :active_storage_blob, :transcription_job, to: :transcription
+  delegate :filename, to: :active_storage_blob
 
   def initialize(transcription:)
     @transcription = transcription
@@ -28,9 +29,5 @@ class TranscriptionComponent < ApplicationViewComponent
 
   def download_path
     user_transcription_download_path(current_user, transcription_id: transcription.id)
-  end
-
-  def filename
-    active_storage_blob.filename
   end
 end

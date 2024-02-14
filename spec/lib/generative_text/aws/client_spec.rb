@@ -44,9 +44,11 @@ RSpec.describe GenerativeText::AWS::Client do
     let(:response) { instance_double GenerativeText::AWS::Client::InvokeModelResponse }
 
     before do
-      allow(GenerativeText::AWS::Client::InvokeModelRequest).to receive(:new).with(prompt:, **params).and_return(request)
+      allow(GenerativeText::AWS::Client::InvokeModelRequest).to receive(:new)
+        .with(prompt:, **params).and_return(request)
       allow(aws_client).to receive(:invoke_model).with(request_hash).and_return(client_response)
-      allow(GenerativeText::AWS::Client::InvokeModelResponse).to receive(:new).with(response_string).and_return(response)
+      allow(GenerativeText::AWS::Client::InvokeModelResponse).to receive(:new)
+        .with(response_string).and_return(response)
     end
 
     it 'returns the InvokeModelResponse object' do
