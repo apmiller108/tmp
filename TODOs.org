@@ -29,9 +29,17 @@
   CLOSED: [2024-02-11 Sun 14:37]
 * DONE create form object
   CLOSED: [2024-02-12 Mon 22:06]
-* TODO Add generate images background job
-* TODO Add request spec for generate images controller
+* DONE Add generate images background job
+  CLOSED: [2024-02-13 Tue 21:40]
+* TODO enqueue generate image job
 * TODO create and implement method to submit the generate text requests turbo stream request
 * TODO Handle custom action cable message for generate image
   dispatch event
+* TODO handle 500 errors when generating content
+  Right now it just breaks the view
 * TODO Insert file into trix editor
+* TODO Add request spec for generate images controller
+* TODO Add spec for generate text job
+* TODO Add spec for generate image job
+* TODO Add spec for stability classes
+* TODO Update wysiwyg component system spec
