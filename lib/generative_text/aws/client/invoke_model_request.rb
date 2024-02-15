@@ -4,7 +4,7 @@ class GenerativeText
       class InvokeModelRequest
         MAX_TOKENS = 1000 # Seems to be max output tokens only. Supports up to 8k.
         TEMP = 0.2 # Between 0..1. Increase for more randomness.
-        TOP_P = 0.8 # Between 0..1. Only consider possibilities gte this value.
+        TOP_P = 0.8 # Between 0..1. Only consider possibilities gte this value. Lower it for weirdness.
 
         attr_reader :params
 

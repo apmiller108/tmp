@@ -16,7 +16,7 @@ class GenerativeText
       end
 
       def invoke_model_stream(prompt:, **params, &block)
-        params.merge!(event_stream_handler: EventStreamHandler.new(&block).to_proc)
+        params[:event_stream_handler] = EventStreamHandler.new(&block).to_proc
         params = InvokeModelRequest.new(prompt:, **params).to_h
         invoke_model_with_response_stream(params)
       end
