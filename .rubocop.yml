@@ -37,6 +37,12 @@ Metrics/ClassLength:
 Naming/VariableNumber:
   Enabled: false
 
+Rails/FilePath:
+  Enabled: false
+Rails/OutputSafety:
+  Exclude:
+    - 'spec/**/*'
+
 RSpec/ExampleLength:
   Enabled: false
 RSpec/MessageSpies:

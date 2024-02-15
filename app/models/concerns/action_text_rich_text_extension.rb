@@ -9,6 +9,6 @@ module ActionTextRichTextExtension
     # rubocop:disable Rails/InverseOf
     has_one :self_ref, class_name: 'ActionText::RichText', foreign_key: :id, dependent: nil
     has_one :memo, through: :self_ref, source: :record, source_type: 'Memo'
-    # rubocop:enabled Rails/InverseOf
+    # rubocop:enable Rails/InverseOf
   end
 end

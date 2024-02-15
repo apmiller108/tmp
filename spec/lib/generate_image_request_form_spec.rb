@@ -34,7 +34,8 @@ RSpec.describe GenerateImageRequestForm do
         form.valid?
         expect(form.errors.full_messages).to(
           contain_exactly(
-            "Prompts can't be blank", "Image can't be blank", 'Dimensions is not included in the list', 'User must exist'
+            "Prompts can't be blank", "Image can't be blank", 'Dimensions is not included in the list',
+            'User must exist'
           )
         )
       end

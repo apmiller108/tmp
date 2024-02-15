@@ -6,13 +6,12 @@ class TranscriptionSummaryJob
     user = User.find(user_id)
     transcription = user.transcriptions.find(transcription_id)
     summary = transcription.summary
+    prompt = GenerativeText.summary_prompt_for(transcription:)
 
     summary.in_progress!
 
-    GenerativeText.summary_prompt_for(transcription:)
-
     # @stream_response [InvokeModelStreamResponse, #content, #final_chunk?]
-    GenerativeText.new.invoke_model_stream(prompt: GenerativeText.summary_prompt_for(transcription:)) do |stream_response|
+    GenerativeText.new.invoke_model_stream(prompt:) do |stream_response|
       summary.content += stream_response.content
 
       if stream_response.final_chunk?

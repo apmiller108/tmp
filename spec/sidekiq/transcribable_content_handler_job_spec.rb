@@ -6,7 +6,7 @@ RSpec.describe TranscribableContentHandlerJob, type: :job do
   let(:memo_id) { 99 }
 
   before do
-    allow(ActiveStorage::Blob).to receive(:not_transcribed_for).with(memo_id:).and_return(blob_relation)
+    allow(ActiveStorage::Blob).to receive(:audio_not_transcribed_for).with(memo_id:).and_return(blob_relation)
     allow(blob_relation).to receive(:ids).and_return(blob_ids)
     allow(Sidekiq::Client).to receive(:push_bulk)
   end
