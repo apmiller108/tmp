@@ -5,7 +5,7 @@ class GenerateImageRequestsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         if form.submit
-          GenerateImageJob.perform_async(form.generate_text_request.id)
+          GenerateImageJob.perform_async(form.generate_image_request.id)
           head :created
         else
           flash.now.alert = t('unable_to_generate_image')
@@ -21,6 +21,6 @@ class GenerateImageRequestsController < ApplicationController
   private
 
   def generate_image_request_params
-    params.require(:generaete_image_request).permit(:image_id, :style, :dimensions, prompts: %i[text weight])
+    params.require(:generate_image_request).permit(:image_id, :style, :dimensions, prompts: %i[text weight])
   end
 end
