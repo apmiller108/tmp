@@ -10,6 +10,7 @@ class GenerativeImage
         JSON.parse(response.body)
       end
 
+      # @param prompts [Array<Hash>] list of prompts with `text` and `weight` keys
       # @return [String] png file binary
       def text_to_image(prompts:, **opts)
         request = TextToImageRequest.new(prompts:, **opts)

@@ -36,12 +36,14 @@
 * TODO create and implement method to submit the generate text requests turbo stream request
 * TODO Handle custom action cable message for generate image
   dispatch event
+* TODO Insert file into trix editor
 * TODO handle 500 errors when generating content
   Right now it just breaks the view
-* TODO Insert file into trix editor
 * TODO Add request spec for generate images controller
 * DONE Add spec for generate text job
   CLOSED: [2024-02-15 Thu 15:47]
 * TODO Add spec for generate image job
-* TODO Add spec for stability classes
+* TODO Add specs for stability classes
+  - [ ] Client
+  - [ ] Request
 * TODO Update wysiwyg component system spec
