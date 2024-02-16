@@ -42,7 +42,8 @@
 * TODO Add request spec for generate images controller
 * DONE Add spec for generate text job
   CLOSED: [2024-02-15 Thu 15:47]
-* TODO Add spec for generate image job
+* DONE Add spec for generate image job
+  CLOSED: [2024-02-16 Fri 11:11]
 * TODO Add specs for stability classes
   - [ ] Client
   - [ ] Request

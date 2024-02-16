@@ -13,7 +13,7 @@ class GenerateImageJob
     if image
       MyChannel.broadcast_to(request.user, payload)
     else
-      payload[:error] = true
+      payload[:generate_image][:error] = true
       MyChannel.broadcast_to(request.user, payload)
       broadcast_flash(request.user)
     end
@@ -25,7 +25,7 @@ class GenerateImageJob
     GenerativeImage.new.text_to_image(params)
   rescue StandardError => e
     Rails.logger.warn("#{self.class}: #{e} : #{e.cause}")
-    false
+    nil
   end
 
   def broadcast_flash(user)
