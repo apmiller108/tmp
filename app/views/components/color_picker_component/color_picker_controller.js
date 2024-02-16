@@ -41,7 +41,7 @@ export default class ColorPicker extends Controller {
     this.dispatch('colorChosen', { detail: { color } })
   }
 
-  reset() {
+  onRemove() {
     this.inputTarget.value = ''
     this.swatchesButtonTarget.style.background = ''
     this.swatchesButtonTarget.style.color = '#000'
