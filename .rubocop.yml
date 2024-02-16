@@ -30,6 +30,7 @@ Metrics/BlockLength:
 Metrics/MethodLength:
   Exclude:
     - 'app/controllers/**/*'
+    - 'app/sidekiq/**/*'
 Metrics/ClassLength:
   Exclude:
     - 'app/controllers/**/*'

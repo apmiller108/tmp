@@ -8,9 +8,10 @@ class GenerateImageJob
     request = GenerateImageRequest.find(generate_image_request_id)
     image = generate_image(request.parameterize)
 
-    payload = { generate_image: { image_id: request.image_id, image:, error: nil } }
+    payload = { generate_image: { image_id: request.image_id, image: nil, error: nil } }
 
     if image
+      payload[:generate_image][:image] = Base64.strict_encode64(image)
       MyChannel.broadcast_to(request.user, payload)
     else
       payload[:generate_image][:error] = true
@@ -22,7 +23,7 @@ class GenerateImageJob
   private
 
   def generate_image(params)
-    GenerativeImage.new.text_to_image(params)
+    GenerativeImage.new.text_to_image(**params)
   rescue StandardError => e
     Rails.logger.warn("#{self.class}: #{e} : #{e.cause}")
     nil
