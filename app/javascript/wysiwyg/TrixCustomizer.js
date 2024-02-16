@@ -127,6 +127,7 @@ export default class TrixCustomizer {
           <div class="trix-button-group d-inline-flex">
             <input type="button" class="trix-button trix-button--dialog" data-trix-method="setAttribute"
                    value="Submit"
+                   data-wysiwyg-editor-type-param=${lowerCase}
                    data-action="click->wysiwyg-editor#submitGenerate${name}:prevent">
           </div>
         </div>

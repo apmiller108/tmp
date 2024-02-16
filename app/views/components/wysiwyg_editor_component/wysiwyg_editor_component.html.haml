@@ -1,3 +1,5 @@
 .c-wysiwyg-editor{ data: { controller: 'wysiwyg-editor',
-                  action: 'memo-form:memoFormSubmit@window->wysiwyg-editor#removeAllPlaceholders my-channel:generateText@window->wysiwyg-editor#onGenerateText' }}
+                  action: 'memo-form:memoFormSubmit@window->wysiwyg-editor#removeAllPlaceholders '\
+                          'my-channel:generateText@window->wysiwyg-editor#onGenerateText '\
+                          'my-channel:generateImage@window->wysiwyg-editor#onGenerateImage' }}
   = rich_text_area_tag(rich_text_area_name, rich_text_area_value)

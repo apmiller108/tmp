@@ -13,6 +13,9 @@ export default class MyChannelController extends Controller {
         case 'generate_text':
           dispatch("generateText", { detail: data })
           break;
+        case 'generate_image':
+          dispatch('generateImage', { detail: data })
+          break;
         default:
           throw new Error(`Unkonwn message type: ${messageType}`)
         }

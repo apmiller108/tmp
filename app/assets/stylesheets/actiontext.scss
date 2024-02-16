@@ -8,6 +8,11 @@
 @mixin modalTrixContent {
   height: 76vh;
   overflow: scroll;
+  .attachment__caption--editing {
+    textarea {
+      overflow: hidden;
+    }
+  }
 }
 
 .trix-content .attachment-gallery > action-text-attachment,
