@@ -33,18 +33,23 @@
   CLOSED: [2024-02-13 Tue 21:40]
 * DONE enqueue generate image job
   CLOSED: [2024-02-15 Thu 14:46]
-* TODO create and implement method to submit the generate text requests turbo stream request
-* TODO Handle custom action cable message for generate image
+* DONE create and implement method to submit the generate text requests turbo stream request
+  CLOSED: [2024-02-16 Fri 15:42]
+* DONE Handle custom action cable message for generate image
+  CLOSED: [2024-02-16 Fri 15:42]
   dispatch event
-* TODO Insert file into trix editor
-* TODO handle 500 errors when generating content
+* DONE Insert file into trix editor
+  CLOSED: [2024-02-16 Fri 15:42]
+* DONE handle 500 errors when generating content
+  CLOSED: [2024-02-16 Fri 15:42]
   Right now it just breaks the view
-* TODO Add request spec for generate images controller
 * DONE Add spec for generate text job
   CLOSED: [2024-02-15 Thu 15:47]
 * DONE Add spec for generate image job
   CLOSED: [2024-02-16 Fri 11:11]
-* TODO Add specs for stability classes
+* TODO Add style and dimensions select to gen image form
+* TODO Add request spec for generate images controller
+* TODO Add or update specs for stability classes
   - [ ] Client
   - [ ] Request
 * TODO Update wysiwyg component system spec
