@@ -4,9 +4,17 @@ import TrixConfiguration from '@wysiwyg/TrixConfiguration'
 import { generateText, generateImage } from '@javascript/http'
 
 export default class WysiwygEditor extends Controller {
+  // This should be invoked as early as possible before the trix editor is
+  // instantiated.
+  static applyTrixCustomConfiguration() {
+    const trixConfiguration = new TrixConfiguration
+    trixConfiguration.initialize()
+  }
+
   static targets = [
     'generateTextBtn', 'generateTextDialog', 'generateTextId', 'generateTextInput', 'generateTextSubmit',
-    'generateImageBtn', 'generateImageDialog', 'generateImageId', 'generateImageInput', 'generateImageSubmit'
+    'generateImageBtn', 'generateImageDialog', 'generateImageId', 'generateImageSubmit', 'generateImagePromptGroup',
+    'generateImageDimensions', 'generateImageStyle'
   ];
 
   editorElem;
@@ -21,8 +29,22 @@ export default class WysiwygEditor extends Controller {
     document.removeEventListener(TrixConfiguration.selectionChange, this.onSelectionChange.bind(this))
   }
 
+  insertGenerateImageOptions() {
+    // TODO insert the style options
+    // TODO insert the dimension options
+    // TODO remove hardcoded options
+  }
+
   get editor() {
     return this.editorElem.editor
+  }
+
+  get generateImageStyleOptions() {
+    return JSON.parse(this.element.dataset.styleOptions)
+  }
+
+  get generateImageDimensionOptions() {
+    return JSON.parse(this.element.dataset.dimensionOptions)
   }
 
   onOpenGenerateTextDialog() {
@@ -31,8 +53,9 @@ export default class WysiwygEditor extends Controller {
   }
 
   onOpenGenerateImageDialog() {
-    this.generateImageInputTarget.value = this.selectedText;
-    this.generateImageInputTarget.focus()
+    const promptInput = this.generateImagePromptInputs.pop()
+    promptInput.value = this.selectedText;
+    promptInput.focus()
   }
 
   onSelectionChange() {
@@ -63,7 +86,12 @@ export default class WysiwygEditor extends Controller {
         window.location = '/'
       }
 
-      if (response.ok) {
+      if (response.status === 422) {
+        const placeHolderDiv = document.getElementById(id)
+        placeHolderDiv?.parentElement?.remove()
+      }
+
+      if (response.ok || response.status === 422) {
         this.generateTextInputTarget.value = ''
         // Generated content is asynchronous. The use of renderStreamMessage is for
         // any turbo streams in the response (ie, flash message)
@@ -88,7 +116,7 @@ export default class WysiwygEditor extends Controller {
     const { params: { type } } = e
     const id = this.createGenerativeId(`gen${type}`)
 
-    if (!this.generateImageInputTarget.value.length) {
+    if (this.generateImagePromptInputs.some(i => i.value.length === 0)) {
       return
     }
 
@@ -98,10 +126,16 @@ export default class WysiwygEditor extends Controller {
 
     let response;
     try {
+      const prompts = this.generateImagePromptGroupTargets.map((g) => {
+        return {
+          text: g.querySelector('input').value,
+          weight: g.querySelector('select[name="weight"]').value
+        }
+      })
       response = await generateImage({
-        prompts: [{ text: this.generateImageInputTarget.value, weight: 1 }],
-        dimensions: '512x512',
-        style: 'photographic',
+        prompts,
+        dimensions: this.generateImageDimensionsTarget.value,
+        style: this.generateImageStyleTarget.value,
         image_id: this.generateImageIdTarget.value
       })
 
@@ -109,8 +143,13 @@ export default class WysiwygEditor extends Controller {
         window.location = '/'
       }
 
-      if (response.ok || response.status == 422) {
-        this.generateImageInputTarget.value = ''
+      if (response.status === 422) {
+        const placeHolderDiv = document.getElementById(id)
+        placeHolderDiv?.parentElement?.remove()
+      }
+
+      if (response.ok || response.status === 422) {
+        this.generateImagePromptInputs.forEach(i => i.value = '')
         // Generated content is asynchronous. The use of renderStreamMessage is for
         // any turbo streams in the response (ie, flash message)
         const responseBody = await response.text()
@@ -128,6 +167,10 @@ export default class WysiwygEditor extends Controller {
       placeHolderDiv?.parentElement?.remove()
       alert('Unable to generate text')
     }
+  }
+
+  get generateImagePromptInputs() {
+    return this.generateImagePromptGroupTargets.map(g => g.querySelector('input'))
   }
 
   /*
@@ -162,7 +205,6 @@ export default class WysiwygEditor extends Controller {
       document.getElementById(text_id).parentElement.remove()
     }
   }
-
 
   async onGenerateImage(event) {
     const { generate_image: { image_id, image, error }} = event.detail

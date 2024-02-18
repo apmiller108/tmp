@@ -15,4 +15,18 @@ class WysiwygEditorComponent < ApplicationViewComponent
   def rich_text_area_value
     object.public_send(method)
   end
+
+  def gen_image_style_options_json
+    JSON.dump(
+      GenerativeImage::Stability::STYLE_PRESETS.map do |preset|
+        { value: preset, label: preset.tr('-', ' ').titleize }
+      end
+    )
+  end
+
+  def gen_image_dimension_options_json
+    JSON.dump(
+      GenerativeImage::Stability::DIMENSIONS
+    )
+  end
 end

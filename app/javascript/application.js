@@ -3,10 +3,10 @@ import "@hotwired/turbo-rails"
 import "@rails/actiontext"
 import "trix"
 import "./controllers"
-import TrixConfiguration from './wysiwyg/TrixConfiguration'
+import WysiwygEditor from "../views/components/wysiwyg_editor_component/wysiwyg_editor_controller.js"
+
+WysiwygEditor.applyTrixCustomConfiguration()
 
 // import * as ActionCable from '@rails/actioncable'
 // ActionCable.logger.enabled = true;
 
-const trixConfiguration = new TrixConfiguration
-trixConfiguration.initialize()

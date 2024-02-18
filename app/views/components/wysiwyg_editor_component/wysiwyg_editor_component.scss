@@ -18,7 +18,15 @@
     }
   }
   .trix-dialogs {
+    .trix-dialog {
+      border-top: none;
+      top: 0.5rem;
+      left: 0.6rem;
+    }
     .trix-custom-dialog {
+      select {
+        padding-bottom: 0.5rem;
+      }
       .trix-button-group {
         width: 100%;
         display: flex;
@@ -44,13 +52,17 @@
       }
       &.trix-custom-generate-text, &.trix-custom-generate-image {
         max-width: 45rem;
-        .generate-text-input {
-          width: 100%;
-          margin-right: 1rem;
-        }
         .trix-button-group {
           margin: 0;
           flex-shrink: 5;
+        }
+      }
+      &.trix-custom-generate-image {
+        .weight-select {
+          max-width: 5rem
+        }
+        input[value='Submit'] {
+          width: 100%;
         }
       }
     }

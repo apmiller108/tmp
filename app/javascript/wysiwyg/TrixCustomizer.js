@@ -34,12 +34,12 @@ export default class TrixCustomizer {
 
   createGenerateTextButton() {
     this.fileTools.insertAdjacentHTML('beforeend', this.generateTextButton)
-    this.dialogs.insertAdjacentHTML('beforeend', this.generativeAiDialog('Text'))
+    this.dialogs.insertAdjacentHTML('beforeend', this.generateTextDialog)
   }
 
   createGenerateImageButton() {
     this.fileTools.insertAdjacentHTML('beforeend', this.generateImageButton)
-    this.dialogs.insertAdjacentHTML('beforeend', this.generativeAiDialog('Image'))
+    this.dialogs.insertAdjacentHTML('beforeend', this.generateImageDialog)
   }
 
   get highlightButton() {
@@ -102,6 +102,28 @@ export default class TrixCustomizer {
     `
   }
 
+
+  get generateTextDialog() {
+    return `
+      <div class="trix-dialog trix-dialog--heading trix-custom-dialog trix-custom-generate-text" data-trix-dialog="generateText"
+            data-trix-dialog-attribute="generateText" data-wysiwyg-editor-target="generateTextDialog">
+        <div class="d-flex" >
+          <input type="hidden" name="generate_text_id" value="" data-wysiwyg-editor-target="generateTextId" autocomplete="off">
+          <input type="text" class="generate-content-input form-control form-control-lg" name="generateText"
+                 data-action="keydown.enter->wysiwyg-editor#submitGenerateText:prevent"
+                 data-wysiwyg-editor-type-param="text"
+                 data-wysiwyg-editor-target="generateTextInput" data-trix-input required>
+          <div class="trix-button-group d-inline-flex">
+            <input type="button" class="trix-button trix-button--dialog" data-trix-method="setAttribute"
+                   value="Submit"
+                   data-wysiwyg-editor-type-param="text"
+                   data-action="click->wysiwyg-editor#submitGenerateText:prevent">
+          </div>
+        </div>
+      </div>
+    `
+  }
+
   get generateImageButton() {
     return`
       <button class="trix-button trix-button--icon trix-button-custom" type="button"
@@ -113,22 +135,61 @@ export default class TrixCustomizer {
     `
   }
 
-  generativeAiDialog(name) {
-    const action = `generate${name}`
-    const lowerCase = name.toLowerCase()
+  get generateImageDialog() {
     return `
-      <div class="trix-dialog trix-dialog--heading trix-custom-dialog trix-custom-generate-${lowerCase}" data-trix-dialog="${action}"
-            data-trix-dialog-attribute="${action}" data-wysiwyg-editor-target="${action}Dialog">
-        <div class="d-flex" >
-          <input type="hidden" name="generate_${lowerCase}_id" value="" data-wysiwyg-editor-target="${action}Id" autocomplete="off">
-          <input type="text" class="generate-${lowerCase}-input form-control form-control-lg" name="${action}"
-                 data-action="keydown.enter->wysiwyg-editor#submitGenerate${name}:prevent"
-                 data-wysiwyg-editor-target="${action}Input" data-trix-input required>
-          <div class="trix-button-group d-inline-flex">
-            <input type="button" class="trix-button trix-button--dialog" data-trix-method="setAttribute"
-                   value="Submit"
-                   data-wysiwyg-editor-type-param=${lowerCase}
-                   data-action="click->wysiwyg-editor#submitGenerate${name}:prevent">
+      <div class="trix-dialog trix-dialog--heading trix-custom-dialog trix-custom-generate-image" data-trix-dialog="generateImage"
+            data-trix-dialog-attribute="generateImage" data-wysiwyg-editor-target="generateImageDialog">
+        <input type="hidden" name="generate_image_id" value="" data-wysiwyg-editor-target="generateImageId" autocomplete="off">
+        <div class="grid" >
+          <div class="g-col-6">
+            <div class="form-floating dimensions-select">
+              <select class="form-select form-select-lg" aria-label="dimensions" name="dimensions"
+                      data-wysiwyg-editor-target="generateImageDimensions">
+                <option selected value="320x320">320x320</option>
+                <option value="512x512">512x512</option>
+                <option value="768x768">768x768</option>
+              </select>
+              <label for="weight">Dimensions</label>
+            </div>
+          </div>
+          <div class="g-col-6">
+            <div class="form-floating style-select">
+              <select class="form-select form-select-lg" aria-label="style" name="style"
+                      data-wysiwyg-editor-target="generateImageStyle">
+                <option selected value="photographic">photographic</option>
+                <option value="pixel-art">pixel art</option>
+                <option value="cinematic">cinematic</option>
+              </select>
+              <label for="weight">Dimensions</label>
+            </div>
+          </div>
+          <div class="g-col-12">
+            <div class="input-group promot-group" data-wysiwyg-editor-target="generateImagePromptGroup">
+              <div class="form-floating">
+                <input type="text" class="generate-content-input form-control form-control-lg" name="generateImage",
+                       placeholder="Enter prompt"
+                       data-action="keydown.enter->wysiwyg-editor#submitGenerateImage:prevent"
+                       data-wysiwyg-editor-type-param="image"
+                       data-trix-input required>
+                <label for="prompt">Prompt</label>
+              </div>
+              <div class="form-floating weight-select">
+                <select class="form-select form-select-lg" aria-label="prompt weight" name="weight">
+                  <option selected value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+                <label for="weight">Weight</label>
+              </div>
+            </div>
+          </div>
+          <div class="g-col-sm-3 g-start-md-10 g-col-12">
+            <div class="trix-button-group d-inline-flex">
+              <input type="button" class="trix-button trix-button--dialog" data-trix-method="setAttribute"
+                     value="Submit"
+                     data-wysiwyg-editor-type-param="image"
+                     data-action="click->wysiwyg-editor#submitGenerateImage:prevent">
+            </div>
           </div>
         </div>
       </div>
