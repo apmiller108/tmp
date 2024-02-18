@@ -25,14 +25,22 @@ export default class WysiwygEditor extends Controller {
     document.addEventListener(TrixConfiguration.selectionChange, this.onSelectionChange.bind(this))
   }
 
-  disconnect() {
-    document.removeEventListener(TrixConfiguration.selectionChange, this.onSelectionChange.bind(this))
+  generateImageStyleTargetConnected(element) {
+    const options = this.generateImageStyleOptions.map((o) => this.optionForSelect(o)).join("\n")
+    element.innerHTML = options
   }
 
-  insertGenerateImageOptions() {
-    // TODO insert the style options
-    // TODO insert the dimension options
-    // TODO remove hardcoded options
+  generateImageDimensionsTargetConnected(element) {
+    const options = this.generateImageDimensionsOptions.map((o) => this.optionForSelect(o)).join("\n")
+    element.innerHTML = options
+  }
+
+  optionForSelect({ value, label, selected }) {
+    return `<option value="${value}" label="${label}" ${selected ? 'selected' : '' }></option>`
+  }
+
+  disconnect() {
+    document.removeEventListener(TrixConfiguration.selectionChange, this.onSelectionChange.bind(this))
   }
 
   get editor() {
@@ -43,7 +51,7 @@ export default class WysiwygEditor extends Controller {
     return JSON.parse(this.element.dataset.styleOptions)
   }
 
-  get generateImageDimensionOptions() {
+  get generateImageDimensionsOptions() {
     return JSON.parse(this.element.dataset.dimensionOptions)
   }
 

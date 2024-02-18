@@ -145,22 +145,16 @@ export default class TrixCustomizer {
             <div class="form-floating dimensions-select">
               <select class="form-select form-select-lg" aria-label="dimensions" name="dimensions"
                       data-wysiwyg-editor-target="generateImageDimensions">
-                <option selected value="320x320">320x320</option>
-                <option value="512x512">512x512</option>
-                <option value="768x768">768x768</option>
               </select>
-              <label for="weight">Dimensions</label>
+              <label for="dimensions">Dimensions</label>
             </div>
           </div>
           <div class="g-col-6">
             <div class="form-floating style-select">
               <select class="form-select form-select-lg" aria-label="style" name="style"
                       data-wysiwyg-editor-target="generateImageStyle">
-                <option selected value="photographic">photographic</option>
-                <option value="pixel-art">pixel art</option>
-                <option value="cinematic">cinematic</option>
               </select>
-              <label for="weight">Dimensions</label>
+              <label for="style">Style</label>
             </div>
           </div>
           <div class="g-col-12">
