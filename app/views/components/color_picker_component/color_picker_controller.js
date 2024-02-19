@@ -3,6 +3,20 @@ import { Controller } from "@hotwired/stimulus"
 export default class ColorPicker extends Controller {
   static targets = ['colorButton', 'input', 'swatchesButton', 'swatches', 'removeColorLink']
 
+  connect() {
+    document.addEventListener('click', this.autoHideSwatches.bind(this))
+  }
+
+  disconnect() {
+    document.removeEventListener('click', this.autoHideSwatches.bind(this))
+  }
+
+  autoHideSwatches(e) {
+    if (!this.element.contains(e.target)) {
+      this.hideSwatches()
+    }
+  }
+
   toggleSwatches() {
     const swatches = this.swatchesTarget
     const swatchesOpacity = window.getComputedStyle(this.swatchesTarget).opacity

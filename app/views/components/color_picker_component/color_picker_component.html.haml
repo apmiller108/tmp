@@ -3,7 +3,7 @@
   %button.btn.icon-btn.color-picker-opener{ style: button_styles,
                                             data: { 'color-picker-target' => 'swatchesButton',
                                                     'bs-toggle' => 'tooltip', 'bs-title' => t('color'),
-                                                     action: 'click->color-picker#toggleSwatches:prevent blur->color-picker#onBlur' } }
+                                                     action: 'click->color-picker#toggleSwatches:prevent' } }
     %i.bi.bi-palette-fill
   .swatches.position-absolute.hide{ data: { 'color-picker-target' => 'swatches' }, style: swatch_styles}
     - swatches.each do |swatch, colors|
@@ -12,8 +12,7 @@
           %button.btn.color-picker-btn.d-flex{ id: color, style: "background: ##{color}; pointer-events: none;",
                                                data: { color: color,
                                                        'color-picker-target' => 'colorButton',
-                                                       action: 'click->color-picker#onChoose:prevent '\
-                                                               'blur->color-picker#onBlur focus->color-picker#onFocus' } }
+                                                       action: 'click->color-picker#onChoose:prevent' } }
     %a.remove-color.link-secondary.link-underline-opacity-75.float-end{ href: '#', class: [selected_color.blank? && 'd-none'],
         data: { 'color-picker-target' => 'removeColorLink', action: 'click->color-picker#onRemove:prevent' }
       } Remove color
