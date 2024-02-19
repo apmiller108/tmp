@@ -143,7 +143,7 @@ export default class TrixCustomizer {
         <div class="grid" >
           <div class="g-col-6">
             <div class="form-floating dimensions-select">
-              <select class="form-select form-select-lg" aria-label="dimensions" name="dimensions"
+              <select id="dimensions" class="form-select form-select-lg" aria-label="dimensions" name="dimensions"
                       data-wysiwyg-editor-target="generateImageDimensions">
               </select>
               <label for="dimensions">Dimensions</label>
@@ -151,16 +151,16 @@ export default class TrixCustomizer {
           </div>
           <div class="g-col-6">
             <div class="form-floating style-select">
-              <select class="form-select form-select-lg" aria-label="style" name="style"
+              <select id="style-preset" class="form-select form-select-lg" aria-label="style preset" name="style-preset"
                       data-wysiwyg-editor-target="generateImageStyle">
               </select>
-              <label for="style">Style</label>
+              <label for="style-preset">Style</label>
             </div>
           </div>
           <div class="g-col-12">
             <div class="input-group promot-group" data-wysiwyg-editor-target="generateImagePromptGroup">
               <div class="form-floating">
-                <input type="text" class="generate-content-input form-control form-control-lg" name="generateImage",
+                <input type="text" id="prompt" class="generate-content-input form-control form-control-lg" name="generateImage",
                        placeholder="Enter prompt"
                        data-action="keydown.enter->wysiwyg-editor#submitGenerateImage:prevent"
                        data-wysiwyg-editor-type-param="image"
@@ -168,7 +168,7 @@ export default class TrixCustomizer {
                 <label for="prompt">Prompt</label>
               </div>
               <div class="form-floating weight-select">
-                <select class="form-select form-select-lg" aria-label="prompt weight" name="weight">
+                <select id="weight" class="form-select form-select-lg" aria-label="prompt weight" name="weight">
                   <option selected value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>

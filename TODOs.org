@@ -47,7 +47,10 @@
   CLOSED: [2024-02-15 Thu 15:47]
 * DONE Add spec for generate image job
   CLOSED: [2024-02-16 Fri 11:11]
-* TODO Add style and dimensions select to gen image form
+* DONE Add style and dimensions select to gen image form
+  CLOSED: [2024-02-18 Sun 12:00]
+* DONE fix color choose event not changing border
+  CLOSED: [2024-02-18 Sun 18:54]
 * TODO Add request spec for generate images controller
 * TODO Add or update specs for stability classes
   - [ ] Client
