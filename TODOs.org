@@ -51,7 +51,8 @@
   CLOSED: [2024-02-18 Sun 12:00]
 * DONE fix color choose event not changing border
   CLOSED: [2024-02-18 Sun 18:54]
-* TODO Add request spec for generate images controller
+* DONE Add request spec for generate images controller
+  CLOSED: [2024-02-18 Sun 19:16]
 * TODO Add or update specs for stability classes
   - [ ] Client
   - [ ] Request

@@ -1,10 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe 'Generative Texts', type: :request do
+RSpec.describe 'Generate text requests', type: :request do
   describe 'POST #create' do
     let(:user) { create :user }
     let(:prompt) { 'list all the flavors of quarks' }
-    let(:params) { { generate_text_request: { prompt:, text_id: 1 } } }
+    let(:text_id) { 'abcd' }
+    let(:params) { { generate_text_request: { prompt:, text_id: } } }
     let(:request) do
       post generate_text_requests_path, params:, as: :turbo_stream
     end
@@ -17,7 +18,7 @@ RSpec.describe 'Generative Texts', type: :request do
     it_behaves_like 'an authenticated route'
 
     context 'with a turbo stream format' do
-      context 'when GenerativeText returns a response' do
+      context 'with a valid request' do
         it 'returns a successful response' do
           request
           expect(response).to have_http_status(:created)
@@ -29,7 +30,7 @@ RSpec.describe 'Generative Texts', type: :request do
         end
 
         it 'creates a generate_text_requests record' do
-          expect { request }.to change(user.generate_text_requests, :count).by(1)
+          expect { request }.to change(user.generate_text_requests.where(prompt:, text_id:), :count).by(1)
         end
 
         it 'enqueues a GenerateTextJob' do
@@ -38,7 +39,7 @@ RSpec.describe 'Generative Texts', type: :request do
         end
       end
 
-      context 'when the GenerateTextRequest is invalid' do
+      context 'when the request is invalid' do
         let(:params) { { generate_text_request: { input: nil, text_id: nil } } }
 
         before { request }
