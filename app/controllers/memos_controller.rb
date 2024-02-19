@@ -79,7 +79,7 @@ class MemosController < ApplicationController
 
         format.turbo_stream do
           render turbo_stream: [
-            turbo_stream.replace(memo_card.component.id, memo_card_component.render_in(view_context)),
+            turbo_stream.replace(memo_card_component.id, memo_card_component.render_in(view_context)),
             turbo_stream.update(flash_component.id, flash_component)
           ]
         end
