@@ -11,15 +11,15 @@ class GenerativeImage
       end
 
       # @param prompts [Array<Hash>] list of prompts with `text` and `weight` keys
-      # @return [String] png file binary
+      # @return [Stability::TextToImageResponse] wraps the JSON response
       def text_to_image(prompts:, **opts)
         request = TextToImageRequest.new(prompts:, **opts)
 
         response = conn.post(request.path) do |req|
           req.body = request.to_json
-          req.headers['Accept'] = 'image/png'
+          req.headers['Accept'] = 'application/json'
         end
-        response.body
+        TextToImageResponse.new(response.body)
       rescue Faraday::ClientError => e
         raise Stability::ClientError, "#{e.response_status}: #{e.response_body}"
       end
