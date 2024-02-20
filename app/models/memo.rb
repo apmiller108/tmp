@@ -22,7 +22,7 @@ class Memo < ApplicationRecord
 
   attribute :color, :color_type
 
-  validates :content, :title, presence: true
+  validates :title, presence: true
   validate :color_inclusion
 
   belongs_to :user, optional: false
