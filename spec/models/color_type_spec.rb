@@ -26,6 +26,14 @@ RSpec.describe ColorType, type: :model do
       color_type = described_class.new
       expect(color_type.serialize(color_type)).to eq(color_type.hex)
     end
+
+    context 'when already a hex string' do
+      it 'returns the hex string' do
+        hex = 'ffffff'
+        color_type = described_class.new
+        expect(color_type.serialize(hex)).to eq(hex)
+      end
+    end
   end
 
   describe '#deserialize' do

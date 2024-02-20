@@ -33,8 +33,8 @@ class Memo < ApplicationRecord
   private
 
   def color_inclusion
-    return if color.blank? || color.hex.in?(COLORS)
+    return if color.blank? || (color.is_a?(ColorType) ? color.hex : color).in?(COLORS)
 
-    errors.add(:color, 'Color is not included in the list')
+    errors.add(:color, 'is not included in the list')
   end
 end

@@ -8,11 +8,19 @@ class ColorType < ActiveRecord::Type::String
   end
 
   def serialize(value)
-    value.hex
+    if value.is_a?(ColorType)
+      value.hex
+    else
+      value
+    end
   end
 
   def cast(value)
-    self.class.new(value)
+    if value.is_a?(ColorType)
+      super(value.hex)
+    else
+      super(value)
+    end
   end
 
   def deserialize(value)
