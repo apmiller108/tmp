@@ -36,13 +36,21 @@
       .trix-button {
         @extend .btn, .btn-outline-secondary;
         width: auto;
-        &:last-child {
-        }
       }
       &.trix-custom-heading {
-        max-width: 14rem;
+        max-width: 20rem;
         .trix-button-group {
           margin: 0;
+        }
+        button {
+          margin-right: 0.5rem;
+          &:last-child {
+            margin-right: 0;
+          }
+          &.trix-active {
+            background-color: $secondary;
+            color: $white;
+          }
         }
         .trix-dialog-hidden__input {
           z-index: -1;

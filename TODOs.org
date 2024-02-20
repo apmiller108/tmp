@@ -53,8 +53,10 @@
   CLOSED: [2024-02-18 Sun 18:54]
 * DONE Add request spec for generate images controller
   CLOSED: [2024-02-18 Sun 19:16]
-* TODO Fix color not saving
-* TODO Fix heading dialog
+* DONE Fix color not saving
+  CLOSED: [2024-02-19 Mon 20:57]
+* DONE Fix heading dialog
+  CLOSED: [2024-02-19 Mon 21:10]
 * TODO Switch to accept JSON over PNG
   - [ ] Remove base64 encoding (it will already be b64 encoded)
   - [ ] log or persist the additional details from the response
