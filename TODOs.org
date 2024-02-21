@@ -57,9 +57,12 @@
   CLOSED: [2024-02-19 Mon 20:57]
 * DONE Fix heading dialog
   CLOSED: [2024-02-19 Mon 21:10]
-* TODO Switch to accept JSON over PNG
-  - [ ] Remove base64 encoding (it will already be b64 encoded)
-  - [ ] log or persist the additional details from the response
+* DONE Switch to accept JSON over PNG
+  CLOSED: [2024-02-20 Tue 21:18]
+  - [X] Remove base64 encoding (it will already be b64 encoded)
+* DONE Update generate image job spec
+  CLOSED: [2024-02-20 Tue 21:18]
+* TODO add spec for TextToImageResponse
 * TODO Make form responsive
 * TODO Add or update specs for stability classes
   - [ ] Client
