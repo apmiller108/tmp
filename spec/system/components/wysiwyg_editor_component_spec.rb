@@ -1,4 +1,5 @@
 require 'system_helper'
+require 'sidekiq/testing'
 
 RSpec.describe 'WysiwygEditorComponent', type: :system do
   let(:user) { create :user }
@@ -20,11 +21,16 @@ RSpec.describe 'WysiwygEditorComponent', type: :system do
   end
 
   before do
+    Sidekiq::Testing.inline!
     stub_request(:post, 'https://bedrock-runtime.us-east-1.amazonaws.com/model/amazon.titan-text-express-v1/invoke')
       .with(body: {
         inputText: prompt, textGenerationConfig: { maxTokenCount: 500, stopSequences: [], temperature: 0.3, topP: 0.8 }
       }.to_json)
       .to_return(status: 200, body: generative_text_response)
+  end
+
+  after do
+    Sidekiq::Testing.fake!
   end
 
   context 'with new object' do
@@ -33,6 +39,7 @@ RSpec.describe 'WysiwygEditorComponent', type: :system do
       visit(WysiwygEditorComponentPreview::NEW_PATH)
 
       expect(page).to have_css 'trix-toolbar'
+      expect(page).to have_css 'trix-editor'
 
       # Generate text dialog
       click_button('Generate Text')
@@ -44,7 +51,7 @@ RSpec.describe 'WysiwygEditorComponent', type: :system do
 
       # Generate text successfully
       # Capybara fill_in/set does not work for dialog input
-      page.execute_script("document.querySelector('input.generate-text-input').value = '#{prompt}'")
+      page.execute_script("document.querySelector(\"input.generate-content-input[type='text']\").value = '#{prompt}'")
       click_button 'Submit'
       expect(page).not_to have_css '.trix-dialog.trix-custom-generate-text'
       expect(page).to have_content generative_text

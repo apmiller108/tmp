@@ -39,7 +39,7 @@ export default class WysiwygEditor extends Controller {
 
   connect () {
     this.editorElem = this.element.querySelector(TrixSelectors.EDITOR)
-    this.editor.element.id = this.editorId
+    this.editorElem.id = this.editorId
 
     this.initScrollPreserveAndRestore()
 
@@ -52,10 +52,10 @@ export default class WysiwygEditor extends Controller {
 
   initScrollPreserveAndRestore() {
     // Scroll position are cached for elements with data attribute `preserve-scroll` on certain turbo events
-    this.editor.element.dataset.preserveScroll = true
+    this.editorElem.dataset.preserveScroll = true
     const turboScroll = new TurboScrollPreservation()
     if (turboScroll.scrollPosition(this.editorId)) {
-      this.editor.element.scrollTop = turboScroll.scrollPosition(this.editorId)
+      this.editorElem.scrollTop = turboScroll.scrollPosition(this.editorId)
     }
   }
 

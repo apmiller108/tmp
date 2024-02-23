@@ -20,6 +20,10 @@ RSpec.describe WysiwygEditorComponent, type: :component do
       define_method(method) do
         value
       end
+
+      def id
+        '123'
+      end
     end.new
   end
 
@@ -28,6 +32,10 @@ RSpec.describe WysiwygEditorComponent, type: :component do
   end
 
   it { is_expected.to have_css '.c-wysiwyg-editor' }
+
+  it 'has the proper data attributes' do
+    expect(page).to have_css '.c-wysiwyg-editor[data-object-id="123"]'
+  end
 
   it 'renders rich text hidden input with the proper attributes' do
     expect(page).to have_css "input[name='#{obj_name}[#{method}]'][value='#{value}']", visible: :hidden

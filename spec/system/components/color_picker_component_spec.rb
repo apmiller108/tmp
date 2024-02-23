@@ -12,7 +12,7 @@ RSpec.describe 'ColorPickerComponent', type: :system do
     expect(page).to have_css('.swatches', visible: :visible)
     expect(page).to have_link('Remove color', visible: :hidden)
 
-    colors = Memo::COLORS.sample(2)
+    colors = Memo::SWATCHES.values.flatten.sample(2)
     colors.each do |c|
       find("button[id='#{c}']").trigger('click')
       expect(hidden_input.value).to eq c

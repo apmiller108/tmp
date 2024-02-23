@@ -65,7 +65,8 @@
 * DONE add spec for TextToImageResponse
   CLOSED: [2024-02-22 Thu 20:59]
 * TODO Make form responsive
-* TODO Add or update specs for stability classes
+* DONE Add or update specs for stability classes
+  CLOSED: [2024-02-23 Fri 15:12]
   - [ ] Client
   - [ ] Request
 * TODO Update wysiwyg component system spec

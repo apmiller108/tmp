@@ -67,7 +67,7 @@ jobs:
         run: |
           docker run -v "$(pwd)":/code presidentbeef/brakeman --color -o brakeman_results.html
       - name: Archive Brakeman results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: brakeman-results
           path: brakeman_results.html
