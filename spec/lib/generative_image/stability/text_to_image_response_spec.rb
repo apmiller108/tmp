@@ -9,7 +9,6 @@ RSpec.describe GenerativeImage::Stability::TextToImageResponse do
 
   describe '#base64' do
     it 'returns the base64 string from the parsed JSON' do
-      puts data
       expect(response.base64).to eq(data['artifacts'][0]['base64'])
     end
   end
