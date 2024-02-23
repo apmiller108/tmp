@@ -5,7 +5,7 @@ class GenerativeImage
 
       def initialize(prompts:, **opts)
         @prompts = prompts
-        @opts = default_opts.merge(opts).symbolize_keys
+        @opts = default_opts.merge(opts.compact).symbolize_keys
       end
 
       # Optionally add prompts with different weights to (de)emphasize concepts.

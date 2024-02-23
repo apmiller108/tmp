@@ -14,23 +14,28 @@ RSpec.describe GenerativeImage::Stability::Client do
   end
 
   describe '#text_to_image' do
-    let(:png) { 'png' }
-    let(:prompt) { 'hubble space telescope galaxy' }
-    let(:request_json) { { prompt:, opt1: 'opt1', opt2: 'opt2' }.to_json }
+    let(:response_json) do
+      { 'artifacts' => [{ 'base64' => 'base64 string', 'seed' => 123, 'finishReason' => 'SUCCESS' }] }.to_json
+    end
+    let(:prompt) { build_stubbed(:prompt, :with_generate_image_request) }
+    let(:args) { prompt.generate_image_request.parameterize }
+    let(:request_json) { args.to_json }
     let(:path) { 'https://api.stability.ai/v1/generation/stable-diffusion-xl-1024-v1-0/text-to-image' }
     let(:request) { instance_double(GenerativeImage::Stability::TextToImageRequest, to_json: request_json, path:) }
+    let(:response) { instance_double(GenerativeImage::Stability::TextToImageResponse) }
 
     before do
-      allow(GenerativeImage::Stability::TextToImageRequest).to receive(:new).and_return(request)
+      allow(GenerativeImage::Stability::TextToImageRequest).to receive(:new).with(args).and_return(request)
+      allow(GenerativeImage::Stability::TextToImageResponse).to receive(:new).with(response_json).and_return(response)
     end
 
     context 'with a success response' do
       before do
-        stub_request(:post, path).with(body: request_json).to_return(status: 200, body: png)
+        stub_request(:post, path).with(body: request_json).to_return(status: 200, body: response_json)
       end
 
-      it 'returns a PNG file binary' do
-        expect(client.text_to_image(prompt:)).to eq(png)
+      it 'returns the TextToImageRequest object' do
+        expect(client.text_to_image(**args)).to eq(response)
       end
     end
 
@@ -45,7 +50,7 @@ RSpec.describe GenerativeImage::Stability::Client do
 
       it 're-raises a client error' do
         expect do
-          client.text_to_image(prompt: '')
+          client.text_to_image(**args)
         end.to raise_error(GenerativeImage::Stability::ClientError, "400: #{response_body}")
       end
     end

@@ -62,7 +62,8 @@
   - [X] Remove base64 encoding (it will already be b64 encoded)
 * DONE Update generate image job spec
   CLOSED: [2024-02-20 Tue 21:18]
-* TODO add spec for TextToImageResponse
+* DONE add spec for TextToImageResponse
+  CLOSED: [2024-02-22 Thu 20:59]
 * TODO Make form responsive
 * TODO Add or update specs for stability classes
   - [ ] Client
