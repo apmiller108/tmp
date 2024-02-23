@@ -2,6 +2,7 @@ import { Controller } from '@hotwired/stimulus'
 import TrixSelectors from '@wysiwyg/TrixSelectors'
 import TrixConfiguration from '@wysiwyg/TrixConfiguration'
 import { generateText, generateImage } from '@javascript/http'
+import TurboScrollPreservation from '@javascript/TurboScrollPreservation'
 
 export default class WysiwygEditor extends Controller {
   // This should be invoked as early as possible before the trix editor is
@@ -20,9 +21,42 @@ export default class WysiwygEditor extends Controller {
   editorElem;
   selectedText;
 
+  get editorId() {
+    return `trix_editor_${this.element.dataset.objectId}`
+  }
+
+  get editor() {
+    return this.editorElem.editor
+  }
+
+  get generateImageStyleOptions() {
+    return JSON.parse(this.element.dataset.styleOptions)
+  }
+
+  get generateImageDimensionsOptions() {
+    return JSON.parse(this.element.dataset.dimensionOptions)
+  }
+
   connect () {
     this.editorElem = this.element.querySelector(TrixSelectors.EDITOR)
+    this.editor.element.id = this.editorId
+
+    this.initScrollPreserveAndRestore()
+
     document.addEventListener(TrixConfiguration.selectionChange, this.onSelectionChange.bind(this))
+  }
+
+  disconnect() {
+    document.removeEventListener(TrixConfiguration.selectionChange, this.onSelectionChange.bind(this))
+  }
+
+  initScrollPreserveAndRestore() {
+    // Scroll position are cached for elements with data attribute `preserve-scroll` on certain turbo events
+    this.editor.element.dataset.preserveScroll = true
+    const turboScroll = new TurboScrollPreservation()
+    if (turboScroll.scrollPosition(this.editorId)) {
+      this.editor.element.scrollTop = turboScroll.scrollPosition(this.editorId)
+    }
   }
 
   generateImageStyleTargetConnected(element) {
@@ -37,22 +71,6 @@ export default class WysiwygEditor extends Controller {
 
   optionForSelect({ value, label, selected }) {
     return `<option value="${value}" label="${label}" ${selected ? 'selected' : '' }></option>`
-  }
-
-  disconnect() {
-    document.removeEventListener(TrixConfiguration.selectionChange, this.onSelectionChange.bind(this))
-  }
-
-  get editor() {
-    return this.editorElem.editor
-  }
-
-  get generateImageStyleOptions() {
-    return JSON.parse(this.element.dataset.styleOptions)
-  }
-
-  get generateImageDimensionsOptions() {
-    return JSON.parse(this.element.dataset.dimensionOptions)
   }
 
   onOpenGenerateTextDialog() {

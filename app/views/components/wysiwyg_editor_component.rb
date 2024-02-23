@@ -1,7 +1,7 @@
 class WysiwygEditorComponent < ApplicationViewComponent
   attr_reader :object, :method
 
-  # @param object [Object]
+  # @param object [Object] ActiveRecord object
   # @param method [Symbol | String]
   def initialize(object:, method:)
     @object = object

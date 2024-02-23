@@ -1,6 +1,7 @@
 .c-wysiwyg-editor{ data: { controller: 'wysiwyg-editor',
                    'style-options' => gen_image_style_options_json,
                    'dimension-options' => gen_image_dimension_options_json,
+                   'object-id' => object.id,
                    action: 'memo-form:memoFormSubmit@window->wysiwyg-editor#removeAllPlaceholders '\
                            'my-channel:generateText@window->wysiwyg-editor#onGenerateText '\
                            'my-channel:generateImage@window->wysiwyg-editor#onGenerateImage' }}
