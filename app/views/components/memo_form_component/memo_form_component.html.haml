@@ -3,9 +3,9 @@
     data: { controller: 'memo-form', action: 'color-picker:colorChosen->memo-form#onColorChosen color-picker:colorRemoved->memo-form#onColorRemoved' },
     html: { class: 'c-memo-form p-3', style: border_styles } do |form|
     .grid
-      .g-col-10
+      .g-col-12.g-col-xl-10
         = form.text_field :title, class: 'form-control', placeholder: 'Title'
-      .g-col-2.d-flex.justify-content-between.align-items-end
+      .g-col-6.g-start-7.g-col-sm-5.g-start-sm-8.g-col-xl-2.d-flex.justify-content-between.align-items-end
         = render ColorPickerComponent.new(**color_picker_options)
         %button.btn.btn-primary.icon-btn{type: :submit, name: :commit,
                                          data: { action: 'click->memo-form#onSubmit:prevent',

@@ -64,9 +64,14 @@
   CLOSED: [2024-02-20 Tue 21:18]
 * DONE add spec for TextToImageResponse
   CLOSED: [2024-02-22 Thu 20:59]
-* TODO Make form responsive
+* DONE Make form responsive
+  CLOSED: [2024-02-23 Fri 20:40]
 * DONE Add or update specs for stability classes
   CLOSED: [2024-02-23 Fri 15:12]
   - [ ] Client
   - [ ] Request
 * TODO Update wysiwyg component system spec
+* TODO fix n+1 bullshit
+  - Add has_image, has_audio plain_text columns to memos
+  - before save, set each new property
+  - use the plain text as the preview
