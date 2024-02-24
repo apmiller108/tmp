@@ -70,6 +70,8 @@
   CLOSED: [2024-02-23 Fri 15:12]
   - [ ] Client
   - [ ] Request
+* DONE Make the toolbar responsive
+  CLOSED: [2024-02-24 Sat 09:39]
 * TODO Update wysiwyg component system spec
 * TODO fix n+1 bullshit
   - Add has_image, has_audio plain_text columns to memos
