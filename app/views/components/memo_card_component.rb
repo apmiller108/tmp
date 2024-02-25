@@ -34,14 +34,12 @@ class MemoCardComponent < ApplicationViewComponent
   end
 
   def preview_text
-    sanitize_preview(
-      plain_text_body_with_attachment_icons.truncate_words(25, omission: '')
-    )
+    sanitize_preview(plain_text_preview)
   end
 
   def continued_preview_text
     sanitize_preview(
-      plain_text_body_with_attachment_icons.gsub(preview_text, '').truncate_words(30)
+      plain_text_body_with_attachment_icons.gsub(plain_text_preview, '').truncate_words(30)
     )
   end
 
@@ -73,6 +71,10 @@ class MemoCardComponent < ApplicationViewComponent
 
   def sanitize_preview(content)
     sanitize(content, tags: %w[i], attributes: %w[class title])
+  end
+
+  def plain_text_preview
+    plain_text_body_with_attachment_icons.truncate_words(25, omission: '')
   end
 
   def attachment_icon(attachment_data)
