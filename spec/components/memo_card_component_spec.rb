@@ -5,7 +5,14 @@ require 'rails_helper'
 RSpec.describe MemoCardComponent, type: :component do
   subject { page }
 
-  let(:memo) { build_stubbed(:memo, user:, title: 'Test Memo', content: '<h1>Lorem ipsum</h1>') }
+  let(:memo) do
+    build_stubbed(:memo, user:, title: 'Test Memo', rich_text_content:)
+  end
+  let(:plain_text_body) { 'Lorem ipsum' }
+  let(:rich_text_content) do
+    build_stubbed(:action_text_rich_text, body: '<h1>Lorem ipsum</h1>', plain_text_body:)
+  end
+  let(:blob) { build_stubbed(:active_storage_blob, content_type: 'image/png')}
   let(:user) { build_stubbed :user }
   let(:component) { described_class.new(memo:) }
 
@@ -24,5 +31,11 @@ RSpec.describe MemoCardComponent, type: :component do
   it { is_expected.to have_css '.card-title', text: memo.title }
   it { is_expected.to have_css '.card-subtitle', text: /Created.*ago/ }
   it { is_expected.to have_css '.card-subtitle', text: /Updated.*ago/ }
-  it { is_expected.to have_css '.card-text', text: memo.content.to_plain_text }
+  it { is_expected.to have_css '.card-text', text: plain_text_body }
+
+  context 'with a plain text attchment representation' do
+    let(:plain_text_body) { 'Foo %JSON{{{"content_type": "image/png","filename": "filename123"}}} Bar' }
+
+    it { is_expected.to have_css '.card-text > i.bi-filetype-png[title="filename123"]' }
+  end
 end
