@@ -1,6 +1,6 @@
 module Flashable
   extend ActiveSupport::Concern
   def flash
-    @flash ||= Struct.new('Flash', :alert, :notice).new
+    @flash ||= Struct.new(:alert, :notice).new
   end
 end

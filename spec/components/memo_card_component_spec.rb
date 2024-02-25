@@ -12,7 +12,7 @@ RSpec.describe MemoCardComponent, type: :component do
   let(:rich_text_content) do
     build_stubbed(:action_text_rich_text, body: '<h1>Lorem ipsum</h1>', plain_text_body:)
   end
-  let(:blob) { build_stubbed(:active_storage_blob, content_type: 'image/png')}
+  let(:blob) { build_stubbed(:active_storage_blob, content_type: 'image/png') }
   let(:user) { build_stubbed :user }
   let(:component) { described_class.new(memo:) }
 
