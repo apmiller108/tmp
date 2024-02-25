@@ -6,7 +6,8 @@ export default class extends Controller {
   subscriptions = []
 
   connect() {
-    setInterval(() => this.subscribeToMemos(), 2000)
+    // Comment in below to enable MemoChannel subscriptions
+    // setInterval(() => this.subscribeToMemos(), 10000)
   }
 
   disconnect() {
