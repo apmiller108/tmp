@@ -14,7 +14,7 @@ class WysiwygEditorComponentPreview < ViewComponent::Preview
 
   def edit
     memo = Memo.last
-    raise 'No memos found. See at least one memo to view the edit version' if memo.blank?
+    raise 'No memos found. Seed at least one memo to view the edit version' if memo.blank?
 
     render_with_template(
       locals: {

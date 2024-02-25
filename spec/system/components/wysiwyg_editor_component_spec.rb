@@ -20,13 +20,42 @@ RSpec.describe 'WysiwygEditorComponent', type: :system do
     JSON
   end
 
+  let(:png) { file_fixture 'image.png' }
+  let(:generate_image_response) do
+    <<~JSON
+      {
+        "artifacts": [{
+          "base64": "#{Base64.strict_encode64(png.read)}",
+          "seed": 3939457358,
+          "finishReason": "SUCCESS"
+        }]
+      }
+    JSON
+  end
+
   before do
     Sidekiq::Testing.inline!
+
     stub_request(:post, 'https://bedrock-runtime.us-east-1.amazonaws.com/model/amazon.titan-text-express-v1/invoke')
       .with(body: {
-        inputText: prompt, textGenerationConfig: { maxTokenCount: 500, stopSequences: [], temperature: 0.3, topP: 0.8 }
-      }.to_json)
+              inputText: prompt, textGenerationConfig: { maxTokenCount: 500, stopSequences: [], temperature: 0.3, topP: 0.8 }
+            }.to_json)
       .to_return(status: 200, body: generative_text_response)
+
+    stub_request(:post, 'https://api.stability.ai/v1/generation/stable-diffusion-xl-1024-v1-0/text-to-image')
+      .with(
+        body:
+          {
+            'text_prompts' => [{ 'text' => prompt, 'weight' => 3 }],
+            'style_preset' => 'comic-book',
+            'height' => 1024,
+            'width' => 1024,
+            'cfg_scale' => 10,
+            'samples' => 1,
+            'seed' => 0,
+            'steps' => 30
+          }.to_json
+      ).to_return(status: 200, body: generate_image_response, headers: {})
   end
 
   after do
@@ -55,6 +84,29 @@ RSpec.describe 'WysiwygEditorComponent', type: :system do
       click_button 'Submit'
       expect(page).not_to have_css '.trix-dialog.trix-custom-generate-text'
       expect(page).to have_content generative_text
+
+      # Generate image
+      click_button('Generate Image')
+      expect(page).to have_css '.trix-dialog.trix-custom-generate-image'
+
+      # Try to generate image without inputing anything
+      click_button 'Submit'
+      expect(page).to have_css '.trix-dialog.trix-custom-generate-image'
+
+      # Generate an image
+      find('option[label="1024x1024"]').select_option
+      find('option[label="Comic Book"]').select_option
+      select '3', from: 'weight'
+      page.execute_script("document.querySelector(\"input#prompt\").value = '#{prompt}'")
+      click_button 'Submit'
+      expect(page).not_to have_css '.trix-dialog.trix-custom-generate-image'
+      generate_image_request = user.generate_image_requests.last
+      expect(generate_image_request.attributes).to include('style' => 'comic-book',
+                                                           'dimensions' => '1024x1024',
+                                                           'image_id' => a_string_matching(/\Agenimage/))
+      figure = find("figure[data-trix-attachment*='#{generate_image_request.image_id}']")
+      expect(figure).to be_visible
+      expect(figure).to have_css 'img'
 
       # Heading dialog for creating h1-6 elements
       (1..6).each do |i|
