@@ -30,6 +30,8 @@ class Memo < ApplicationRecord
   has_many :image_blobs, -> { image }, through: :rich_text_content, source: :embeds_blobs
   has_many :transcriptions, through: :audio_blobs
 
+  delegate :plain_text_body, :plain_text_attachments, to: :content
+
   private
 
   def color_inclusion

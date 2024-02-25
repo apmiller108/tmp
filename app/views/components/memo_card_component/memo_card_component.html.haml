@@ -14,5 +14,6 @@
         %p.card-subtitle= "Updated #{updated_at} ago"
     %p.card-text.mt-2{data: { 'bs-toggle' => (continued_preview_text.present? && 'tooltip'),
                               'bs-title' => continued_preview_text.presence,
+                              'bs-html' => 'true',
                               'bs-placement' => 'bottom',
                               'memo-card-target' => 'cardText' }.compact } #{preview_text}...
