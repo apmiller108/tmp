@@ -38,8 +38,10 @@ RSpec.describe 'WysiwygEditorComponent', type: :system do
 
     stub_request(:post, 'https://bedrock-runtime.us-east-1.amazonaws.com/model/amazon.titan-text-express-v1/invoke')
       .with(body: {
-              inputText: prompt, textGenerationConfig: { maxTokenCount: 500, stopSequences: [], temperature: 0.3, topP: 0.8 }
-            }.to_json)
+        inputText: prompt, textGenerationConfig: {
+          maxTokenCount: 500, stopSequences: [], temperature: 0.3, topP: 0.8
+        }
+      }.to_json)
       .to_return(status: 200, body: generative_text_response)
 
     stub_request(:post, 'https://api.stability.ai/v1/generation/stable-diffusion-xl-1024-v1-0/text-to-image')

@@ -72,7 +72,8 @@
   - [ ] Request
 * DONE Make the toolbar responsive
   CLOSED: [2024-02-24 Sat 09:39]
-* TODO Update wysiwyg component system spec
+* DONE Update wysiwyg component system spec
+  CLOSED: [2024-02-24 Sat 20:34]
 * TODO fix n+1 bullshit
   - Add has_image, has_audio plain_text columns to memos
   - before save, set each new property
