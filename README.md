@@ -4,12 +4,13 @@
 AI infused note taking application.
 
 ## Features
-- Add and transcribe audio
-- Summarize audio transcriptions
-- Generate text
+- Rich text editor
+- Text to image (stable diffusion)
+- Text to text (llm)
+- Speech to text (transcribe audio files)
+- Transcription summaries
 
 ## Planned
-- Text to Image
 - Video playback
 - PDF rendering
 - Export
