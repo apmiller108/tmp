@@ -1,0 +1,14 @@
+:PROPERTIES:
+:CATEGORY: tmp
+:END:
+
+* TODO link generated image to prompt
+  - [ ] Rename image_id to image_name
+  - [ ] Add active_storage_blob_id FK to generate_image_requests
+  - [ ] when the attachment is no longer pending associate the blob to the
+    request record if the attachment is a generated image
+  - [ ] On hover show the generated image params
+* TODO On hover of image icon, show small variant of image
+* TODO Show attachment icon
+  possible the count of files by type
+  on hover show the details / gallery view of the images (small variant)

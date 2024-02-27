@@ -11,6 +11,8 @@ AI infused note taking application.
 - Transcription summaries
 
 ## Planned
+- Upscale images
+- Image to video
 - Video playback
 - PDF rendering
 - Export

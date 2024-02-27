@@ -43,7 +43,20 @@ export default class WysiwygEditor extends Controller {
 
     this.initScrollPreserveAndRestore()
 
+    console.log(this.editor.getDocument().getAttachments())
+
     document.addEventListener(TrixConfiguration.selectionChange, this.onSelectionChange.bind(this))
+    document.addEventListener('trix-attachment-add', this.onAttachmentAdd.bind(this))
+  }
+
+  onAttachmentAdd(e) {
+    const { attachment } = e
+    const id = setInterval(() => {
+      console.log(attachment.isPending())
+      if (!attachment.isPending()) {
+        clearInterval(id)
+      }
+    }, 300)
   }
 
   disconnect() {
