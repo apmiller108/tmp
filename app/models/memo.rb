@@ -32,6 +32,14 @@ class Memo < ApplicationRecord
 
   delegate :plain_text_body, :plain_text_attachments, to: :content
 
+  def default_color?
+    if color.respond_to?(:default?)
+      color.default?
+    else
+      ColorType.new(color).default?
+    end
+  end
+
   private
 
   def color_inclusion

@@ -3,7 +3,7 @@
 class MemoFormComponent < ApplicationViewComponent
   attr_reader :memo
 
-  delegate :color, to: :memo
+  delegate :color, :default_color?, to: :memo
 
   def initialize(memo:)
     @memo = memo
@@ -18,7 +18,7 @@ class MemoFormComponent < ApplicationViewComponent
   end
 
   def selected_color
-    color.hex unless color.default?
+    color.hex unless default_color?
   end
 
   def color_picker_options
@@ -31,7 +31,7 @@ class MemoFormComponent < ApplicationViewComponent
   end
 
   def border_styles
-    return if color.default?
+    return if default_color?
 
     "box-shadow: 0 0 0.5rem 0.5rem rgba(#{color.to_rgb.join(',')}, 0.5); "\
     "border: 0.25rem solid rgba(#{color.to_rgb.join(',')}, 0.8);"
