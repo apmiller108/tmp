@@ -14,7 +14,7 @@ export default class WysiwygEditor extends Controller {
 
   static targets = [
     'generateTextBtn', 'generateTextDialog', 'generateTextId', 'generateTextInput', 'generateTextSubmit',
-    'generateImageBtn', 'generateImageDialog', 'generateImageId', 'generateImageSubmit', 'generateImagePromptGroup',
+    'generateImageBtn', 'generateImageDialog', 'generateImageName', 'generateImageSubmit', 'generateImagePromptGroup',
     'generateImageDimensions', 'generateImageStyle'
   ];
 
@@ -159,7 +159,7 @@ export default class WysiwygEditor extends Controller {
       return
     }
 
-    this.generateImageIdTarget.value = id
+    this.generateImageNameTarget.value = id
 
     this.insertGenerativePlaceholder(id, type)
 
@@ -175,7 +175,7 @@ export default class WysiwygEditor extends Controller {
         prompts,
         dimensions: this.generateImageDimensionsTarget.value,
         style: this.generateImageStyleTarget.value,
-        image_id: this.generateImageIdTarget.value
+        image_name: this.generateImageNameTarget.value
       })
 
       if (response.status === 401 || response.status === 403) {
@@ -246,9 +246,9 @@ export default class WysiwygEditor extends Controller {
   }
 
   async onGenerateImage(event) {
-    const { generate_image: { image_id, image, error }} = event.detail
+    const { generate_image: { image_name, image, error }} = event.detail
     const selectedRange = this.editor.getSelectedRange()
-    const placeHolderDiv = document.getElementById(image_id)
+    const placeHolderDiv = document.getElementById(image_name)
     try {
       if (placeHolderDiv && !error) {
         this.editor.recordUndoEntry("InsertGenImage")
@@ -257,7 +257,7 @@ export default class WysiwygEditor extends Controller {
         // Images are Base64 encoded and pushed in JSON objects over websockets. See comment above.
         const base64response = await fetch(`data:image/png;base64,${image}`)
         const blob = await base64response.blob();
-        const file = new File([blob], image_id, { type: 'image/png' })
+        const file = new File([blob], image_name, { type: 'image/png' })
         this.editor.insertFile(file)
       } else if (error) {
         throw new Error('Job to generate image was not successful')
@@ -266,7 +266,7 @@ export default class WysiwygEditor extends Controller {
       console.log(err)
       alert('Unable to generate image')
     } finally {
-      document.getElementById(image_id).parentElement.remove()
+      document.getElementById(image_name).parentElement.remove()
     }
   }
 

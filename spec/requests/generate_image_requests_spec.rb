@@ -4,10 +4,10 @@ RSpec.describe 'Generate image requests', type: :request do
   describe 'POST #create' do
     let(:user) { create :user }
     let(:prompts) { [{ text: 'a dragon', weight: 1 }, { text: 'cave', weight: -1 }] }
-    let(:image_id) { 'foo123' }
+    let(:image_name) { 'genimage_123' }
     let(:style) { GenerativeImage::Stability::STYLE_PRESETS.sample }
     let(:dimensions) { GenerativeImage::Stability::DIMENSIONS.sample }
-    let(:params) { { generate_image_request: { prompts:, image_id:, style:, dimensions: } } }
+    let(:params) { { generate_image_request: { prompts:, image_name:, style:, dimensions: } } }
     let(:request) do
       post generate_image_requests_path, params:, as: :turbo_stream
     end
@@ -32,7 +32,7 @@ RSpec.describe 'Generate image requests', type: :request do
         end
 
         it 'creates a generate_image_requests record' do
-          expect { request }.to change(user.generate_image_requests.where(image_id:, style:, dimensions:), :count).by(1)
+          expect { request }.to change(user.generate_image_requests.where(image_name:, style:, dimensions:), :count).by(1)
         end
 
         it 'creates the prompt records' do
@@ -48,7 +48,7 @@ RSpec.describe 'Generate image requests', type: :request do
       end
 
       context 'when the request is invalid' do
-        let(:params) { { generate_image_request: { prompts:, image_id: nil } } }
+        let(:params) { { generate_image_request: { prompts:, image_name: nil } } }
 
         before { request }
 

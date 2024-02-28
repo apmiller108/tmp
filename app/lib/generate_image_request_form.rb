@@ -2,7 +2,7 @@ class GenerateImageRequestForm
   include ActiveModel::Model
   include ActiveModel::Attributes
 
-  attribute :image_id, :string
+  attribute :image_name, :string
   attribute :style, :string
   attribute :dimensions, :string
   attribute :prompts
@@ -14,7 +14,7 @@ class GenerateImageRequestForm
 
   def initialize(attrs)
     super(attrs)
-    self.generate_image_request = GenerateImageRequest.new(attrs.slice(:image_id, :style, :dimensions, :user))
+    self.generate_image_request = GenerateImageRequest.new(attrs.slice(:image_name, :style, :dimensions, :user))
   end
 
   def submit

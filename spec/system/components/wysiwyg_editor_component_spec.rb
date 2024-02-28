@@ -105,8 +105,8 @@ RSpec.describe 'WysiwygEditorComponent', type: :system do
       generate_image_request = user.generate_image_requests.last
       expect(generate_image_request.attributes).to include('style' => 'comic-book',
                                                            'dimensions' => '1024x1024',
-                                                           'image_id' => a_string_matching(/\Agenimage/))
-      figure = find("figure[data-trix-attachment*='#{generate_image_request.image_id}']")
+                                                           'image_name' => a_string_matching(/\Agenimage/))
+      figure = find("figure[data-trix-attachment*='#{generate_image_request.image_name}']")
       expect(figure).to be_visible
       expect(figure).to have_css 'img'
 

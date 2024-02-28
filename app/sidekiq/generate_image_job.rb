@@ -8,7 +8,7 @@ class GenerateImageJob
     request = GenerateImageRequest.find(generate_image_request_id)
     response = generate_image(request.parameterize)
 
-    payload = { generate_image: { image_id: request.image_id, image: nil, error: nil } }
+    payload = { generate_image: { image_name: request.image_name, image: nil, error: nil } }
 
     if response&.image_present?
       broadcast_image(request.user, payload, response)

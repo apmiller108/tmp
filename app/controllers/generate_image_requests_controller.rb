@@ -21,6 +21,6 @@ class GenerateImageRequestsController < ApplicationController
   private
 
   def generate_image_request_params
-    params.require(:generate_image_request).permit(:image_id, :style, :dimensions, prompts: %i[text weight])
+    params.require(:generate_image_request).permit(:image_name, :style, :dimensions, prompts: %i[text weight])
   end
 end

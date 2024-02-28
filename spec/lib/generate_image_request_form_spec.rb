@@ -7,7 +7,7 @@ RSpec.describe GenerateImageRequestForm do
 
   let(:valid_params) do
     {
-      image_id: '1234abcd',
+      image_name: '1234abcd',
       style: GenerativeImage::Stability::STYLE_PRESETS.sample,
       dimensions: GenerativeImage::Stability::DIMENSIONS.sample,
       prompts: [
@@ -34,7 +34,7 @@ RSpec.describe GenerateImageRequestForm do
         form.valid?
         expect(form.errors.full_messages).to(
           contain_exactly(
-            "Prompts can't be blank", "Image can't be blank", 'Dimensions is not included in the list',
+            "Prompts can't be blank", "Image name can't be blank", 'Dimensions is not included in the list',
             'User must exist'
           )
         )

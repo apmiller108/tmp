@@ -139,7 +139,7 @@ export default class TrixCustomizer {
     return `
       <div class="trix-dialog trix-dialog--heading trix-custom-dialog trix-custom-generate-image" data-trix-dialog="generateImage"
             data-trix-dialog-attribute="generateImage" data-wysiwyg-editor-target="generateImageDialog">
-        <input type="hidden" name="generate_image_id" value="" data-wysiwyg-editor-target="generateImageId" autocomplete="off">
+        <input type="hidden" name="generate_image_name" value="" data-wysiwyg-editor-target="generateImageName" autocomplete="off">
         <div class="grid" >
           <div class="g-col-6">
             <div class="form-floating dimensions-select">

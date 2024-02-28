@@ -32,7 +32,7 @@ RSpec.describe GenerateImageJob, type: :job do
         perform
         expect(MyChannel).to(
           have_received(:broadcast_to).with(request.user,
-                                            { generate_image: { image_id: request.image_id, image: base64,
+                                            { generate_image: { image_name: request.image_name, image: base64,
                                                                 error: nil } })
         )
       end
@@ -53,7 +53,7 @@ RSpec.describe GenerateImageJob, type: :job do
         perform
         expect(MyChannel).to have_received(:broadcast_to)
           .with(request.user,
-                { generate_image: { image_id: request.image_id, image: nil,
+                { generate_image: { image_name: request.image_name, image: nil,
                                     error: true } })
       end
 

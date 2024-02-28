@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_25_145935) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_28_000413) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -56,12 +56,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_25_145935) do
   end
 
   create_table "generate_image_requests", force: :cascade do |t|
-    t.string "image_id", limit: 50, null: false
+    t.string "image_name", limit: 50, null: false
     t.string "style", limit: 50
     t.string "dimensions", limit: 25, null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "active_storage_blob_id"
+    t.index ["active_storage_blob_id"], name: "index_generate_image_requests_on_active_storage_blob_id"
     t.index ["user_id"], name: "index_generate_image_requests_on_user_id"
   end
 
@@ -151,6 +153,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_25_145935) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "generate_image_requests", "active_storage_blobs"
   add_foreign_key "generate_image_requests", "users"
   add_foreign_key "generate_text_requests", "users"
   add_foreign_key "memos", "users", on_delete: :cascade

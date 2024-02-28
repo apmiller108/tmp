@@ -21,10 +21,10 @@ export const generateText = ({ prompt, text_id }) => {
   })
 }
 
-export const generateImage = ({ prompts, image_id, style, dimensions }) => {
+export const generateImage = ({ prompts, image_name, style, dimensions }) => {
   const body = JSON.stringify({
     generate_image_request: {
-      prompts, image_id, style, dimensions
+      prompts, image_name, style, dimensions
     }
   })
   const headers = {

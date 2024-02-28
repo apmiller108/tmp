@@ -6,16 +6,17 @@ module ActiveStorageBlobExtension
     base.const_set(:PLAIN_TEXT_ATTACHMENT_PATTERN, /%JSON\{\{.+\}\}/)
     base.const_set(:PLAIN_TEXT_JSON_ATTACHMENT_PATTERN, /%JSON\{\{(?<json>.+)\}\}/)
 
-    has_one :transcription_job, foreign_key: :active_storage_blob_id, inverse_of: :active_storage_blob,
-                                dependent: :destroy
-    has_one :transcription, foreign_key: :active_storage_blob_id, inverse_of: :active_storage_blob, dependent: :destroy
+    has_one :transcription_job, foreign_key: :active_storage_blob_id,
+                                inverse_of: :active_storage_blob, dependent: :destroy
+    has_one :transcription, foreign_key: :active_storage_blob_id,
+                            inverse_of: :active_storage_blob, dependent: :destroy
+    has_one :generaete_image_request, dependent: :destroy
 
     # rubocop:disable Rails/InverseOf
     has_one :rich_text_attachment, -> {
       where(name: 'embeds', record_type: 'ActionText::RichText')
     }, class_name: 'ActiveStorage::Attachment', dependent: nil
     # rubocop:enable Rails/InverseOf
-
     has_one :rich_text, through: :rich_text_attachment
     has_one :memo, through: :rich_text
 
