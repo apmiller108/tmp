@@ -19,22 +19,21 @@ export default class ColorPicker extends Controller {
 
   toggleSwatches() {
     const swatches = this.swatchesTarget
-    const swatchesOpacity = window.getComputedStyle(this.swatchesTarget).opacity
-    if (swatches.classList.contains('show') || swatchesOpacity !== '0') {
-      return this.hideSwatches()
+    if (swatches.classList.contains('d-none')) {
+      return this.showSwatches()
     }
-    this.showSwatches()
+    this.hideSwatches()
   }
 
   hideSwatches() {
-    this.swatchesTarget.classList.remove('show')
+    this.swatchesTarget.classList.add('d-none')
     this.swatchesButtonTarget.classList.remove('active')
     this.colorButtonTargets.forEach((btn) => btn.style.pointerEvents = 'none');
   }
 
   showSwatches() {
     this.colorButtonTargets.forEach((btn) => btn.style.pointerEvents = 'auto');
-    this.swatchesTarget.classList.add('show')
+    this.swatchesTarget.classList.remove('d-none')
     this.swatchesButtonTarget.classList.add('active')
   }
 

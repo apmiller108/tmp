@@ -5,7 +5,7 @@
                                                     'bs-toggle' => 'tooltip', 'bs-title' => t('color'),
                                                      action: 'click->color-picker#toggleSwatches:prevent' } }
     %i.bi.bi-palette-fill
-  .swatches.position-absolute.hide{ data: { 'color-picker-target' => 'swatches' }, style: swatch_styles}
+  .swatches.position-absolute.d-none{ data: { 'color-picker-target' => 'swatches' }, style: swatch_styles}
     - swatches.each do |swatch, colors|
       .swatch.d-flex{ id: swatch }
         - colors.each do |color|
