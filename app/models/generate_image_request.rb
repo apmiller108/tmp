@@ -4,7 +4,7 @@ class GenerateImageRequest < ApplicationRecord
   validates :dimensions, inclusion: { in: GenerativeImage::Stability::DIMENSIONS }
 
   belongs_to :user
-  belongs_to :active_storage_blob, optional: true
+  belongs_to :active_storage_blob, optional: true, class_name: 'ActiveStorage::Blob'
   has_many :prompts, dependent: :destroy
 
   def parameterize

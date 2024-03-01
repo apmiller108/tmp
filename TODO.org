@@ -5,8 +5,7 @@
 * TODO link generated image to prompt
   - [X] Rename image_id to image_name
   - [X] Add active_storage_blob_id FK to generate_image_requests
-  - [ ] when the attachment is no longer pending associate the blob to the
-    request record if the attachment is a generated image
+  - [X] after create commit to link blob to request
   - [ ] On hover show the generated image params
 * TODO On hover of image icon, show small variant of image
 * TODO Show attachment icon

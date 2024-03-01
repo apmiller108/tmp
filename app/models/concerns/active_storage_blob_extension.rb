@@ -10,7 +10,8 @@ module ActiveStorageBlobExtension
                                 inverse_of: :active_storage_blob, dependent: :destroy
     has_one :transcription, foreign_key: :active_storage_blob_id,
                             inverse_of: :active_storage_blob, dependent: :destroy
-    has_one :generaete_image_request, dependent: :destroy
+    has_one :generate_image_request, dependent: :destroy, foreign_key: :active_storage_blob_id,
+                                     inverse_of: :active_storage_blob
 
     # rubocop:disable Rails/InverseOf
     has_one :rich_text_attachment, -> {
@@ -29,11 +30,21 @@ module ActiveStorageBlobExtension
         .where(memos: { id: memo_id }, transcriptions: { id: nil })
     }
 
+    after_create_commit :associate_generated_image_to_request, if: ->(blob) { blob.text_to_image? }
+
     def attachable_plain_text_representation(caption = nil)
       # rubocop:disable Style/FormatString
       caption || sprintf(self.class::PLAIN_TEXT_ATTACHMENT_TEMPLATE,
                          json: attributes.slice('content_type', 'filename').to_json)
       # rubocop:enable Style/FormatString
+    end
+
+    def associate_generated_image_to_request
+      AssociateBlobToGenerateImageRequestJob.perform_async(id)
+    end
+
+    def text_to_image?
+      image? && filename.base =~ /\Agenimage_.+/
     end
   end
 end
