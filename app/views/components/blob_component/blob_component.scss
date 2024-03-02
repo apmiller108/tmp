@@ -8,4 +8,13 @@
     margin-bottom: var(--bs-alert-margin-bottom);
     text-align: center;
   }
+  .image-blob {
+    position: relative;
+    .image-info-btn {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      color: $white;
+    }
+  }
 }

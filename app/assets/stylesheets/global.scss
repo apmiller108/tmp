@@ -60,4 +60,7 @@
     width: 2rem;
     font-size: 1.33rem;
   }
+  &:hover {
+    filter: brightness(0.7);
+  }
 }
