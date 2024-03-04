@@ -35,4 +35,5 @@ Rails.application.routes.draw do
 
   resources :generate_text_requests, only: :create
   resources :generate_image_requests, only: :create
+  resources :blob_details, only: :show, param: :active_storage_blob_id
 end
