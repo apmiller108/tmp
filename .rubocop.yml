@@ -44,6 +44,8 @@ Rails/FilePath:
 Rails/OutputSafety:
   Exclude:
     - 'spec/**/*'
+Rails/HasAndBelongsToMany:
+  Enabled: false
 
 RSpec/ExampleLength:
   Enabled: false

@@ -10,8 +10,10 @@ module ActiveStorageBlobExtension
                                 inverse_of: :active_storage_blob, dependent: :destroy
     has_one :transcription, foreign_key: :active_storage_blob_id,
                             inverse_of: :active_storage_blob, dependent: :destroy
-    has_one :generate_image_request, dependent: :destroy, foreign_key: :active_storage_blob_id,
-                                     inverse_of: :active_storage_blob
+
+    has_one :active_storage_blobs_generate_image_request, foreign_key: :active_storage_blob_id, dependent: :destroy,
+                                                          inverse_of: :active_storage_blob
+    has_one :generate_image_request, through: :active_storage_blobs_generate_image_request
 
     # rubocop:disable Rails/InverseOf
     has_one :rich_text_attachment, -> {

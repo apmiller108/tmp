@@ -6,7 +6,6 @@ class AssociateBlobToGenerateImageRequestJob
     return unless blob.text_to_image?
 
     request = GenerateImageRequest.find_by!(image_name: blob.filename.base)
-    request.active_storage_blob = blob
-    request.save!
+    blob.generate_image_request = request
   end
 end
