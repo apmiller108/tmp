@@ -2,7 +2,7 @@
   #pagination-container{ data: { controller: :pagination }}
     = container
     %turbo-frame#pagination.d-flex.justify-content-center{ src: collection_path, loading: :lazy }
-      .spinner-border.text-primary.my-3{ role: :status}
+      .spinner-border.text-primary.my-3{role: :status}
         %span.visually-hidden Loading...
 - elsif list && !container
   %turbo-stream{action: :append, target: container_id}

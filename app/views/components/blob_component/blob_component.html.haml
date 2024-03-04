@@ -11,8 +11,6 @@
                                                   id: dom_id(transcription_job) }
               = render TranscriptionJobComponent.new(transcription_job:, user:)
     - elsif representable?
-      .image-blob
-        %button.btn.icon-btn.image-info-btn
-          %i.bi.bi-info-square
+      = render MoreInfoComponent.new do
         = image_tag representation(resize_to_limit: resize_to_limit)
       = fig_caption

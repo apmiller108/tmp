@@ -1,0 +1,10 @@
+.c-more-info{
+  position: relative;
+  display: inline-block;
+  .image-info-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    color: $white;
+  }
+}

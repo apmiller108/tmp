@@ -1,0 +1,5 @@
+.c-more-info{ data: { controller: 'more-info' }}
+  %button.btn.icon-btn.image-info-btn{ data: { 'bs-toggle' => 'popover', 'bs-container' => 'body', 'bs-html' => 'true',
+                                               'bs-placement' => 'left', 'bs-content' => bs_content.html_safe } }
+    %i.bi.bi-info-square
+  = content

@@ -23,6 +23,7 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 @import 'memo_component/memo_component';
 @import 'memo_card_component/memo_card_component';
 @import 'memo_form_component/memo_form_component';
+@import 'more_info_component/more_info_component';
 @import 'transcription_component/transcription_component';
 @import 'wysiwyg_editor_component/wysiwyg_editor_component';
 

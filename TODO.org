@@ -6,11 +6,12 @@
   - [X] Rename image_id to image_name
   - [X] Add active_storage_blob_id FK to generate_image_requests
   - [X] after create commit to link blob to request
-  - [ ] Create More Info compoent. Args are kv pairs.
+  - [X] Create More Info compoent. Args
     Overlay gear icon. On click show generative details. Lazy turbo frame? Make request to endpoint with the blob id.
+  - [ ] Add blob details controller.
   - [ ] Look up blob and associated generate image request. Return template with
     filename, image size, generate image request details
-  - [ ] Add download link
+  - [ ] Add download link (this will eventually be used to download the original lossless file)
 * TODO On hover of image icon, show small variant of image
 * TODO Show attachment icon
   possible the count of files by type
