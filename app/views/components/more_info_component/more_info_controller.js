@@ -6,6 +6,6 @@ export default class MoreInfo extends Controller {
 
   connect() {
     const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
-    this.popovers = [...popoverTriggerList].map(el => new Popover(el))
+    this.popovers = [...popoverTriggerList].map(el => new Popover(el, { trigger: 'focus' }))
   }
 }

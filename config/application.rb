@@ -38,8 +38,8 @@ module Tmp
       ActionText::ContentHelper.sanitizer.class.allowed_attributes += %w[
         aria-controls aria-expanded controls data-blob-target
         data-controller data-bs-container data-bs-content data-bs-html data-bs-placement
-        data-bs-target data-bs-toggle data-transcription-target data-turbo data-turbo-stream
-        disabled id poster preload style type
+        data-bs-target data-bs-toggle data-bs-trigger data-transcription-target data-turbo data-turbo-stream
+        disabled id poster preload style tabindex type
       ]
       ActionText::ContentHelper.sanitizer.class.allowed_tags += %w[
         audio embed iframe source video button turbo-frame mark
