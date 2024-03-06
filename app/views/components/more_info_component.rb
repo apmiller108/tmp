@@ -3,7 +3,7 @@
 class MoreInfoComponent < ApplicationViewComponent
   attr_reader :id, :src
 
-  def initialize(id: 'more-info', src: 'http://example.com/stuff')
+  def initialize(id:, src:)
     @id = id
     @src = src
   end
