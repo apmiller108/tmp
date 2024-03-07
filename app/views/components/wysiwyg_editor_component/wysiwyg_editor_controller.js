@@ -20,7 +20,6 @@ export default class WysiwygEditor extends Controller {
 
   editorElem;
   selectedText;
-  intervalId = null
 
   get editorId() {
     return `trix_editor_${this.element.dataset.objectId}`
@@ -45,21 +44,6 @@ export default class WysiwygEditor extends Controller {
     this.initScrollPreserveAndRestore()
 
     document.addEventListener(TrixConfiguration.selectionChange, this.onSelectionChange.bind(this))
-    document.addEventListener('trix-attachment-add', this.onAttachmentAdd.bind(this))
-  }
-
-  onAttachmentAdd(e) {
-    const { attachment } = e
-    if (attachment.file && attachment.file.name.startsWith('genimage_') && !this.intervalId) {
-      console.log(attachment)
-      this.intervalId = setInterval(() => {
-        if (!attachment.isPending()) {
-          clearInterval(this.intervalId)
-          this.intervalId = null
-          console.log(attachment)
-        }
-      }, 300)
-    }
   }
 
   disconnect() {

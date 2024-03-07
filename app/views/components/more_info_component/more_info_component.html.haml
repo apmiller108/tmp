@@ -1,6 +1,9 @@
 .c-more-info{ data: { controller: 'more-info' }}
-  %a.btn.icon-btn.image-info-btn{ tabindex: 0,
-                                  data: { 'bs-toggle' => 'popover', 'bs-container' => 'body', 'bs-html' => 'true',
-                                          'bs-trigger' => 'focus', 'bs-placement' => 'left', 'bs-content' => bs_content.html_safe } }
+  .content.d-none{ data: { 'more-info-target' => :content }}
+    %turbo-frame{ id:, src:, lazy: true }
+      .spinner-border.text-primary.my-3{ role: :status }
+        .visually-hidden Loading...
+    .content__nub
+  %button.btn.icon-btn.image-info-btn{ data: { action: 'click->more-info#onClick' } }
     %i.bi.bi-info-square
-  = content
+  = wrapped
