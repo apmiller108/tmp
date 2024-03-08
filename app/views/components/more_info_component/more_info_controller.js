@@ -1,10 +1,12 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class MoreInfo extends Controller {
-  static targets = ['content']
+  static targets = ['content', 'button']
 
   connect() {
     document.addEventListener('click', this.hideContent.bind(this))
+    // Adding action dynamically to bypass sanitizers (ie, Trix)
+    this.buttonTarget.dataset.action = 'click->more-info#onClick'
   }
 
   disconnect() {

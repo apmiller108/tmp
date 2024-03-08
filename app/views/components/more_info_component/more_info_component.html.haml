@@ -4,6 +4,6 @@
       .spinner-border.text-primary.my-3{ role: :status }
         .visually-hidden Loading...
     .content__nub
-  %button.btn.icon-btn.image-info-btn{ data: { action: 'click->more-info#onClick' } }
+  %button.btn.icon-btn.image-info-btn{ data: { 'more-info-target' => 'button' } }
     %i.bi.bi-info-square
   = wrapped

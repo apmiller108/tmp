@@ -1,2 +1,25 @@
 %turbo-frame{id: "blob_details_#{dom_id(@blob)}" }
-  = @blob.generate_image_request.parameterize.to_s
+  .blob-details
+    - if @blob.generate_image_request
+      .generate-image-details
+        - gen_img_params = @blob.generate_image_request.parameterize
+        .prompts
+          Prompts
+          - gen_img_params[:prompts].each do |prompt|
+            .prompt
+              %pre= prompt['text']
+              .prompt-weight.d-flex.align-items-center.justify-content-end.mt-1
+                %span.label.me-1 Weight
+                %pre.value= prompt['weight']
+        .settings.d-flex.justify-content-between.flex-wrap
+          - gen_img_params.slice(:style, :dimensions).each do |k,v|
+            %div.d-flex.align-items-center.justify-content-between.mt-1
+              %span.label.me-2= k.to_s.titleize
+              %pre.value= v
+    .file-details
+      %div.d-flex.align-items-center.justify-content-between.mt-1
+        %span.label.me-2 Name
+        %pre.value= @blob.filename
+      %div.d-flex.align-items-center.justify-content-between.mt-1
+        %span.label.me-2 Size
+        %pre.value= number_to_human_size(@blob.byte_size)

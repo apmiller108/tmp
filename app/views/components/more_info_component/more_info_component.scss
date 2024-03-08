@@ -12,7 +12,6 @@
     bottom: 3.25rem;
     right: 0.5rem;
     background: $white;
-    padding: 0.5rem;
     max-width: 25rem;
     box-shadow: 0 .15em 1.5em #0000001a,0 0 1em #00000008;
     border: 1px solid $more-info-border-color;
@@ -22,6 +21,7 @@
     bottom: -20px;
     right: 6px;
     &:after {
+      background-color: #E5E4E2;
       content: '';
       position: absolute;
       top: -20px;
@@ -30,7 +30,7 @@
       height: 0;
       border-left: 0.5rem solid $more-info-border-color;
       border-right: 0.5rem solid $more-info-border-color;
-      border-top: 0.5rem solid $white;
+      border-top: 0.5rem solid $more-info-background-color;
     }
   }
 }

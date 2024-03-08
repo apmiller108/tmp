@@ -25,10 +25,14 @@ $custom-colors: (
   "accent3": $accent3,
 );
 
+$more-info-border-color: rgb(55, 55, 70);
+$more-info-background-color: #E5E4E2;
+$more-info-pre-background-color: #F5F5F5;
+
+
 // Disable traditional Bootstrap grid; Enable CSS grid based Bootstrap grid.
 $enable-grid-classes: false;
 $enable-cssgrid: true;
 
 $tooltip-max-width: 20rem;
 
-$more-info-border-color: rgb(55, 55, 70)
