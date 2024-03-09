@@ -32,7 +32,8 @@ RSpec.describe 'Generate image requests', type: :request do
         end
 
         it 'creates a generate_image_requests record' do
-          expect { request }.to change(user.generate_image_requests.where(image_name:, style:, dimensions:), :count).by(1)
+          expect { request }.to change(user.generate_image_requests.where(image_name:, style:, dimensions:),
+                                       :count).by(1)
         end
 
         it 'creates the prompt records' do
