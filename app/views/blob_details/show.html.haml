@@ -6,11 +6,12 @@
         .prompts
           Prompts
           - gen_img_params[:prompts].each do |prompt|
-            .prompt
-              %pre= prompt['text']
-              .prompt-weight.d-flex.align-items-center.justify-content-end.mt-1
-                %span.label.me-1 Weight
-                %pre.value= prompt['weight']
+            = render ClipboardComponent.new('prompt') do |component|
+              = component.with_copyable do
+                %pre{ data: { 'clipboard-target' => 'source' } }= prompt['text']
+                .prompt-weight.d-flex.align-items-center.justify-content-end.mt-1
+                  %span.label.me-1 Weight
+                  %pre.value= prompt['weight']
         .settings.d-flex.justify-content-between.flex-wrap
           - gen_img_params.slice(:style, :dimensions).each do |k,v|
             %div.d-flex.align-items-center.justify-content-between.mt-1

@@ -9,8 +9,8 @@
   - [X] Create More Info compoent. Args
     Overlay gear icon. On click show generative details. Lazy turbo frame? Make request to endpoint with the blob id.
   - [X] Add blob details controller.
-  - [ ] Customize more info component to not rely on bs popover
-  - [ ] Add DataList component with slot
+  - [X] Customize more info component to not rely on bs popover
+  - [X] Add copy to clipboard thingy
   - [ ] Add download link (this will eventually be used to download the original lossless file)
 * TODO On hover of image icon, show small variant of image
 * TODO Show attachment icon

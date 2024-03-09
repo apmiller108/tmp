@@ -15,7 +15,8 @@ export default class MoreInfo extends Controller {
 
   onClick() {
     if (this.contentTarget.classList.contains('d-none')) {
-      return this.contentTarget.classList.remove('d-none')
+      this.contentTarget.classList.remove('d-none')
+      return
     }
     this.contentTarget.classList.add('d-none')
   }
