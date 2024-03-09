@@ -1,6 +1,8 @@
 .c-clipboard{ data: { controller: :clipboard }, class: css_class }
   %button.btn.icon-btn.icon-btn-sm.copy-btn.d-none{ data: { action: 'click->clipboard#copy:prevent',
-                                                                    'clipboard-target' => 'button' }}
+                                                            'clipboard-target' => 'button',
+                                                            'bs-toggle' => 'tooltip',
+                                                            'bs-title' => t('copy.prompt') } }
     %i.bi.bi-copy{ data: { 'clipboard-target' => 'copyIcon' } }
     %i.bi.bi-check2-square.text-success.d-none{ data: { 'clipboard-target' => 'successIcon' }}
   = copyable

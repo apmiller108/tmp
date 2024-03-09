@@ -1,4 +1,5 @@
 import { Controller } from '@hotwired/stimulus'
+import ToolTippable from '@javascript/mixins/ToolTippable'
 
 export default class ClipBoardController extends Controller {
   static targets = ['button', 'source', 'copyIcon', 'successIcon']
@@ -6,7 +7,12 @@ export default class ClipBoardController extends Controller {
   connect() {
     if('clipboard' in navigator) {
       this.buttonTarget.classList.remove('d-none')
+      ToolTippable.connect.bind(this)()
     }
+  }
+
+  disconnect() {
+    ToolTippable.disconnect.bind(this)()
   }
 
   copy() {

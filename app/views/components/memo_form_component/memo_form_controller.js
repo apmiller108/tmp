@@ -2,11 +2,12 @@ import { Controller } from "@hotwired/stimulus"
 import ToolTippable from '@javascript/mixins/ToolTippable'
 
 export default class MemoFormController extends Controller {
-  disconnect() {
-    ToolTippable.disconnect.bind(this)()
-  }
   connect() {
     ToolTippable.connect.bind(this)()
+  }
+
+  disconnect() {
+    ToolTippable.disconnect.bind(this)()
   }
 
   async onSubmit() {

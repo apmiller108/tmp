@@ -34,8 +34,11 @@ en:
   cancel: 'Cancel'
   color: 'Color'
   content: 'Content'
+  copy:
+    prompt: 'Copy prompt'
   create: 'Create'
   download: 'Download'
+  download_image: 'Download image'
   download_to_save: 'Download to save a copy'
   edit: 'Edit'
   memo:
