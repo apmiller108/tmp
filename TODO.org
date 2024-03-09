@@ -2,7 +2,8 @@
 :CATEGORY: tmp
 :END:
 
-* TODO link generated image to prompt
+* DONE link generated image to prompt
+  CLOSED: [2024-03-09 Sat 14:58]
   - [X] Rename image_id to image_name
   - [X] Add active_storage_blob_id FK to generate_image_requests
   - [X] after create commit to link blob to request
@@ -11,10 +12,10 @@
   - [X] Add blob details controller.
   - [X] Customize more info component to not rely on bs popover
   - [X] Add copy to clipboard thingy
-  - [ ] Add download link (this will eventually be used to download the original lossless file)
-* TODO On hover of image icon, show small variant of image
-* TODO Show attachment icon
-  possible the count of files by type
-  on hover show the details / gallery view of the images (small variant)
-* TODO remove on delete cascade from memos
-* TODO create card to add a scrollspy thingy
+  - [X] Add download link (this will eventually be used to download the original lossless file)
+* TODO request spec BlobDetailsController
+* TODO request spec BlobsController
+* TODO spec AssociateBlobToGenerateImageRequestJob
+* TODO spec ClipboardComponent
+* TODO spec MoreInfoComponent
+* TODO system spec MoreInfoComponent
