@@ -34,6 +34,11 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
 
+  # Clean up attached files
+  config.after(:suite) do
+    FileUtils.rm_rf(ActiveStorage::Blob.service.root)
+  end
+
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false
 

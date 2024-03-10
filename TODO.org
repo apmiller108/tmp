@@ -13,9 +13,12 @@
   - [X] Customize more info component to not rely on bs popover
   - [X] Add copy to clipboard thingy
   - [X] Add download link (this will eventually be used to download the original lossless file)
-* TODO request spec BlobDetailsController
-* TODO request spec BlobsController
-* TODO spec AssociateBlobToGenerateImageRequestJob
+* DONE request spec BlobDetailsController
+  CLOSED: [2024-03-10 Sun 14:16]
+* DONE request spec BlobsController
+  CLOSED: [2024-03-10 Sun 15:06]
+* DONE spec AssociateBlobToGenerateImageRequestJob
+  CLOSED: [2024-03-10 Sun 15:32]
 * TODO spec ClipboardComponent
 * TODO spec MoreInfoComponent
 * TODO system spec MoreInfoComponent

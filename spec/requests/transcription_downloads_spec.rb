@@ -36,16 +36,7 @@ RSpec.describe 'Transcription Downloads', type: :request do
       context 'when transcript does not belong to the user' do
         let(:memo) { create :memo, :with_user }
 
-        before do
-          method = Rails.application.method(:env_config)
-          allow(Rails.application).to receive(:env_config).with(no_args) do
-            method.call.merge(
-              'action_dispatch.show_exceptions' => :all,
-              'action_dispatch.show_detailed_exceptions' => false,
-              'consider_all_requests_local' => false
-            )
-          end
-        end
+        include_context 'disable consider all requests local'
 
         it 'has not found status' do
           request
