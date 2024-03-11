@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe ClipboardComponent, type: :component do
-  pending "add some examples to (or delete) #{__FILE__}"
+  subject { page }
 
-  # it "renders something useful" do
-  #   expect(
-  #     render_inline(described_class.new(attr: "value")) { "Hello, components!" }.css("p").to_html
-  #   ).to include(
-  #     "Hello, components!"
-  #   )
-  # end
+  before do
+    render_inline(described_class.new('my-clipboard') { |c| c.with_copyable { '<input type="text"></input>'} })
+  end
+
+  it { is_expected.to have_css '.c-clipboard.my-clipboard[data-controller="clipboard"]'}
+  it { is_expected.to have_css 'button.copy-btn' }
+  it { is_expected.to have_css 'input[type="text"]' }
 end

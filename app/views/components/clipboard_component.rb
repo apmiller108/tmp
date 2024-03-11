@@ -5,7 +5,7 @@ class ClipboardComponent < ApplicationViewComponent
 
   attr_reader :css_class
 
-  def initialize(css_class)
+  def initialize(css_class = 'clipboard')
     @css_class = css_class
   end
 end
