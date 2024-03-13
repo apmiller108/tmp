@@ -15,6 +15,18 @@ end
 RSpec.configure do |c|
   c.include BetterRailsSystemTests, type: :system
 
+  c.before(:example, type: :system) do
+    # Mock the clipboard API. For some reason, it is not defined. Maybe because its headless?
+    # See also https://github.com/rubycdp/ferrum?tab=readme-ov-file#evaluate_asyncexpression-wait_time-args
+    page.driver.browser.evaluate_on_new_document(<<~JS)
+      const clipboard = {
+        writeText: text => new Promise(resolve => this.text = text),
+        readText: () => new Promise(resolve => resolve(this.text))
+      }
+      Object.defineProperty(navigator, 'clipboard', { value: clipboard } )
+    JS
+  end
+
   c.around(:each, type: :system) do |ex|
     original_host = Rails.application.default_url_options[:host]
     Rails.application.default_url_options[:host] = Capybara.server_host
