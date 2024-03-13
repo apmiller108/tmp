@@ -19,6 +19,8 @@
   CLOSED: [2024-03-10 Sun 15:06]
 * DONE spec AssociateBlobToGenerateImageRequestJob
   CLOSED: [2024-03-10 Sun 15:32]
-* TODO spec ClipboardComponent
-* TODO spec MoreInfoComponent
+* DONE spec ClipboardComponent
+  CLOSED: [2024-03-13 Wed 15:15]
+* DONE spec MoreInfoComponent
+  CLOSED: [2024-03-13 Wed 15:28]
 * TODO system spec MoreInfoComponent

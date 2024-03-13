@@ -1,13 +1,27 @@
 require 'rails_helper'
 
 RSpec.describe MoreInfoComponent, type: :component do
-  pending "add some examples to (or delete) #{__FILE__}"
+  subject { page }
 
-  # it "renders something useful" do
-  #   expect(
-  #     render_inline(described_class.new(attr: "value")) { "Hello, components!" }.css("p").to_html
-  #   ).to include(
-  #     "Hello, components!"
-  #   )
-  # end
+  let(:id) { 'more-info' }
+  let(:src) { 'http://example.com/stuff' }
+  let(:component) { described_class.new(id:, src:) }
+
+  before do
+    component.with_wrapped { 'WRAPPED' }
+    render_inline(component)
+  end
+
+  it { is_expected.to have_css '.c-more-info[data-controller="more-info"]' }
+  it { is_expected.to have_css '.content[data-more-info-target="content"]' }
+
+  it 'renders a lazy turbo frame element' do
+    expect(page).to have_css "turbo-frame##{id}[src='#{src}'][loading='lazy']"
+  end
+
+  it { is_expected.to have_css 'button[data-more-info-target="button"]' }
+
+  it 'renders the wrapped slot' do
+    expect(page).to have_content 'WRAPPED'
+  end
 end
