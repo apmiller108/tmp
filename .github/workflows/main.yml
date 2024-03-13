@@ -141,6 +141,12 @@ jobs:
           CHROME_URL: http://localhost:3333
         run: |
           bundle exec rspec
+      - name: Archive screenshots
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: screenshots
+          path: tmp/capybara
       # For debugging the build using upterm to ssh into the container comment in this step
       # See https://github.com/marketplace/actions/debugging-with-ssh
       # - name: debug
