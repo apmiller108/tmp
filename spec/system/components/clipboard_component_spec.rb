@@ -11,6 +11,7 @@ RSpec.describe 'ClipboardComponent', type: :system do
       }
       Object.defineProperty(navigator, 'clipboard', { value: clipboard } )
     JS
+    sleep 1
   end
 
   specify 'copying text to the clipboard' do
