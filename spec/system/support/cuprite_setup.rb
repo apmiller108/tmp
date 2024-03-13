@@ -2,10 +2,12 @@ require 'capybara/cuprite'
 
 # Configure a driver
 Capybara.register_driver(:cuprite_driver) do |app|
+  browser_options = {}
+  browser_options['no-sandbox'] = nil unless ENV['CI']
   Capybara::Cuprite::Driver.new(
     app,
     window_size: [1200, 800],
-    browser_options: { 'no-sandbox' => nil },
+    browser_options:,
     process_timeout: 10, # Chrome startup wait time. Might need to increase on CI.
     timeout: 10,
     inspector: true, # Enable debugging
