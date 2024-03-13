@@ -140,6 +140,12 @@ Why? Produce views using POROs, thereby making that which was implicit, explicit
 See also
 - https://evilmartians.com/chronicles/viewcomponent-in-the-wild-building-modern-rails-frontends
 
+### Previews
+In development, visit http://localhost:3000/rails/view_components/ for the index
+of available previews. Note that previews are used for the component system tests.
+
+See also https://viewcomponent.org/guide/previews.html
+
 ### Some best practices for view components
 1. Avoid Deeply Nested Component Trees
 2. Stick to the Single-Responsibility Principle
