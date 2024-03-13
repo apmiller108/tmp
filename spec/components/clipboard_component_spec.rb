@@ -14,6 +14,6 @@ RSpec.describe ClipboardComponent, type: :component do
   it { is_expected.to have_css '.c-clipboard.my-clipboard[data-controller="clipboard"]' }
   it { is_expected.to have_css 'button.copy-btn' }
   it { is_expected.to have_css 'input[name="copyable"]' }
-  it { is_expected.to have_css '.bi.bi-copy[data-clipboard-target="copyIcon"]'}
+  it { is_expected.to have_css '.bi.bi-copy[data-clipboard-target="copyIcon"]' }
   it { is_expected.to have_css '.bi.bi-check2-square[data-clipboard-target="successIcon"]' }
 end

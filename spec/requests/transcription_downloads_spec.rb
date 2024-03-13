@@ -36,7 +36,7 @@ RSpec.describe 'Transcription Downloads', type: :request do
       context 'when transcript does not belong to the user' do
         let(:memo) { create :memo, :with_user }
 
-        include_context 'disable consider all requests local'
+        include_context 'with disable consider all requests local'
 
         it 'has not found status' do
           request

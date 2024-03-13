@@ -33,7 +33,7 @@ RSpec.describe 'Blobs', type: :request do
     context 'when the associated memo does not belong to the user' do
       let(:memo) { create :memo }
 
-      include_context 'disable consider all requests local'
+      include_context 'with disable consider all requests local'
 
       it 'returns a 404 response' do
         request
