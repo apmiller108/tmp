@@ -25,7 +25,7 @@ RSpec.describe 'Create and view memo', type: :system do
     Sidekiq::Testing.inline!
   end
 
-  before() do
+  before do
     stub_request(:post, 'https://api.stability.ai/v1/generation/stable-diffusion-xl-1024-v1-0/text-to-image')
       .with(
         body:

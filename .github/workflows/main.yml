@@ -114,6 +114,16 @@ jobs:
         with:
           bundler-cache: true
           ruby-version: 3.3
+      - name: Update apt
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          sudo apt-get update -qq -o Acquire::Retries=3
+      - name: Install libvips
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          sudo apt-get install --fix-missing -qq -0 Acquire::Retires=3 libvips
       - name: Include node and yarn
         uses: actions/setup-node@v4
         with:
