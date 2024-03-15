@@ -123,7 +123,7 @@ jobs:
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-          sudo apt-get install --fix-missing -qq -0 Acquire::Retires=3 libvips
+          sudo apt-get install --fix-missing -qq -o Acquire::Retires=3 libvips
       - name: Include node and yarn
         uses: actions/setup-node@v4
         with:
