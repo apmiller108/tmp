@@ -7,6 +7,7 @@ Capybara.register_driver(:cuprite_driver) do |app|
   Capybara::Cuprite::Driver.new(
     app,
     window_size: [1200, 800],
+    js_errors: true,
     browser_options: { 'no-sandbox' => nil },
     process_timeout: 10, # Chrome startup wait time. Might need to increase on CI.
     timeout: 10,

@@ -5,6 +5,9 @@ Capybara.default_max_wait_time = 2
 # Normalize whitespace when using text matchers.
 Capybara.default_normalize_ws = true
 
+# Disable CSS transitions/animations
+Capybara.disable_animation = true
+
 # For screenshots and downloads
 Capybara.save_path = './tmp/capybara'
 

@@ -37,4 +37,6 @@ RSpec.configure do |c|
   c.prepend_before(:each, type: :system) do
     driven_by Capybara.javascript_driver
   end
+
+  c.filter_gems_from_backtrace('capybara', 'cuprite', 'ferrum')
 end
