@@ -7,7 +7,7 @@
         = form.text_field :title, class: 'form-control', placeholder: 'Title'
       .g-col-6.g-start-7.g-col-sm-5.g-start-sm-8.g-col-xl-2.d-flex.justify-content-between.align-items-end
         = render ColorPickerComponent.new(**color_picker_options)
-        %button.btn.btn-primary.icon-btn{type: :submit, name: :commit,
+        %button.btn.btn-primary.icon-btn{type: :submit, name: :save,
                                          data: { action: 'click->memo-form#onSubmit:prevent',
                                                  'bs-toggle' => 'tooltip',
                                                  'bs-title' => t('save'),  } }
