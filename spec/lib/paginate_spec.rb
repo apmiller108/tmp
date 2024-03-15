@@ -45,5 +45,12 @@ RSpec.describe Paginate do
         expect(result).to eq [collection, nil]
       end
     end
+
+    context 'with an ascending sort order' do
+      it 'uses an upward range' do
+        described_class.call(relation:, limit:, cursor:, order: { created_at: :asc })
+        expect(relation).to have_received(:where).with(id: cursor..)
+      end
+    end
   end
 end

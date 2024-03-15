@@ -1,7 +1,7 @@
 class MemosController < ApplicationController
   def index
-    relation = current_user.memos.with_rich_text_content_and_embeds.order(created_at: :desc)
-    @memos, @cursor = Paginate.call(relation:, limit: 21, cursor: params[:c])
+    relation = current_user.memos.with_rich_text_content_and_embeds
+    @memos, @cursor = Paginate.call(relation:, limit: 21, cursor: params[:c], order: { created_at: :desc })
     respond_to do |format|
       format.html
       format.turbo_stream
