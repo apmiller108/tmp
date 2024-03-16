@@ -34,13 +34,7 @@ class MemoCardComponent < ApplicationViewComponent
   end
 
   def preview_text
-    sanitize_preview(plain_text_preview)
-  end
-
-  def continued_preview_text
-    sanitize_preview(
-      plain_text_body_with_attachment_icons.gsub(plain_text_preview, '').truncate_words(30)
-    )
+    sanitize_preview(plain_text_body_with_attachment_icons)
   end
 
   def created_at
@@ -71,10 +65,6 @@ class MemoCardComponent < ApplicationViewComponent
 
   def sanitize_preview(content)
     sanitize(content, tags: %w[i turbo-frame], attributes: %w[class title data-controller loading src])
-  end
-
-  def plain_text_preview
-    plain_text_body_with_attachment_icons.truncate_words(25, omission: '')
   end
 
   def attachment_icon(attachment_data)
