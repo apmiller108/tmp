@@ -78,23 +78,6 @@ class MemoCardComponent < ApplicationViewComponent
   end
 
   def attachment_icon(attachment_data)
-    "<i class='#{attachment_icon_class(attachment_data['content_type'])}' title='#{attachment_data['filename']}'></i>"
+    render ImagePreviewComponent.new(content_type: attachment_data['content_type'], filename: attachment_data['filename'])
   end
-
-  # rubocop:disable Metrics/MethodLength
-  def attachment_icon_class(content_type = '')
-    case content_type
-    when /jpe?g/
-      'bi bi-filetype-jpg'
-    when /mp3/
-      'bi bi-filetype-mp3'
-    when /png/
-      'bi bi-filetype-png'
-    when /wav/
-      'bi bi-filetype-wav'
-    else
-      'bi bi-file-earmark'
-    end
-  end
-  # rubocop:enable Metrics/MethodLength
 end
