@@ -1,3 +1,4 @@
 %i.c-image-preview{class: attachment_icon_class, title: filename, data: { controller: 'image-preview' }}
-  %turbo-frame.d-none{ loading: :lazy, src: '/blob_image_previews/1'}
-    = render SpinnerComponent.new
+  %turbo-frame.d-none{ loading: :lazy, src: '#', data: { 'image-preview-target' => 'content' }, id: "#{filename}-frame" }
+    %span.spinner-border.text-primary{ role: :status }
+      %span.visually-hidden Loading...

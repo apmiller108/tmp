@@ -64,7 +64,11 @@ class MemoCardComponent < ApplicationViewComponent
   private
 
   def sanitize_preview(content)
-    sanitize(content, tags: %w[i turbo-frame], attributes: %w[class title data-controller loading src])
+    sanitize(
+      content,
+      tags: %w[div i span turbo-frame],
+      attributes: %w[class data-controller data-image-preview-target id loading role src title]
+    )
   end
 
   def attachment_icon(attachment_data)
