@@ -70,7 +70,7 @@ class MemoCardComponent < ApplicationViewComponent
   private
 
   def sanitize_preview(content)
-    sanitize(content, tags: %w[i], attributes: %w[class title])
+    sanitize(content, tags: %w[i turbo-frame], attributes: %w[class title data-controller loading src])
   end
 
   def plain_text_preview
