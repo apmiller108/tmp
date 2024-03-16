@@ -15,8 +15,7 @@
         = tag.turbo_frame(id: self.class.turbo_frame_body_id, src: nil,
                           data: { 'modal-target' => 'bodyTurboFrame' }, loading: :lazy) do
           .d-flex.justify-content-center
-            .spinner-border.text-primary{ role: :status }
-              %span.visually-hidden Loading...
+            = render SpinnerComponent.new
       - if footer?
         .modal-footer
           = footer

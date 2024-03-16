@@ -1,8 +1,7 @@
 .c-more-info{ data: { controller: 'more-info' }}
   .content.rounded-1.d-none{ data: { 'more-info-target' => :content }}
     %turbo-frame{ id:, src:, loading: :lazy }
-      .spinner-border.text-primary.my-3{ role: :status }
-        .visually-hidden Loading...
+      = render SpinnerComponent.new(css_class: 'my-3')
     .content__nub
   %button.btn.icon-btn.image-info-btn{ data: { 'more-info-target' => 'button' } }
     %i.bi.bi-info-square
