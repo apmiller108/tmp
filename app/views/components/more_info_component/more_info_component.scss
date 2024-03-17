@@ -14,7 +14,7 @@
     background: $white;
     min-width: 5rem;
     max-width: 25rem;
-    box-shadow: 0 .15em 1.5em #0000001a,0 0 1em #00000008;
+    box-shadow: $more-info-box-shadow;
     border: 1px solid $more-info-border-color;
   }
   .content__nub {

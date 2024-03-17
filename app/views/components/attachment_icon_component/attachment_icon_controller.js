@@ -13,6 +13,6 @@ export default class AttachmentIconController extends Controller {
   }
 
   mouseLeave() {
-    // this.contentTarget.classList.add('d-none')
+    this.contentTarget.classList.add('d-none')
   }
 }

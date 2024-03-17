@@ -1,0 +1,13 @@
+.c-attachment-icon {
+  .content {
+    position: absolute;
+    overflow: hidden;
+    text-overflow: clip;
+    padding: 1rem;
+    border-color: $more-info-border-color;
+    background-color: $more-info-background-color;
+    text-align: center;
+    border-radius: 0.5rem;
+    box-shadow: $more-info-box-shadow;
+  }
+}

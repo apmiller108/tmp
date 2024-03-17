@@ -1,7 +1,6 @@
 .c-memo-card {
   height: 15rem;
   background-color: $light;
-  overflow: hidden;
   @include clickableThing;
   .card-title {
     white-space: nowrap;

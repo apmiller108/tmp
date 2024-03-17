@@ -16,6 +16,7 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 @import 'blob_details';
 
 // View component style sheets
+@import 'attachment_icon_component/attachment_icon_component';
 @import 'blob_component/blob_component';
 @import 'color_picker_component/color_picker_component';
 @import 'flash_message_component/flash_message_component';
