@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
-class ImagePreviewComponent < ApplicationViewComponent
+class AttachmentIconComponent < ApplicationViewComponent
   attr_reader :content_type, :filename
 
+  # TODO: pass in blob id
+  # TODO: use blob id to make turbo-frame id unique
   def initialize(content_type:, filename:)
     @content_type = content_type
     @filename = filename

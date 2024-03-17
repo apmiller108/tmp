@@ -67,11 +67,12 @@ class MemoCardComponent < ApplicationViewComponent
     sanitize(
       content,
       tags: %w[div i span turbo-frame],
-      attributes: %w[class data-controller data-image-preview-target id loading role src title]
+      attributes: %w[class data-controller data-attachment-icon-target id loading role src title]
     )
   end
 
   def attachment_icon(attachment_data)
-    render ImagePreviewComponent.new(content_type: attachment_data['content_type'], filename: attachment_data['filename'])
+    attachment_data.symbolize_keys!
+    render AttachmentIconComponent.new(**attachment_data)
   end
 end
