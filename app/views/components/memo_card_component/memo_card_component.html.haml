@@ -1,4 +1,5 @@
 .c-memo-card.card.g-col-12.g-col-md-6.g-col-lg-4{ id: id,
+                                                  style: background_body_style,
                                                   data: { controller: 'modal-opener memo-card',
                                                           'memo-id' => memo.id,
                                                           modal: ModalComponent.id,
@@ -6,7 +7,7 @@
                                                           'modal-src': user_memo_path(current_user, memo.id) } }
   .card-header{ style: background_style, class: font_class }
     %h4.card-title.m-0= title
-  .card-body{ style: background_body_style, class: font_class }
+  .card-body{class: font_class }
     .grid
       .g-col-6
         %p.card-subtitle= "Created #{created_at} ago"

@@ -1,17 +1,21 @@
 .c-memo-card {
   height: 15rem;
   background-color: $light;
-  @include clickableThing;
+  @include selectableThing;
   .card-title {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis
   }
   .card-text {
+    line-height: 1.75rem;
     overflow: hidden;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 5;
     display: -webkit-box;
+    i {
+      font-size: 1.5rem
+    }
   }
   .card-subtitle {
     font-size: 0.75rem;
