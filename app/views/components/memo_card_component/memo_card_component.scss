@@ -5,13 +5,16 @@
   .card-title {
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis
+    text-overflow: ellipsis;
+  }
+  .card-body {
+    overflow: hidden;
   }
   .card-text {
     line-height: 1.75rem;
     overflow: hidden;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 5;
+    -webkit-line-clamp: 3;
     display: -webkit-box;
     i {
       font-size: 1.5rem
