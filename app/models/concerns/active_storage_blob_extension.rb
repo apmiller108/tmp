@@ -37,7 +37,7 @@ module ActiveStorageBlobExtension
     def attachable_plain_text_representation(caption = nil)
       # rubocop:disable Style/FormatString
       caption || sprintf(self.class::PLAIN_TEXT_ATTACHMENT_TEMPLATE,
-                         json: attributes.slice('content_type', 'filename').to_json)
+                         json: attributes.slice('id', 'content_type', 'filename').to_json)
       # rubocop:enable Style/FormatString
     end
 

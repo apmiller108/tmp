@@ -1,14 +1,27 @@
 # frozen_string_literal: true
 
 class AttachmentIconComponent < ApplicationViewComponent
-  attr_reader :content_type, :filename
+  attr_reader :content_type, :filename, :blob_id
 
-  # TODO: pass in blob id
-  # TODO: use blob id to make turbo-frame id unique
-  def initialize(content_type:, filename:)
+  def self.turbo_frame_id(blob_id)
+    "blob_preview_#{blob_id}"
+  end
+
+  def initialize(blob_id:, content_type:, filename:)
+    @blob_id = blob_id
     @content_type = content_type
     @filename = filename
   end
+
+  def turbo_frame_id
+    self.class.turbo_frame_id(blob_id)
+  end
+
+  def src
+    blob_preview_path(blob_id)
+  end
+
+  private
 
   # rubocop:disable Metrics/MethodLength
   def attachment_icon_class

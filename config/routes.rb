@@ -33,8 +33,10 @@ Rails.application.routes.draw do
     resources :transcription_summaries, only: %i[create]
   end
 
-  resources :generate_text_requests, only: :create
-  resources :generate_image_requests, only: :create
-  resources :blob_details, only: :show, param: :active_storage_blob_id
-  resources :blobs, only: :show, param: :active_storage_blob_id
+  resources :generate_text_requests, only: %[create]
+  resources :generate_image_requests, only: %i[create]
+
+  resources :blobs, only: %i[show], param: :active_storage_blob_id
+  resources :blob_details, only: %i[show], param: :active_storage_blob_id
+  resources :blob_previews, only: %i[show], param: :active_storage_blob_id
 end

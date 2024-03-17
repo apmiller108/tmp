@@ -1,4 +1,4 @@
 %i.c-attachment-icon{class: attachment_icon_class, title: filename, data: { controller: 'attachment-icon' }}
-  %turbo-frame.d-none{ loading: :lazy, src: '#', data: { 'attachment-icon-target' => 'content' }, id: "#{filename}-frame" }
+  %turbo-frame.d-none{ loading: :lazy, src:, data: { 'attachment-icon-target' => 'content' }, id: turbo_frame_id }
     %span.spinner-border.text-primary{ role: :status }
       %span.visually-hidden Loading...

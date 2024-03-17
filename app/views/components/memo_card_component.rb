@@ -73,6 +73,11 @@ class MemoCardComponent < ApplicationViewComponent
 
   def attachment_icon(attachment_data)
     attachment_data.symbolize_keys!
-    render AttachmentIconComponent.new(**attachment_data)
+    render(
+      AttachmentIconComponent.new(
+        **attachment_data.slice(:content_type, :filename),
+        blob_id: attachment_data.fetch(:id)
+      )
+    )
   end
 end
