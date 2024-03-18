@@ -1,0 +1,13 @@
+:PROPERTIES:
+:CATEGORY: tmp
+:END:
+
+* TODO fix scroll to top on transcription job component open
+* TODO add statistics columns to memo
+* TODO after save commit compute and store stats
+  background job
+* TODO show icons and count in footer
+* TODO on hover, show gallery for images
+  with download links
+* TODO on hover, show file names
+  with download links
