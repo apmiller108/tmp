@@ -2,7 +2,8 @@
 :CATEGORY: tmp
 :END:
 
-* TODO fix scroll to top on transcription job component open
+* DONE fix scroll to top on transcription job component open
+  CLOSED: [2024-03-18 Mon 22:17]
 * TODO add statistics columns to memo
 * TODO after save commit compute and store stats
   background job
