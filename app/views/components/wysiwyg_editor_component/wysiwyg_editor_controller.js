@@ -242,10 +242,10 @@ export default class WysiwygEditor extends Controller {
         this.editor.setSelectedRange(selectedRange[0])
 
         // Images are Base64 encoded and pushed in JSON objects over websockets. See comment above.
-        const base64response = await fetch(`data:image/png;base64,${image}`)
+        const base64response = await fetch(`data:image/webp;base64,${image}`)
         const blob = await base64response.blob();
-        const filename = `${image_name}.png` // TODO include content type on the event detail that comes from the backend
-        const file = new File([blob], filename, { type: 'image/png' })
+        const filename = `${image_name}.webp` // TODO include content type on the event detail that comes from the backend
+        const file = new File([blob], filename, { type: 'image/webp' })
         this.editor.insertFile(file)
       } else if (error) {
         throw new Error('Job to generate image was not successful')

@@ -1,3 +1,5 @@
+require 'vips'
+
 class GenerateImageJob
   include Sidekiq::Job
   include Flashable
@@ -30,7 +32,10 @@ class GenerateImageJob
   end
 
   def broadcast_image(user, payload, response)
-    payload[:generate_image][:image] = response.base64
+    # payload[:generate_image][:image] = response.base64
+    png = Vips::Image.new_from_buffer(Base64.decode64(response.base64), '')
+    webp = png.webpsave_buffer
+    payload[:generate_image][:image] = Base64.encode64(webp)
     MyChannel.broadcast_to(user, payload)
   end
 
