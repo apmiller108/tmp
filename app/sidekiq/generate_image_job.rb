@@ -10,7 +10,7 @@ class GenerateImageJob
     request = GenerateImageRequest.find(generate_image_request_id)
     response = generate_image(request.parameterize)
 
-    payload = { generate_image: { image_name: request.image_name, image: nil, error: nil } }
+    payload = { generate_image: { image_name: request.image_name, image: nil, content_type: nil, error: nil } }
 
     if response&.image_present?
       broadcast_image(request.user, payload, response)
@@ -32,10 +32,10 @@ class GenerateImageJob
   end
 
   def broadcast_image(user, payload, response)
-    # payload[:generate_image][:image] = response.base64
     png = Vips::Image.new_from_buffer(Base64.decode64(response.base64), '')
     webp = png.webpsave_buffer
     payload[:generate_image][:image] = Base64.encode64(webp)
+    payload[:generate_image][:content_type] = 'image/webp'
     MyChannel.broadcast_to(user, payload)
   end
 

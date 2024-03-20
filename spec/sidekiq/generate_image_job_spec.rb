@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'vips'
 
 RSpec.describe GenerateImageJob, type: :job do
   describe 'sidekiq_options' do
@@ -15,12 +16,15 @@ RSpec.describe GenerateImageJob, type: :job do
     let(:generative_image) { instance_double GenerativeImage }
     let(:base64) { 'base64 string of png' }
     let(:response) { instance_double GenerativeImage::Stability::TextToImageResponse, base64:, image_present?: true }
+    let(:webp) { 'webp image' }
+    let(:png) { instance_double(Vips::Image, webpsave_buffer: webp) }
 
     before do
       allow(GenerateImageRequest).to receive(:find).with(request.id).and_return(request)
       allow(GenerativeImage).to receive(:new).and_return(generative_image)
       allow(MyChannel).to receive(:broadcast_to)
       allow(ViewComponentBroadcaster).to receive(:call)
+      allow(Vips::Image).to receive(:new_from_buffer).and_return(png)
     end
 
     context 'when the image was succesfully generated' do
@@ -32,7 +36,9 @@ RSpec.describe GenerateImageJob, type: :job do
         perform
         expect(MyChannel).to(
           have_received(:broadcast_to).with(request.user,
-                                            { generate_image: { image_name: request.image_name, image: base64,
+                                            { generate_image: { image_name: request.image_name,
+                                                                image: Base64.encode64(webp),
+                                                                content_type: 'image/webp',
                                                                 error: nil } })
         )
       end
