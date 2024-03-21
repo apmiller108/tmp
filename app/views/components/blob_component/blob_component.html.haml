@@ -13,5 +13,5 @@
     - elsif representable?
       = render MoreInfoComponent.new(id: "blob_details_#{dom_id(blob)}", src: blob_detail_path(blob)) do |component|
         = component.with_wrapped do
-          = image_tag representation(resize_to_limit: resize_to_limit)
+          = image_tag representation(resize_to_limit: resize_to_limit, convert: :webp)
       = fig_caption
