@@ -49,4 +49,24 @@ class BlobComponent < ApplicationViewComponent
       end
     end
   end
+
+  # rubocop:disable Metrics/MethodLength
+  def variant_options
+    {
+      resize_to_limit:,
+      saver: {
+        strip: true,
+        quality: 75,
+        define: {
+          webp: {
+            lossless: false,
+            alpha_quality: 85,
+            thread_level: 1
+          }
+        }
+      },
+      format: 'webp'
+    }
+  end
+  # rubocop:enable Metrics/MethodLength
 end
