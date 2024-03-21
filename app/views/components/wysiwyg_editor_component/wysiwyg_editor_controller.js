@@ -233,7 +233,7 @@ export default class WysiwygEditor extends Controller {
   }
 
   async onGenerateImage(event) {
-    const { generate_image: { image_name, image, error }} = event.detail
+    const { generate_image: { image_name, image, error, content_type }} = event.detail
     const selectedRange = this.editor.getSelectedRange()
     const placeHolderDiv = document.getElementById(image_name)
     try {
@@ -242,10 +242,11 @@ export default class WysiwygEditor extends Controller {
         this.editor.setSelectedRange(selectedRange[0])
 
         // Images are Base64 encoded and pushed in JSON objects over websockets. See comment above.
-        const base64response = await fetch(`data:image/webp;base64,${image}`)
+        const base64response = await fetch(`data:${content_type};base64,${image}`)
         const blob = await base64response.blob();
-        const filename = `${image_name}.webp` // TODO include content type on the event detail that comes from the backend
-        const file = new File([blob], filename, { type: 'image/webp' })
+        const ext = content_type.split('/')[1]
+        const filename = `${image_name}.${ext}`
+        const file = new File([blob], filename, { type: content_type })
         this.editor.insertFile(file)
       } else if (error) {
         throw new Error('Job to generate image was not successful')

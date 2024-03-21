@@ -4,7 +4,8 @@
 
 * DONE fix scroll to top on transcription job component open
   CLOSED: [2024-03-18 Mon 22:17]
-* TODO Include the content type in the image event
+* DONE Include the content type in the image event
+CLOSED: [2024-03-21 Thu 16:04]
 * TODO Persist the original png as an attachment on the gen image request
 * TODO Stream back the original png when downloading from blob details
 * TODO add statistics columns to memo
@@ -15,3 +16,4 @@
   with download links
 * TODO on hover, show file names
   with download links
+* TODO Swap generating image placeholder with a status banner 
