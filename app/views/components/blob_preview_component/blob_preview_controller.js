@@ -14,10 +14,12 @@ export default class BlobPreviewController extends Controller {
   }
 
   imageIsLoaded() {
-    return this.imageTarget.complet || this.imageTarget.naturalWidth !== 0
+    return this.imageTarget.complete || this.imageTarget.naturalWidth !== 0
   }
 
   removeSpinner() {
-    this.spinnerTarget.remove()
+    if (this.hasSpinnerTarget) {
+      this.spinnerTarget.remove()
+    }
   }
 }
