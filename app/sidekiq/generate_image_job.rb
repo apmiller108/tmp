@@ -11,6 +11,8 @@ class GenerateImageJob
     request = GenerateImageRequest.find(generate_image_request_id)
     response = generate_image(request.parameterize)
 
+    payload = { generate_image: { image_name: request.image_name, image: nil, content_type: nil, error: nil } }
+
     if response&.image_present?
       png = Vips::Image.new_from_buffer(Base64.decode64(response.base64), '')
       attach_to_request(request, png)
@@ -25,10 +27,6 @@ class GenerateImageJob
   # rubocop:enable Metrics/AbcSize
 
   private
-
-  def payload
-    @payload ||= { generate_image: { image_name: request.image_name, image: nil, content_type: nil, error: nil } }
-  end
 
   def generate_image(params)
     GenerativeImage.new.text_to_image(**params)
