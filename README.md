@@ -193,7 +193,7 @@ Websockets are handled by [ActionCable](https://guides.rubyonrails.org/action_ca
 See also https://rspec.info/documentation/
 ## Authentication
 For specs that require authentication, there are a few options:
-1. Use Devise's [IntegrationHelpers](https://www.rubydoc.info/gems/devise/Devise/Test/IntegrationHelpers)
+1. Use Devise's [IntegrationHelpers](https://www.rubydoc.info/gems/devise/Devise/Test/IntegrationHelpers) (eg in request specs)
 2. For feature tests, use `LoginHelper#login` to log in the user. This will login in the user with username and password on the sign in page.
 3. For JSON format request specs, use the `auth_headers` helper to perform a login and retrieve the `Authorization` header:
 ```ruby

@@ -15,8 +15,15 @@ RSpec.describe MemoCardComponent, type: :component do
   let(:blob) { build_stubbed(:active_storage_blob, content_type: 'image/png') }
   let(:user) { build_stubbed :user }
   let(:component) { described_class.new(memo:) }
+  let(:attachment_icon_component) do
+    Class.new(ApplicationViewComponent) do
+      haml_template 'ATTACHMENT_ICON_COMPONENT'
+    end
+  end
 
   before do
+    stub_const('AttachmentIconComponent', attachment_icon_component)
+    allow(AttachmentIconComponent).to receive(:new).and_call_original
     with_current_user(user) do
       render_inline component
     end
@@ -34,8 +41,10 @@ RSpec.describe MemoCardComponent, type: :component do
   it { is_expected.to have_css '.card-text', text: plain_text_body }
 
   context 'with a plain text attchment representation' do
-    let(:plain_text_body) { 'Foo %JSON{{{"content_type": "image/png","filename": "filename123"}}} Bar' }
+    let(:plain_text_body) { 'Foo %JSON{{{"id": 1, "content_type": "image/png","filename": "filename123"}}} Bar' }
 
-    it { is_expected.to have_css '.card-text > i.bi-filetype-png[title="filename123"]' }
+    it 'instantiates an AttachmentIconComponent' do
+      expect(AttachmentIconComponent).to have_received(:new).with(blob_id: 1, content_type: 'image/png')
+    end
   end
 end

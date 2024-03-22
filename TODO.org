@@ -8,8 +8,11 @@
 CLOSED: [2024-03-21 Thu 16:04]
 * DONE Persist the original png as an attachment on the gen image request
   CLOSED: [2024-03-21 Thu 22:02]
-* TODO Update blob details to have the lossless png data
-* TODO Stream back the original png when downloading from blob details
+* DONE Update blob details to have the lossless png data
+CLOSED: [2024-03-22 Fri 13:07]
+* DONE Stream back the original png when downloading from blob details
+CLOSED: [2024-03-22 Fri 13:07]
+* TODO Update request specs
 * TODO add statistics columns to memo
 * TODO after save commit compute and store stats
   background job

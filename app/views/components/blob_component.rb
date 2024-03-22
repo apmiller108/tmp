@@ -6,8 +6,8 @@ class BlobComponent < ApplicationViewComponent
 
   attr_reader :blob, :in_gallery, :user
 
-  delegate :audio?, :byte_size, :content_type, :filename, :representable?, :representation,
-           :transcription_job, :url, to: :blob
+  delegate :audio?, :byte_size, :content_type, :filename, :generated_image?, :original_lossless_generated_image_blob,
+           :representable?, :representation, :transcription_job, :url, to: :blob
 
   def initialize(blob:, in_gallery: true, user: current_user)
     @blob = blob
@@ -48,6 +48,11 @@ class BlobComponent < ApplicationViewComponent
           tag.span(humanized_file_size, class: 'attachment__size')
       end
     end
+  end
+
+  def more_info_blob_path
+    more_info_blob = generated_image? && (original_lossless_generated_image_blob || blob)
+    blob_detail_path(more_info_blob)
   end
 
   # rubocop:disable Metrics/MethodLength

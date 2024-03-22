@@ -11,7 +11,7 @@
                                                   id: dom_id(transcription_job) }
               = render TranscriptionJobComponent.new(transcription_job:, user:)
     - elsif representable?
-      = render MoreInfoComponent.new(id: "blob_details_#{dom_id(blob)}", src: blob_detail_path(blob)) do |component|
+      = render MoreInfoComponent.new(id: 'blob_details', src: more_info_blob_path) do |component|
         = component.with_wrapped do
           = image_tag representation(**variant_options)
       = fig_caption

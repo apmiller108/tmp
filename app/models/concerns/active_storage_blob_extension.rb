@@ -32,7 +32,12 @@ module ActiveStorageBlobExtension
         .where(memos: { id: memo_id }, transcriptions: { id: nil })
     }
 
-    after_create_commit :associate_generated_image_to_request, if: ->(blob) { blob.text_to_image? }
+    scope :associated_with_user, ->(user_id) {
+      left_joins(:memo, :generate_image_request)
+        .where(memo: { user_id: }).or(GenerateImageRequest.where(user_id:))
+    }
+
+    after_create_commit :associate_generated_image_to_request, if: ->(blob) { blob.generated_image? }
 
     def attachable_plain_text_representation(caption = nil)
       # rubocop:disable Style/FormatString
@@ -45,8 +50,14 @@ module ActiveStorageBlobExtension
       AssociateBlobToGenerateImageRequestJob.perform_async(id)
     end
 
-    def text_to_image?
-      image? && filename.base =~ /\Agenimage_.+/
+    def generated_image?
+      !!(image? && filename.base =~ /\Agenimage_.+/)
+    end
+
+    def original_lossless_generated_image_blob
+      return unless generated_image?
+
+      generate_image_request.image_blob
     end
   end
 end

@@ -1,16 +1,15 @@
 # frozen_string_literal: true
 
 class AttachmentIconComponent < ApplicationViewComponent
-  attr_reader :content_type, :filename, :blob_id
+  attr_reader :content_type, :blob_id
 
   def self.turbo_frame_id(blob_id)
     "blob_preview_#{blob_id}"
   end
 
-  def initialize(blob_id:, content_type:, filename:)
+  def initialize(blob_id:, content_type:)
     @blob_id = blob_id
     @content_type = content_type
-    @filename = filename
   end
 
   def turbo_frame_id
