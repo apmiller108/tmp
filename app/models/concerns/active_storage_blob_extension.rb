@@ -5,6 +5,20 @@ module ActiveStorageBlobExtension
     base.const_set(:PLAIN_TEXT_ATTACHMENT_TEMPLATE, '%%JSON{{%<json>s}}')
     base.const_set(:PLAIN_TEXT_ATTACHMENT_PATTERN, /%JSON\{\{.+\}\}/)
     base.const_set(:PLAIN_TEXT_JSON_ATTACHMENT_PATTERN, /%JSON\{\{(?<json>.+)\}\}/)
+    base.const_set(:WEBP_VARIANT_OPTS, {
+      format: 'webp',
+      saver: {
+        strip: true,
+        quality: 75,
+        define: {
+          webp: {
+            lossless: false,
+            alpha_quality: 85,
+            thread_level: 1
+          }
+        }
+      }
+    })
 
     has_one :transcription_job, foreign_key: :active_storage_blob_id,
                                 inverse_of: :active_storage_blob, dependent: :destroy

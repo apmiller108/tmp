@@ -51,27 +51,18 @@ class BlobComponent < ApplicationViewComponent
   end
 
   def more_info_blob_path
-    more_info_blob = generated_image? && (original_lossless_generated_image_blob || blob)
+    more_info_blob = if generated_image? && original_lossless_generated_image_blob
+                       original_lossless_generated_image_blob
+                     else
+                       blob
+                     end
     blob_detail_path(more_info_blob)
   end
 
-  # rubocop:disable Metrics/MethodLength
   def variant_options
     {
       resize_to_limit:,
-      saver: {
-        strip: true,
-        quality: 75,
-        define: {
-          webp: {
-            lossless: false,
-            alpha_quality: 85,
-            thread_level: 1
-          }
-        }
-      },
-      format: 'webp'
+      **ActiveStorage::Blob::WEBP_VARIANT_OPTS
     }
   end
-  # rubocop:enable Metrics/MethodLength
 end
