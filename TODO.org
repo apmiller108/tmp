@@ -6,7 +6,9 @@
   CLOSED: [2024-03-18 Mon 22:17]
 * DONE Include the content type in the image event
 CLOSED: [2024-03-21 Thu 16:04]
-* TODO Persist the original png as an attachment on the gen image request
+* DONE Persist the original png as an attachment on the gen image request
+  CLOSED: [2024-03-21 Thu 22:02]
+* TODO Update blob details to have the lossless png data
 * TODO Stream back the original png when downloading from blob details
 * TODO add statistics columns to memo
 * TODO after save commit compute and store stats
@@ -16,4 +18,5 @@ CLOSED: [2024-03-21 Thu 16:04]
   with download links
 * TODO on hover, show file names
   with download links
-* TODO Swap generating image placeholder with a status banner 
+* TODO Swap generating image placeholder with a status banner
+* TODO Remove placeholder on gen image job error
