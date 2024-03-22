@@ -10,6 +10,8 @@ class GenerateImageRequest < ApplicationRecord
   has_many :active_storage_blobs_generate_image_requests, dependent: nil
   has_many :active_storage_blobs, through: :active_storage_blobs_generate_image_requests
 
+  has_one_attached :image
+
   def parameterize
     {
       **attributes.slice('style', 'dimensions'),
