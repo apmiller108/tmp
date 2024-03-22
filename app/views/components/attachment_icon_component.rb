@@ -23,20 +23,12 @@ class AttachmentIconComponent < ApplicationViewComponent
 
   private
 
-  # rubocop:disable Metrics/MethodLength
   def attachment_icon_class
     case content_type
-    when /jpe?g/
-      'bi bi-filetype-jpg'
-    when /mp3/
-      'bi bi-filetype-mp3'
-    when /png/
-      'bi bi-filetype-png'
-    when /wav/
-      'bi bi-filetype-wav'
+    when %r{\Aimage/}
+      'bi bi-file-earmark-image'
     else
       'bi bi-file-earmark'
     end
   end
-  # rubocop:enable Metrics/MethodLength
 end

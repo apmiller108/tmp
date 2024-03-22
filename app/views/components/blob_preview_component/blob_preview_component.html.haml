@@ -1,7 +1,6 @@
 .c-blob-preview{data: { controller: 'blob-preview' }}
   - if image?
     = render SpinnerComponent.new('data-blob-preview-target': 'spinner')
-    = image_tag blob.variant(**variant_options),
-    data: { 'blob-preview-target' => 'image' }, title: filename
+    = image_tag blob.variant(**variant_options), data: { 'blob-preview-target' => 'image' }, title: filename
   - else
     = filename
