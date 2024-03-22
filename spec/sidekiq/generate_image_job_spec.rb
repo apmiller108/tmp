@@ -17,14 +17,17 @@ RSpec.describe GenerateImageJob, type: :job do
     let(:base64) { 'base64 string of png' }
     let(:response) { instance_double GenerativeImage::Stability::TextToImageResponse, base64:, image_present?: true }
     let(:webp) { 'webp image' }
-    let(:png) { instance_double(Vips::Image, webpsave_buffer: webp) }
+    let(:png) { instance_double(Vips::Image, webpsave_buffer: webp, write_to_buffer: '') }
 
     before do
+      # This method is defined dynamically and will raise error when stubbed with a verifing double
+      Vips::Image.define_method(:webpsave_buffer) { '' }
       allow(GenerateImageRequest).to receive(:find).with(request.id).and_return(request)
       allow(GenerativeImage).to receive(:new).and_return(generative_image)
       allow(MyChannel).to receive(:broadcast_to)
       allow(ViewComponentBroadcaster).to receive(:call)
       allow(Vips::Image).to receive(:new_from_buffer).and_return(png)
+      allow(request.image).to receive(:attach)
     end
 
     context 'when the image was succesfully generated' do
@@ -32,7 +35,16 @@ RSpec.describe GenerateImageJob, type: :job do
         allow(generative_image).to receive(:text_to_image).with(params).and_return(response)
       end
 
-      it 'broadcasts the image' do
+      it 'attaches the original image to the request' do
+        perform
+        expect(request.image).to(
+          have_received(:attach).with(io: kind_of(StringIO),
+                                      filename: "#{request.image_name}.png",
+                                      content_type: 'image/png')
+        )
+      end
+
+      it 'broadcasts the webp converted image' do
         perform
         expect(MyChannel).to(
           have_received(:broadcast_to).with(request.user,
@@ -60,7 +72,7 @@ RSpec.describe GenerateImageJob, type: :job do
         expect(MyChannel).to have_received(:broadcast_to)
           .with(request.user,
                 { generate_image: { image_name: request.image_name, image: nil,
-                                    error: true } })
+                                    content_type: nil, error: true } })
       end
 
       it 'broadcasts the flash message' do

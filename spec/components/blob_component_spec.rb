@@ -39,7 +39,12 @@ RSpec.describe BlobComponent, type: :component do
     it { is_expected.to have_css "img[src='#{representation}']" }
 
     it 'uses the default size' do
-      expect(attachment).to have_received(:representation).with(resize_to_limit: described_class::DEFAULT_IMAGE_SIZE)
+      expect(attachment).to(
+        have_received(:representation).with(
+          resize_to_limit: described_class::DEFAULT_IMAGE_SIZE,
+          **ActiveStorage::Blob::WEBP_VARIANT_OPTS
+        )
+      )
     end
 
     it 'displays the default caption' do
@@ -62,7 +67,12 @@ RSpec.describe BlobComponent, type: :component do
       let(:in_gallery) { true }
 
       it 'uses the smaller size' do
-        expect(attachment).to have_received(:representation).with(resize_to_limit: described_class::GALLERY_IMAGE_SIZE)
+        expect(attachment).to(
+          have_received(:representation).with(
+            resize_to_limit: described_class::GALLERY_IMAGE_SIZE,
+            **ActiveStorage::Blob::WEBP_VARIANT_OPTS
+          )
+        )
       end
     end
   end
