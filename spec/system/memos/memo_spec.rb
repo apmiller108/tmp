@@ -101,5 +101,9 @@ RSpec.describe 'Create and view memo', type: :system do
         expect(page).to have_css "a[href='/blobs/#{blob.id}']"
       end
     end
+
+    # Doing this in an after suite hook or after all hook causes the test to
+    # fail as if the file is being deleted before the test has completed.
+    FileUtils.rm_rf(ActiveStorage::Blob.service.root)
   end
 end

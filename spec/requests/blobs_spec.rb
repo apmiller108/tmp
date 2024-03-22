@@ -15,6 +15,10 @@ RSpec.describe 'Blobs', type: :request do
       sign_in user
     end
 
+    after(:all) do
+      FileUtils.rm_rf(ActiveStorage::Blob.service.root)
+    end
+
     it_behaves_like 'an authenticated route'
 
     context 'when the blob is associate to the user through a Memo' do

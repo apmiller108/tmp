@@ -12,7 +12,9 @@ CLOSED: [2024-03-21 Thu 16:04]
 CLOSED: [2024-03-22 Fri 13:07]
 * DONE Stream back the original png when downloading from blob details
 CLOSED: [2024-03-22 Fri 13:07]
-* TODO Update request specs
+* DONE Update request specs
+CLOSED: [2024-03-22 Fri 16:05]
+* TODO Do the pending spes
 * TODO add statistics columns to memo
 * TODO after save commit compute and store stats
   background job
