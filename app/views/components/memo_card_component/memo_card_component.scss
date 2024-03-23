@@ -23,4 +23,16 @@
   .card-subtitle {
     font-size: 0.75rem;
   }
+  .card-footer {
+    button {
+      margin-left: 0.5rem;
+      position: relative;
+      .badge {
+        font-size: 1rem;
+        position: absolute;
+        top: -4px;
+        right: -9px;
+      }
+    }
+  }
 }
