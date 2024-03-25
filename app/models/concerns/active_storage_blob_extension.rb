@@ -3,7 +3,7 @@ module ActiveStorageBlobExtension
 
   included do |base|
     base.const_set(:PLAIN_TEXT_ATTACHMENT_TEMPLATE, '%%JSON{{%<json>s}}')
-    base.const_set(:PLAIN_TEXT_ATTACHMENT_PATTERN, /%JSON\{\{.+\}\}/)
+    base.const_set(:PLAIN_TEXT_ATTACHMENT_PATTERN, /%JSON\{\{\{[^{}]+\}\}\}/)
     base.const_set(:PLAIN_TEXT_JSON_ATTACHMENT_PATTERN, /%JSON\{\{(?<json>.+)\}\}/)
     base.const_set(:WEBP_VARIANT_OPTS, {
       format: 'webp',
