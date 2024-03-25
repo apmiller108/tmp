@@ -15,15 +15,4 @@
         %p.card-subtitle= "Updated #{updated_at} ago"
     %p.card-text.mt-2{data: { 'memo-card-target' => 'cardText' }.compact } #{preview_text}...
   .card-footer.d-flex.justify-content-end{ style: background_style }
-    %button.btn.icon-btn{ type: :button, class: font_class }
-      %i.bi.bi-file-earmark-image
-      %span.badge.rounded-pill.text-bg-success 3
-    %button.btn.icon-btn{ type: :button, class: font_class }
-      %i.bi.bi-file-earmark-play
-      %span.badge.rounded-pill.text-bg-success 3
-    %button.btn.icon-btn{ type: :button, class: font_class }
-      %i.bi.bi-file-earmark-music
-      %span.badge.rounded-pill.text-bg-success 3
-    %button.btn.icon-btn{ type: :button, class: font_class }
-      %i.bi.bi-file-earmark
-      %span.badge.rounded-pill.text-bg-success 3
+    = render AttachmentSummaryComponent.new(font_class:)

@@ -1,0 +1,5 @@
+.c-attachment-summary
+  - counts.each do |count_type, count|
+    %button.btn.icon-btn{ type: :button, class: font_class }
+      %i{ class: icon_class(count_type) }
+      %span.badge.rounded-pill.text-bg-success= count
