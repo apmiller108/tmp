@@ -25,6 +25,8 @@ Rails.application.configure do
   config.cache_store = :redis_cache_store, { url: ENV.fetch('REDIS_URL', 'redis://redis:6379') }
   config.session_store :cookie_store, key: '_tmp_session'
 
+  config.active_job.queue_adapter = :sidekiq
+
   # Store uploaded files in amazon using creds and a bucket for development
   config.active_storage.service = :amazon_dev
 
