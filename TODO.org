@@ -14,9 +14,12 @@ CLOSED: [2024-03-22 Fri 13:07]
 CLOSED: [2024-03-22 Fri 13:07]
 * DONE Update request specs
 CLOSED: [2024-03-22 Fri 16:05]
+
 * TODO add statistics columns to memo
+image_attachment_count, audio_attachment_count, video_attachment_count, attachment_count
 * TODO after save commit compute and store stats
-  background job
+  - background job
+  - can I use active record dirty?
 * TODO show icons and count in footer
 * TODO on click, show gallery for images
   with download links
