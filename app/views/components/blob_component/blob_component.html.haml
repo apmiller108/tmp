@@ -15,3 +15,12 @@
         = component.with_wrapped do
           = image_tag representation(**variant_options)
       = fig_caption
+    - else
+      %figcaption.attachment__caption
+        - if caption = blob.try(:caption)
+          = caption
+        - else
+          %span.attachment__name= blob.filename
+          %span.attachment__size= number_to_human_size blob.byte_size
+
+
