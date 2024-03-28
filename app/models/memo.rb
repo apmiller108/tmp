@@ -33,7 +33,7 @@ class Memo < ApplicationRecord
   delegate :plain_text_body, :plain_text_attachments, to: :content
 
   after_save_commit do
-    ComputeStatsJob.perform_async(id)
+    ComputeStatsJob.perform_async(id) if content.body_previously_changed?
   end
 
   def default_color?

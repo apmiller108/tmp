@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_04_215719) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_27_151800) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -88,6 +88,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_04_215719) do
     t.datetime "updated_at", null: false
     t.string "title", limit: 100, null: false
     t.string "color", limit: 6
+    t.integer "image_attachment_count", default: 0, null: false
+    t.integer "audio_attachment_count", default: 0, null: false
+    t.integer "video_attachment_count", default: 0, null: false
+    t.integer "attachment_count", default: 0, null: false
     t.index ["user_id"], name: "index_memos_on_user_id"
   end
 
