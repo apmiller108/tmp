@@ -4,14 +4,14 @@ class Memo
 
     def perform(memo_id)
       memo = Memo.find(memo_id)
-      blob_content_type_counts = memo.content.embeds_blobs.group(:content_type).count
+      attachment_count_by_content_type = memo.content.blob_count_by_content_type
 
-      stats = blob_content_type_counts.each_with_object(default_counts) do |(content_type, count), counts|
+      stats = attachment_count_by_content_type.each_with_object(default_counts) do |(content_type, count), counts|
         type = "#{content_type.split('/')[0]}_attachment_count".to_sym
         counts[type] += count if type.in?(default_counts.keys)
       end
 
-      stats[:attachment_count] = blob_content_type_counts.values.sum
+      stats[:attachment_count] = attachment_count_by_content_type.values.sum
     end
 
     private

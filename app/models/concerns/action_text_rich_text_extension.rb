@@ -18,5 +18,9 @@ module ActionTextRichTextExtension
 
       plain_text_body.scan(ActiveStorage::Blob::PLAIN_TEXT_ATTACHMENT_PATTERN)
     end
+
+    def blob_count_by_content_type
+      embeds_blobs.group(:content_type).count
+    end
   end
 end
