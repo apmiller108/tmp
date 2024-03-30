@@ -5,7 +5,8 @@ class MemoCardComponent < ApplicationViewComponent
 
   attr_reader :memo
 
-  delegate :color, :title, :plain_text_attachments, to: :memo
+  delegate :color, :title, :plain_text_attachments, :image_attachment_count, :audio_attachment_count,
+           :video_attachment_count, :attachment_count, to: :memo
 
   def initialize(memo:)
     @memo = memo
@@ -62,6 +63,16 @@ class MemoCardComponent < ApplicationViewComponent
   end
 
   private
+
+  def attachment_summary_component_args
+    {
+      audio_count: audio_attachment_count,
+      image_count: image_attachment_count,
+      video_count: video_attachment_count,
+      all_count: attachment_count,
+      font_class:
+    }
+  end
 
   def sanitize_preview(content)
     sanitize(
