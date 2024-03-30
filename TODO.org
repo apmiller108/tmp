@@ -15,9 +15,11 @@ CLOSED: [2024-03-22 Fri 13:07]
 * DONE Update request specs
 CLOSED: [2024-03-22 Fri 16:05]
 
-* TODO add statistics columns to memo
+* DONE add statistics columns to memo
+  CLOSED: [2024-03-30 Sat 09:39]
 image_attachment_count, audio_attachment_count, video_attachment_count, attachment_count
-* TODO after save commit compute and store stats
+* DONE after save commit compute and store stats
+  CLOSED: [2024-03-30 Sat 09:39]
   - background job
   - can I use active record dirty?
 * TODO show icons and count in footer
@@ -28,3 +30,6 @@ image_attachment_count, audio_attachment_count, video_attachment_count, attachme
 * TODO Swap generating image placeholder with a status banner
 * TODO Remove placeholder on gen image job error
 * TODO Do the pending spes
+  - compute job
+  - update memo modal test
+

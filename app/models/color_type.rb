@@ -2,6 +2,7 @@ class ColorType < ActiveRecord::Type::String
   DEFAULT = 'e4f2fe'.freeze
 
   attr_reader :hex
+  alias hex_color hex
 
   def initialize(hex = nil)
     @hex = hex.presence || DEFAULT

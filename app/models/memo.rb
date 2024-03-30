@@ -30,10 +30,10 @@ class Memo < ApplicationRecord
   has_many :image_blobs, -> { image }, through: :rich_text_content, source: :embeds_blobs
   has_many :transcriptions, through: :audio_blobs
 
-  delegate :plain_text_body, :plain_text_attachments, to: :content
+  delegate :plain_text_body, :plain_text_attachments, :body_previously_changed?, to: :content
 
   after_save_commit do
-    ComputeStatsJob.perform_async(id) if content.body_previously_changed?
+    ComputeStatsJob.perform_async(id) if body_previously_changed?
   end
 
   def default_color?
@@ -44,10 +44,14 @@ class Memo < ApplicationRecord
     end
   end
 
+  def content_attachment_counts
+    @content_attachment_counts ||= content.blob_count_by_content_type
+  end
+
   private
 
   def color_inclusion
-    return if color.blank? || (color.is_a?(ColorType) ? color.hex : color).in?(COLORS)
+    return if color.blank? || (color.respond_to?(:hex_color) ? color.hex_color : color).in?(COLORS)
 
     errors.add(:color, 'is not included in the list')
   end
