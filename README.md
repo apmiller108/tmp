@@ -128,6 +128,7 @@ Rails convention.
 Adding and updating keys requires having a key (not in source control) for a particular environment. The keys are
 - config/credentials/development.key
 - config/credentials/production.key
+- config/credentials/test.key
 - config/master.key
 ## Hotwire
 Front end built with [turbo](https://turbo.hotwired.dev/) and [stimulus](https://stimulus.hotwired.dev/).
