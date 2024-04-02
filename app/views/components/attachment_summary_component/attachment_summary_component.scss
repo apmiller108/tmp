@@ -1,0 +1,12 @@
+.c-attachment-summary {
+  button {
+    margin-left: 0.5rem;
+    position: relative;
+    .badge {
+      font-size: 0.75rem;
+      position: absolute;
+      top: 0px;
+      right: 0px;
+    }
+  }
+}
