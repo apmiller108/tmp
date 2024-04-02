@@ -17,11 +17,19 @@ RSpec.describe AttachmentIconComponent, type: :component do
     expect(page).to have_css "turbo-frame#blob_preview_#{blob_id}[loading='lazy'][src='#{blob_preview_path(blob_id)}']"
   end
 
-  context 'with an image content type' do
+  context 'with image content type' do
     let(:content_type) { 'image/png' }
 
     it 'renders the proper icon' do
       expect(page).to have_css 'i.bi.bi-file-earmark-image'
+    end
+  end
+
+  context 'with audio content type' do
+    let(:content_type) { 'audio/wav' }
+
+    it 'renders the proper icon' do
+      expect(page).to have_css 'i.bi.bi-file-earmark-music'
     end
   end
 end

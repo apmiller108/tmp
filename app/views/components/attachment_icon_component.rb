@@ -26,6 +26,8 @@ class AttachmentIconComponent < ApplicationViewComponent
     case content_type
     when %r{\Aimage/}
       'bi bi-file-earmark-image'
+    when %r{\Aaudio/}
+      'bi bi-file-earmark-music'
     else
       'bi bi-file-earmark'
     end
