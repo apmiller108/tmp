@@ -20,10 +20,19 @@ RSpec.describe MemoCardComponent, type: :component do
       haml_template 'ATTACHMENT_ICON_COMPONENT'
     end
   end
+  let(:attachment_summary_component) do
+    Class.new(ApplicationViewComponent) do
+      haml_template 'ATTACHMENT_SUMMARY_COMPONENT'
+    end
+  end
 
   before do
     stub_const('AttachmentIconComponent', attachment_icon_component)
     allow(AttachmentIconComponent).to receive(:new).and_call_original
+
+    stub_const('AttachmentSummaryComponent', attachment_summary_component)
+    allow(AttachmentSummaryComponent).to receive(:new).and_call_original
+
     with_current_user(user) do
       render_inline component
     end
@@ -46,5 +55,21 @@ RSpec.describe MemoCardComponent, type: :component do
     it 'instantiates an AttachmentIconComponent' do
       expect(AttachmentIconComponent).to have_received(:new).with(blob_id: 1, content_type: 'image/png')
     end
+  end
+
+  it 'instantiates an AttachmentSummaryComponent' do
+    expect(AttachmentSummaryComponent).to(
+      have_received(:new).with(
+        audio_count: memo.audio_attachment_count,
+        image_count: memo.image_attachment_count,
+        video_count: memo.video_attachment_count,
+        all_count: memo.attachment_count,
+        font_class: 'text-dark'
+      )
+    )
+  end
+
+  it 'renders an AttachmentSummaryComponent' do
+    expect(page).to have_content 'ATTACHMENT_SUMMARY_COMPONENT'
   end
 end

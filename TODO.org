@@ -22,7 +22,8 @@ image_attachment_count, audio_attachment_count, video_attachment_count, attachme
   CLOSED: [2024-03-30 Sat 09:39]
   - background job
   - can I use active record dirty?
-* TODO show icons and count in footer
+* DONE show icons and count in footer
+  CLOSED: [2024-04-01 Mon 21:16]
 * TODO on click, show gallery for images
   with download links
 * TODO on click, show file names
@@ -30,6 +31,10 @@ image_attachment_count, audio_attachment_count, video_attachment_count, attachme
 * TODO Swap generating image placeholder with a status banner
 * TODO Remove placeholder on gen image job error
 * TODO Do the pending spes
+  - attachment summary component
+  - blob preview component
+  - blob previews request spec
+  - spinner component
   - compute job
   - update memo modal test
 
