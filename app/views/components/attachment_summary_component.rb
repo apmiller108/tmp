@@ -24,7 +24,15 @@ class AttachmentSummaryComponent < ApplicationViewComponent
     }.select { |_k, v| v.positive? }
   end
 
-  private
+  def tooltip(count_type, count)
+    file_type = case count_type
+                when :image_count, :video_count, :audio_count
+                  count_type.to_s.split('_')[0]
+                else
+                  'file'
+                end
+    "#{count} #{file_type.pluralize(count)}"
+  end
 
   # rubocop:disable Metrics/MethodLength
   def icon_class(count_type)

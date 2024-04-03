@@ -1,5 +1,5 @@
-.c-attachment-summary
+.c-attachment-summary{ data: { controller: 'attachment-summary' } }
   - counts.each do |count_type, count|
-    %button.btn.icon-btn{ type: :button, class: font_class }
+    %button.btn.icon-btn{ type: :button, class: font_class, data: { 'bs-toggle' => 'tooltip', 'bs-title' => tooltip(count_type, count) } }
       %i{ class: icon_class(count_type) }
       %span.badge.rounded-pill.text-bg-success= count
