@@ -1,15 +1,23 @@
-# frozen_string_literal: true
-
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe AttachmentSummaryComponent, type: :component do
-  pending "add some examples to (or delete) #{__FILE__}"
+  subject { page }
 
-  # it "renders something useful" do
-  #   expect(
-  #     render_inline(described_class.new(attr: "value")) { "Hello, components!" }.css("p").to_html
-  #   ).to include(
-  #     "Hello, components!"
-  #   )
-  # end
+  let(:component) { described_class.new(all_count: 5, audio_count: 2, image_count: 1, video_count: 0, font_class:) }
+  let(:font_class) { 'foo-class' }
+
+  before do
+    render_inline component
+  end
+
+  it { is_expected.to have_css '.c-attachment-summary[data-controller="attachment-summary"]' }
+
+  it { is_expected.to have_css 'button[data-bs-title="1 image"]' }
+  it { is_expected.to have_css 'i.bi.bi-file-earmark-image' }
+
+  it { is_expected.to have_css 'button[data-bs-title="2 audios"]' }
+  it { is_expected.to have_css 'i.bi.bi-file-earmark-music' }
+
+  it { is_expected.to have_css 'button[data-bs-title="2 files"]' }
+  it { is_expected.to have_css 'i.bi.bi-file-earmark' }
 end
