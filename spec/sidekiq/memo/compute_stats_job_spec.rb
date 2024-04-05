@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'sidekiq/testing'
 
 RSpec.describe Memo::ComputeStatsJob, type: :job do
   describe '#perform' do
