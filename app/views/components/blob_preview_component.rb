@@ -3,14 +3,14 @@
 class BlobPreviewComponent < ApplicationViewComponent
   attr_reader :blob
 
-  delegate :image?, to: :blob
+  delegate :image?, :filename, to: :blob
 
   def initialize(blob:)
     @blob = blob
   end
 
-  def filename
-    blob.filename.to_s[0, 15]
+  def short_filename
+    filename.to_s.truncate(25)
   end
 
   def variant_options

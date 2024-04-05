@@ -3,4 +3,4 @@
     = render SpinnerComponent.new('data-blob-preview-target': 'spinner')
     = image_tag blob.variant(**variant_options), data: { 'blob-preview-target' => 'image' }, title: filename
   - else
-    = filename
+    = short_filename
