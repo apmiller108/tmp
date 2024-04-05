@@ -135,7 +135,9 @@ Front end built with [turbo](https://turbo.hotwired.dev/) and [stimulus](https:/
 
 See also https://notes.alex-miller.co/20231125150622-turbo_streams/
 
-Live reloading in development is handled by [hotwire-livereload](https://github.com/kirillplatonov/hotwire-livereload)
+- Live reloading in development is handled by [hotwire-livereload](https://github.com/kirillplatonov/hotwire-livereload)
+- Convenience functions for behaviors added to Stimulus with [stimulus-use](https://github.com/stimulus-use/stimulus-use)
+
 
 ## View Component
 This uses the [view_component](https://viewcomponent.org/guide/getting-started.html) library.
