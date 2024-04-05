@@ -104,6 +104,6 @@ RSpec.describe 'Create and view memo', type: :system do
 
     # Doing this in an after suite hook or after all hook causes the test to
     # fail as if the file is being deleted before the test has completed.
-    FileUtils.rm_rf(ActiveStorage::Blob.service.root)
+    FileUtils.rm_rf(ActiveStorage::Blob.service.root) if ENV['CI'].blank?
   end
 end

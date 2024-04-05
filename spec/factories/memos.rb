@@ -3,10 +3,10 @@ FactoryBot.define do
     title { Faker::DcComics.title }
     content { '<h1>Content</h1>' }
     color { nil }
-    audio_attachment_count { 1 }
-    image_attachment_count { 2 }
-    video_attachment_count { 3 }
-    attachment_count { 6 }
+    audio_attachment_count { 0 }
+    image_attachment_count { 0 }
+    video_attachment_count { 0 }
+    attachment_count { 0 }
     user
 
     trait :with_user do

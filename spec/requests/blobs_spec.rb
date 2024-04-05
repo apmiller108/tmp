@@ -16,7 +16,7 @@ RSpec.describe 'Blobs', type: :request do
     end
 
     after(:all) do
-      FileUtils.rm_rf(ActiveStorage::Blob.service.root)
+      FileUtils.rm_rf(ActiveStorage::Blob.service.root) if ENV['CI'].blank?
     end
 
     it_behaves_like 'an authenticated route'
