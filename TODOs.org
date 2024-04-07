@@ -1,0 +1,12 @@
+:PROPERTIES:
+:CATEGORY: tmp
+:END:
+* TODO Build claude adapter
+* TODO Setup presets
+  https://docs.anthropic.com/claude/prompt-library
+* TODO Do not delete prompt
+* TODO Move generative text placeholder out of input field into header
+* TODO Insert generated text into a quote block
+* TODO Associate a conversation to a Memo
+  persist dialogue between use the LLM
+* TODO Submit previous dialog with each generative text request

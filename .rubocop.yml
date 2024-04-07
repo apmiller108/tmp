@@ -32,6 +32,11 @@ Metrics/BlockLength:
     - 'app/controllers/**/*'
     - 'app/**/concerns/**/*'
 Metrics/MethodLength:
+  CountAsOne:
+    - 'array'
+    - 'hash'
+    - 'heredoc'
+    - 'method_call'
   Exclude:
     - 'app/controllers/**/*'
     - 'app/sidekiq/**/*'
