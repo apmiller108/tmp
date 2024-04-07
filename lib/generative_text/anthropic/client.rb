@@ -6,6 +6,7 @@ class GenerativeText
     HAIKU = 'claude-3-haiku-20240307'.freeze
     SONNET = 'claude-3-sonnet-20240229'.freeze
     MAX_TOKENS = 1024 # 4096 is the max output
+    ClientError = Class.new(StandardError)
 
     class Client
       def initialize
@@ -31,7 +32,10 @@ class GenerativeText
         response = conn.post(MESSAGES_PATH) do |req|
           req.body = request_body.to_json
         end
+        # TODO return InvokeModelResponse object
         JSON.parse(response.body)
+      rescue Faraday::ClientError => e
+        raise ClientError, "#{e.response_status}: #{e.response_body}"
       end
 
       # yield block to [InvokeModelStreamResponse]
@@ -49,7 +53,7 @@ class GenerativeText
             'anthropic-version': VERSION
           }
         ) do |f|
-          # f.response :raise_error
+          f.response :raise_error
         end
       end
     end
