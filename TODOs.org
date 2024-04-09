@@ -1,12 +1,18 @@
 :PROPERTIES:
 :CATEGORY: tmp
 :END:
-* TODO Build claude adapter
-* TODO Setup presets
+* DONE Build claude adapter
+  CLOSED: [2024-04-08 Mon 20:57]
+* DONE Setup presets
+  CLOSED: [2024-04-08 Mon 20:57]
   https://docs.anthropic.com/claude/prompt-library
-* TODO Do not delete prompt
-* TODO Move generative text placeholder out of input field into header
+* TODO Add preset drop down to form [/]
+  - [ ] Add preset drop down
+  - [ ] Add temperature drop down 0 - 1 increments of 0.1
+    Set the temp based on the preset
+* TODO Do not delete prompt on sending request
 * TODO Insert generated text into a quote block
+* TODO Move generative text placeholder out of input field into header
 * TODO Associate a conversation to a Memo
   persist dialogue between use the LLM
 * TODO Submit previous dialog with each generative text request
