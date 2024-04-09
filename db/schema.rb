@@ -10,7 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_27_151800) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_08_233924) do
+  create_schema "rollback"
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -80,6 +82,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_27_151800) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_generate_text_requests_on_user_id"
+  end
+
+  create_table "generative_text_presets", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "description", null: false
+    t.text "system_message", null: false
+    t.integer "temperature", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "memos", force: :cascade do |t|
