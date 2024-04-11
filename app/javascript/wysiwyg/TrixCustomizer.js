@@ -107,17 +107,35 @@ export default class TrixCustomizer {
     return `
       <div class="trix-dialog trix-dialog--heading trix-custom-dialog trix-custom-generate-text" data-trix-dialog="generateText"
             data-trix-dialog-attribute="generateText" data-wysiwyg-editor-target="generateTextDialog">
-        <div class="d-flex" >
-          <input type="hidden" name="generate_text_id" value="" data-wysiwyg-editor-target="generateTextId" autocomplete="off">
-          <input type="text" class="generate-content-input form-control form-control-lg" name="generateText"
-                 data-action="keydown.enter->wysiwyg-editor#submitGenerateText:prevent"
-                 data-wysiwyg-editor-type-param="text"
-                 data-wysiwyg-editor-target="generateTextInput" data-trix-input required>
-          <div class="trix-button-group d-inline-flex">
-            <input type="button" class="trix-button trix-button--dialog" data-trix-method="setAttribute"
-                   value="Submit"
-                   data-wysiwyg-editor-type-param="text"
-                   data-action="click->wysiwyg-editor#submitGenerateText:prevent">
+        <div class="grid" >
+          <div class="g-col-6">
+            <div class="form-floating gen-text-preset-selects">
+              <select id="gen-text-presets" class="form-select form-select-lg" aria-label="gen text presets"
+                      name="generative_text_preset_id" data-wysiwyg-editor-target="generateTextPreset">
+              </select>
+              <label for="generative_text_preset_id">Preset</label>
+            </div>
+          </div>
+          <div class="g-col-6">
+            <div class="form-floating temperature-select">
+              <select id="temperature" class="form-select form-select-lg" aria-label="style preset" name="temperature"
+                      data-wysiwyg-editor-target="generateTextTemperature">
+              </select>
+              <label for="temperature">Temperature</label>
+            </div>
+          </div>
+          <div class="d-flex g-col-12" >
+            <input type="hidden" name="generate_text_id" value="" data-wysiwyg-editor-target="generateTextId" autocomplete="off">
+            <input type="text" class="generate-content-input form-control form-control-lg" name="generateText"
+                  data-action="keydown.enter->wysiwyg-editor#submitGenerateText:prevent"
+                  data-wysiwyg-editor-type-param="text"
+                  data-wysiwyg-editor-target="generateTextInput" data-trix-input required>
+            <div class="trix-button-group d-inline-flex">
+              <input type="button" class="trix-button trix-button--dialog" data-trix-method="setAttribute"
+                    value="Submit"
+                    data-wysiwyg-editor-type-param="text"
+                    data-action="click->wysiwyg-editor#submitGenerateText:prevent">
+            </div>
           </div>
         </div>
       </div>

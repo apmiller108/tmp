@@ -17,18 +17,18 @@ class WysiwygEditorComponent < ApplicationViewComponent
   end
 
   def gen_image_style_options_json
-    JSON.dump(
-      GenerativeImage::Stability::STYLE_PRESETS.map do |preset|
-        { value: preset, label: preset.tr('-', ' ').titleize, selected: preset == 'photographic' }
-      end
-    )
+    GenerativeImage::Stability::STYLE_PRESETS.map do |preset|
+      { value: preset, label: preset.tr('-', ' ').titleize, selected: preset == 'photographic' }
+    end.to_json
   end
 
   def gen_image_dimension_options_json
-    JSON.dump(
-      GenerativeImage::Stability::DIMENSIONS.map do |dimension|
-        { value: dimension, label: dimension, selected: dimension == '320x320' }
-      end
-    )
+    GenerativeImage::Stability::DIMENSIONS.map do |dimension|
+      { value: dimension, label: dimension, selected: dimension == '320x320' }
+    end.to_json
+  end
+
+  def gen_text_preset_options_json
+    GenerativeTextPreset.all.map { |p| { value: p.id, label: p.name.titleize } }.to_json
   end
 end

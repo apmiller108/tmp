@@ -15,7 +15,7 @@ export default class WysiwygEditor extends Controller {
   static targets = [
     'generateTextBtn', 'generateTextDialog', 'generateTextId', 'generateTextInput', 'generateTextSubmit',
     'generateImageBtn', 'generateImageDialog', 'generateImageName', 'generateImageSubmit', 'generateImagePromptGroup',
-    'generateImageDimensions', 'generateImageStyle'
+    'generateImageDimensions', 'generateImageStyle', 'generateTextTemperature', 'generateTextPreset'
   ];
 
   editorElem;
@@ -35,6 +35,10 @@ export default class WysiwygEditor extends Controller {
 
   get generateImageDimensionsOptions() {
     return JSON.parse(this.element.dataset.dimensionOptions)
+  }
+
+  get generateTextPresetOptions() {
+    return JSON.parse(this.element.dataset.genTextPresetOptions)
   }
 
   connect () {
@@ -67,6 +71,12 @@ export default class WysiwygEditor extends Controller {
   generateImageDimensionsTargetConnected(element) {
     const options = this.generateImageDimensionsOptions.map((o) => this.optionForSelect(o)).join("\n")
     element.innerHTML = options
+  }
+
+  generateTextPresetTargetConnected(element) {
+    const options = this.generateTextPresetOptions.map((o) => this.optionForSelect(o))
+    options.unshift('<option></option')
+    element.innerHTML = options.join("\n")
   }
 
   optionForSelect({ value, label, selected }) {
