@@ -29,7 +29,7 @@ class WysiwygEditorComponent < ApplicationViewComponent
   end
 
   def gen_text_preset_options_json
-    GenerativeTextPreset.all.map { |p| { value: p.id, label: p.name.titleize } }.to_json
+    GenerativeTextPreset.all.map { |p| { value: p.id, label: p.name.titleize, temperature: p.temperature } }.to_json
   end
 
   def gen_text_temperature_options_json
