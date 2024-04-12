@@ -6,13 +6,20 @@
 * DONE Setup presets
   CLOSED: [2024-04-08 Mon 20:57]
   https://docs.anthropic.com/claude/prompt-library
-* TODO Add preset drop down to form [/]
-  - [ ] Add preset drop down
-  - [ ] Add temperature drop down 0 - 1 increments of 0.1
+* DONE Add preset drop down to form [2/2]
+  CLOSED: [2024-04-11 Thu 21:12]
+  - [X] Add preset drop down
+  - [X] Add temperature drop down 0 - 1 increments of 0.1
     Set the temp based on the preset
+* TODO Wire up the claude adapter
+  - [ ] Add temperature column float to generate_text_requests
+  - [ ] Rename GenerativeTextPreset to GenerateTextPreset
+  - [ ] Add optional reference to generate_text_preset
+  - [ ] Use Claude Client in generate_text_job. Pass in temperature and system message.
 * TODO Do not delete prompt on sending request
 * TODO Insert generated text into a quote block
 * TODO Move generative text placeholder out of input field into header
 * TODO Associate a conversation to a Memo
   persist dialogue between use the LLM
 * TODO Submit previous dialog with each generative text request
+* TODO Broadcast MemoCardComponent from comp stats job
