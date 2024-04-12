@@ -41,6 +41,10 @@ export default class WysiwygEditor extends Controller {
     return JSON.parse(this.element.dataset.genTextPresetOptions)
   }
 
+  get generateTextTemperatureOptions() {
+    return JSON.parse(this.element.dataset.genTextTemperatureOptions)
+  }
+
   connect () {
     this.editorElem = this.element.querySelector(TrixSelectors.EDITOR)
     this.editorElem.id = this.editorId
@@ -77,6 +81,11 @@ export default class WysiwygEditor extends Controller {
     const options = this.generateTextPresetOptions.map((o) => this.optionForSelect(o))
     options.unshift('<option></option')
     element.innerHTML = options.join("\n")
+  }
+
+  generateTextTemperatureTargetConnected(element) {
+    const options = this.generateTextTemperatureOptions.map((o) => this.optionForSelect(o)).join("\n")
+    element.innerHTML = options
   }
 
   optionForSelect({ value, label, selected }) {
