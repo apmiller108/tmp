@@ -1,3 +1,5 @@
+require 'aws-sdk-bedrockruntime'
+
 class GenerativeText
   InvalidRequestError = Class.new(StandardError)
 

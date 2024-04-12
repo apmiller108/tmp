@@ -124,7 +124,9 @@ export default class WysiwygEditor extends Controller {
     try {
       response = await generateText({
         prompt: this.generateTextInputTarget.value,
-        text_id: this.generateTextIdTarget.value
+        text_id: this.generateTextIdTarget.value,
+        temperature: this.generateTextTemperatureTarget.value,
+        generate_text_preset_id: this.generateTextPresetTarget.value,
       })
 
       if (response.status === 401 || response.status === 403) {

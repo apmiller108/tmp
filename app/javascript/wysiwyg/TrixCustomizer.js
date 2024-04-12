@@ -111,9 +111,9 @@ export default class TrixCustomizer {
           <div class="g-col-6">
             <div class="form-floating gen-text-preset-selects">
               <select id="gen-text-presets" class="form-select form-select-lg" aria-label="gen text presets"
-                      name="generative_text_preset_id" data-wysiwyg-editor-target="generateTextPreset">
+                      name="generate_text_preset_id" data-wysiwyg-editor-target="generateTextPreset">
               </select>
-              <label for="generative_text_preset_id">Preset</label>
+              <label for="generate_text_preset_id">Preset</label>
             </div>
           </div>
           <div class="g-col-6">

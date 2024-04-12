@@ -11,11 +11,13 @@
   - [X] Add preset drop down
   - [X] Add temperature drop down 0 - 1 increments of 0.1
     Set the temp based on the preset
-* TODO Wire up the claude adapter
-  - [ ] Add temperature column float to generate_text_requests
-  - [ ] Rename GenerativeTextPreset to GenerateTextPreset
-  - [ ] Add optional reference to generate_text_preset
-  - [ ] Use Claude Client in generate_text_job. Pass in temperature and system message.
+* DONE Wire up the claude adapter [4/4]
+CLOSED: [2024-04-12 Fri 14:43]
+  - [X] Add temperature column float to generate_text_requests
+  - [X] Rename GenerativeTextPreset to GenerateTextPreset
+  - [X] Add optional reference to generate_text_preset
+  - [X] Use Claude Client in generate_text_job. Pass in temperature and system message.
+* TODO auto set temp when selecting a preset
 * TODO Do not delete prompt on sending request
 * TODO Insert generated text into a quote block
 * TODO Move generative text placeholder out of input field into header

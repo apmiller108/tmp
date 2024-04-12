@@ -5,7 +5,7 @@ RSpec.describe 'WysiwygEditorComponent', type: :system do
   let(:user) { create :user }
   let(:prompt) { 'This is my prompt' }
   let(:generative_text) { 'this is the generated text' }
-  let(:generative_text_response) do
+  let(:titan_generative_text_response) do
     <<~JSON
       {
         "inputTextTokenCount": 5,
@@ -16,6 +16,27 @@ RSpec.describe 'WysiwygEditorComponent', type: :system do
             "completionReason": "FINISH"
           }
         ]
+      }
+    JSON
+  end
+
+  let(:claude_generative_text_response) do
+    <<~JSON
+      {
+        "id": "msg_01DMcCdRr6gaWDuZs7Y63rhe",
+        "type": "message",
+        "role": "assistant",
+        "content": [{
+            "type": "text",
+            "text": "#{generative_text}"
+        }],
+        "model": "claude-3-haiku-20240307",
+        "stop_reason": "end_turn",
+        "stop_sequence": null,
+        "usage": {
+            "input_tokens": 79,
+            "output_tokens": 942
+        }
       }
     JSON
   end
@@ -42,7 +63,15 @@ RSpec.describe 'WysiwygEditorComponent', type: :system do
           maxTokenCount: 500, stopSequences: [], temperature: 0.3, topP: 0.8
         }
       }.to_json)
-      .to_return(status: 200, body: generative_text_response)
+      .to_return(status: 200, body: titan_generative_text_response)
+
+    stub_request(:post, 'https://api.anthropic.com/v1/messages')
+      .with(
+        body: {
+          model: 'claude-3-haiku-20240307', max_tokens: 1024, temperature: 0.0,
+          messages: [{ 'role' => 'user', 'content' => [{ 'type' => 'text', 'text' => 'This is my prompt' }] }]
+        }.to_json
+      ).to_return(status: 200, body: claude_generative_text_response)
 
     stub_request(:post, 'https://api.stability.ai/v1/generation/stable-diffusion-xl-1024-v1-0/text-to-image')
       .with(

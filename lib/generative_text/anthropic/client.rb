@@ -19,8 +19,7 @@ class GenerativeText
         request_body = {
           model: HAIKU,
           max_tokens: MAX_TOKENS,
-          temperature: params[:temp], # TODO: this should be bound to the preset/system message
-          system: params[:system_message], # TODO: combine with temperature
+          temperature: params[:temperature],
           messages: [
             {
               role: :user,
@@ -31,6 +30,7 @@ class GenerativeText
             }
           ]
         }
+        request_body[:system] = params[:system_message] if params[:system_message]
         response = conn.post(MESSAGES_PATH) do |req|
           req.body = request_body.to_json
         end

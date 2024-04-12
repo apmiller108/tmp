@@ -2,10 +2,10 @@ function getCsrfToken() {
   return document.querySelector('meta[name="csrf-token"]')?.content
 }
 
-export const generateText = ({ prompt, text_id }) => {
+export const generateText = ({ prompt, text_id, temperature, generate_text_preset_id }) => {
   const body = JSON.stringify({
     generate_text_request: {
-      prompt, text_id
+      prompt, text_id, temperature, generate_text_preset_id
     }
   })
   const headers = {

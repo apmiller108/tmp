@@ -6,7 +6,7 @@ class GenerateTextJob
 
   def perform(generate_text_request_id)
     generate_text_request = GenerateTextRequest.find(generate_text_request_id)
-    response = invoke_model(prompt: generate_text_request.prompt)
+    response = invoke_model(generate_text_request)
 
     if response
       broadcast_content(generate_text_request, response)
@@ -39,10 +39,10 @@ class GenerateTextJob
     )
   end
 
-  def invoke_model(prompt:)
-    GenerativeText.new.invoke_model(
-      prompt:,
-      temp: 0.3,
+  def invoke_model(generate_text_request)
+    client = GenerativeText::Anthropic::Client.new
+    GenerativeText.new(client).invoke_model(
+      **generate_text_request.slice(:prompt, :temperature, :system_message).symbolize_keys,
       max_tokens: 500
     )
   rescue StandardError => e

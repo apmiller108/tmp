@@ -21,6 +21,6 @@ class GenerateTextRequestsController < ApplicationController
   private
 
   def generate_text_request_params
-    params.require(:generate_text_request).permit(:prompt, :text_id)
+    params.require(:generate_text_request).permit(:prompt, :text_id, :temperature, :generate_text_preset_id)
   end
 end
