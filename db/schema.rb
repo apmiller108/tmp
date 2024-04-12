@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_08_233924) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_12_182824) do
   create_schema "rollback"
 
   # These are extensions that must be enabled in order to support this database
@@ -75,22 +75,25 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_08_233924) do
     t.index ["user_id"], name: "index_generate_image_requests_on_user_id"
   end
 
+  create_table "generate_text_presets", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "description", null: false
+    t.text "system_message", null: false
+    t.integer "temperature", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "generate_text_requests", force: :cascade do |t|
     t.string "text_id", limit: 50, null: false
     t.text "prompt", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "temperature"
+    t.bigint "generate_text_preset_id"
+    t.index ["generate_text_preset_id"], name: "index_generate_text_requests_on_generate_text_preset_id"
     t.index ["user_id"], name: "index_generate_text_requests_on_user_id"
-  end
-
-  create_table "generative_text_presets", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "description", null: false
-    t.text "system_message", null: false
-    t.float "temperature", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "memos", force: :cascade do |t|
@@ -177,6 +180,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_08_233924) do
   add_foreign_key "active_storage_blobs_generate_image_requests", "generate_image_requests"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "generate_image_requests", "users"
+  add_foreign_key "generate_text_requests", "generate_text_presets"
   add_foreign_key "generate_text_requests", "users"
   add_foreign_key "memos", "users", on_delete: :cascade
   add_foreign_key "prompts", "generate_image_requests"
