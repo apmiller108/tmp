@@ -81,6 +81,12 @@ export default class WysiwygEditor extends Controller {
     const options = this.generateTextPresetOptions.map((o) => this.optionForSelect(o))
     options.unshift('<option></option')
     element.innerHTML = options.join("\n")
+
+    // Automatically set the temperature select value to selected preset's temperature
+    element.addEventListener('change', (e) => {
+      const { temperature } = this.generateTextPresetOptions.find(o => o.value == e.target.value)
+      this.generateTextTemperatureTarget.value = temperature
+    });
   }
 
   generateTextTemperatureTargetConnected(element) {

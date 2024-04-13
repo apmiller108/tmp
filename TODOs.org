@@ -17,7 +17,9 @@ CLOSED: [2024-04-12 Fri 14:43]
   - [X] Rename GenerativeTextPreset to GenerateTextPreset
   - [X] Add optional reference to generate_text_preset
   - [X] Use Claude Client in generate_text_job. Pass in temperature and system message.
-* TODO auto set temp when selecting a preset
+* DONE auto set temp when selecting a preset
+  CLOSED: [2024-04-13 Sat 09:00]
+* TODO Show flash message on failure of gen text
 * TODO Do not delete prompt on sending request
 * TODO Insert generated text into a quote block
 * TODO Move generative text placeholder out of input field into header
