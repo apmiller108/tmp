@@ -1,7 +1,7 @@
 class GenerativeText
   module Anthropic
     VERSION = '2023-06-01'.freeze
-    HOST = 'https://api.anthropic.com/'
+    HOST = 'https://api.anthropic.com/'.freeze
     MESSAGES_PATH = '/v1/messages'.freeze
     HAIKU = 'claude-3-haiku-20240307'.freeze
     SONNET = 'claude-3-sonnet-20240229'.freeze
