@@ -79,7 +79,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_12_182824) do
     t.string "name", null: false
     t.string "description", null: false
     t.text "system_message", null: false
-    t.integer "temperature", null: false
+    t.float "temperature", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
