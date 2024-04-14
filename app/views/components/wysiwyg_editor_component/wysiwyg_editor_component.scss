@@ -1,4 +1,11 @@
 .c-wysiwyg-editor {
+  .notifications-bar {
+    p {
+      height: 2rem;
+      max-height: 2rem;
+      padding: 0.25rem 0;
+    }
+  }
   trix-toolbar {
     .trix-button-custom {
       padding: 0.2rem 0 0;

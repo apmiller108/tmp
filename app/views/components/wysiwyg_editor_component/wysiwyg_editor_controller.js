@@ -15,7 +15,7 @@ export default class WysiwygEditor extends Controller {
   static targets = [
     'generateTextBtn', 'generateTextDialog', 'generateTextId', 'generateTextInput', 'generateTextSubmit',
     'generateImageBtn', 'generateImageDialog', 'generateImageName', 'generateImageSubmit', 'generateImagePromptGroup',
-    'generateImageDimensions', 'generateImageStyle', 'generateTextTemperature', 'generateTextPreset'
+    'generateImageDimensions', 'generateImageStyle', 'generateTextTemperature', 'generateTextPreset', 'notification'
   ];
 
   editorElem;
@@ -124,10 +124,9 @@ export default class WysiwygEditor extends Controller {
 
     this.generateTextIdTarget.value = id
 
-    this.insertGenerativePlaceholder(id, type)
-
     let response;
     try {
+      this.setNotification('Generating text...')
       response = await generateText({
         prompt: this.generateTextInputTarget.value,
         text_id: this.generateTextIdTarget.value,
@@ -140,8 +139,7 @@ export default class WysiwygEditor extends Controller {
       }
 
       if (response.status === 422) {
-        const placeHolderDiv = document.getElementById(id)
-        placeHolderDiv?.parentElement?.remove()
+        this.clearNotification()
       }
 
       if (response.ok || response.status === 422) {
@@ -157,10 +155,7 @@ export default class WysiwygEditor extends Controller {
       }
     } catch (err) {
       console.log(err)
-
-      // Remove the placeholder attachment figure
-      const placeHolderDiv = document.getElementById(id)
-      placeHolderDiv?.parentElement?.remove()
+      this.clearNotification()
       alert('Unable to generate text')
     }
   }
@@ -246,16 +241,20 @@ export default class WysiwygEditor extends Controller {
     const selectedRange = this.editor.getSelectedRange()
     const placeHolderDiv = document.getElementById(text_id)
     try {
-      if (placeHolderDiv && !error) {
+      if (!error) {
         this.editor.recordUndoEntry("InsertGenText")
-        this.editor.setSelectedRange(selectedRange[0])
+        // Insert the content at the end of the document, with 2 line break prepended.
+        const docLength = this.editor.getDocument().getLength()
+        this.editor.setSelectedRange(docLength - 1)
+        this.editor.insertLineBreak()
+        this.editor.insertLineBreak()
         this.editor.insertString(content)
       }
     } catch (err) {
       console.log(err)
       alert('Unable to generate text')
     } finally {
-      document.getElementById(text_id).parentElement.remove()
+      this.clearNotification()
     }
   }
 
@@ -290,6 +289,16 @@ export default class WysiwygEditor extends Controller {
     const timestamp = new Date().getTime()
     const random = Math.floor(Math.random() * 10000)
     return `${prefix}_${timestamp}_${random}`
+  }
+
+  setNotification(text) {
+    this.notificationTarget.textContent = 'Generating text'
+    this.notificationTarget.classList.add('alert', 'alert-info', 'i-pulse')
+  }
+
+  clearNotification() {
+    this.notificationTarget.textContent = ''
+    this.notificationTarget.classList.remove('alert', 'alert-info', 'i-pulse')
   }
 
   insertGenerativePlaceholder(id, type) {

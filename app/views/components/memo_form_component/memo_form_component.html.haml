@@ -19,6 +19,6 @@
         - else
           %button.btn.icon-btn.flex-grow-0{data: { controller: 'modal-closer' }}
             %i.bi.bi-x-lg
-    %div.mt-3{ class: [memo.errors[:content].present? && 'field_with_errors'] }
+    %div{ class: [memo.errors[:content].present? && 'field_with_errors'] }
       = render WysiwygEditorComponent.new(object: memo, method: :content)
 
