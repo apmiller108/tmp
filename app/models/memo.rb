@@ -20,8 +20,6 @@ class Memo < ApplicationRecord
   #    content.embeds_blobs (this is through embeds_attachments)
   has_rich_text :content
 
-  attribute :color, :color_type
-
   validates :title, presence: true
   validate :color_inclusion
 
@@ -36,12 +34,12 @@ class Memo < ApplicationRecord
     ComputeStatsJob.perform_async(id) if body_previously_changed?
   end
 
+  def color
+    ColorType.new(super)
+  end
+
   def default_color?
-    if color.respond_to?(:default?)
-      color.default?
-    else
-      ColorType.new(color).default?
-    end
+    color.default?
   end
 
   def content_attachment_counts
@@ -51,7 +49,7 @@ class Memo < ApplicationRecord
   private
 
   def color_inclusion
-    return if color.blank? || (color.respond_to?(:hex_color) ? color.hex_color : color).in?(COLORS)
+    return if color.hex_color.in?(COLORS)
 
     errors.add(:color, 'is not included in the list')
   end

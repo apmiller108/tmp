@@ -1,4 +1,4 @@
-class ColorType < ActiveRecord::Type::String
+class ColorType
   DEFAULT = 'e4f2fe'.freeze
 
   attr_reader :hex
@@ -6,26 +6,6 @@ class ColorType < ActiveRecord::Type::String
 
   def initialize(hex = nil)
     @hex = hex.presence || DEFAULT
-  end
-
-  def serialize(value)
-    if value.is_a?(ColorType)
-      value.hex
-    else
-      value
-    end
-  end
-
-  def cast(value)
-    if value.is_a?(ColorType)
-      super(value.hex)
-    else
-      super(value)
-    end
-  end
-
-  def deserialize(value)
-    self.class.new(value)
   end
 
   def to_rgb

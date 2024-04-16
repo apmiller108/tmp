@@ -21,35 +21,6 @@ RSpec.describe ColorType, type: :model do
     end
   end
 
-  describe '#serialize' do
-    it 'returns the hex string' do
-      color_type = described_class.new
-      expect(color_type.serialize(color_type)).to eq(color_type.hex)
-    end
-
-    context 'when already a hex string' do
-      it 'returns the hex string' do
-        hex = 'ffffff'
-        color_type = described_class.new
-        expect(color_type.serialize(hex)).to eq(hex)
-      end
-    end
-  end
-
-  describe '#deserialize' do
-    subject(:color_type) { described_class.new }
-
-    it 'creates a new instance with the provided value' do
-      deserialized = color_type.deserialize(hex)
-      expect(deserialized).to be_a described_class
-    end
-
-    it 'sets the value to the hex property' do
-      deserialized = color_type.deserialize(hex)
-      expect(deserialized.hex).to eq hex
-    end
-  end
-
   describe '#to_rgb' do
     it 'returns an array with RGB values' do
       color_type = described_class.new(hex)
