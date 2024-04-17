@@ -1,14 +1,10 @@
-test:
-  service: Disk
-  root: <%= Rails.root.join("tmp/storage") %>
-
-amazon_dev:
-  service: S3
-  access_key_id: <%= Rails.application.credentials.dig(:aws, :access_key_id) %>
-  secret_access_key: <%= Rails.application.credentials.dig(:aws, :secret_access_key) %>
-  region: us-east-1
-  bucket: <%= Rails.application.credentials.dig(:aws, :bucket) %>
-  retry_limit: 0
+# primary:
+#   service: S3
+#   access_key_id: <%= Rails.application.credentials.dig(:aws, :access_key_id) %>
+#   secret_access_key: <%= Rails.application.credentials.dig(:aws, :secret_access_key) %>
+#   region: us-east-1
+#   bucket: <%= Rails.application.credentials.dig(:aws, :bucket) %>
+#   retry_limit: 0
 
 # local:
 #   service: Disk

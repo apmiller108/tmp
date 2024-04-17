@@ -27,8 +27,8 @@ Rails.application.configure do
 
   config.active_job.queue_adapter = :sidekiq
 
-  # Store uploaded files in amazon using creds and a bucket for development
-  config.active_storage.service = :amazon_dev
+  # See config/storage/development.yml
+  config.active_storage.service = :primary
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
