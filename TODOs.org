@@ -19,12 +19,14 @@ CLOSED: [2024-04-12 Fri 14:43]
   - [X] Use Claude Client in generate_text_job. Pass in temperature and system message.
 * DONE auto set temp when selecting a preset
   CLOSED: [2024-04-13 Sat 09:00]
-* TODO Do not delete prompt on sending request [1/2]
+* DONE Do not delete prompt on sending request [2/2]
+CLOSED: [2024-04-18 Thu 14:07]
   - [X] for text
-  - [ ] for images
-* TODO Move generative text placeholder out of input field into header [1/2]
+  - [X] for images
+* DONE Move generative text placeholder out of input field into header [2/2]
+CLOSED: [2024-04-18 Thu 14:07]
   - [X] for text
-  - [ ] for images
+  - [X] for images
 * TODO Insert generated text into a quote block
 * TODO Show flash message on failure of gen text
 * TODO Associate a conversation to a Memo

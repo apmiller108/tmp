@@ -170,10 +170,9 @@ export default class WysiwygEditor extends Controller {
 
     this.generateImageNameTarget.value = id
 
-    this.insertGenerativePlaceholder(id, type)
-
     let response;
     try {
+      this.setNotification('Generating image...')
       const prompts = this.generateImagePromptGroupTargets.map((g) => {
         return {
           text: g.querySelector('input').value,
@@ -192,8 +191,7 @@ export default class WysiwygEditor extends Controller {
       }
 
       if (response.status === 422) {
-        const placeHolderDiv = document.getElementById(id)
-        placeHolderDiv?.parentElement?.remove()
+        this.clearNotification()
       }
 
       if (response.ok || response.status === 422) {
@@ -209,10 +207,7 @@ export default class WysiwygEditor extends Controller {
       }
     } catch (err) {
       console.log(err)
-
-      // Remove the placeholder attachment figure
-      const placeHolderDiv = document.getElementById(id)
-      placeHolderDiv?.parentElement?.remove()
+      this.clearNotification()
       alert('Unable to generate text')
     }
   }
@@ -259,11 +254,10 @@ export default class WysiwygEditor extends Controller {
   }
 
   async onGenerateImage(event) {
-    const { generate_image: { image_name, image, error, content_type }} = event.detail
+    const { generate_image: { image_name, image, error, content_type } } = event.detail
     const selectedRange = this.editor.getSelectedRange()
-    const placeHolderDiv = document.getElementById(image_name)
     try {
-      if (placeHolderDiv && !error) {
+      if (!error) {
         this.editor.recordUndoEntry("InsertGenImage")
         this.editor.setSelectedRange(selectedRange[0])
 
@@ -273,6 +267,12 @@ export default class WysiwygEditor extends Controller {
         const ext = content_type.split('/')[1]
         const filename = `${image_name}.${ext}`
         const file = new File([blob], filename, { type: content_type })
+
+        // Insert the image at the end of the document, with 2 line break prepended.
+        const docLength = this.editor.getDocument().getLength()
+        this.editor.setSelectedRange(docLength - 1)
+        this.editor.insertLineBreak()
+        this.editor.insertLineBreak()
         this.editor.insertFile(file)
       } else if (error) {
         throw new Error('Job to generate image was not successful')
@@ -281,7 +281,7 @@ export default class WysiwygEditor extends Controller {
       console.log(err)
       alert('Unable to generate image')
     } finally {
-      document.getElementById(image_name).parentElement.remove()
+      this.clearNotification()
     }
   }
 
@@ -292,39 +292,12 @@ export default class WysiwygEditor extends Controller {
   }
 
   setNotification(text) {
-    this.notificationTarget.textContent = 'Generating text'
+    this.notificationTarget.textContent = text
     this.notificationTarget.classList.add('alert', 'alert-info', 'i-pulse')
   }
 
   clearNotification() {
     this.notificationTarget.textContent = ''
     this.notificationTarget.classList.remove('alert', 'alert-info', 'i-pulse')
-  }
-
-  insertGenerativePlaceholder(id, type) {
-    const placeholder = new Trix.Attachment({
-      content: this.generativeContainer(id, type), contentType: 'tmp/generative-content-placeholder'
-    })
-    this.editor.recordUndoEntry("InsertGenerativeContentPlaceholder")
-    this.editor.insertAttachment(placeholder)
-
-    // Clear the selection so the placeholder figure is not selected.
-    // Also remove the undo entry that would let the user put the placeholder back.
-    // I could only get these things to work by pushing it to the end of the stack.
-    setTimeout(() => {
-      this.editor.undoManager.undoEntries.pop()
-      window.getSelection().empty()
-    }, 0)
-  }
-
-  generativeContainer(id, type) {
-    return`
-      <div id=${id} class="gen${type}-placeholder alert alert-info i-pulse p-1">Generating ${type}...</div>
-    `
-  }
-
-  removeAllPlaceholders() {
-    const placeholders = document.querySelectorAll(`.${this.genTextClassName}`)
-    placeholders.forEach(p => p.parentElement.remove())
   }
 }
