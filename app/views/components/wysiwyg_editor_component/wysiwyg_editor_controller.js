@@ -238,12 +238,17 @@ export default class WysiwygEditor extends Controller {
     try {
       if (!error) {
         this.editor.recordUndoEntry("InsertGenText")
-        // Insert the content at the end of the document, with 2 line break prepended.
-        const docLength = this.editor.getDocument().getLength()
-        this.editor.setSelectedRange(docLength - 1)
+        // Insert the content at the end of the selected range, with a line
+        // break prepended. Add three line breaks after the inserted content to
+        // break out of the blockquote (requires 2 breaks) and have a line break
+        // appended.
+        this.editor.setSelectedRange(this.editor.getSelectedRange()[1])
+        this.editor.insertLineBreak()
+        this.editor.insertHTML(`<blockquote><!--block-->${content}</blockquote>`)
+        this.editor.setSelectedRange(this.editor.getSelectedRange()[1] + 1)
         this.editor.insertLineBreak()
         this.editor.insertLineBreak()
-        this.editor.insertString(content)
+        this.editor.insertLineBreak()
       }
     } catch (err) {
       console.log(err)
