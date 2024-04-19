@@ -2,7 +2,7 @@ class WysiwygEditorComponent < ApplicationViewComponent
   attr_reader :object, :method
 
   # @param object [Object] ActiveRecord object
-  # @param method [Symbol | String]
+  # @param method [Symbol | String] the returns the content of the editor
   def initialize(object:, method:)
     @object = object
     @method = method
@@ -34,5 +34,9 @@ class WysiwygEditorComponent < ApplicationViewComponent
 
   def gen_text_temperature_options_json
     0.step(to: 1, by: 0.1).map { |n| { value: n.round(1).to_s, label: n.round(1).to_s } }.to_json
+  end
+
+  def conversation
+    object.conversation if object.respond_to?(:conversation)
   end
 end

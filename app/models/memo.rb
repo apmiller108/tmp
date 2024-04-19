@@ -27,6 +27,7 @@ class Memo < ApplicationRecord
   has_many :audio_blobs, -> { audio }, through: :rich_text_content, source: :embeds_blobs
   has_many :image_blobs, -> { image }, through: :rich_text_content, source: :embeds_blobs
   has_many :transcriptions, through: :audio_blobs
+  has_one :conversation, dependent: :nullify
 
   delegate :plain_text_body, :plain_text_attachments, :body_previously_changed?, to: :content
 

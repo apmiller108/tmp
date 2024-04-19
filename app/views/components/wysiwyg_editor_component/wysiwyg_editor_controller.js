@@ -14,8 +14,9 @@ export default class WysiwygEditor extends Controller {
 
   static targets = [
     'generateTextBtn', 'generateTextDialog', 'generateTextId', 'generateTextInput', 'generateTextSubmit',
+    'generateTextTemperature', 'generateTextPreset', 'generateTextConversationId',
     'generateImageBtn', 'generateImageDialog', 'generateImageName', 'generateImageSubmit', 'generateImagePromptGroup',
-    'generateImageDimensions', 'generateImageStyle', 'generateTextTemperature', 'generateTextPreset', 'notification'
+    'generateImageDimensions', 'generateImageStyle', 'notification'
   ];
 
   editorElem;
@@ -45,9 +46,15 @@ export default class WysiwygEditor extends Controller {
     return JSON.parse(this.element.dataset.genTextTemperatureOptions)
   }
 
+  get conversationId() {
+    return this.element.dataset.conversationId;
+  }
+
   connect () {
     this.editorElem = this.element.querySelector(TrixSelectors.EDITOR)
     this.editorElem.id = this.editorId
+
+    this.generateTextConversationIdTarget.value = this.conversationId
 
     this.initScrollPreserveAndRestore()
 
@@ -131,7 +138,8 @@ export default class WysiwygEditor extends Controller {
         prompt: this.generateTextInputTarget.value,
         text_id: this.generateTextIdTarget.value,
         temperature: this.generateTextTemperatureTarget.value,
-        generate_text_preset_id: this.generateTextPresetTarget.value
+        generate_text_preset_id: this.generateTextPresetTarget.value,
+        conversation_id: this.generateTextConversationIdTarget.value
       })
 
       if (response.status === 401 || response.status === 403) {

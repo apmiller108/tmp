@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_12_182824) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_19_192037) do
   create_schema "rollback"
 
   # These are extensions that must be enabled in order to support this database
@@ -62,6 +62,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_12_182824) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "conversations", force: :cascade do |t|
+    t.bigint "memo_id"
+    t.jsonb "exchange", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["memo_id"], name: "index_conversations_on_memo_id"
   end
 
   create_table "generate_image_requests", force: :cascade do |t|
@@ -179,6 +187,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_12_182824) do
   add_foreign_key "active_storage_blobs_generate_image_requests", "active_storage_blobs"
   add_foreign_key "active_storage_blobs_generate_image_requests", "generate_image_requests"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "conversations", "memos"
   add_foreign_key "generate_image_requests", "users"
   add_foreign_key "generate_text_requests", "generate_text_presets"
   add_foreign_key "generate_text_requests", "users"
