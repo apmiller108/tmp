@@ -63,7 +63,7 @@ RSpec.describe GenerateTextJob, type: :job do
         perform
         expect(ViewComponentBroadcaster).to(
           have_received(:call).with([generate_text_request.user, TurboStreams::STREAMS[:memos]],
-                                    component: kind_of(FlashMessageComponent), action: :replace)
+                                    component: kind_of(FlashMessageComponent), action: :update)
         )
       end
     end
