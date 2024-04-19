@@ -224,17 +224,13 @@ export default class WysiwygEditor extends Controller {
     channel, emitted as CustomEvents and handled here. I was unable to render
     turbo streams into the Trix editor.
 
-    Generated content is inserted into the editor programatically. First,
-    determine if the placeholder is still present. It could have been removed by
-    the user by this point in which case inserting the generated text is
-    aborted.
+    Generated content is inserted into the editor programatically.
 
-    This placeholder is removed in a finally block. It must be re-queried for some reason.
+    Notifcation is removed in a finally block.
   */
   onGenerateText(event) {
     const { generate_text: { text_id, content, error }} = event.detail
     const selectedRange = this.editor.getSelectedRange()
-    const placeHolderDiv = document.getElementById(text_id)
     try {
       if (!error) {
         this.editor.recordUndoEntry("InsertGenText")
