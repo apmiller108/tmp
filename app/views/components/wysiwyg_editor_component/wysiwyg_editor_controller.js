@@ -272,13 +272,13 @@ export default class WysiwygEditor extends Controller {
         const ext = content_type.split('/')[1]
         const filename = `${image_name}.${ext}`
         const file = new File([blob], filename, { type: content_type })
-
-        // Insert the image at the end of the document, with 2 line break prepended.
-        const docLength = this.editor.getDocument().getLength()
-        this.editor.setSelectedRange(docLength - 1)
-        this.editor.insertLineBreak()
+        // Insert the image at the end of the selected range, with a line break
+        // prepended. Insert a line break after the image.
+        this.editor.setSelectedRange(this.editor.getSelectedRange()[1])
         this.editor.insertLineBreak()
         this.editor.insertFile(file)
+        this.editor.setSelectedRange(this.editor.getSelectedRange()[1] + 1)
+        this.editor.insertLineBreak()
       } else if (error) {
         throw new Error('Job to generate image was not successful')
       }
