@@ -38,7 +38,7 @@ CLOSED: [2024-04-19 Fri 14:02]
     exchange:jsonb
 
   1. [X] Create Conversation endpoint with create action POST /memos//:id/conversations
-  2. [ ] Add index generate text request text_id
+  2. [X] Add index generate text request text_id
   3. [ ] On successful generate text response, client makes call to create or update
      conversation. Passes the text_id and memo_id.
   4. [ ] If memo has conversation, update it; otherwise create a new conversation.
@@ -48,3 +48,4 @@ CLOSED: [2024-04-19 Fri 14:02]
   7. [ ] If the conversation exists, prepend it to the request.
 * TODO Submit previous dialog with each generative text request
 * TODO Broadcast MemoCardComponent from comp stats job
+* TODO Auto save memo after text or image generated
