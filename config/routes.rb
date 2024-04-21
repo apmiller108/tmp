@@ -33,6 +33,10 @@ Rails.application.routes.draw do
     resources :transcription_summaries, only: %i[create]
   end
 
+  resources :memos, only: [] do
+    resources :conversations, only: %i[create update]
+  end
+
   resources :generate_text_requests, only: %[create]
   resources :generate_image_requests, only: %i[create]
 
