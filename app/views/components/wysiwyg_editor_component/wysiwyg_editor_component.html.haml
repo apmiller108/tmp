@@ -4,7 +4,6 @@
                    'gen-text-preset-options' => gen_text_preset_options_json,
                    'gen-text-temperature-options' => gen_text_temperature_options_json,
                    'object-id' => object.id || 'new',
-                   'conversation-id' => conversation&.id,
                    action: 'my-channel:generateText@window->wysiwyg-editor#onGenerateText '\
                            'my-channel:generateImage@window->wysiwyg-editor#onGenerateImage' }}
   .notifications-bar.d-flex.justify-content-center

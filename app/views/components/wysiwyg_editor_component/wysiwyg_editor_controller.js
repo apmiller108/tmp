@@ -14,13 +14,13 @@ export default class WysiwygEditor extends Controller {
 
   static targets = [
     'generateTextBtn', 'generateTextDialog', 'generateTextId', 'generateTextInput', 'generateTextSubmit',
-    'generateTextTemperature', 'generateTextPreset', 'generateTextConversationId',
-    'generateImageBtn', 'generateImageDialog', 'generateImageName', 'generateImageSubmit', 'generateImagePromptGroup',
+    'generateTextTemperature', 'generateTextPreset', 'generateImageBtn', 'generateImageDialog',
+    'generateImageName', 'generateImageSubmit', 'generateImagePromptGroup',
     'generateImageDimensions', 'generateImageStyle', 'notification'
   ];
 
   editorElem;
-  selectedText;
+  selectedText = ''
 
   get editorId() {
     return `trix_editor_${this.element.dataset.objectId}`
@@ -53,8 +53,6 @@ export default class WysiwygEditor extends Controller {
   connect () {
     this.editorElem = this.element.querySelector(TrixSelectors.EDITOR)
     this.editorElem.id = this.editorId
-
-    this.generateTextConversationIdTarget.value = this.conversationId
 
     this.initScrollPreserveAndRestore()
 
@@ -138,8 +136,7 @@ export default class WysiwygEditor extends Controller {
         prompt: this.generateTextInputTarget.value,
         text_id: this.generateTextIdTarget.value,
         temperature: this.generateTextTemperatureTarget.value,
-        generate_text_preset_id: this.generateTextPresetTarget.value,
-        conversation_id: this.generateTextConversationIdTarget.value
+        generate_text_preset_id: this.generateTextPresetTarget.value
       })
 
       if (response.status === 401 || response.status === 403) {
@@ -240,7 +237,7 @@ export default class WysiwygEditor extends Controller {
     const { generate_text: { text_id, content, error }} = event.detail
     const selectedRange = this.editor.getSelectedRange()
     try {
-      if (!error) {
+      if (!error && content) {
         this.editor.recordUndoEntry("InsertGenText")
         // Insert the content at the end of the selected range, with a line
         // break prepended. Add three line breaks after the inserted content to
@@ -253,6 +250,8 @@ export default class WysiwygEditor extends Controller {
         this.editor.insertLineBreak()
         this.editor.insertLineBreak()
         this.editor.insertLineBreak()
+
+        this.dispatch('generatedTextInserted', { detail: { content, text_id } });
       }
     } catch (err) {
       console.log(err)

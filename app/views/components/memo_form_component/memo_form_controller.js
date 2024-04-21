@@ -1,7 +1,20 @@
 import { Controller } from "@hotwired/stimulus"
+import { createConversation, updateConversation } from '@javascript/http'
 import ToolTippable from '@javascript/mixins/ToolTippable'
 
 export default class MemoFormController extends Controller {
+  get memoId() {
+    return this.element.dataset.memoId
+  }
+
+  get conversationId() {
+    return this.element.dataset.conversationId
+  }
+
+  set conversationId(id) {
+    this.element.dataset.conversationId = id
+  }
+
   connect() {
     ToolTippable.connect.bind(this)()
   }
@@ -27,5 +40,21 @@ export default class MemoFormController extends Controller {
   onColorRemoved() {
     this.element.style.border = ''
     this.element.style.boxShadow = ''
+  }
+
+  async onGeneratedTextInserted(e) {
+    const { detail: { text_id, content } } = e
+    const params = {
+      text_id,
+      assistant_response: content,
+      memo_id: this.memoId
+    }
+    if (this.conversationId) {
+      updateConversation({ conversation_id: this.conversationId, ...params })
+    } else {
+      const response = await createConversation(params)
+      const conversation = await response.json()
+      this.conversationId = conversation.id
+    }
   }
 }

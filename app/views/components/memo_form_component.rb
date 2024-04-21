@@ -3,7 +3,7 @@
 class MemoFormComponent < ApplicationViewComponent
   attr_reader :memo
 
-  delegate :color, :default_color?, to: :memo
+  delegate :color, :default_color?, :conversation, to: :memo
 
   def initialize(memo:)
     @memo = memo

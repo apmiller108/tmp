@@ -107,7 +107,6 @@ export default class TrixCustomizer {
     return `
       <div class="trix-dialog trix-dialog--heading trix-custom-dialog trix-custom-generate-text" data-trix-dialog="generateText"
             data-trix-dialog-attribute="generateText" data-wysiwyg-editor-target="generateTextDialog">
-        <input type="hidden" data-wysiwyg-editor-target="generateTextConversationId">
         <div class="grid" >
           <div class="g-col-6">
             <div class="form-floating gen-text-preset-selects">
