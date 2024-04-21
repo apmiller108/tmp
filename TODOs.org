@@ -45,7 +45,8 @@ CLOSED: [2024-04-19 Fri 14:02]
 
   5. [X] Add the memo's conversation.id to the generate text form
   6. [X] Send conversation.id when client submits generate text request
-  7. [ ] If the conversation exists, prepend it to the client API request.
+  7. [ ] Generate image request belongs to a conversation optionally
+  8. [ ] If the conversation exists on the request, prepend it to the client API request.
 * TODO Auto save memo after text or image generated, but before emitting the insert events
   Creating or updating a conversation requires a persisted memo
 * TODO Submit previous dialog with each generative text request

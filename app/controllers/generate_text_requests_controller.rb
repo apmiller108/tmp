@@ -5,7 +5,7 @@ class GenerateTextRequestsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         if generatate_text_request.persisted?
-          GenerateTextJob.perform_async(generatate_text_request.id)
+          GenerateTextJob.perform_async(generatate_text_request.id, params[:conversation_id])
           head :created
         else
           flash.now.alert = t('unable_to_generate_text')

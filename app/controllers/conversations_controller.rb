@@ -1,6 +1,6 @@
 class ConversationsController < ApplicationController
   def create
-    conversation = current_user.memos.find(params[:memo_id]).build_conversation
+    conversation = current_user.memos.find(params[:memo_id]).build_conversation(user: current_user)
     generative_text_request = current_user.generate_text_requests.find_by!(text_id: params[:text_id])
 
     # TODO: extract this to model
