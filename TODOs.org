@@ -31,7 +31,7 @@ CLOSED: [2024-04-18 Thu 14:07]
 CLOSED: [2024-04-19 Fri 11:44]
 * DONE Show flash message on failure of gen text
 CLOSED: [2024-04-19 Fri 14:02]
-* TODO Associate a conversation to a Memo
+* TODO Associate a conversation to a Memo [6/7]
   Persist dialogue between use the LLM
   conversations
     memo_id
