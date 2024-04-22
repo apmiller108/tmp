@@ -13,8 +13,8 @@ class ConversationsController < ApplicationController
           render json: conversation.as_json(only: %i[id created_at updated_at]), status: :ok
         else
           render json: {
-                   error: { message: conversation.errors.full_messages.join(';') }
-                 }, status: :unprocessable_entity
+            error: { message: conversation.errors.full_messages.join(';') }
+          }, status: :unprocessable_entity
         end
       end
     end
