@@ -4,9 +4,8 @@ function getCsrfToken() {
 
 export const generateText = ({ prompt, text_id, temperature, generate_text_preset_id, conversation_id }) => {
   const body = JSON.stringify({
-    conversation_id,
     generate_text_request: {
-      prompt, text_id, temperature, generate_text_preset_id
+      prompt, text_id, temperature, generate_text_preset_id, conversation_id,
     }
   })
   const headers = {
