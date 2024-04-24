@@ -29,9 +29,8 @@ export const createConversation = ({ text_id, memo_id, assistant_response }) => 
     'X-CSRF-Token': getCsrfToken()
   }
   const body = JSON.stringify({
-    text_id,
     conversation: {
-      assistant_response
+      assistant_response, text_id, memo_id
     }
   })
 
@@ -51,7 +50,7 @@ export const updateConversation = ({ conversation_id, text_id, memo_id, assistan
   const body = JSON.stringify({
     text_id,
     conversation: {
-      assistant_response
+      assistant_response, text_id, memo_id
     }
   })
 
