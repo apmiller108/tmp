@@ -55,6 +55,7 @@ export default class MemoFormController extends Controller {
       const response = await createConversation(params)
       const conversation = await response.json()
       this.conversationId = conversation.id
+      this.dispatch('conversationCreated', { detail: { conversationId: this.conversationId } });
     }
   }
 }

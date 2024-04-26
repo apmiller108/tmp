@@ -31,7 +31,6 @@ class GenerativeText
           )
         }
         request_body[:system] = params[:system_message] if params[:system_message]
-        Rails.logger.info request_body
         response = conn.post(MESSAGES_PATH) do |req|
           req.body = request_body.to_json
         end

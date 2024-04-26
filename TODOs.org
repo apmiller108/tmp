@@ -48,7 +48,8 @@ CLOSED: [2024-04-26 Fri 13:46]
   6. [X] Send conversation.id when client submits generate text request
   7. [X] Generate image request belongs to a conversation optionally
   8. [X] Include the conversation_id in the generate_text_request params
-* TODO Submit previous dialog with each generative text request
+* DONE Submit previous dialog with each generative text request
+CLOSED: [2024-04-26 Fri 16:20]
 * TODO Auto save memo after or before text or image generated, but before emitting the insert events
   Creating or updating a conversation requires a persisted memo
 * TODO Broadcast MemoCardComponent from comp stats job

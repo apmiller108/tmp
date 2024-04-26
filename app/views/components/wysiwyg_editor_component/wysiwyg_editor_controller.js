@@ -50,6 +50,10 @@ export default class WysiwygEditor extends Controller {
     return this.element.dataset.conversationId
   }
 
+  set conversationId(id) {
+    this.element.dataset.conversationId = id
+  }
+
   connect () {
     this.editorElem = this.element.querySelector(TrixSelectors.EDITOR)
     this.editorElem.id = this.editorId
@@ -260,6 +264,11 @@ export default class WysiwygEditor extends Controller {
     } finally {
       this.clearNotification()
     }
+  }
+
+  onConversationCreated(e) {
+    const id = e.detail.conversationId
+    this.conversationId = id
   }
 
   async onGenerateImage(event) {
