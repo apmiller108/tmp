@@ -15,12 +15,12 @@ class GenerativeText
       end
 
       # @return [InvokeModelResponse]
-      def invoke_model(prompt:, **params)
+      def invoke_model(prompt:, messages: [], **params)
         request_body = {
           model: HAIKU,
           max_tokens: MAX_TOKENS,
           temperature: params[:temperature],
-          messages: [
+          messages: messages.push(
             {
               role: :user,
               content: [
@@ -28,9 +28,10 @@ class GenerativeText
                 text: prompt
               ]
             }
-          ]
+          )
         }
         request_body[:system] = params[:system_message] if params[:system_message]
+        Rails.logger.info request_body
         response = conn.post(MESSAGES_PATH) do |req|
           req.body = request_body.to_json
         end
