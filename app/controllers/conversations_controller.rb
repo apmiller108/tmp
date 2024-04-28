@@ -5,7 +5,7 @@ class ConversationsController < ApplicationController
     respond_to do |format|
       format.json do
         if form.save
-          render json: form.conversation.as_json(only: %i[id created_at updated_at]), status: :ok
+          render json: form.conversation.as_json(only: %i[id created_at updated_at]), status: :created
         else
           render json: {
             error: { message: form.errors.full_messages.join(';') }
