@@ -31,7 +31,7 @@ CLOSED: [2024-04-18 Thu 14:07]
 CLOSED: [2024-04-19 Fri 11:44]
 * DONE Show flash message on failure of gen text
 CLOSED: [2024-04-19 Fri 14:02]
-* DONE Associate a conversation to a Memo [8/9]
+* DONE Associate a conversation to a Memo [8/8]
 CLOSED: [2024-04-26 Fri 13:46]
   Persist dialogue between use the LLM
   conversations
@@ -50,6 +50,11 @@ CLOSED: [2024-04-26 Fri 13:46]
   8. [X] Include the conversation_id in the generate_text_request params
 * DONE Submit previous dialog with each generative text request
 CLOSED: [2024-04-26 Fri 16:20]
-* TODO Auto save memo after or before text or image generated, but before emitting the insert events
+* TODO Auto save memo after or before text or image generated, but before saving the conversation [/]
   Creating or updating a conversation requires a persisted memo
+  - [ ] Add JSON format to MemosController#update/create action OR new autosave
+    action? Will need to broadcast the memo card component.
+  - [ ] Add functions to update/create memo to http.js
+  - [ ] Synchronously create the memo before creating the conversation. I think
+    the update could be async.
 * TODO Broadcast MemoCardComponent from comp stats job
