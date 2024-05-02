@@ -13,7 +13,7 @@ class MemosController < ApplicationController
   end
 
   def new
-    @memo = current_user.memos.new
+    @memo = current_user.memos.new(title: 'New memo')
     respond_to do |format|
       format.turbo_stream
       format.html
