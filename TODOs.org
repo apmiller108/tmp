@@ -54,7 +54,7 @@ CLOSED: [2024-04-26 Fri 16:20]
   Creating or updating a conversation requires a persisted memo
   - [ ] Add JSON format to MemosController#update/create action OR new autosave
     action? Will need to broadcast the memo card component.
-  - [ ] Add functions to update/create memo to http.js
+  - [ ] Add functions to auto save (update/create) memo to http.js
   - [ ] Synchronously create the memo before creating the conversation. I think
     the update could be async.
 * TODO Broadcast MemoCardComponent from comp stats job
