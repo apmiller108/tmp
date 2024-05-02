@@ -21,5 +21,6 @@ export default class BlobPreviewController extends Controller {
     if (this.hasSpinnerTarget) {
       this.spinnerTarget.remove()
     }
+    this.imageTarget.classList.remove('d-none')
   }
 }
