@@ -46,7 +46,7 @@ RSpec.describe 'Create and view memo', type: :system do
     Sidekiq::Testing.fake!
   end
 
-  specify 'View memo' do
+  specify 'Create memo with generated image' do
     login(user:)
     visit user_memos_path(user)
 
