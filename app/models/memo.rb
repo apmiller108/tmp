@@ -20,6 +20,8 @@ class Memo < ApplicationRecord
   #    content.embeds_blobs (this is through embeds_attachments)
   has_rich_text :content
 
+  attribute :title, default: "New memo #{Time.current.strftime('%a, %d %b %Y %H:%M:%S')}"
+
   validates :title, presence: true
   validate :color_inclusion
 
