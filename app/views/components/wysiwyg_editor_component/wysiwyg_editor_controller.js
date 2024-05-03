@@ -240,7 +240,9 @@ export default class WysiwygEditor extends Controller {
   */
   onGenerateText(event) {
     const { generate_text: { text_id, content, error }} = event.detail
-    const selectedRange = this.editor.getSelectedRange()
+    // TODO store the selected range in an object with the text_id/image_id.
+    // When inserting the generated content, place it at the cached location
+    // const selectedRange = this.editor.getSelectedRange()
     try {
       if (!error && content) {
         this.editor.recordUndoEntry("InsertGenText")
