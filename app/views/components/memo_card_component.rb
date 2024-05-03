@@ -16,6 +16,7 @@ class MemoCardComponent < ApplicationViewComponent
     "card_#{dom_id(memo)}"
   end
 
+  # current_user for HTTP requests. memo.user for background job broadcasts.
   def user
     current_user || memo.user
   end
