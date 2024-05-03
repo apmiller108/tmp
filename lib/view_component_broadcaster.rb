@@ -1,3 +1,5 @@
+# Turbo stream broadcasts view components. The component should defined an +id+
+# method which returns the dom target string that is operated upon (eg, update, replace, etc)
 module ViewComponentBroadcaster
   module_function
 
@@ -5,7 +7,7 @@ module ViewComponentBroadcaster
     Turbo::StreamsChannel.broadcast_action_to(
       streamables,
       target: component.id,
-      content: component.render_in(ActionController::Base.new.view_context),
+      content: ApplicationController.render(component, layout: false),
       **options
     )
   end

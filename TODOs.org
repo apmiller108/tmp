@@ -50,11 +50,13 @@ CLOSED: [2024-04-26 Fri 13:46]
   8. [X] Include the conversation_id in the generate_text_request params
 * DONE Submit previous dialog with each generative text request
 CLOSED: [2024-04-26 Fri 16:20]
-* TODO Auto save memo after or before text or image generated, but before saving the conversation [/]
+* DONE Auto save memo after or before text or image generated, but before saving the conversation [3/3]
+CLOSED: [2024-05-03 Fri 13:30]
   Creating or updating a conversation requires a persisted memo
-  - [ ] Add JSON format to MemosController#update/create action OR new autosave
+  - [X] Add JSON format to MemosController#update/create action OR new autosave
     action? Will need to broadcast the memo card component.
-  - [ ] Add functions to auto save (update/create) memo to http.js
-  - [ ] Synchronously create the memo before creating the conversation. I think
+  - [X] Add functions to auto save (update/create) memo to http.js
+  - [X] Synchronously create the memo before creating the conversation. I think
     the update could be async.
-* TODO Broadcast MemoCardComponent from comp stats job
+* DONE Broadcast MemoCardComponent from comp stats job
+CLOSED: [2024-05-03 Fri 14:01]

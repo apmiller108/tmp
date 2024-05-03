@@ -7,6 +7,11 @@ class Memo
       {}.then { |stats| stats.merge(media_attachment_counts(memo)) }
         .then { |stats| stats.merge(total_attachment_counts(memo)) }
         .then { |stats| memo.update!(**stats) }
+      ViewComponentBroadcaster.call(
+        [memo.user, TurboStreams::STREAMS[:memos]],
+        component: MemoCardComponent.new(memo:),
+        action: :replace
+      )
     end
 
     private

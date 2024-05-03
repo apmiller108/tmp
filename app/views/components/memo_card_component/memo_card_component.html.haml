@@ -4,7 +4,7 @@
                                                           'memo-id' => memo.id,
                                                           modal: ModalComponent.id,
                                                           'modal-hide-header': true,
-                                                          'modal-src': user_memo_path(current_user, memo.id) } }
+                                                          'modal-src': user_memo_path(user, memo.id) } }
   .card-header{ style: background_style, class: font_class }
     %h4.card-title.m-0= title
   .card-body{class: font_class }

@@ -16,6 +16,10 @@ class MemoCardComponent < ApplicationViewComponent
     "card_#{dom_id(memo)}"
   end
 
+  def user
+    current_user || memo.user
+  end
+
   def plain_text_body
     memo.plain_text_body || ''
   end
