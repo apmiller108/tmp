@@ -26,8 +26,6 @@ Rails.application.routes.draw do
 
   resources :users, only: %i[show] do
     resources :memos do
-      # post 'autosave', action: :create, controller: 'memo_autosaves', on: :collection
-      # patch 'autosave', action: :update, controller: 'memo_autosaves', on: :member
     end
     resources :transcription_jobs, only: [] do
       resources :transcriptions, only: %i[index]
@@ -41,7 +39,7 @@ Rails.application.routes.draw do
   end
 
   resources :memos, only: [] do
-    resources :conversations, only: %i[create update]
+    resources :conversations, only: %i[index create update]
   end
 
   resources :generate_text_requests, only: %i[create]
