@@ -10,7 +10,8 @@ RSpec.describe GenerateTextJob, type: :job do
   describe '#perform' do
     subject(:perform) { described_class.new.perform(generate_text_request.id) }
 
-    let(:generate_text_request) { build_stubbed :generate_text_request, :with_generate_text_preset }
+    let(:generate_text_request) { build_stubbed :generate_text_request, :with_generate_text_preset, conversation: }
+    let(:conversation) { build_stubbed :conversation }
     let(:response) do
       instance_double(GenerativeText::AWS::Client::InvokeModelResponse, content: Faker::Lorem.paragraph)
     end
@@ -29,6 +30,7 @@ RSpec.describe GenerateTextJob, type: :job do
         expect(generative_text).to have_received(:invoke_model)
           .with(prompt: generate_text_request.prompt,
                 temperature: generate_text_request.temperature,
+                messages: conversation.exchange,
                 system_message: generate_text_request.system_message,
                 max_tokens: 500)
       end
