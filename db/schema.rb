@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_23_000345) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_03_155309) do
   create_schema "rollback"
 
   # These are extensions that must be enabled in order to support this database
@@ -51,7 +51,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_23_000345) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "active_storage_blobs_generate_image_requests", id: false, force: :cascade do |t|
+  create_table "active_storage_blobs_generate_image_requests", force: :cascade do |t|
     t.bigint "generate_image_request_id", null: false
     t.bigint "active_storage_blob_id", null: false
     t.index ["active_storage_blob_id"], name: "idx_on_active_storage_blob_id_88e9e5b11e"
