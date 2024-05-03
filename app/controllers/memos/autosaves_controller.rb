@@ -6,9 +6,13 @@ module Memos
       respond_to do |format|
         if memo.persisted?
           format.turbo_stream do
-            render turbo_stream.prepend(
-              'memos', MemoCardComponent.new(memo:).render_in(view_context)
-            ), status: :created
+            render(
+              turbo_stream: [
+                turbo_stream.replace('new_memo', MemoFormComponent.new(memo:).render_in(view_context)),
+                turbo_stream.prepend('memos', MemoCardComponent.new(memo:).render_in(view_context))
+              ],
+              status: :created
+            )
           end
         else
           format.any do
@@ -25,9 +29,8 @@ module Memos
         if memo&.update(memo_params)
           component = MemoCardComponent.new(memo:)
           format.turbo_stream do
-            render turbo_stream.replace(
-              component.id, component.render_in(view_context)
-            ), status: :ok
+            render turbo_stream: turbo_stream.replace(component.id, component.render_in(view_context)),
+                   status: :ok
           end
         else
           format.any do
@@ -35,6 +38,12 @@ module Memos
           end
         end
       end
+    end
+
+    private
+
+    def memo_params
+      params.require(:memo).permit(:content, :title, :color)
     end
   end
 end

@@ -1,10 +1,14 @@
 import { Controller } from "@hotwired/stimulus"
-import { createConversation, updateConversation } from '@javascript/http'
+import { createConversation, updateConversation, getConversation, autoSaveMemo } from '@javascript/http'
 import ToolTippable from '@javascript/mixins/ToolTippable'
 
 export default class MemoFormController extends Controller {
   get memoId() {
     return this.element.dataset.memoId
+  }
+
+  set memoId(id) {
+    this.element.dataset.memoId = id
   }
 
   get conversationId() {
@@ -15,8 +19,19 @@ export default class MemoFormController extends Controller {
     this.element.dataset.conversationId = id
   }
 
-  connect() {
+  async connect() {
     ToolTippable.connect.bind(this)()
+
+    // A new memo turbo stream created from an autosave action will not have the
+    // conversation ID since the conversation creation happens after the memo is
+    // created. In this case, fetch the converstation ID after the turbo stream
+    // is handled and emit it for any listeners who depend on it (eg, wywiwyg
+    // editor)
+    if (this.memoId && !this.conversationId) {
+      const conversation = await getConversation(this.memoId)
+      this.conversationId = conversation.id
+      this.emitConversationCreated()
+    }
   }
 
   disconnect() {
@@ -44,18 +59,64 @@ export default class MemoFormController extends Controller {
 
   async onGeneratedTextInserted(e) {
     const { detail: { text_id, content } } = e
-    const params = {
+    const conversationParams = {
       text_id,
       assistant_response: content,
       memo_id: this.memoId
     }
+
+    const autoSaveTurboStream = await this.autoSave()
+
+    if (autoSaveTurboStream.length) {
+      if (!conversationParams.memo_id) {
+        // For new memos, there will not be a memo_id. After autosave completes,
+        // however, the memo_id will exist. The memo_id is then extracted from
+        // the tuboframe's form element and added to the conversation params.
+        const tempTemplate = document.createElement('template')
+        tempTemplate.innerHTML = autoSaveTurboStream
+        conversationParams.memo_id = tempTemplate.content.querySelector('template')
+                                                 .content.querySelector('form').dataset.memoId
+      }
+
+      await this.createOrUpdateConversation(conversationParams)
+
+      Turbo.renderStreamMessage(autoSaveTurboStream)
+    }
+  }
+
+  async autoSave() {
+    const form = this.formData()
+    const memo = {
+      id: this.memoId,
+      title: form.get('memo[title]'),
+      content: form.get('memo[content]'),
+      color: form.get('memo[color]')
+    }
+
+    try {
+      const response = await autoSaveMemo(memo)
+      return await response.text()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async createOrUpdateConversation(params) {
     if (this.conversationId) {
-      updateConversation({ conversation_id: this.conversationId, ...params })
+      await updateConversation({ conversation_id: this.conversationId, ...params })
     } else {
       const response = await createConversation(params)
       const conversation = await response.json()
       this.conversationId = conversation.id
-      this.dispatch('conversationCreated', { detail: { conversationId: this.conversationId } });
+      this.emitConversationCreated()
     }
+  }
+
+  emitConversationCreated() {
+    this.dispatch('conversationCreated', { detail: { conversationId: this.conversationId } });
+  }
+
+  formData() {
+    return new FormData(this.element)
   }
 }

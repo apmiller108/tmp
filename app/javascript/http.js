@@ -60,6 +60,49 @@ export const updateConversation = ({ conversation_id, text_id, memo_id, assistan
   })
 }
 
+export const getConversation = async (memo_id) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+    'X-CSRF-Token': getCsrfToken()
+  }
+  const response = await fetch(`/memos/${memo_id}/conversations`, {
+    method: 'GET',
+    headers
+  })
+
+  return await response.json()
+}
+
+export const autoSaveMemo = (memo) => {
+  const { title, content, color } = memo
+  const headers = {
+    'Content-Type': 'application/json',
+    Accept: 'text/vnd.turbo-stream.html',
+    'X-CSRF-Token': getCsrfToken()
+  }
+
+  const body = JSON.stringify({
+    memo: {
+      title, content, color
+    }
+  })
+
+  if(memo.id) {
+    return fetch(`/memos/autosaves/${memo.id}`, {
+      method: 'PUT',
+      headers,
+      body
+    })
+  } else {
+    return fetch('/memos/autosaves', {
+      method: 'POST',
+      headers,
+      body
+    })
+  }
+}
+
 export const generateImage = ({ prompts, image_name, style, dimensions }) => {
   const body = JSON.stringify({
     generate_image_request: {
@@ -81,5 +124,8 @@ export const generateImage = ({ prompts, image_name, style, dimensions }) => {
 
 export default {
   generateText,
-  generateImage
+  generateImage,
+  createConversation,
+  updateConversation,
+  autoSaveMemo
 }
