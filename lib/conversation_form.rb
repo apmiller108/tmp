@@ -23,11 +23,15 @@ class ConversationForm
 
     return false if invalid?
 
-    conversation.save!
-    generate_text_request.save!
+    save!
   end
 
   private
+
+  def save!
+    conversation.save!
+    generate_text_request.save!
+  end
 
   def conversation_valid
     return if conversation.valid?
