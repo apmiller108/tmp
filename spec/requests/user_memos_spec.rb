@@ -92,7 +92,7 @@ RSpec.describe 'Memos', type: :request do
       end
 
       context 'when memo is invalid' do
-        let(:params) { { memo: { content: '' } } }
+        let(:params) { { memo: { title: '' } } }
 
         it { is_expected.to have_http_status :unprocessable_entity }
 
@@ -123,7 +123,7 @@ RSpec.describe 'Memos', type: :request do
       end
 
       context 'when memo is invalid' do
-        let(:params) { { memo: { content: nil } } }
+        let(:params) { { memo: { title: nil } } }
 
         it { is_expected.to have_http_status :unprocessable_entity }
 

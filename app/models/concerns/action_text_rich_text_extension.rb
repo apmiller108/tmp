@@ -11,7 +11,7 @@ module ActionTextRichTextExtension
     has_one :memo, through: :self_ref, source: :record, source_type: 'Memo'
     # rubocop:enable Rails/InverseOf
 
-    before_save { self.plain_text_body = body.to_plain_text }
+    before_save { self.plain_text_body = body&.to_plain_text }
 
     def plain_text_attachments
       return [] if plain_text_body.blank?
