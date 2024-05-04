@@ -17,11 +17,12 @@ RSpec.describe GenerateImageJob, type: :job do
     let(:base64) { 'base64 string of png' }
     let(:response) { instance_double GenerativeImage::Stability::TextToImageResponse, base64:, image_present?: true }
     let(:webp) { 'webp image' }
-    let(:png) { instance_double(Vips::Image, webpsave_buffer: webp, write_to_buffer: '') }
+    # rubocop:disable RSpec/VerifiedDoubles
+    # Must use double since websave_buffer is dynamically defined and can't be stubbed as a verfied double
+    let(:png) { double('Vips::Image', webpsave_buffer: webp, write_to_buffer: '') } 
+    # rubocop:enable RSpec/VerifiedDoubles
 
     before do
-      # This method is defined dynamically and will raise error when stubbed with a verifing double
-      Vips::Image.define_method(:webpsave_buffer) { '' }
       allow(GenerateImageRequest).to receive(:find).with(request.id).and_return(request)
       allow(GenerativeImage).to receive(:new).and_return(generative_image)
       allow(MyChannel).to receive(:broadcast_to)
