@@ -19,7 +19,7 @@ RSpec.describe GenerateImageJob, type: :job do
     let(:webp) { 'webp image' }
     # rubocop:disable RSpec/VerifiedDoubles
     # Must use double since websave_buffer is dynamically defined and can't be stubbed as a verfied double
-    let(:png) { double('Vips::Image', webpsave_buffer: webp, write_to_buffer: '') } 
+    let(:png) { double('Vips::Image', webpsave_buffer: webp, write_to_buffer: '') }
     # rubocop:enable RSpec/VerifiedDoubles
 
     before do
