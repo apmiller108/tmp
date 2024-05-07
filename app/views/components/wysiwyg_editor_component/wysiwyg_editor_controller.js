@@ -246,15 +246,18 @@ export default class WysiwygEditor extends Controller {
     try {
       if (!error && content) {
         this.editor.recordUndoEntry("InsertGenText")
-        // Insert the content at the end of the selected range, with a line
-        // break prepended. Add three line breaks after the inserted content to
-        // break out of the blockquote (requires 2 breaks) and have a line break
-        // appended.
+        // Insert the content at the end of the selected range, with two line
+        // breaks prepended. Add two line breaks after the inserted content.
         this.editor.setSelectedRange(this.editor.getSelectedRange()[1])
         this.editor.insertLineBreak()
-        this.editor.insertHTML(`<blockquote><!--block-->${content}</blockquote>`)
-        this.editor.setSelectedRange(this.editor.getSelectedRange()[1] + 1)
         this.editor.insertLineBreak()
+
+        // Convert backtics to `pre` elements for code blocks
+        let formattedContent = content.replace(/```(.+)/g, "<pre class=$1>").replace(/```/g, '</pre>')
+        this.editor.insertHTML(`🤖🤖🤖<br>${formattedContent}<br>🤖🤖🤖`)
+
+
+        this.editor.setSelectedRange(this.editor.getSelectedRange()[1] + 1)
         this.editor.insertLineBreak()
         this.editor.insertLineBreak()
 
