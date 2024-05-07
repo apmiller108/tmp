@@ -3,7 +3,7 @@ class ConversationsController < ApplicationController
     conversation = current_user.memos.find(params[:memo_id]).conversation
     respond_to do |format|
       format.json do
-        render json: conversation.as_json(only: %i[id created_at updated_at]), status: :ok
+        render json: [conversation.as_json(only: %i[id created_at updated_at])].compact, status: :ok
       end
     end
   end

@@ -71,7 +71,8 @@ export const getConversation = async (memo_id) => {
     headers
   })
 
-  return await response.json()
+  const data = await response.json()
+  return data[0]
 }
 
 export const autoSaveMemo = (memo) => {
