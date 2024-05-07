@@ -1,7 +1,43 @@
 require 'rails_helper'
 
 RSpec.describe 'Conversations', type: :request do
-  describe 'GET #create' do
+  describe 'GET #index' do
+    let(:user) { create :user }
+    let(:memo) { create :memo, user: }
+    let(:headers) { { 'ACCEPT' => 'application/json', 'Content-Type' => 'application/json' } }
+    let!(:conversation) { create :conversation, memo:, user: }
+
+    let(:request) { get "/memos/#{memo.id}/conversations", headers: }
+
+    before do
+      sign_in user
+    end
+
+    it_behaves_like 'an API authenticated route'
+
+    include_context 'with disable consider all requests local'
+
+    it 'returns an OK response' do
+      request
+      expect(response).to have_http_status :ok
+    end
+
+    it 'returns the memo\'s conversation' do
+      request
+      expect(response.body).to eq [conversation.attributes.slice('id', 'created_at', 'updated_at')].to_json
+    end
+
+    context 'when the conversation does not exist' do
+      let(:conversation) { nil }
+
+      it 'returns an empty array' do
+        request
+        expect(JSON.parse(response.body)).to eq []
+      end
+    end
+  end
+
+  describe 'POST #create' do
     subject { response }
 
     let(:request) { post "/memos/#{memo.id}/conversations", headers:, params:, as: :json }

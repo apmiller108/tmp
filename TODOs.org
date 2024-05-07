@@ -62,7 +62,8 @@ CLOSED: [2024-05-03 Fri 13:30]
 CLOSED: [2024-05-03 Fri 14:01]
 * DONE Fixing lost newline characters in generated text
 CLOSED: [2024-05-06 Mon 16:04]
-* TODO Update spec/requests/conversations_spec.rb with index action
+* DONE Update spec/requests/conversations_spec.rb with index action
+CLOSED: [2024-05-07 Tue 14:39]
 * TODO Update spec/requests/generate_text_requests_spec.rb
   include temperature generate_text_preset_id and conversation_id in the params
 * TODO Add spec/requests/memos/autosaves_spec.rb
@@ -79,3 +80,4 @@ CLOSED: [2024-05-07 Tue 13:32]
   - It creates a conversation
   - It sets the conversation id on the form
   - It sets the conversation id on the wysiwyg editor
+* TODO autosave on generated image
