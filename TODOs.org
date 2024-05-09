@@ -72,7 +72,8 @@ CLOSED: [2024-05-07 Tue 14:39]
   When conversation exists, the conversation-id data set attr exists
 * DONE ConversationForm spec
 CLOSED: [2024-05-07 Tue 13:32]
-* TODO GenerativeText::Anthropic::Client spec
+* DONE GenerativeText::Anthropic::Client spec
+  CLOSED: [2024-05-08 Wed 20:56]
 * TODO GenerativeText::Anthropic::InvokeModelResponse
 * TODO update spec/system/memos/memo_spec.rb
   - Include test for creating new memo with generating text
