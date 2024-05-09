@@ -35,7 +35,7 @@ class GenerativeText
           req.body = request_body.to_json
         end
         InvokeModelResponse.new(response.body)
-      rescue Faraday::ClientError => e
+      rescue Faraday::Error => e
         raise ClientError, "#{e.response_status}: #{e.response_body}"
       end
 

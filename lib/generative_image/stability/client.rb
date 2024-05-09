@@ -20,7 +20,7 @@ class GenerativeImage
           req.headers['Accept'] = 'application/json'
         end
         TextToImageResponse.new(response.body)
-      rescue Faraday::ClientError => e
+      rescue Faraday::Error => e
         raise Stability::ClientError, "#{e.response_status}: #{e.response_body}"
       end
 
