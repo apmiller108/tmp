@@ -35,7 +35,7 @@ class GenerativeText
 
       def completion_reason
         # stop_reason could be one of ["end_turn", "max_tokens", "stop_sequence"]
-        results.fetch('stop_reason')
+        response_data.fetch('stop_reason')
       end
 
       def token_count
