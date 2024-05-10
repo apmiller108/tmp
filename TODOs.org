@@ -67,7 +67,8 @@ CLOSED: [2024-05-07 Tue 14:39]
 * DONE Update spec/requests/generate_text_requests_spec.rb
 CLOSED: [2024-05-10 Fri 12:00]
   include temperature generate_text_preset_id and conversation_id in the params
-* TODO Add spec/requests/memos/autosaves_spec.rb
+* DONE Add spec/requests/memos/autosaves_spec.rb
+CLOSED: [2024-05-10 Fri 12:34]
 * TODO update ComputeStatsJob spec
 * TODO update MemoFormComponent spec
   When conversation exists, the conversation-id data set attr exists
