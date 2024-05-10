@@ -3,8 +3,9 @@ require 'rails_helper'
 RSpec.describe MemoFormComponent, type: :component do
   subject { page }
 
-  let(:memo) { build_stubbed(:memo, user:) }
+  let(:memo) { build_stubbed(:memo, user:, conversation:) }
   let(:user) { build_stubbed :user }
+  let(:conversation) { nil }
   let(:component) { described_class.new(memo:) }
   let(:wysiwyg_editor_component) do
     Class.new(ApplicationViewComponent) do
@@ -46,6 +47,14 @@ RSpec.describe MemoFormComponent, type: :component do
 
     it 'renders a modal closer' do
       expect(page).to have_css 'button[data-controller="modal-closer"]'
+    end
+  end
+
+  context 'with a conversation exists' do
+    let(:conversation) { build_stubbed :conversation }
+
+    it 'sets the conversation ID dataset attribute' do
+      expect(page).to have_css ".c-memo-form[data-conversation-id='#{conversation.id}']"
     end
   end
 

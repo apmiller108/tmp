@@ -13,6 +13,7 @@ RSpec.describe Memo::ComputeStatsJob, type: :job do
       memo.rich_text_content.embeds_blobs << audios
       memo.rich_text_content.embeds_blobs << videos
       memo.rich_text_content.embeds_blobs << other
+      allow(ViewComponentBroadcaster).to receive(:call)
     end
 
     it 'updates the memo attachment counters cache columns' do
@@ -31,6 +32,17 @@ RSpec.describe Memo::ComputeStatsJob, type: :job do
              'video_attachment_count' => 3,
              'audio_attachment_count' => 1,
              'attachment_count' => 7 })
+    end
+
+    it 'broadcasts the MemoCardComponent' do
+      described_class.new.perform(memo.id)
+      expect(ViewComponentBroadcaster).to(
+        have_received(:call).with(
+          [memo.user, TurboStreams::STREAMS[:memos]],
+          component: kind_of(MemoCardComponent),
+          action: :replace
+        )
+      )
     end
   end
 end
