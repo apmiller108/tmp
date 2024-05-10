@@ -5,7 +5,17 @@ RSpec.describe 'Generate text requests', type: :request do
     let(:user) { create :user }
     let(:prompt) { 'list all the flavors of quarks' }
     let(:text_id) { 'abcd' }
-    let(:params) { { generate_text_request: { prompt:, text_id: } } }
+    let(:conversation) { create :conversation, user: }
+    let(:generate_text_preset) { create :generate_text_preset }
+    let(:temperature) { 0.5 }
+    let(:params) do
+      {
+        generate_text_request: {
+          prompt:, text_id:, temperature:,
+          generate_text_preset_id: generate_text_preset.id, conversation_id: conversation.id
+        }
+      }
+    end
     let(:request) do
       post generate_text_requests_path, params:, as: :turbo_stream
     end
@@ -30,7 +40,12 @@ RSpec.describe 'Generate text requests', type: :request do
         end
 
         it 'creates a generate_text_requests record' do
-          expect { request }.to change(user.generate_text_requests.where(prompt:, text_id:), :count).by(1)
+          expect { request }.to(
+            change(
+              user.generate_text_requests.where(prompt:, text_id:, conversation:, generate_text_preset:),
+              :count
+            ).by(1)
+          )
         end
 
         it 'enqueues a GenerateTextJob' do
