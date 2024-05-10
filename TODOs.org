@@ -74,7 +74,8 @@ CLOSED: [2024-05-07 Tue 14:39]
 CLOSED: [2024-05-07 Tue 13:32]
 * DONE GenerativeText::Anthropic::Client spec
   CLOSED: [2024-05-08 Wed 20:56]
-* TODO GenerativeText::Anthropic::InvokeModelResponse
+* DONE GenerativeText::Anthropic::InvokeModelResponse
+CLOSED: [2024-05-10 Fri 11:52]
 * TODO update spec/system/memos/memo_spec.rb
   - Include test for creating new memo with generating text
   - It autosaves
