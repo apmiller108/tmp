@@ -21,6 +21,30 @@ RSpec.describe 'Create and view memo', type: :system do
     JSON
   end
 
+  let(:generate_text_prompt) { 'This is my prompt' }
+  let!(:generate_text_preset) { create :generate_text_preset }
+  let(:generative_text) { 'This is AI slop' }
+  let(:claude_generative_text_response) do
+    <<~JSON
+      {
+        "id": "msg_01DMcCdRr6gaWDuZs7Y63rhe",
+        "type": "message",
+        "role": "assistant",
+        "content": [{
+            "type": "text",
+            "text": "#{generative_text}"
+        }],
+        "model": "claude-3-haiku-20240307",
+        "stop_reason": "end_turn",
+        "stop_sequence": null,
+        "usage": {
+            "input_tokens": 79,
+            "output_tokens": 942
+        }
+      }
+    JSON
+  end
+
   before(:context) do
     Sidekiq::Testing.inline!
   end
@@ -40,6 +64,15 @@ RSpec.describe 'Create and view memo', type: :system do
             'steps' => 30
           }.to_json
       ).to_return(status: 200, body: generate_image_response, headers: {})
+
+    stub_request(:post, 'https://api.anthropic.com/v1/messages')
+      .with(
+        body: {
+          model: 'claude-3-haiku-20240307', max_tokens: 1024, temperature: generate_text_preset.temperature,
+          messages: [{ 'role' => 'user', 'content' => [{ 'type' => 'text', 'text' => generate_text_prompt }] }],
+          system: generate_text_preset.system_message
+        }.to_json
+      ).to_return(status: 200, body: claude_generative_text_response)
   end
 
   after(:context) do
@@ -58,7 +91,7 @@ RSpec.describe 'Create and view memo', type: :system do
     find('option[label="1024x1024"]').select_option
     find('option[label="Comic Book"]').select_option
     select '3', from: 'weight'
-    page.execute_script("document.querySelector(\"input#prompt\").value = '#{gen_image_prompt}'")
+    find('input#prompt').set gen_image_prompt
     click_button 'Submit'
 
     # Generated image appears in the editor
@@ -105,5 +138,30 @@ RSpec.describe 'Create and view memo', type: :system do
     # Doing this in an after suite hook or after all hook causes the test to
     # fail as if the file is being deleted before the test has completed.
     FileUtils.rm_rf(ActiveStorage::Blob.service.root)
+  end
+
+  specify 'create memo with generative text' do
+    login(user:)
+    visit user_memos_path(user)
+
+    click_button 'New Memo'
+    fill_in 'Title', with: 'My Memo'
+
+    click_button 'Generate Text'
+
+    # Select preset that automaticallty sets the temperature option
+    find("option[label='#{generate_text_preset.name}']").select_option
+    expect(find('select#temperature').value).to eq generate_text_preset.temperature.to_s
+
+    # Generate text autosaves the memo
+    find('input[name="generateText"]').set generate_text_prompt
+    click_button 'Submit'
+    page.driver.wait_for_network_idle
+    expect(page).to have_content generative_text
+    expect(user.memos.last.plain_text_body).to include generative_text
+
+    # TODO creates conversation
+    # TODO sets the conversation id on the form
+    # TODO sets the conversation id on the wywiwyg editor
   end
 end

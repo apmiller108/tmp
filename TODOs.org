@@ -87,3 +87,4 @@ CLOSED: [2024-05-10 Fri 11:52]
   - It sets the conversation id on the form
   - It sets the conversation id on the wysiwyg editor
 * TODO autosave on generated image
+* TODO Fix cursor placement on generating image
