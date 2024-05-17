@@ -282,7 +282,7 @@ export default class WysiwygEditor extends Controller {
     try {
       if (!error) {
         this.editor.recordUndoEntry("InsertGenImage")
-        this.editor.setSelectedRange(selectedRange[0])
+        // this.editor.setSelectedRange(selectedRange[0])
 
         // Images are Base64 encoded and pushed in JSON objects over websockets. See comment above.
         const base64response = await fetch(`data:${content_type};base64,${image}`)
@@ -294,9 +294,15 @@ export default class WysiwygEditor extends Controller {
         // prepended. Insert a line break after the image.
         this.editor.setSelectedRange(this.editor.getSelectedRange()[1])
         this.editor.insertLineBreak()
+        this.editor.insertLineBreak()
+
         this.editor.insertFile(file)
+
         this.editor.setSelectedRange(this.editor.getSelectedRange()[1] + 1)
         this.editor.insertLineBreak()
+        this.editor.insertLineBreak()
+
+        this.dispatch('generatedImageInserted', { detail: { image_name } })
       } else if (error) {
         throw new Error('Job to generate image was not successful')
       }
