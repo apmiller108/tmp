@@ -29,8 +29,10 @@ export default class MemoFormController extends Controller {
     // editor)
     if (this.memoId && !this.conversationId) {
       const conversation = await getConversation(this.memoId)
-      this.conversationId = conversation.id
-      this.emitConversationCreated()
+      if (conversation) {
+        this.conversationId = conversation.id
+        this.emitConversationCreated()
+      }
     }
   }
 
@@ -82,6 +84,12 @@ export default class MemoFormController extends Controller {
 
       Turbo.renderStreamMessage(autoSaveTurboStream)
     }
+  }
+
+  async onGeneratedImageInserted(e) {
+    // TODO: figure out how to autosave. After this event, the file is direct
+    // uploaded. Cannot save until the upload completed.
+    console.log(e.detail)
   }
 
   async autoSave() {
