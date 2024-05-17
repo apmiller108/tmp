@@ -278,12 +278,9 @@ export default class WysiwygEditor extends Controller {
 
   async onGenerateImage(event) {
     const { generate_image: { image_name, image, error, content_type } } = event.detail
-    const selectedRange = this.editor.getSelectedRange()
     try {
       if (!error) {
         this.editor.recordUndoEntry("InsertGenImage")
-        // this.editor.setSelectedRange(selectedRange[0])
-
         // Images are Base64 encoded and pushed in JSON objects over websockets. See comment above.
         const base64response = await fetch(`data:${content_type};base64,${image}`)
         const blob = await base64response.blob();
