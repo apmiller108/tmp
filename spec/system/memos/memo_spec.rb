@@ -158,10 +158,17 @@ RSpec.describe 'Create and view memo', type: :system do
     click_button 'Submit'
     page.driver.wait_for_network_idle
     expect(page).to have_content generative_text
-    expect(user.memos.last.plain_text_body).to include generative_text
+    memo = user.memos.last
+    expect(memo.plain_text_body).to include generative_text
 
-    # TODO creates conversation
-    # TODO sets the conversation id on the form
-    # TODO sets the conversation id on the wywiwyg editor
+    # A conversation was created which stores both the user prompt and AI response
+    conversation = user.conversations.last
+    expect(conversation.memo_id).to eq memo.id
+    expect(conversation.exchange.find { |e| e['role'] == 'user' }['content'][0]['text']).to eq generate_text_prompt
+    expect(conversation.exchange.find { |e| e['role'] == 'assistant' }['content']).to eq generative_text
+
+    # Conversation ID is set as data attributes
+    expect(page).to have_css "form.c-memo-form[data-conversation-id='#{conversation.id}']"
+    expect(page).to have_css ".c-wysiwyg-editor[data-conversation-id='#{conversation.id}']"
   end
 end
