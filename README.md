@@ -68,8 +68,11 @@ See also [#activestorage-configuration](ActiveStorage Configuration)
 ### AWS Transcribe
 This uses AWS Transcription Jobs for speech to text
 ### AWS Titan
-LLM used for summaries and generative text features
+LLM used for summaries
 See also https://aws.amazon.com/bedrock/titan/
+### Anthopic Claude
+LLM used generative text features
+See also https://www.anthropic.com/claude
 ### Stability AI
 Text to Image
 https://stability.ai/
