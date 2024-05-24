@@ -7,6 +7,7 @@ class GenerativeImage
     HOST = 'https://api.stability.ai'.freeze
     ENGINES_ENDPOINT = '/v1/engines/list'.freeze
     GENERATION_ENDPOINT = '/v1/generation/%<engine>s/text-to-image'.freeze
+    CORE_GENERATION_ENDPOINT = '/https://api.stability.ai/v2beta/stable-image/generate/core'.freeze
 
     ENGINES = {
       v1_6: {
@@ -39,6 +40,8 @@ class GenerativeImage
       pixel-art
       tile-texture
     ].freeze
+
+    CORE_ASPECT_RATIOS = %w[1:1 5:4 3:2 16:9 21:9 2:3 4:5 9:16 9:21].freeze
 
     DEFAULT_STYLE = 'photographic'.freeze
   end
