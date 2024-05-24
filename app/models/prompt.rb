@@ -3,7 +3,7 @@ class Prompt < ApplicationRecord
 
   belongs_to :generate_image_request
 
-  validates :text, presence: true, length: { maximum: MAX_LENGTH } # Stability max is 77 tokens
+  validates :text, presence: true
   validates :weight, presence: true, inclusion: { in: -10..10 }
 
   before_validation :truncate_text
