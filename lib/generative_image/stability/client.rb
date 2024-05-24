@@ -13,7 +13,7 @@ class GenerativeImage
       # @param prompts [Array<Hash>] list of prompts with `text` and `weight` keys
       # @return [Stability::TextToImageResponse] wraps the JSON response
       def text_to_image(prompts:, **opts)
-        request = TextToImageRequest.new(prompts:, **opts)
+        request = TextToImageRequest.call(prompts:, **opts)
 
         response = conn.post(request.path) do |req|
           req.body = request.to_json

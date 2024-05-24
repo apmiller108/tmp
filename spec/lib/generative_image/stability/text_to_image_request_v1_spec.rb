@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe GenerativeImage::Stability::TextToImageRequest do
+describe GenerativeImage::Stability::TextToImageRequestV1 do
   describe '#as_json' do
     let(:prompts) { build_list :prompt, 3 }
 
