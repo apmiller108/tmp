@@ -1,0 +1,19 @@
+:PROPERTIES:
+:CATEGORY: tmp
+:END:
+* TODO Add aspect ratio select to form
+  - Show icons / example of ratio in addition to label
+* TODO Add negative prompt to form
+  - Add tooltip that describes prompt syntax for weights, etc
+* TODO Update strong params
+* TODO Update generate image request [/]
+  - [ ] Add options jsonb column
+  - [ ] migrate style and dimensions to jsonb
+  - [ ] Drop style and dimensions columns
+* TODO Store everything but prompt and image name in options json column
+* TODO Check out the background job
+  Does anything need to change here?
+* TODO Remove support for v1
+  - [ ] Drop the request object
+  - [ ] Simply response object
+  - [ ] Delete unused constants
