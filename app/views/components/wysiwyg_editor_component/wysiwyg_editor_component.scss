@@ -85,6 +85,12 @@
         select {
           font-size: 1rem;
         }
+        .aspect-ratio-example {
+          width: auto;
+          height: 100%;
+          background: black;
+          aspect-ratio: 1/1;
+        }
       }
     }
   }

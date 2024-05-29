@@ -23,9 +23,9 @@ class WysiwygEditorComponent < ApplicationViewComponent
     end.to_json
   end
 
-  def gen_image_dimension_options_json
-    GenerativeImage::Stability::DIMENSIONS.map do |dimension|
-      { value: dimension, label: dimension, selected: dimension == '320x320' }
+  def gen_image_aspect_ratio_options_json
+    GenerativeImage::Stability::CORE_ASPECT_RATIOS.map do |ar|
+      { value: ar, label: ar, selected: ar == '1:1' }
     end.to_json
   end
 

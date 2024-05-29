@@ -16,7 +16,7 @@ export default class WysiwygEditor extends Controller {
     'generateTextBtn', 'generateTextDialog', 'generateTextId', 'generateTextInput', 'generateTextSubmit',
     'generateTextTemperature', 'generateTextPreset', 'generateImageBtn', 'generateImageDialog',
     'generateImageName', 'generateImageSubmit', 'generateImagePromptGroup',
-    'generateImageDimensions', 'generateImageStyle', 'notification'
+    'generateImageAspectRatio', 'aspectRatioExample', 'generateImageStyle', 'notification'
   ];
 
   editorElem;
@@ -34,8 +34,8 @@ export default class WysiwygEditor extends Controller {
     return JSON.parse(this.element.dataset.styleOptions)
   }
 
-  get generateImageDimensionsOptions() {
-    return JSON.parse(this.element.dataset.dimensionOptions)
+  get generaeteImageAspectRatioOptions() {
+    return JSON.parse(this.element.dataset.aspectRatioOptions)
   }
 
   get generateTextPresetOptions() {
@@ -81,8 +81,8 @@ export default class WysiwygEditor extends Controller {
     element.innerHTML = options
   }
 
-  generateImageDimensionsTargetConnected(element) {
-    const options = this.generateImageDimensionsOptions.map((o) => this.optionForSelect(o)).join("\n")
+  generateImageAspectRatioTargetConnected(element) {
+    const options = this.generaeteImageAspectRatioOptions.map((o) => this.optionForSelect(o)).join("\n")
     element.innerHTML = options
   }
 
@@ -105,6 +105,11 @@ export default class WysiwygEditor extends Controller {
 
   optionForSelect({ value, label, selected }) {
     return `<option value="${value}" label="${label}" ${selected ? 'selected' : '' }></option>`
+  }
+
+  onGenerateImageAspectRatioChange(e) {
+    const aspectRatio = e.target.value.replace(":", "/")
+    this.aspectRatioExampleTarget.style.aspectRatio = aspectRatio
   }
 
   onOpenGenerateTextDialog() {
@@ -191,7 +196,7 @@ export default class WysiwygEditor extends Controller {
       })
       response = await generateImage({
         prompts,
-        dimensions: this.generateImageDimensionsTarget.value,
+        aspect_ration: this.generateImageAspectRatioTarget.value,
         style: this.generateImageStyleTarget.value,
         image_name: this.generateImageNameTarget.value
       })

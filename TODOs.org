@@ -1,7 +1,8 @@
 :PROPERTIES:
 :CATEGORY: tmp
 :END:
-* TODO Add aspect ratio select to form
+* DONE Add aspect ratio select to form
+CLOSED: [2024-05-29 Wed 16:52]
   - Show icons / example of ratio in addition to label
 * TODO Add negative prompt to form
   - Add tooltip that describes prompt syntax for weights, etc

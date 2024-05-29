@@ -41,7 +41,7 @@ class GenerativeImage
       tile-texture
     ].freeze
 
-    CORE_ASPECT_RATIOS = %w[1:1 5:4 3:2 16:9 21:9 2:3 4:5 9:16 9:21].freeze
+    CORE_ASPECT_RATIOS = %w[1:1 5:4 3:2 16:9 21:9 4:5 2:3 9:16 9:21].freeze
 
     DEFAULT_STYLE = 'photographic'.freeze
   end
