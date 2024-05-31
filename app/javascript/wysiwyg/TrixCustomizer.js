@@ -159,16 +159,16 @@ export default class TrixCustomizer {
             data-trix-dialog-attribute="generateImage" data-wysiwyg-editor-target="generateImageDialog">
         <input type="hidden" name="generate_image_name" value="" data-wysiwyg-editor-target="generateImageName" autocomplete="off">
         <div class="grid" >
-          <div class="g-col-3">
+          <div class="g-col-6">
             <div class="form-floating aspect-ratio-select">
               <select id="aspect-ratio" class="form-select form-select-lg" aria-label="aspect-ratio" name="aspect-ratio"
                       data-wysiwyg-editor-target="generateImageAspectRatio" data-action="change->wysiwyg-editor#onGenerateImageAspectRatioChange">
               </select>
               <label for="aspect-ratio">Aspect Ratio</label>
+              <div class="aspect-ratio-example">
+                <div class="example position-absolute" data-wysiwyg-editor-target="aspectRatioExample"></div>
+              </div>
             </div>
-          </div>
-          <div class="g-col-3 position-relative">
-            <div class="aspect-ratio-example position-absolute" data-wysiwyg-editor-target="aspectRatioExample"></div>
           </div>
           <div class="g-col-6">
             <div class="form-floating style-select">

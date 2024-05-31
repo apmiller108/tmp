@@ -86,10 +86,17 @@
           font-size: 1rem;
         }
         .aspect-ratio-example {
-          width: auto;
-          height: 100%;
-          background: black;
-          aspect-ratio: 1/1;
+          position: absolute;
+          height: 1.75rem;
+          width: 1.75rem;
+          top: 21px;
+          left: 83px;
+          .example {
+            width: auto;
+            height: 100%;
+            border: 0.15rem dashed $gray-600;
+            aspect-ratio: 1/1;
+          }
         }
       }
     }
