@@ -18,10 +18,11 @@ CLOSED: [2024-05-31 Fri 15:14]
 CLOSED: [2024-05-31 Fri 15:42]
   - [X] Update validation
   - [X] Update parameterize method
-* TODO Update form object [/]
-  - [ ] Store everything but prompt and image name in options json column
-  - [ ] Store prompt as an associated prompt with weight 1
-  - [ ] Store the negative prompt as an associated prompt with weight -1
+* Update form object [3/3]
+  - [X] Store everything but prompt and image name in options json column
+  - [X] Store prompt as an associated prompt with weight 1
+  - [X] Store the negative prompt as an associated prompt with weight -1
+  - [ ] Update spec
 * TODO Check out the background job
   Does anything need to change here?
 * TODO update blob details

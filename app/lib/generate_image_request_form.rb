@@ -10,12 +10,12 @@ class GenerateImageRequestForm
   attribute :user
   attribute :generate_image_request
 
-  validate :prompts_must_have_text
+  validates :prompt, presence: true
   validate :generate_image_request_valid
 
   def initialize(attrs)
     super(attrs)
-    self.generate_image_request = GenerateImageRequest.new(attrs.slice(:image_name, :style, :dimensions, :user))
+    self.generate_image_request = GenerateImageRequest.new(attrs.slice(:image_name, :style, :aspect_ratio, :user))
   end
 
   def submit
@@ -31,17 +31,18 @@ class GenerateImageRequestForm
 
   private
 
+  def prompts
+    [
+      { text: prompt, weight: 1 },
+      { text: negative_prompt, weight: -1 }
+    ].select { |p| p[:text].present? }
+  end
+
   def generate_image_request_valid
     return if generate_image_request.valid?
 
     generate_image_request.errors.each do |error|
       errors.add(error.attribute, error.message)
     end
-  end
-
-  def prompts_must_have_text
-    return if prompts&.all? { |p| p[:text].present? }
-
-    errors.add(:prompts, "can't be blank")
   end
 end
