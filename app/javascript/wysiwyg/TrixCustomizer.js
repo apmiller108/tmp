@@ -179,23 +179,24 @@ export default class TrixCustomizer {
             </div>
           </div>
           <div class="g-col-12">
-            <div class="input-group promot-group" data-wysiwyg-editor-target="generateImagePromptGroup">
-              <div class="form-floating">
-                <input type="text" id="prompt" class="generate-content-input form-control form-control-lg" name="generateImage",
-                       placeholder="Enter prompt"
-                       data-action="keydown.enter->wysiwyg-editor#submitGenerateImage:prevent"
-                       data-wysiwyg-editor-type-param="image"
-                       data-trix-input required>
-                <label for="prompt">Prompt</label>
-              </div>
-              <div class="form-floating weight-select">
-                <select id="weight" class="form-select form-select-lg" aria-label="prompt weight" name="weight">
-                  <option selected value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                </select>
-                <label for="weight">Weight</label>
-              </div>
+            <div class="form-floating">
+              <input type="text" id="prompt" class="generate-content-input form-control form-control-lg" name="generateImage",
+                      placeholder="Enter prompt"
+                      data-action="keydown.enter->wysiwyg-editor#submitGenerateImage:prevent"
+                      data-wysiwyg-editor-type-param="image"
+                      data-wysiwyg-editor-target="generateImagePrompt"
+                      data-trix-input
+                      required>
+              <label for="prompt">Prompt</label>
+            </div>
+          </div>
+          <div class="g-col-12">
+            <div class="form-floating">
+              <input type="text" id="prompt" class="generate-content-input form-control form-control-lg" name="generate-image-negative-prompt",
+                      placeholder="Enter negative prompt"
+                      data-wysiwyg-editor-target="generateImageNegativePrompt"
+                      data-trix-input>
+              <label for="prompt">Negative Prompt</label>
             </div>
           </div>
           <div class="g-col-sm-3 g-start-md-10 g-col-12">

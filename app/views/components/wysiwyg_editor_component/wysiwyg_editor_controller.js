@@ -15,7 +15,7 @@ export default class WysiwygEditor extends Controller {
   static targets = [
     'generateTextBtn', 'generateTextDialog', 'generateTextId', 'generateTextInput', 'generateTextSubmit',
     'generateTextTemperature', 'generateTextPreset', 'generateImageBtn', 'generateImageDialog',
-    'generateImageName', 'generateImageSubmit', 'generateImagePromptGroup',
+    'generateImageName', 'generateImageSubmit', 'generateImagePrompt', 'generateImageNegativePrompt',
     'generateImageAspectRatio', 'aspectRatioExample', 'generateImageStyle', 'notification'
   ];
 
@@ -118,7 +118,7 @@ export default class WysiwygEditor extends Controller {
   }
 
   onOpenGenerateImageDialog() {
-    const promptInput = this.generateImagePromptInputs.pop()
+    const promptInput = this.generateImagePromptTarget
     promptInput.value = this.selectedText;
     promptInput.focus()
   }
@@ -179,7 +179,7 @@ export default class WysiwygEditor extends Controller {
     const { params: { type } } = e
     const id = this.createGenerativeId(`gen${type}`)
 
-    if (this.generateImagePromptInputs.some(i => i.value.length === 0)) {
+    if (this.generateImagePromptTarget.value.length === 0) {
       return
     }
 
@@ -188,15 +188,10 @@ export default class WysiwygEditor extends Controller {
     let response;
     try {
       this.setNotification('Generating image...')
-      const prompts = this.generateImagePromptGroupTargets.map((g) => {
-        return {
-          text: g.querySelector('input').value,
-          weight: g.querySelector('select[name="weight"]').value
-        }
-      })
       response = await generateImage({
-        prompts,
-        aspect_ration: this.generateImageAspectRatioTarget.value,
+        prompt: this.generateImagePromptTarget.value,
+        negative_prompt: this.generateImageNegativePromptTarget.value,
+        aspect_ratio: this.generateImageAspectRatioTarget.value,
         style: this.generateImageStyleTarget.value,
         image_name: this.generateImageNameTarget.value
       })
@@ -228,7 +223,9 @@ export default class WysiwygEditor extends Controller {
   }
 
   get generateImagePromptInputs() {
-    return this.generateImagePromptGroupTargets.map(g => g.querySelector('input'))
+    return [
+      this.generateImagePromptTarget, this.generateImageNegativePromptTarget
+    ]
   }
 
   /*
