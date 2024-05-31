@@ -10,7 +10,7 @@ RSpec.describe GenerateImageRequest, type: :model do
     let(:request) do
       described_class.new(
         style: GenerativeImage::Stability::STYLE_PRESETS.sample,
-        dimensions: GenerativeImage::Stability::DIMENSIONS.sample,
+        aspect_ratio: GenerativeImage::Stability::CORE_ASPECT_RATIOS.sample,
         prompts: [prompt1, prompt2]
       )
     end
@@ -23,7 +23,7 @@ RSpec.describe GenerateImageRequest, type: :model do
     it 'returns a hash with style, dimensions, and prompts' do
       expected_hash = {
         style: request.style,
-        dimensions: request.dimensions,
+        aspect_ratio: request.aspect_ratio,
         prompts: [prompt1_params, prompt2_params]
       }
 
