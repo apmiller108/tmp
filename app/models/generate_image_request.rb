@@ -1,7 +1,9 @@
 class GenerateImageRequest < ApplicationRecord
+  store_accessor :options, :style, :aspect_ratio
+
   validates :image_name, presence: true, length: { maximum: 50 }
   validates :style, inclusion: { in: GenerativeImage::Stability::STYLE_PRESETS, allow_blank: true }
-  validates :dimensions, inclusion: { in: GenerativeImage::Stability::DIMENSIONS }
+  validates :aspect_ratio, inclusion: { in: GenerativeImage::Stability::CORE_ASPECT_RATIOS }
 
   belongs_to :user
   belongs_to :active_storage_blob, optional: true, class_name: 'ActiveStorage::Blob',
@@ -12,10 +14,17 @@ class GenerateImageRequest < ApplicationRecord
 
   has_one_attached :image
 
+  OPTION_FIELDS = %w[style aspect_ratio].freeze
+  LEGACY_OPTION_FIELDS = %w[dimensions].freeze
+
   def parameterize
     {
-      **attributes.slice('style', 'dimensions'),
+      **flat_attributes.slice(*OPTION_FIELDS, *LEGACY_OPTION_FIELDS),
       prompts: prompts.map(&:parameterize)
     }.symbolize_keys
+  end
+
+  def flat_attributes
+    attributes.except('options').merge(options)
   end
 end
