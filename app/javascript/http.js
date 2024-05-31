@@ -104,10 +104,10 @@ export const autoSaveMemo = (memo) => {
   }
 }
 
-export const generateImage = ({ prompt, negative_prompt, image_name, style, dimensions }) => {
+export const generateImage = ({ prompt, negative_prompt, image_name, style, aspect_ratio }) => {
   const body = JSON.stringify({
     generate_image_request: {
-      prompt, negative_prompt, image_name, style, dimensions
+      prompt, negative_prompt, image_name, style, aspect_ratio
     }
   })
   const headers = {
