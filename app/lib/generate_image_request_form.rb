@@ -4,8 +4,9 @@ class GenerateImageRequestForm
 
   attribute :image_name, :string
   attribute :style, :string
-  attribute :dimensions, :string
-  attribute :prompts
+  attribute :aspect_ratio, :string
+  attribute :prompt, :string
+  attribute :negative_prompt, :string
   attribute :user
   attribute :generate_image_request
 

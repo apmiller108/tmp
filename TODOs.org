@@ -4,17 +4,29 @@
 * DONE Add aspect ratio select to form
 CLOSED: [2024-05-29 Wed 16:52]
   - Show icons / example of ratio in addition to label
-* TODO Add negative prompt to form
-  - Add tooltip that describes prompt syntax for weights, etc
-* TODO Update strong params
-* TODO Update generate image request [/]
-  - [ ] Add options jsonb column
-  - [ ] migrate style and dimensions to jsonb
-  - [ ] Drop style and dimensions columns
-* TODO Store everything but prompt and image name in options json column
+* DONE Add negative prompt to form
+CLOSED: [2024-05-31 Fri 14:43]
+  - remove weight
+* DONE Update strong params
+CLOSED: [2024-05-31 Fri 14:43]
+* DONE Update generate image request [3/3]
+CLOSED: [2024-05-31 Fri 15:14]
+  - [X] Add options jsonb column
+  - [X] migrate style and dimensions to jsonb
+  - [X] Drop style and dimensions columns
+* DONE Update generate_image_request [2/2]
+CLOSED: [2024-05-31 Fri 15:42]
+  - [X] Update validation
+  - [X] Update parameterize method
+* TODO Update form object [/]
+  - [ ] Store everything but prompt and image name in options json column
+  - [ ] Store prompt as an associated prompt with weight 1
+  - [ ] Store the negative prompt as an associated prompt with weight -1
 * TODO Check out the background job
   Does anything need to change here?
+* TODO update blob details
 * TODO Remove support for v1
   - [ ] Drop the request object
   - [ ] Simply response object
   - [ ] Delete unused constants
+* TODO Add prompt tooltips describing syntax
