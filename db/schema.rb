@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_03_155309) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_31_194853) do
   create_schema "rollback"
 
   # These are extensions that must be enabled in order to support this database
@@ -76,11 +76,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_03_155309) do
 
   create_table "generate_image_requests", force: :cascade do |t|
     t.string "image_name", limit: 50, null: false
-    t.string "style", limit: 50
-    t.string "dimensions", limit: 25, null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "options", default: {}
     t.index ["image_name"], name: "index_generate_image_requests_on_image_name"
     t.index ["user_id"], name: "index_generate_image_requests_on_user_id"
   end
