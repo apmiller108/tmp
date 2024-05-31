@@ -21,6 +21,6 @@ class GenerateImageRequestsController < ApplicationController
   private
 
   def generate_image_request_params
-    params.require(:generate_image_request).permit(:image_name, :style, :aspect_ratio, prompt:, negative_prompt:)
+    params.require(:generate_image_request).permit(:image_name, :style, :aspect_ratio, :prompt, :negative_prompt)
   end
 end
