@@ -7,7 +7,7 @@ class GenerativeImage
     HOST = 'https://api.stability.ai'.freeze
     ENGINES_ENDPOINT = '/v1/engines/list'.freeze
     GENERATION_ENDPOINT = '/v1/generation/%<engine>s/text-to-image'.freeze
-    CORE_GENERATION_ENDPOINT = '/https://api.stability.ai/v2beta/stable-image/generate/core'.freeze
+    CORE_GENERATION_ENDPOINT = '/v2beta/stable-image/generate/core'.freeze
 
     ENGINES = {
       v1_6: {

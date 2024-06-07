@@ -9,7 +9,7 @@ class GenerateImageJob
   # rubocop:disable Metrics/AbcSize
   def perform(generate_image_request_id)
     request = GenerateImageRequest.find(generate_image_request_id)
-    response = generate_image(request.parameterize)
+    response = generate_image(request)
 
     payload = { generate_image: { image_name: request.image_name, image: nil, content_type: nil, error: nil } }
 
@@ -28,7 +28,8 @@ class GenerateImageJob
 
   private
 
-  def generate_image(params)
+  def generate_image(request)
+    params = request.parameterize
     GenerativeImage.new.text_to_image(**params)
   rescue StandardError => e
     Rails.logger.warn("#{self.class}: #{e} : #{e.cause}")
