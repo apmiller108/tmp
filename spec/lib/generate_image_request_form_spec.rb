@@ -9,11 +9,9 @@ RSpec.describe GenerateImageRequestForm do
     {
       image_name: '1234abcd',
       style: GenerativeImage::Stability::STYLE_PRESETS.sample,
-      dimensions: GenerativeImage::Stability::DIMENSIONS.sample,
-      prompts: [
-        { text: 'A golden retriever doggy sitting on a farm', weight: 1 },
-        { text: 'Clouds in the sky', weight: -1 }
-      ],
+      aspect_ratio: GenerativeImage::Stability::CORE_ASPECT_RATIOS.sample,
+      prompt: 'A golden retriever doggy sitting on a farm',
+      negative_prompt: 'Clouds in the sky',
       user:
     }
   end
@@ -34,7 +32,7 @@ RSpec.describe GenerateImageRequestForm do
         form.valid?
         expect(form.errors.full_messages).to(
           contain_exactly(
-            "Prompts can't be blank", "Image name can't be blank", 'Dimensions is not included in the list',
+            "Prompt can't be blank", "Image name can't be blank", 'Aspect ratio is not included in the list',
             'User must exist'
           )
         )
@@ -59,7 +57,16 @@ RSpec.describe GenerateImageRequestForm do
 
       it 'creates the prompts' do
         prompts = form.generate_image_request.prompts
-        expect(prompts.map { |p| p.slice(:text, :weight) }).to contain_exactly(*valid_params[:prompts])
+        expect(prompts.map { |p| p.slice(:text, :weight) }).to(
+          contain_exactly(
+            {
+              'text' => valid_params.fetch(:prompt), 'weight' => 1
+            },
+            {
+              'text' => valid_params.fetch(:negative_prompt), 'weight' => -1
+            }
+          )
+        )
       end
     end
 
