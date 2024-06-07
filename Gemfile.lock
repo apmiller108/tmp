@@ -190,6 +190,8 @@ GEM
       base64
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
+    faraday-multipart (1.0.4)
+      multipart-post (~> 2)
     faraday-net_http (3.0.2)
     ferrum (0.14)
       addressable (~> 2.5)
@@ -267,6 +269,7 @@ GEM
     minitest (5.22.3)
     msgpack (1.6.0)
     multi_xml (0.6.0)
+    multipart-post (2.4.1)
     mutex_m (0.2.0)
     net-imap (0.4.10)
       date
@@ -518,6 +521,8 @@ DEPENDENCIES
   dry-effects
   factory_bot_rails (~> 6.2)
   faker
+  faraday
+  faraday-multipart
   haml
   hotwire-livereload
   image_processing (~> 1.2)

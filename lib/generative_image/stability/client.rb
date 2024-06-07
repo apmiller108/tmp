@@ -11,12 +11,12 @@ class GenerativeImage
       end
 
       # @param prompts [Array<Hash>] list of prompts with `text` and `weight`
-      # keys @return [Stability::TextToImageResponse | Stability::TextToImageResponseV2 ] wraps the JSON response
+      # @return [Stability::TextToImageResponse] wraps the JSON response
       def text_to_image(prompts:, **opts)
-        request = TextToImageRequest.call(prompts:, **opts)
+        request = TextToImageRequest.new(prompts:, **opts)
 
         response = conn.post(request.path) do |req|
-          req.body = request.to_json
+          req.body = request.as_json
           req.headers['Accept'] = 'application/json'
         end
         TextToImageResponse.new(response.body)
@@ -31,9 +31,10 @@ class GenerativeImage
           url: HOST,
           headers: {
             'Authorization': "Bearer #{Rails.application.credentials.fetch(:stability_key)}",
-            'Content-Type': 'application/json'
+            'Content-Type': 'multipart/form-data'
           }
         ) do |f|
+          f.request :multipart
           f.response :raise_error
         end
       end
