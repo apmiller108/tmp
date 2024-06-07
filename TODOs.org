@@ -18,16 +18,22 @@ CLOSED: [2024-05-31 Fri 15:14]
 CLOSED: [2024-05-31 Fri 15:42]
   - [X] Update validation
   - [X] Update parameterize method
-* Update form object [3/3]
+* DONE Update form object [4/4]
+CLOSED: [2024-06-07 Fri 13:56]
   - [X] Store everything but prompt and image name in options json column
   - [X] Store prompt as an associated prompt with weight 1
   - [X] Store the negative prompt as an associated prompt with weight -1
-  - [ ] Update spec
-* TODO Check out the background job
+  - [X] Update spec
+* DONE Check out the background job
+CLOSED: [2024-06-07 Fri 14:47]
   Does anything need to change here?
+
+* TODO Switch from Base64 to raw bytes
+  - [ ] Read meta data from the response headers
 * TODO update blob details
-* TODO Remove support for v1
-  - [ ] Drop the request object
-  - [ ] Simply response object
-  - [ ] Delete unused constants
+* DONE Remove support for v1
+CLOSED: [2024-06-07 Fri 15:22]
+  - [X] Drop the request object
+  - [X] Simply response object
+  - [X] Delete unused constants
 * TODO Add prompt tooltips describing syntax
