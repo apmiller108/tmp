@@ -13,7 +13,7 @@
                   %span.label.me-1 Weight
                   %pre.value= prompt['weight']
         .settings.d-flex.justify-content-between.flex-wrap
-          - gen_img_params.slice(:style, :dimensions).each do |k,v|
+          - gen_img_params.slice(:style, :dimensions, :aspect_ratio).each do |k,v|
             %div.d-flex.align-items-center.justify-content-between.mt-3
               %span.label.me-2= k.to_s.titleize
               %pre.value= v
