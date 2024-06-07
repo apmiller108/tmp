@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe GenerativeImage::Stability::TextToImageRequestV2 do
+RSpec.describe GenerativeImage::Stability::TextToImageRequest do
   subject(:request) { described_class.new(prompts:, **opts) }
 
   let(:prompt) { { 'text' => 'prompt text', 'weight' => 1 } }
@@ -22,16 +22,6 @@ RSpec.describe GenerativeImage::Stability::TextToImageRequestV2 do
                                       style_preset: opts.fetch(:style),
                                       aspect_ratio: opts.fetch(:aspect_ratio),
                                       seed: opts.fetch(:seed))
-      end
-    end
-
-    context 'with defaults' do
-      xit 'returns the expected JSON structure' do
-      end
-    end
-
-    context 'without a negative prompt' do
-      xit 'returns the expected JSON structure' do
       end
     end
   end
