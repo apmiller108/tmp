@@ -14,15 +14,14 @@ class GenerateImageJob
     payload = { generate_image: { image_name: request.image_name, image: nil, content_type: nil, error: nil } }
 
     if response&.image_present?
-      png = Vips::Image.new_from_buffer(Base64.decode64(response.base64), '')
-      attach_to_request(request, png)
-      broadcast_image(request.user, payload, png)
+      attach_to_request(request, response.image)
+      broadcast_image(request.user, payload, response.image)
     else
       broadcast_error(request.user, payload)
     end
-  rescue StandardError => e
-    Rails.logger.warn("#{self.class}: #{e} : #{e.cause}")
-    broadcast_flash(request.user)
+    rescue StandardError => e
+      Rails.logger.warn("#{self.class}: #{e} : #{e.cause}")
+      broadcast_flash(request.user)
   end
   # rubocop:enable Metrics/AbcSize
 
@@ -38,15 +37,18 @@ class GenerateImageJob
 
   def attach_to_request(generate_image_request, png)
     generate_image_request.image.attach(
-      io: StringIO.new(png.write_to_buffer('.png', strip: true)),
+      io: ImageProcessing::Vips.source(Vips::Image.new_from_buffer(png, '')).saver(strip: true).call,
       filename: "#{generate_image_request.image_name}.png",
       content_type: 'image/png'
     )
   end
 
+  # @param [User] user
+  # @param [Hash] payload
+  # @param [String] png the raw image bytes
   def broadcast_image(user, payload, png)
-    webp = png.webpsave_buffer
-    payload[:generate_image][:image] = Base64.encode64(webp)
+    webp = ImageProcessing::Vips.source(Vips::Image.new_from_buffer(png, '')).convert!('webp') # Tempfile
+    payload[:generate_image][:image] = Base64.encode64(webp.read)
     payload[:generate_image][:content_type] = 'image/webp'
     MyChannel.broadcast_to(user, payload)
   end

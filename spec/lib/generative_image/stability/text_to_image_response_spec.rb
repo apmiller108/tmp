@@ -1,83 +1,45 @@
 require 'rails_helper'
 
 RSpec.describe GenerativeImage::Stability::TextToImageResponse do
-  subject(:response) { described_class.new(data.to_json) }
-
-  context 'with v1 responses' do
-    let(:data) do
-      { 'artifacts' => [{ 'base64' => 'base64 string', 'seed' => 123, 'finishReason' => 'SUCCESS' }] }
-    end
-
-    describe '#base64' do
-      it 'returns the base64 string from the parsed JSON' do
-        expect(response.base64).to eq(data['artifacts'][0]['base64'])
-      end
-    end
-
-    describe '#seed' do
-      it 'returns the seed from the parsed JSON' do
-        expect(response.seed).to eq(data['artifacts'][0]['seed'])
-      end
-    end
-
-    describe '#finish_reason' do
-      it 'returns the finish reason from the parsed JSON' do
-        expect(response.finish_reason).to eq(data['artifacts'][0]['finishReason'])
-      end
-    end
-
-    describe '#image_present?' do
-      context 'when base64 is present' do
-        it 'returns true' do
-          expect(response.image_present?).to be true
-        end
-      end
-
-      context 'when base64 is blank' do
-        let(:data) do
-          { 'artifacts' => [{ 'base64' => '', 'seed' => 123, 'finishReason' => 'SUCCESS' }] }
-        end
-
-        it 'returns false' do
-          expect(response.image_present?).to be false
-        end
-      end
-    end
-  end
+  subject(:response) { described_class.new(client_response) }
 
   context 'with v2 responses' do
-    let(:data) do
-      { 'image' => 'base64 string', 'seed' => 123, 'finish_reason' => 'SUCCESS' }
+    let(:headers) { { 'finish-reason' => 'SUCCESS', 'seed' => '1234' } }
+
+    let(:client_response) do
+      response = Data.define :body, :headers
+      response.new body: 'raw-image-bytes', headers:
     end
 
-    describe '#base64' do
-      it 'returns the base64 string from the parsed JSON' do
-        expect(response.base64).to eq(data['image'])
+    describe '#image' do
+      it 'returns the raw image bytes (client response body)' do
+        expect(response.image).to eq(client_response.body)
       end
     end
 
     describe '#seed' do
-      it 'returns the seed from the parsed JSON' do
-        expect(response.seed).to eq(data['seed'])
+      it 'returns the seed from header' do
+        expect(response.seed).to eq(headers['seed'])
       end
     end
 
     describe '#finish_reason' do
       it 'returns the finish reason from the parsed JSON' do
-        expect(response.finish_reason).to eq(data['finish_reason'])
+        expect(response.finish_reason).to eq(headers['finish-reason'])
       end
     end
 
     describe '#image_present?' do
-      context 'when base64 is present' do
+      context 'when image raw bytes is present' do
         it 'returns true' do
           expect(response.image_present?).to be true
         end
       end
 
-      context 'when base64 is blank' do
-        let(:data) do
-          { 'image' => '', 'seed' => 123, 'finish_reason' => 'SUCCESS' }
+      context 'when image is blank' do
+        let(:client_response) do
+          response = Data.define :body, :headers
+          response.new body: '', headers: { 'finish-reason' => 'SUCCESS', 'seed' => '1234' }
         end
 
         it 'returns false' do

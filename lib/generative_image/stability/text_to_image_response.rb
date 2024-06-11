@@ -1,29 +1,27 @@
 class GenerativeImage
   module Stability
     class TextToImageResponse
-      attr_reader :data
+      attr_reader :response
 
-      # Example parsed json
-      # {"image": "AAAAIGZ0eXBpc29tAAACAGlzb21pc28yYXZjMW1...", "finish_reason": "SUCCESS", "seed": 343940597 }
-      def initialize(json)
-        @data = JSON.parse(json)
+      delegate :present?, to: :image, prefix: true
+      delegate :headers, :body, to: :response
+
+      # param [Object] response that responds to `body` and `headers` (eg, Farady::Response)
+      def initialize(response)
+        @response = response
       end
 
-      def base64
-        data['image']
+      def image
+        body
       end
 
       def seed
-        data['seed']
+        headers['seed']
       end
 
       # SUCCESS or CONTENT_FILTERED
       def finish_reason
-        data['finish_reason']
-      end
-
-      def image_present?
-        base64.present?
+        headers['finish-reason']
       end
     end
   end
