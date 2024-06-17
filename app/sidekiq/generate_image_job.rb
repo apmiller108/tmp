@@ -19,9 +19,9 @@ class GenerateImageJob
     else
       broadcast_error(request.user, payload)
     end
-    rescue StandardError => e
-      Rails.logger.warn("#{self.class}: #{e} : #{e.cause}")
-      broadcast_flash(request.user)
+  rescue StandardError => e
+    Rails.logger.warn("#{self.class}: #{e} : #{e.cause}")
+    broadcast_flash(request.user)
   end
   # rubocop:enable Metrics/AbcSize
 
