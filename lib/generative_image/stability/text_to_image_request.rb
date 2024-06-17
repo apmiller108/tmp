@@ -13,7 +13,7 @@ class GenerativeImage
         {
           prompt:,
           negative_prompt:,
-          style_preset: opts[:style],
+          style_preset: opts[:style].presence,
           aspect_ratio: opts[:aspect_ratio],
           seed: opts[:seed]
         }.compact

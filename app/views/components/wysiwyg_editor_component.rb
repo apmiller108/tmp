@@ -19,7 +19,7 @@ class WysiwygEditorComponent < ApplicationViewComponent
 
   def gen_image_style_options_json
     GenerativeImage::Stability::STYLE_PRESETS.map do |preset|
-      { value: preset, label: preset.tr('-', ' ').titleize, selected: preset == 'photographic' }
+      { value: preset, label: preset.tr('-', ' ').titleize }
     end.to_json
   end
 

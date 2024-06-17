@@ -27,11 +27,12 @@ CLOSED: [2024-06-07 Fri 13:56]
 * DONE Check out the background job
 CLOSED: [2024-06-07 Fri 14:47]
   Does anything need to change here?
-
-* TODO Add blank option to style preset
+* DONE Add blank option to style preset
+CLOSED: [2024-06-17 Mon 16:12]
 no selection by default
-* TODO Switch from Base64 to raw bytes
-  - [ ] Read meta data from the response headers
+* DONE Switch from Base64 to raw bytes
+CLOSED: [2024-06-17 Mon 16:08]
+  - [X] Read meta data from the response headers
 * DONE update blob details
 CLOSED: [2024-06-07 Fri 15:33]
 * DONE Remove support for v1

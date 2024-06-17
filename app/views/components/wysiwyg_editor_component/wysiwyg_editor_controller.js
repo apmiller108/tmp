@@ -77,8 +77,9 @@ export default class WysiwygEditor extends Controller {
   }
 
   generateImageStyleTargetConnected(element) {
-    const options = this.generateImageStyleOptions.map((o) => this.optionForSelect(o)).join("\n")
-    element.innerHTML = options
+    const options = this.generateImageStyleOptions.map((o) => this.optionForSelect(o))
+    options.unshift('<option></option>')
+    element.innerHTML = options.join("\n")
   }
 
   generateImageAspectRatioTargetConnected(element) {
