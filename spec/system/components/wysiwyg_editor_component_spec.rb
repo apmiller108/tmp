@@ -73,20 +73,11 @@ RSpec.describe 'WysiwygEditorComponent', type: :system do
         }.to_json
       ).to_return(status: 200, body: claude_generative_text_response)
 
-    stub_request(:post, 'https://api.stability.ai/v1/generation/stable-diffusion-xl-1024-v1-0/text-to-image')
-      .with(
-        body:
-          {
-            'text_prompts' => [{ 'text' => prompt, 'weight' => 3 }],
-            'style_preset' => 'comic-book',
-            'height' => 1024,
-            'width' => 1024,
-            'cfg_scale' => 10,
-            'samples' => 1,
-            'seed' => 0,
-            'steps' => 30
-          }.to_json
-      ).to_return(status: 200, body: generate_image_response, headers: {})
+    stub_request(:post, 'https://api.stability.ai/v2beta/stable-image/generate/core')
+      .with(headers: {
+        'Authorization': "Bearer #{Rails.application.credentials.fetch(:stability_key)}",
+        'Accept': 'image/*'
+      }).to_return(status: 200, body: png.read, headers: { 'seed' => 1234, 'finish-reason' => 'SUCCESS' })
   end
 
   after do
@@ -125,15 +116,15 @@ RSpec.describe 'WysiwygEditorComponent', type: :system do
       expect(page).to have_css '.trix-dialog.trix-custom-generate-image'
 
       # Generate an image
-      find('option[label="1024x1024"]').select_option
+      find('option[label="1:1"]').select_option
       find('option[label="Comic Book"]').select_option
-      select '3', from: 'weight'
       page.execute_script("document.querySelector(\"input#prompt\").value = '#{prompt}'")
       click_button 'Submit'
       expect(page).not_to have_css '.trix-dialog.trix-custom-generate-image'
       generate_image_request = user.generate_image_requests.last
-      expect(generate_image_request.attributes).to include('style' => 'comic-book',
-                                                           'dimensions' => '1024x1024',
+      expect(generate_image_request.attributes).to include('options' => {
+                                                             'style' => 'comic-book', 'aspect_ratio' => '1:1'
+                                                           },
                                                            'image_name' => a_string_matching(/\Agenimage/))
       figure = find("figure[data-trix-attachment*='#{generate_image_request.image_name}']")
       expect(figure).to be_visible

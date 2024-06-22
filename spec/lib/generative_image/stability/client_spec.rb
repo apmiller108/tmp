@@ -14,28 +14,29 @@ RSpec.describe GenerativeImage::Stability::Client do
   end
 
   describe '#text_to_image' do
-    let(:response_json) do
-      { 'artifacts' => [{ 'base64' => 'base64 string', 'seed' => 123, 'finishReason' => 'SUCCESS' }] }.to_json
-    end
     let(:prompt) { build_stubbed(:prompt, :with_generate_image_request) }
     let(:args) { prompt.generate_image_request.parameterize }
     let(:request_json) { args.to_json }
-    let(:path) { 'https://api.stability.ai/v1/generation/stable-diffusion-xl-1024-v1-0/text-to-image' }
+    let(:path) { 'https://api.stability.ai/v2beta/stable-image/generate/core' }
     let(:request) { instance_double(GenerativeImage::Stability::TextToImageRequest, to_json: request_json, path:) }
-    let(:response) { instance_double(GenerativeImage::Stability::TextToImageResponse) }
+    let(:headers) do
+      {
+        'Authorization': "Bearer #{Rails.application.credentials.fetch(:stability_key)}",
+        'Accept': 'image/*'
+      }
+    end
 
     before do
       allow(GenerativeImage::Stability::TextToImageRequest).to receive(:new).with(args).and_return(request)
-      allow(GenerativeImage::Stability::TextToImageResponse).to receive(:new).with(response_json).and_return(response)
     end
 
     context 'with a success response' do
       before do
-        stub_request(:post, path).with(body: request_json).to_return(status: 200, body: response_json)
+        stub_request(:post, path).with(headers:).to_return(status: 200, body: 'raw image bytes')
       end
 
       it 'returns the TextToImageRequest object' do
-        expect(client.text_to_image(**args)).to eq(response)
+        expect(client.text_to_image(**args)).to  be_a GenerativeImage::Stability::TextToImageResponse
       end
     end
 
@@ -45,7 +46,7 @@ RSpec.describe GenerativeImage::Stability::Client do
       end
 
       before do
-        stub_request(:post, path).with(body: request_json).to_return(status: 400, body: response_body)
+        stub_request(:post, path).with(headers:).to_return(status: 400, body: response_body)
       end
 
       it 're-raises a client error' do

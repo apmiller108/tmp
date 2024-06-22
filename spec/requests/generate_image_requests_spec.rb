@@ -3,11 +3,12 @@ require 'rails_helper'
 RSpec.describe 'Generate image requests', type: :request do
   describe 'POST #create' do
     let(:user) { create :user }
-    let(:prompts) { [{ text: 'a dragon', weight: 1 }, { text: 'cave', weight: -1 }] }
+    let(:prompt) { 'a dragon' }
+    let(:negative_prompt) { 'a hobbit' }
     let(:image_name) { 'genimage_123' }
     let(:style) { GenerativeImage::Stability::STYLE_PRESETS.sample }
-    let(:dimensions) { GenerativeImage::Stability::DIMENSIONS.sample }
-    let(:params) { { generate_image_request: { prompts:, image_name:, style:, dimensions: } } }
+    let(:aspect_ratio) { GenerativeImage::Stability::CORE_ASPECT_RATIOS.sample }
+    let(:params) { { generate_image_request: { prompt:, negative_prompt:, image_name:, style:, aspect_ratio: } } }
     let(:request) do
       post generate_image_requests_path, params:, as: :turbo_stream
     end
@@ -32,14 +33,17 @@ RSpec.describe 'Generate image requests', type: :request do
         end
 
         it 'creates a generate_image_requests record' do
-          expect { request }.to change(user.generate_image_requests.where(image_name:, style:, dimensions:),
+          expect { request }.to change(user.generate_image_requests
+                                           .where(image_name:, options: { style:, aspect_ratio: }),
                                        :count).by(1)
         end
 
         it 'creates the prompt records' do
           request
-          prompt_attrs = user.generate_image_requests.last.prompts.pluck(:text, :weight)
-          expect(prompt_attrs).to contain_exactly(*prompts.map(&:values))
+          prompt_attrs = user.generate_image_requests.last.prompts.map do |p|
+            p.attributes.slice('text', 'weight').symbolize_keys
+          end
+          expect(prompt_attrs).to contain_exactly({ text: prompt, weight: 1}, { text: negative_prompt, weight: -1 })
         end
 
         it 'enqueues a GenerateImageJob' do
@@ -49,7 +53,7 @@ RSpec.describe 'Generate image requests', type: :request do
       end
 
       context 'when the request is invalid' do
-        let(:params) { { generate_image_request: { prompts:, image_name: nil } } }
+        let(:params) { { generate_image_request: { prompt:, image_name: nil } } }
 
         before { request }
 

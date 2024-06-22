@@ -1,5 +1,6 @@
 require 'rails_helper'
 require 'vips'
+require 'tempfile'
 
 RSpec.describe GenerateImageJob, type: :job do
   describe 'sidekiq_options' do
@@ -14,20 +15,14 @@ RSpec.describe GenerateImageJob, type: :job do
     let(:request) { build_stubbed :generate_image_request }
     let(:params) { request.parameterize }
     let(:generative_image) { instance_double GenerativeImage }
-    let(:base64) { 'base64 string of png' }
-    let(:response) { instance_double GenerativeImage::Stability::TextToImageResponse, base64:, image_present?: true }
-    let(:webp) { 'webp image' }
-    # rubocop:disable RSpec/VerifiedDoubles
-    # Must use double since websave_buffer is dynamically defined and can't be stubbed as a verfied double
-    let(:png) { double('Vips::Image', webpsave_buffer: webp, write_to_buffer: '') }
-    # rubocop:enable RSpec/VerifiedDoubles
+    let(:image) { file_fixture('image.png').read }
+    let(:response) { instance_double GenerativeImage::Stability::TextToImageResponse, image:, image_present?: true }
 
     before do
       allow(GenerateImageRequest).to receive(:find).with(request.id).and_return(request)
       allow(GenerativeImage).to receive(:new).and_return(generative_image)
       allow(MyChannel).to receive(:broadcast_to)
       allow(ViewComponentBroadcaster).to receive(:call)
-      allow(Vips::Image).to receive(:new_from_buffer).and_return(png)
       allow(request.image).to receive(:attach)
     end
 
@@ -39,7 +34,7 @@ RSpec.describe GenerateImageJob, type: :job do
       it 'attaches the original image to the request' do
         perform
         expect(request.image).to(
-          have_received(:attach).with(io: kind_of(StringIO),
+          have_received(:attach).with(io: kind_of(Tempfile),
                                       filename: "#{request.image_name}.png",
                                       content_type: 'image/png')
         )
@@ -50,7 +45,7 @@ RSpec.describe GenerateImageJob, type: :job do
         expect(MyChannel).to(
           have_received(:broadcast_to).with(request.user,
                                             { generate_image: { image_name: request.image_name,
-                                                                image: Base64.encode64(webp),
+                                                                image: kind_of(String),
                                                                 content_type: 'image/webp',
                                                                 error: nil } })
         )

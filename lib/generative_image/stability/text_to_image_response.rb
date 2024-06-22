@@ -3,7 +3,6 @@ class GenerativeImage
     class TextToImageResponse
       attr_reader :response
 
-      delegate :present?, to: :image, prefix: true
       delegate :headers, :body, to: :response
 
       # param [Object] response that responds to `body` and `headers` (eg, Farady::Response)
@@ -13,6 +12,10 @@ class GenerativeImage
 
       def image
         body
+      end
+
+      def image_present?
+        image.length.positive?
       end
 
       def seed
