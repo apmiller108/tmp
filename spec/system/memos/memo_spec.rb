@@ -88,18 +88,18 @@ RSpec.describe 'Create and view memo', type: :system do
 
     # Generate image
     click_button('Generate Image')
-    find('option[label="1024x1024"]').select_option
+    find('option[label="3:2"]').select_option
     find('option[label="Comic Book"]').select_option
-    select '3', from: 'weight'
     find('input#prompt').set gen_image_prompt
     click_button 'Submit'
 
     # Generated image appears in the editor
     page.driver.wait_for_network_idle
     generate_image_request = user.generate_image_requests.last
-    expect(generate_image_request.attributes).to include('style' => style_preset,
-                                                         'dimensions' => "#{image_width}x#{image_height}",
-                                                         'image_name' => a_string_matching(/\Agenimage/))
+    expect(generate_image_request.attributes).to(
+      include('options' => { 'style' => style_preset, 'aspect_ratio' => '3:2' },
+              'image_name' => a_string_matching(/\Agenimage/))
+    )
     figure = find("figure[data-trix-attachment*='#{generate_image_request.image_name}']")
     expect(figure).to be_visible
     expect(figure).to have_css 'img'
@@ -158,10 +158,12 @@ RSpec.describe 'Create and view memo', type: :system do
     click_button 'Submit'
     page.driver.wait_for_network_idle
     expect(page).to have_content generative_text
+    page.driver.wait_for_network_idle
     memo = user.memos.last
     expect(memo.plain_text_body).to include generative_text
 
     # A conversation was created which stores both the user prompt and AI response
+    page.driver.wait_for_network_idle
     conversation = user.conversations.last
     expect(conversation.memo_id).to eq memo.id
     expect(conversation.exchange.find { |e| e['role'] == 'user' }['content'][0]['text']).to eq generate_text_prompt

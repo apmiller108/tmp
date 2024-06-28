@@ -192,7 +192,8 @@ export default class TrixCustomizer {
           </div>
           <div class="g-col-12">
             <div class="form-floating">
-              <input type="text" id="prompt" class="generate-content-input form-control form-control-lg" name="generate-image-negative-prompt",
+              <input type="text" id="negative-prompt" class="generate-content-input form-control form-control-lg"
+                      name="generate-image-negative-prompt",
                       placeholder="Enter negative prompt"
                       data-wysiwyg-editor-target="generateImageNegativePrompt"
                       data-trix-input>
