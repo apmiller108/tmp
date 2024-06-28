@@ -9,6 +9,7 @@ This side project was started in order to learn the latest features of RoR, Hotw
 - Rich text editor
 - Text to image (stable diffusion)
 - Text to text (llm)
+- Conversational LLM interface
 - Speech to text (transcribe audio files)
 - Transcription summaries
 
@@ -19,6 +20,7 @@ This side project was started in order to learn the latest features of RoR, Hotw
 - PDF rendering
 - Export
 - Sharing
+- Streaming LLM responses
 
 # Start
 
