@@ -179,6 +179,7 @@ export default class TrixCustomizer {
             </div>
           </div>
           <div class="g-col-12">
+            <i class="bi bi-info-square trix-dialog-tooltip" data-bs-toggle="tooltip" data-bs-title="To control the weight of a given word use the format (word:weight), where word is the word you'd like to control the weight of and weight is a value between 0 and 1. For example: The sky was a crisp (blue:0.3) and (green:0.8) would convey a sky that was blue and green, but more green than blue."></i>
             <div class="form-floating">
               <input type="text" id="prompt" class="generate-content-input form-control form-control-lg" name="generateImage",
                       placeholder="Enter prompt"

@@ -3,6 +3,7 @@ import TrixSelectors from '@wysiwyg/TrixSelectors'
 import TrixConfiguration from '@wysiwyg/TrixConfiguration'
 import { generateText, generateImage } from '@javascript/http'
 import TurboScrollPreservation from '@javascript/TurboScrollPreservation'
+import { initializeTooltipsFor } from '@javascript/mixins/ToolTippable'
 
 export default class WysiwygEditor extends Controller {
   // This should be invoked as early as possible before the trix editor is
@@ -74,6 +75,10 @@ export default class WysiwygEditor extends Controller {
     if (turboScroll.scrollPosition(this.editorId)) {
       this.editorElem.scrollTop = turboScroll.scrollPosition(this.editorId)
     }
+  }
+
+  generateImageDialogTargetConnected(element) {
+    initializeTooltipsFor(element)
   }
 
   generateImageStyleTargetConnected(element) {
