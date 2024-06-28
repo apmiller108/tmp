@@ -9,18 +9,6 @@ RSpec.describe 'Create and view memo', type: :system do
   let(:image_width) { 1024 }
   let(:png) { file_fixture 'image.png' }
   let(:gen_image_prompt) { 'A doggy dog' }
-  let(:generate_image_response) do
-    <<~JSON
-      {
-        "artifacts": [{
-          "base64": "#{Base64.strict_encode64(png.read)}",
-          "seed": 3939457358,
-          "finishReason": "SUCCESS"
-        }]
-      }
-    JSON
-  end
-
   let(:generate_text_prompt) { 'This is my prompt' }
   let!(:generate_text_preset) { create :generate_text_preset }
   let(:generative_text) { 'This is AI slop' }
@@ -50,20 +38,11 @@ RSpec.describe 'Create and view memo', type: :system do
   end
 
   before do
-    stub_request(:post, 'https://api.stability.ai/v1/generation/stable-diffusion-xl-1024-v1-0/text-to-image')
-      .with(
-        body:
-          {
-            'text_prompts' => [{ 'text' => gen_image_prompt, 'weight' => 3 }],
-            'style_preset' => style_preset,
-            'height' => image_height,
-            'width' => image_width,
-            'cfg_scale' => 10,
-            'samples' => 1,
-            'seed' => 0,
-            'steps' => 30
-          }.to_json
-      ).to_return(status: 200, body: generate_image_response, headers: {})
+    stub_request(:post, 'https://api.stability.ai/v2beta/stable-image/generate/core')
+      .with(headers: {
+        'Authorization': "Bearer #{Rails.application.credentials.fetch(:stability_key)}",
+        'Accept': 'image/*'
+      }).to_return(status: 200, body: png.read, headers: { 'seed' => 1234, 'finish-reason' => 'SUCCESS' })
 
     stub_request(:post, 'https://api.anthropic.com/v1/messages')
       .with(
@@ -127,7 +106,7 @@ RSpec.describe 'Create and view memo', type: :system do
           expect(page).to have_content "Weight #{prompt.fetch('weight')}"
         end
         expect(page).to have_content "Style #{details.fetch(:style)}"
-        expect(page).to have_content "Dimensions #{details.fetch(:dimensions)}"
+        expect(page).to have_content "Aspect Ratio #{details.fetch(:aspect_ratio)}"
         expect(page).to have_content "Name #{blob.filename}"
 
         # Download link

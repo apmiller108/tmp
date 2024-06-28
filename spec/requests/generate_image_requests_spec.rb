@@ -43,7 +43,7 @@ RSpec.describe 'Generate image requests', type: :request do
           prompt_attrs = user.generate_image_requests.last.prompts.map do |p|
             p.attributes.slice('text', 'weight').symbolize_keys
           end
-          expect(prompt_attrs).to contain_exactly({ text: prompt, weight: 1}, { text: negative_prompt, weight: -1 })
+          expect(prompt_attrs).to contain_exactly({ text: prompt, weight: 1 }, { text: negative_prompt, weight: -1 })
         end
 
         it 'enqueues a GenerateImageJob' do
