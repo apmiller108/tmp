@@ -11,7 +11,7 @@ class ApplicationQuery
     @relation = relation
   end
 
-  def resolve(*args)
+  def resolve(*)
     relation
   end
 end
