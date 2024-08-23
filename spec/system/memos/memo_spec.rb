@@ -12,6 +12,7 @@ RSpec.describe 'Create and view memo', type: :system do
   let(:generate_text_prompt) { 'This is my prompt' }
   let!(:generate_text_preset) { create :generate_text_preset }
   let(:generative_text) { 'This is AI slop' }
+  let(:claude_model) { GenerativeText::Anthropic::DEFAULT_MODEL }
   let(:claude_generative_text_response) do
     <<~JSON
       {
@@ -47,7 +48,8 @@ RSpec.describe 'Create and view memo', type: :system do
     stub_request(:post, 'https://api.anthropic.com/v1/messages')
       .with(
         body: {
-          model: 'claude-3-haiku-20240307', max_tokens: 1024, temperature: generate_text_preset.temperature,
+          model: claude_model.api_name, max_tokens: claude_model.max_tokens,
+          temperature: generate_text_preset.temperature,
           messages: [{ 'role' => 'user', 'content' => [{ 'type' => 'text', 'text' => generate_text_prompt }] }],
           system: generate_text_preset.system_message
         }.to_json

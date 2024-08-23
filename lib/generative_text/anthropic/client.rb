@@ -16,9 +16,10 @@ class GenerativeText
 
       # @return [InvokeModelResponse]
       def invoke_model(prompt:, messages: [], **params)
+        model = MODELS.fetch(params[:model], DEFAULT_MODEL)
         request_body = {
-          model: HAIKU,
-          max_tokens: MAX_TOKENS,
+          model: model.api_name,
+          max_tokens: model.max_tokens,
           temperature: params[:temperature],
           messages: messages.push(
             {

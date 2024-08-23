@@ -20,6 +20,7 @@ RSpec.describe 'WysiwygEditorComponent', type: :system do
     JSON
   end
 
+  let(:claude_model) { GenerativeText::Anthropic::DEFAULT_MODEL }
   let(:claude_generative_text_response) do
     <<~JSON
       {
@@ -68,7 +69,7 @@ RSpec.describe 'WysiwygEditorComponent', type: :system do
     stub_request(:post, 'https://api.anthropic.com/v1/messages')
       .with(
         body: {
-          model: 'claude-3-haiku-20240307', max_tokens: 1024, temperature: 0.0,
+          model: claude_model.api_name, max_tokens: claude_model.max_tokens, temperature: 0.0,
           messages: [{ 'role' => 'user', 'content' => [{ 'type' => 'text', 'text' => 'This is my prompt' }] }]
         }.to_json
       ).to_return(status: 200, body: claude_generative_text_response)
