@@ -14,6 +14,7 @@ class GenerativeText
         end
       end
 
+      # rubocop:disable Metrics/AbcSize
       # @return [InvokeModelResponse]
       def invoke_model(prompt:, messages: [], **params)
         model = MODELS.values.find { |m| m.api_name == params[:model] } || DEFAULT_MODEL
@@ -39,6 +40,7 @@ class GenerativeText
       rescue Faraday::Error => e
         raise ClientError, "#{e.response_status}: #{e.response_body}"
       end
+      # rubocop:enable Metrics/AbcSize
 
       private
 
