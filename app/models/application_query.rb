@@ -1,8 +1,6 @@
 class ApplicationQuery
-  class << self
-    def resolve(...)
-      new.resolve(...)
-    end
+  def self.call(...)
+    new.resolve(...)
   end
 
   attr_reader :relation
