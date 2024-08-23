@@ -16,7 +16,7 @@ class GenerativeText
 
       # @return [InvokeModelResponse]
       def invoke_model(prompt:, messages: [], **params)
-        model = MODELS.fetch(params[:model], DEFAULT_MODEL)
+        model = MODELS.values.find { |m| m.api_name == params[:model] } || DEFAULT_MODEL
         request_body = {
           model: model.api_name,
           max_tokens: model.max_tokens,

@@ -23,6 +23,6 @@ class GenerateTextRequestsController < ApplicationController
   def generate_text_request_params
     params.require(:generate_text_request).permit(
       :prompt, :text_id, :temperature, :generate_text_preset_id, :conversation_id
-    )
+    ).merge(model: current_user.setting.text_model)
   end
 end

@@ -47,7 +47,7 @@ class GenerateTextJob
   def invoke_model(generate_text_request)
     client = GenerativeText::Anthropic::Client.new
     GenerativeText.new(client).invoke_model(
-      **generate_text_request.slice(:prompt, :temperature, :system_message).symbolize_keys,
+      **generate_text_request.slice(:prompt, :temperature, :system_message, :model).symbolize_keys,
       messages: generate_text_request.conversation.exchange,
       max_tokens: 500
     )
