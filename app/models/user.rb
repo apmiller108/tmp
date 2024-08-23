@@ -13,6 +13,8 @@ class User < ApplicationRecord
   has_many :transcriptions, through: :memos
   has_many :transcription_summaries, through: :transcriptions, source: :summary
 
+  has_one :setting, dependent: :destroy
+
   scope :with_image_containing_memos, WithImageContainingMemos
 
   def self.from_omniauth(auth)

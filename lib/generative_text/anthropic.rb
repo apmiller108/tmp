@@ -6,7 +6,7 @@ class GenerativeText
 
     HAIKU3 = 'claude-3-haiku-20240307'.freeze
     SONNET3 = 'claude-3-sonnet-20240229'.freeze
-    SONNET35 = 'claude-3-5-sonnet-20240620'
+    SONNET35 = 'claude-3-5-sonnet-20240620'.freeze
     OPUS3 = 'claude-3-opus-20240229'.freeze
 
     Model = Struct.new(:api_name, :name, :max_tokens, keyword_init: true)

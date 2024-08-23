@@ -3,3 +3,10 @@
   %h2= email
   %div
     = link_to t('memo.index'), user_memos_path(user)
+%div
+  %h1 Settings
+
+  = form_with model: [user, setting] do |form|
+    = form.label :text_model
+    = form.collection_select :text_model, GenerativeText::Anthropic::MODELS.values, :api_name, :name
+    = form.submit 'Save'

@@ -32,6 +32,7 @@ Rails.application.routes.draw do
     end
     resources :transcription_downloads, param: :transcription_id, only: %i[show]
     resources :transcription_summaries, only: %i[create]
+    resources :settings, only: %i[create update]
   end
 
   namespace :memos do

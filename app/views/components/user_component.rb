@@ -5,4 +5,8 @@ class UserComponent < ApplicationViewComponent
   def initialize(user:)
     @user = user
   end
+
+  def setting
+    user.setting || user.build_setting
+  end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_31_194853) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_23_191335) do
   create_schema "rollback"
 
   # These are extensions that must be enabled in order to support this database
@@ -131,6 +131,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_31_194853) do
     t.check_constraint "weight >= '-10'::integer AND weight <= 10", name: "weight_check"
   end
 
+  create_table "settings", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "text_model"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_settings_on_user_id"
+  end
+
   create_table "summaries", force: :cascade do |t|
     t.string "summarizable_type", null: false
     t.bigint "summarizable_id", null: false
@@ -199,6 +207,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_31_194853) do
   add_foreign_key "generate_text_requests", "users"
   add_foreign_key "memos", "users", on_delete: :cascade
   add_foreign_key "prompts", "generate_image_requests"
+  add_foreign_key "settings", "users"
   add_foreign_key "transcription_jobs", "active_storage_blobs"
   add_foreign_key "transcriptions", "active_storage_blobs"
   add_foreign_key "transcriptions", "transcription_jobs"
