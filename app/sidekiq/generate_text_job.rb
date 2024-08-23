@@ -51,8 +51,5 @@ class GenerateTextJob
       messages: generate_text_request.conversation.exchange,
       max_tokens: 500
     )
-  rescue StandardError => e
-    Rails.logger.warn("#{self.class}: #{e} : #{e.cause}")
-    false
   end
 end
