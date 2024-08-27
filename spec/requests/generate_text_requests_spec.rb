@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Generate text requests', type: :request do
   describe 'POST #create' do
-    let(:user) { create :user }
+    let(:user) { create :user, :with_setting }
     let(:prompt) { 'list all the flavors of quarks' }
     let(:text_id) { 'abcd' }
     let(:conversation) { create :conversation, user: }

@@ -38,7 +38,7 @@ RSpec.describe GenerativeText::Anthropic::Client do
 
       context 'with the model param' do
         let(:model) { GenerativeText::Anthropic::MODELS.fetch(:sonnet35) }
-        let(:params) { { temperature: 0.7, system_message: 'this is the system message', model: 'sonnet35' } }
+        let(:params) { { temperature: 0.7, system_message: 'this is the system message', model: model.api_name } }
 
         it 'returns an InvokeModelResponse object' do
           response = client.invoke_model(prompt:, messages:, **params)

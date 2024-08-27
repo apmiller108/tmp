@@ -30,6 +30,7 @@ RSpec.describe GenerateTextJob, type: :job do
         expect(generative_text).to have_received(:invoke_model)
           .with(prompt: generate_text_request.prompt,
                 temperature: generate_text_request.temperature,
+                model: generate_text_request.model,
                 messages: conversation.exchange,
                 system_message: generate_text_request.system_message,
                 max_tokens: 500)

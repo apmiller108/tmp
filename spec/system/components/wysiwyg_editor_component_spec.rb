@@ -2,7 +2,7 @@ require 'system_helper'
 require 'sidekiq/testing'
 
 RSpec.describe 'WysiwygEditorComponent', type: :system do
-  let(:user) { create :user }
+  let(:user) { create :user, :with_setting }
   let(:prompt) { 'This is my prompt' }
   let(:generative_text) { 'this is the generated text' }
   let(:titan_generative_text_response) do
@@ -20,7 +20,7 @@ RSpec.describe 'WysiwygEditorComponent', type: :system do
     JSON
   end
 
-  let(:claude_model) { GenerativeText::Anthropic::DEFAULT_MODEL }
+  let(:claude_model) { GenerativeText::Anthropic::MODELS.values.find { _1.api_name == user.setting.text_model } }
   let(:claude_generative_text_response) do
     <<~JSON
       {

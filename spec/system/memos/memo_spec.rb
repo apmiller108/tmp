@@ -2,7 +2,7 @@ require 'system_helper'
 require 'sidekiq/testing'
 
 RSpec.describe 'Create and view memo', type: :system do
-  let!(:user) { create :user }
+  let!(:user) { create :user, :with_setting }
 
   let(:style_preset) { 'comic-book' }
   let(:image_height) { 1024 }
@@ -12,7 +12,7 @@ RSpec.describe 'Create and view memo', type: :system do
   let(:generate_text_prompt) { 'This is my prompt' }
   let!(:generate_text_preset) { create :generate_text_preset }
   let(:generative_text) { 'This is AI slop' }
-  let(:claude_model) { GenerativeText::Anthropic::DEFAULT_MODEL }
+  let(:claude_model) { GenerativeText::Anthropic::MODELS.values.find { _1.api_name == user.setting.text_model } }
   let(:claude_generative_text_response) do
     <<~JSON
       {
