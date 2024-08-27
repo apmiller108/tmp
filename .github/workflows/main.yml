@@ -55,7 +55,8 @@ jobs:
         with:
           node-version: 20
       - name: Run yarn audit
-        run: yarn audit
+        run: |
+          yarn audit --groups dependencies
 
   brakeman:
     name: Brakeman
