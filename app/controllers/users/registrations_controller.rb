@@ -12,9 +12,10 @@ module Users
     # end
 
     # POST /resource
-    # def create
-    #   super
-    # end
+    def create
+      super
+      resource.create_setting
+    end
 
     # GET /resource/edit
     # def edit
