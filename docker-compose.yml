@@ -44,7 +44,7 @@ services:
     depends_on:
       redis:
         condition: service_healthy
-  web:
+  app:
     <<: *base
     command: bash -c "rm -f tmp/pids/server.pid && /rails/bin/dev"
     restart: always
@@ -52,7 +52,7 @@ services:
       - ".:/rails"
       - "/rails/node_modules" # don't mount node_modules
     ports:
-      - "3000:3000"
+      - "3000"
     links:
       - "database"
       - "redis"
@@ -77,15 +77,24 @@ services:
     volumes:
       - ".:/rails"
     ports:
-      - '50051'
+      - "50051"
     depends_on:
       database:
         condition: service_healthy
       ws:
         condition: service_started
     env_file:
-      - '.env'
-      - '.anycable.env'
+      - ".env"
+      - ".anycable.env"
+  nginx:
+    image: nginx:1.27
+    links:
+      - "app"
+    volumes:
+      - "./config/nginx:/etc/nginx/conf.d"
+      - "./app/assets:/app/public"
+    ports:
+      - "3000:80"
   chrome: # docker-compose up -d chrome
     image: browserless/chrome:latest # See https://www.browserless.io/docs/docker
     ports:
