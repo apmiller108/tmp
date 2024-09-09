@@ -91,7 +91,7 @@ services:
     links:
       - "app"
     volumes:
-      - "./config/nginx:/etc/nginx/conf.d"
+      - "./config/nginx/development:/etc/nginx/conf.d"
       - "./app/assets:/app/public"
     ports:
       - "3000:80"
