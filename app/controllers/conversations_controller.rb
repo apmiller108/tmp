@@ -10,6 +10,7 @@ class ConversationsController < ApplicationController
   end
 
   def edit
+    @conversation = current_user.conversations.find(params[:id])
   end
 
   def update
