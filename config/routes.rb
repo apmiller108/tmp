@@ -25,14 +25,14 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: %i[show] do
-    resources :memos do
-    end
+    resources :memos
     resources :transcription_jobs, only: [] do
       resources :transcriptions, only: %i[index]
     end
     resources :transcription_downloads, param: :transcription_id, only: %i[show]
     resources :transcription_summaries, only: %i[create]
     resources :settings, only: %i[create update]
+    resources :conversations
   end
 
   namespace :memos do
@@ -40,7 +40,7 @@ Rails.application.routes.draw do
   end
 
   resources :memos, only: [] do
-    resources :conversations, only: %i[index create update]
+    resources :conversations, only: %i[index create update], controller: 'memo_conversations'
   end
 
   resources :generate_text_requests, only: %i[create]
