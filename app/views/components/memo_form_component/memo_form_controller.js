@@ -26,7 +26,7 @@ export default class MemoFormController extends Controller {
     // conversation ID since the conversation creation happens after the memo is
     // created. In this case, fetch the converstation ID after the turbo stream
     // is handled and emit it for any listeners who depend on it (eg, wywiwyg
-    // editor)
+    // editor). See also onGeneratedTextInserted callback below.
     if (this.memoId && !this.conversationId) {
       const conversation = await getConversation(this.memoId)
       if (conversation) {
@@ -71,13 +71,17 @@ export default class MemoFormController extends Controller {
 
     if (autoSaveTurboStream.length) {
       if (!conversationParams.memo_id) {
+        // Due to new memos which aren't persisted yet, the conversation is
+        // created after the autosave action so the memo_id can be set on the
+        // conversation.
+        //
         // For new memos, there will not be a memo_id. After autosave completes,
         // however, the memo_id will exist. The memo_id is then extracted from
         // the tuboframe's form element and added to the conversation params.
         const tempTemplate = document.createElement('template')
         tempTemplate.innerHTML = autoSaveTurboStream
         conversationParams.memo_id = tempTemplate.content.querySelector('template')
-                                                 .content.querySelector('form').dataset.memoId
+          .content.querySelector('form').dataset.memoId
       }
 
       await this.createOrUpdateConversation(conversationParams)
