@@ -6,5 +6,13 @@ class Conversation < ApplicationRecord
 
   attribute :exchange, default: []
 
+  delegate :first, to: :exchange
+
   # TODO: custom validator exchange JSON schema
+
+  def starter
+    return if first.nil?
+
+    first.fetch('content').first.fetch('text')
+  end
 end
