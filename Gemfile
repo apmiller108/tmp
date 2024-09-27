@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '~> 3.3'
 
-gem 'anycable-rails'
+gem 'anycable-rails', '~> 1.4'
 gem 'aws-sdk-bedrockruntime', require: false
 gem 'aws-sdk-s3', require: false
 gem 'aws-sdk-transcribeservice', require: false

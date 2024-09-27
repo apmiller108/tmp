@@ -13,8 +13,17 @@
   %body
     %nav.navbar.navbar-expand-lg.bg-dark
       .container
-        = link_to root_path, class: 'logo' do
+        = link_to root_path, class: 'logo navbar-brand' do
           = render inline: Rails.application.assets.find_asset('tmp.svg').source
+      - if current_user
+        .container.collapse.navbar-collapse
+          %ul.navbar-nav
+            %li.nav-item
+              = link_to "Memos", user_memos_path(current_user), class: 'nav-link text-light fs-3'
+            %li.nav-item
+              = link_to "Conversations", user_conversations_path(current_user), class: 'nav-link text-light fs-3'
+            %li.nav-item
+              = link_to "Settings", user_path(current_user), class: 'nav-link text-light fs-3'
       .container-fluid.justify-content-end
         - if current_user
           = button_to 'Sign Out', destroy_user_session_path, method: :delete, data: { turbo: false, controller: 'my-channel' },
