@@ -4,7 +4,7 @@ class GenerateTextRequest < ApplicationRecord
   belongs_to :conversation, optional: true
 
   validates :text_id, presence: true, length: { maximum: 50 }
-  validates :prompt, presence: true, length: { maximum: 8000 }
+  validates :prompt, presence: true, length: { maximum: 24_000 }
 
   delegate :system_message, to: :generate_text_preset, allow_nil: true
 
