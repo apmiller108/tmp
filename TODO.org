@@ -4,11 +4,13 @@
 * TODO extract Segment to class
 * TODO unit test Segment class
 * TODO create conversation segment component
-* TODO Add form to submit conversation [/]
-  - [ ] Add form
+* TODO Add form to submit conversation [1/3]
+  - [X] Add form
   - [ ] respond with user segment over turbo stream
   - [ ] process conversation in background and turbo stream assistant segment
 * TODO Style edit page
 * TODO add copy button to assistant response
 * TODO allow editing of the last user. Trigger regenerate on the last assistant response.
 * TODO add regenerate button to last assistant response
+* TODO add coversation settings (eg, temperature, system prompt etc)
+* TODO extact gentext generator to class

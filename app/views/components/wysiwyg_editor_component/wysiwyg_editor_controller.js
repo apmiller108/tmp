@@ -261,7 +261,7 @@ export default class WysiwygEditor extends Controller {
         this.editor.insertLineBreak()
 
         // Convert backtics to `pre` elements for code blocks
-        let formattedContent = content.replace(/```(.+)/g, "<pre class=$1>").replace(/```/g, '</pre>')
+        let formattedContent = content.replace(/```(.+)/g, "<pre>").replace(/```/g, '</pre>')
         this.editor.insertHTML(`🤖🤖🤖<br>${formattedContent}<br>🤖🤖🤖`)
 
 
