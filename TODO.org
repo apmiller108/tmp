@@ -1,13 +1,19 @@
 :PROPERTIES:
 :CATEGORY: tmp
 :END:
-* TODO extract Segment to class
-* TODO unit test Segment class
-* TODO create conversation segment component
-* TODO Add form to submit conversation [1/3]
+* DONE extract Turn to class
+CLOSED: [2024-11-26 Tue 12:29]
+* TODO unit test Turn class
+* TODO unit test conversation turn component
+* DONE create conversation Turn component
+CLOSED: [2024-11-26 Tue 14:14]
+* TODO Add form to submit conversation [2/5]
   - [X] Add form
-  - [ ] respond with user segment over turbo stream
+  - [X] respond with user segment over turbo stream
   - [ ] process conversation in background and turbo stream assistant segment
+  - [ ] GenerateTextRequestsController responds with Turbo stream to append user segment
+  - [ ] onGenerateText updates conversation with assistant response. It responds
+    with turbo stream to append assistant segment component
 * TODO Style edit page
 * TODO add copy button to assistant response
 * TODO allow editing of the last user. Trigger regenerate on the last assistant response.

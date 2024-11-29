@@ -6,7 +6,13 @@ class GenerateTextRequestsController < ApplicationController
       format.turbo_stream do
         if generatate_text_request.persisted?
           GenerateTextJob.perform_async(generatate_text_request.id)
-          head :created
+          render(
+            turbo_stream: turbo_stream.append(
+              'conversation',
+              ConversationTurnComponent.new(prompt_to_turn).render_in(view_context)
+            ),
+            status: :created
+          )
         else
           flash.now.alert = t('unable_to_generate_text')
           flash_component = FlashMessageComponent.new(flash:)
@@ -19,6 +25,18 @@ class GenerateTextRequestsController < ApplicationController
   end
 
   private
+
+  def prompt_to_turn
+    Conversation::Turn.for_prompt(generate_text_request_params[:prompt])
+  end
+
+  def conversation
+    @conversation ||= Conversation.find_or_initialize_by(id: conversation_id)
+  end
+
+  def conversation_id
+    generate_text_request_params[:conversation_id]
+  end
 
   def generate_text_request_params
     params.require(:generate_text_request).permit(
