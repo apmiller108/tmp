@@ -1,6 +1,6 @@
 class MemoConversationsController < ApplicationController
   def index
-    conversation = current_user.memos.find(params[:memo_id]).conversation
+    conversation = memo.conversation
     respond_to do |format|
       format.json do
         render json: [conversation.as_json(only: %i[id created_at updated_at])].compact, status: :ok
@@ -43,10 +43,18 @@ class MemoConversationsController < ApplicationController
   private
 
   def form_params
-    conversation_params.merge(user: current_user)
+    conversation_params.merge(user: current_user, conversation:)
+  end
+
+  def conversation
+    @conversation ||= memo.conversation || memo.build_conversation(user: current_user)
+  end
+
+  def memo
+    @memo ||= current_user.memos.find(params[:memo_id])
   end
 
   def conversation_params
-    params.require(:conversation).permit(:assistant_response, :memo_id, :text_id)
+    params.require(:conversation).permit(:assistant_response, :text_id)
   end
 end

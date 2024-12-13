@@ -29,15 +29,13 @@ export const createConversation = ({ text_id, memo_id, assistant_response }) => 
   }
   const body = JSON.stringify({
     conversation: {
-      assistant_response, text_id, memo_id
+      assistant_response, text_id
     }
   })
 
-  return fetch(`/memos/${memo_id}/conversations`, {
-    method: 'POST',
-    headers,
-    body
-  })
+  const url = memo_id ? `/memos/${memo_id}/conversations` : '/conversations'
+
+  return fetch(url, { method: 'POST', headers, body })
 }
 
 export const updateConversation = ({ conversation_id, text_id, memo_id, assistant_response }) => {
@@ -47,17 +45,14 @@ export const updateConversation = ({ conversation_id, text_id, memo_id, assistan
     'X-CSRF-Token': getCsrfToken()
   }
   const body = JSON.stringify({
-    text_id,
     conversation: {
-      assistant_response, text_id, memo_id
+      assistant_response, text_id
     }
   })
 
-  return fetch(`/memos/${memo_id}/conversations/${conversation_id}`, {
-    method: 'PUT',
-    headers,
-    body
-  })
+  const url = memo_id ? `/memos/${memo_id}/conversations/${conversation_id}` :  `/conversations/${conversation_id}`
+
+  return fetch(url, { method: 'PUT', headers, body })
 }
 
 export const getConversation = async (memo_id) => {

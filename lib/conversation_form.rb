@@ -1,9 +1,9 @@
 class ConversationForm
   include ActiveModel::Model
 
-  attr_accessor :assistant_response, :text_id, :user, :memo_id
+  attr_accessor :assistant_response, :text_id, :user, :conversation
 
-  attr_reader :conversation, :generate_text_request, :memo
+  attr_reader :generate_text_request
 
   validates :assistant_response, presence: true
   validate :conversation_valid
@@ -11,8 +11,6 @@ class ConversationForm
 
   def initialize(params)
     super(params)
-    @memo = user.memos.find(memo_id)
-    @conversation = memo.conversation || memo.build_conversation(user:)
     @generate_text_request = user.generate_text_requests.find_by!(text_id:)
   end
 
