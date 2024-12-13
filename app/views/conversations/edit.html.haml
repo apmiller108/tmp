@@ -1,4 +1,5 @@
 .conversation{ data: { controller: :conversations,
+                       'user-id' => current_user.id,
                        action: 'my-channel:generateText@window->conversations#onGenerateText' } }
   #conversation-turns
     - @conversation.turns.each do |t|

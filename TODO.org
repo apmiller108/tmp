@@ -5,18 +5,20 @@
 CLOSED: [2024-11-26 Tue 12:29]
 * TODO unit test Turn class
 * TODO unit test conversation turn component
+* TODO update ConversationForm unit tests
 * DONE create conversation Turn component
 CLOSED: [2024-11-26 Tue 14:14]
-* TODO Add form to submit conversation [2/5]
+* DONE Add form to submit conversation [4/4]
+CLOSED: [2024-12-13 Fri 15:15]
   - [X] Add form
-  - [X] respond with user segment over turbo stream
-  - [ ] process conversation in background and turbo stream assistant segment
-  - [ ] GenerateTextRequestsController responds with Turbo stream to append user segment
-  - [ ] onGenerateText updates conversation with assistant response. It responds
-    with turbo stream to append assistant segment component
+  - [X] respond with user conversation turn over turbo stream
+  - [X] respond with empty form as well that is disabled
+  - [X] onGenerateText updates conversation with user prompt and assistant
+        response. Enable the form on successful conversation update.
+* TODO Make sure new conversation works
 * TODO Style edit page
 * TODO add copy button to assistant response
-* TODO allow editing of the last user. Trigger regenerate on the last assistant response.
+* TODO allow editing of the last prompt. Trigger regenerate on the last assistant response.
 * TODO add regenerate button to last assistant response
 * TODO add coversation settings (eg, temperature, system prompt etc)
 * TODO extact gentext generator to class

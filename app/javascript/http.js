@@ -21,7 +21,7 @@ export const generateText = ({ prompt, text_id, temperature, generate_text_prese
   })
 }
 
-export const createConversation = ({ text_id, memo_id, assistant_response }) => {
+export const createConversation = ({ text_id, memo_id, assistant_response, user_id }) => {
   const headers = {
     'Content-Type': 'application/json',
     Accept: 'application/json',
@@ -33,7 +33,7 @@ export const createConversation = ({ text_id, memo_id, assistant_response }) => 
     }
   })
 
-  const url = memo_id ? `/memos/${memo_id}/conversations` : '/conversations'
+  const url = memo_id ? `/memos/${memo_id}/conversations` : `/users/${user_id}/conversations`
 
   return fetch(url, { method: 'POST', headers, body })
 }
@@ -50,7 +50,41 @@ export const updateConversation = ({ conversation_id, text_id, memo_id, assistan
     }
   })
 
-  const url = memo_id ? `/memos/${memo_id}/conversations/${conversation_id}` :  `/conversations/${conversation_id}`
+  const url = `/memos/${memo_id}/conversations/${conversation_id}`
+
+  return fetch(url, { method: 'PUT', headers, body })
+}
+
+export const createUserConversation = ({ text_id, assistant_response, user_id }) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    Accept: 'text/vnd.turbo-stream.html',
+    'X-CSRF-Token': getCsrfToken()
+  }
+  const body = JSON.stringify({
+    conversation: {
+      assistant_response, text_id
+    }
+  })
+
+  const url = `/users/${user_id}/conversations`
+
+  return fetch(url, { method: 'POST', headers, body })
+}
+
+export const updateUserConversation = ({ conversation_id, text_id, assistant_response, user_id}) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    Accept: 'text/vnd.turbo-stream.html',
+    'X-CSRF-Token': getCsrfToken()
+  }
+  const body = JSON.stringify({
+    conversation: {
+      assistant_response, text_id
+    }
+  })
+
+  const url = `/users/${user_id}/conversations/${conversation_id}`
 
   return fetch(url, { method: 'PUT', headers, body })
 }
