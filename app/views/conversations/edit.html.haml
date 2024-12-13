@@ -1,11 +1,6 @@
-.conversation#conversation{ data: { controller: :conversations,
-                            action: 'my-channel:generateText@window->conversations#onGenerateText' } }
-  - @conversation.turns.each do |t|
-    = render ConversationTurnComponent.new(t)
-= form_for :generate_text_request, url: generate_text_requests_path, method: :post do |form|
-  = form.text_area :prompt
-  = form.hidden_field :conversation_id, value: @conversation.id
-  = form.hidden_field :text_id, value: "gentext_#{Time.current.to_i}_#{rand(1000)}"
-  = form.hidden_field :temperature, value: 1
-  = form.hidden_field :generate_text_preset_id, value: nil
-  = form.submit
+.conversation{ data: { controller: :conversations,
+                       action: 'my-channel:generateText@window->conversations#onGenerateText' } }
+  #conversation-turns
+    - @conversation.turns.each do |t|
+      = render ConversationTurnComponent.new(t)
+  = render PromptFormComponent.new(conversation: @conversation)

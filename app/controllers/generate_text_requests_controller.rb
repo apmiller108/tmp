@@ -7,10 +7,16 @@ class GenerateTextRequestsController < ApplicationController
         if generatate_text_request.persisted?
           GenerateTextJob.perform_async(generatate_text_request.id)
           render(
-            turbo_stream: turbo_stream.append(
-              'conversation',
-              ConversationTurnComponent.new(prompt_to_turn).render_in(view_context)
-            ),
+            turbo_stream: [
+              turbo_stream.append(
+                'conversation-turns',
+                ConversationTurnComponent.new(prompt_to_turn).render_in(view_context)
+              ),
+              turbo_stream.replace(
+                'prompt-form',
+                PromptFormComponent.new(conversation:, disabled: true).render_in(view_context)
+              )
+            ],
             status: :created
           )
         else
