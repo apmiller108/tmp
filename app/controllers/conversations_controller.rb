@@ -50,7 +50,7 @@ class ConversationsController < ApplicationController
   private
 
   def assistant_response_to_turn
-    Conversation::Turn.for_prompt(conversation_params[:assistant_response])
+    Conversation::Turn.for_response(conversation_params[:assistant_response])
   end
 
   def form_params

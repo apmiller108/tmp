@@ -1,3 +1,7 @@
-.c-conversation-turn-component.card.segment{ class: "segment-#{turn.role}" }
-  %i{ class: icon_class }
-  .card-body= content
+.c-conversation-turn.mb-3
+  .turn.grid
+    .g-col-1
+      %i{ class: [icon_class, 'fs-1'] }
+    .g-col-11
+      .card.segment{ class: "segment-#{turn.role}" }
+        .card-body= content

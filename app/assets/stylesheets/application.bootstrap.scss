@@ -14,12 +14,14 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 @import 'global';
 @import 'nav';
 @import 'blob_details';
+@import 'conversations';
 
 // View component style sheets
 @import 'attachment_icon_component/attachment_icon_component';
 @import 'attachment_summary_component/attachment_summary_component';
 @import 'blob_component/blob_component';
 @import 'color_picker_component/color_picker_component';
+@import 'conversation_turn_component/conversation_turn_component';
 @import 'flash_message_component/flash_message_component';
 @import 'inline_edit_component/inline_edit_component';
 @import 'inline_field_component/inline_field_component';
