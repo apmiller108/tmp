@@ -20,6 +20,7 @@ class ConversationsController < ApplicationController
   end
 
   def edit
+    render template: 'conversations/edit', formats: %i[html]
   end
 
   def update
