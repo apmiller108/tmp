@@ -6,9 +6,17 @@ class ConversationsController < ApplicationController
   end
 
   def new
+    @conversation = current_user.conversations.new
   end
 
   def create
+    @conversation = current_user.conversations.new
+    form = ConversationForm.new(form_params)
+
+    if form.save
+      response.headers['Content-Type'] = 'text/html'
+      redirect_to edit_user_conversation_path(current_user, @conversation)
+    end
   end
 
   def edit

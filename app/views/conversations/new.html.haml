@@ -1,0 +1,7 @@
+.conversation.conversation-container{ data: { controller: :conversation,
+                                              'user-id' => current_user.id,
+                                              action: 'my-channel:generateText@window->conversation#onGenerateText' } }
+  #conversation-turns.conversation-turns{ data: { 'conversation-target': 'turns' }}
+    - @conversation.turns.each do |t|
+      = render ConversationTurnComponent.new(t)
+  = render PromptFormComponent.new(conversation: @conversation)
