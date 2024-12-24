@@ -16,6 +16,12 @@ class ConversationsController < ApplicationController
     if form.save
       response.headers['Content-Type'] = 'text/html'
       redirect_to edit_user_conversation_path(current_user, @conversation)
+    else
+      flash.now.alert = t('unable_to_generate_text')
+      flash_component = FlashMessageComponent.new(flash:, record: form)
+
+      render turbo_stream: turbo_stream.update(flash_component.id, flash_component),
+             status: :unprocessable_entity
     end
   end
 
@@ -31,8 +37,8 @@ class ConversationsController < ApplicationController
         if form.save
           render(
             turbo_stream: [
-              turbo_stream.append(
-                'conversation-turns',
+              turbo_stream.replace(
+                ConversationTurnComponent::PENDING_RESPONSE_DOM_ID,
                 ConversationTurnComponent.new(assistant_response_to_turn).render_in(view_context)
               ),
               turbo_stream.replace(
@@ -46,7 +52,10 @@ class ConversationsController < ApplicationController
           flash.now.alert = t('unable_to_generate_text')
           flash_component = FlashMessageComponent.new(flash:)
 
-          render turbo_stream: turbo_stream.update(flash_component.id, flash_component),
+          render turbo_stream: [
+                   turbo_stream.update(flash_component.id, flash_component),
+                   turbo_stream.remove(ConversationTurnComponent::PENDING_RESPONSE_DOM_ID)
+                 ],
                  status: :unprocessable_entity
         end
       end

@@ -3,8 +3,6 @@
 :END:
 * DONE extract Turn to class
 CLOSED: [2024-11-26 Tue 12:29]
-* DONE create conversation Turn component
-CLOSED: [2024-11-26 Tue 14:14]
 * DONE Add form to submit conversation [4/4]
 CLOSED: [2024-12-13 Fri 15:15]
   - [X] Add form
@@ -12,15 +10,34 @@ CLOSED: [2024-12-13 Fri 15:15]
   - [X] respond with empty form as well that is disabled
   - [X] onGenerateText updates conversation with user prompt and assistant
         response. Enable the form on successful conversation update.
+* DONE create conversation Turn component
+CLOSED: [2024-11-26 Tue 14:14]
 * DONE Style edit page
 CLOSED: [2024-12-20 Fri 14:37]
-* TODO Come up with something for new conversations
+* DONE Come up with something for new conversations
+CLOSED: [2024-12-22 Sun 14:41]
+* DONE disable input on submit [3/3]
+CLOSED: [2024-12-22 Sun 19:34]
+  - [X] disable the form on submit
+  - [X] Move the onGenerateText event handler to the prompt form controller.
+  - [X] On a successful conversation update, re-enable the form, and text input
+* DONE add a spinner
+CLOSED: [2024-12-23 Mon 21:54]
+  Maybe this could be a placeholder component that is removed with the turbo
+  stream response
+* TODO fix unable to submit prompt after validation error
+  This form is still disabled I think
+* TODO format content returned by llm
 * TODO add copy button to assistant response
 * TODO allow editing of the last prompt. Trigger regenerate on the last assistant response.
 * TODO add regenerate button to last assistant response
 * TODO add coversation settings (eg, temperature, system prompt etc)
 * TODO extact gentext generator to class
+  - use it in the propmt_form_controller to set the text_id input
+* TODO extract conversation component
+  This is used for both the new and edit actions
 * TODO support adding files to the prompt
 * TODO unit test Turn class
 * TODO unit test conversation turn component
 * TODO update ConversationForm unit tests
+* TODO move flash messages to it's own stream

@@ -12,16 +12,16 @@ class GenerateTextRequestsController < ApplicationController
                 'conversation-turns',
                 ConversationTurnComponent.new(prompt_to_turn).render_in(view_context)
               ),
-              turbo_stream.replace(
-                'prompt-form',
-                PromptFormComponent.new(conversation:, disabled: true).render_in(view_context)
+              turbo_stream.append(
+                'conversation-turns',
+                ConversationTurnComponent.new(Conversation::Turn.for_response(''), pending: true).render_in(view_context)
               )
             ],
             status: :created
           )
         else
           flash.now.alert = t('unable_to_generate_text')
-          flash_component = FlashMessageComponent.new(flash:)
+          flash_component = FlashMessageComponent.new(flash:, record: generatate_text_request)
 
           render turbo_stream: turbo_stream.update(flash_component.id, flash_component),
                  status: :unprocessable_entity

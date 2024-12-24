@@ -1,12 +1,13 @@
-.c-prompt-form.my-1#prompt-form
-  = form_for :generate_text_request, url: generate_text_requests_path, method: :post do |form|
+.c-prompt-form.my-1#prompt-form{ data: { controller: 'prompt-form', action: 'my-channel:generateText@window->prompt-form#onGenerateText' }}
+  = form_for :generate_text_request, url: generate_text_requests_path, method: :post, data: { 'prompt-form-target' => 'form' } do |form|
     .grid
       .g-start-2.g-col-10
-        = form.text_area :prompt, class: 'form-control'
-        = form.hidden_field :conversation_id, value: @conversation.id
+        = form.text_area :prompt, class: 'form-control', data: { 'prompt-form-target' => 'promptInput' }
+        = form.hidden_field :conversation_id, value: @conversation.id, data: { 'prompt-form-target' => 'conversationId' }
+        = form.hidden_field :user_id, value: current_user.id, data: { 'prompt-form-target' => 'userId' }
         = form.hidden_field :text_id, value: "gentext_#{Time.current.to_i}_#{rand(1000)}"
         = form.hidden_field :temperature, value: 1
         = form.hidden_field :generate_text_preset_id, value: nil
-      .g-col-1
-        %button.btn.btn-primary.icon-btn{type: 'submit', name: 'commit'}
+      .g-col-1.d-flex.align-items-center
+        %button.btn.btn-primary.icon-btn{type: 'submit', name: 'commit', data: { 'prompt-form-target' => 'submitButton' }}
           %i.bi.bi-send-fill

@@ -1,7 +1,11 @@
-.c-conversation-turn.mb-3
+.c-conversation-turn.mb-3{ id: }
   .turn.grid
     .g-col-1
       %i{ class: [icon_class, 'fs-1'] }
     .g-col-11
       .card.segment{ class: "segment-#{turn.role}" }
-        .card-body= content
+        .card-body{ class: pending? && 'text-center' }
+          - if pending?
+            = render SpinnerComponent.new
+          - else
+            = content

@@ -42,7 +42,7 @@ export default class MemoFormController extends Controller {
 
   async onSubmit() {
     await this.dispatch('memoFormSubmit')
-    this.element.requestSubmit()
+    this.element.requestSubmit() // requestSubmit instead of submit to submit turbo form
   }
   onColorChosen(e) {
     const hexColor = e.detail.color

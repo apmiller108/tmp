@@ -3,10 +3,7 @@
 class PromptFormComponent < ApplicationViewComponent
   attr_reader :conversation
 
-  def initialize(conversation:, disabled: false)
+  def initialize(conversation:)
     @conversation = conversation
-    @disabled = disabled
   end
-
-  def disabled? = @disabled
 end
