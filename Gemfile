@@ -8,6 +8,7 @@ gem 'aws-sdk-bedrockruntime', require: false
 gem 'aws-sdk-s3', require: false
 gem 'aws-sdk-transcribeservice', require: false
 gem 'bootsnap', require: false
+gem 'commonmarker'
 gem 'cssbundling-rails'
 gem 'devise'
 gem 'devise-jwt'
