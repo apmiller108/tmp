@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GenerateTextPreset < ApplicationRecord
   has_one :generate_text_request, dependent: :nullify
 
