@@ -25,9 +25,10 @@ CLOSED: [2024-12-22 Sun 19:34]
 CLOSED: [2024-12-23 Mon 21:54]
   Maybe this could be a placeholder component that is removed with the turbo
   stream response
+* DONE format content returned by llm
+CLOSED: [2024-12-25 Wed 18:20]
 * TODO fix unable to submit prompt after validation error
   This form is still disabled I think
-* TODO format content returned by llm
 * TODO add copy button to assistant response
 * TODO allow editing of the last prompt. Trigger regenerate on the last assistant response.
 * TODO add regenerate button to last assistant response

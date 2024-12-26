@@ -3,7 +3,7 @@
 class ConversationTurnComponent < ApplicationViewComponent
   attr_reader :turn, :pending
 
-  delegate :assistant?, :content, to: :turn
+  delegate :assistant?, to: :turn
 
   alias pending? pending
 
@@ -13,6 +13,18 @@ class ConversationTurnComponent < ApplicationViewComponent
   def initialize(turn, pending: false)
     @turn = turn
     @pending = pending
+  end
+
+  def content
+    if assistant?
+      Commonmarker.to_html(
+        turn.content,
+        options: { parse: { smart: true } },
+        plugins: { syntax_highlighter: { theme: 'Solarized (dark)' } }
+      )
+    else
+      turn.content
+    end
   end
 
   def id

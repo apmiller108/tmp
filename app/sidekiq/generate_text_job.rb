@@ -24,13 +24,8 @@ class GenerateTextJob
   private
 
   def broadcast_content(generate_text_request, user, model_response)
-    content = Commonmarker.to_html(
-      model_response.content,
-      options: { parse: { smart: true } },
-      plugins: { syntax_highlighter: { theme: 'Solarized (dark)' } }
-    )
     MyChannel.broadcast_to(user, {
-      generate_text: { text_id: generate_text_request.text_id, content:, error: nil }
+      generate_text: { text_id: generate_text_request.text_id, content: model_response.content, error: nil }
     })
   end
 
