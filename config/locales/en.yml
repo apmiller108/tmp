@@ -34,8 +34,7 @@ en:
   cancel: 'Cancel'
   color: 'Color'
   content: 'Content'
-  copy:
-    prompt: 'Copy prompt'
+  copy: 'copy'
   create: 'Create'
   download: 'Download'
   download_image: 'Download image'

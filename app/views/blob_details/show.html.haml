@@ -6,7 +6,7 @@
         .prompts
           %p Prompts
           - gen_img_params[:prompts].each do |prompt|
-            = render ClipboardComponent.new('prompt') do |component|
+            = render ClipboardComponent.new(css_class: 'prompt') do |component|
               = component.with_copyable do
                 %pre{ data: { 'clipboard-target' => 'source' } }= prompt['text']
                 .prompt-weight.d-flex.align-items-center.justify-content-end.mt-3

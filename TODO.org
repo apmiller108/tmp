@@ -27,18 +27,25 @@ CLOSED: [2024-12-23 Mon 21:54]
   stream response
 * DONE format content returned by llm
 CLOSED: [2024-12-25 Wed 18:20]
-* TODO fix unable to submit prompt after validation error
+* DONE fix unable to submit prompt after validation error
+CLOSED: [2024-12-29 Sun 18:54]
   This form is still disabled I think
-* TODO add copy button to assistant response
+* TODO link to memo
+* TODO delete conversation
+  for those conversations not linked to a memo
+* DONE add copy button to assistant response
+CLOSED: [2024-12-29 Sun 19:35]
 * TODO allow editing of the last prompt. Trigger regenerate on the last assistant response.
 * TODO add regenerate button to last assistant response
 * TODO add coversation settings (eg, temperature, system prompt etc)
 * TODO extact gentext generator to class
   - use it in the propmt_form_controller to set the text_id input
-* TODO extract conversation component
+* DONE extract conversation component
+CLOSED: [2024-12-29 Sun 19:07]
   This is used for both the new and edit actions
+* TODO move flash messages to it's own stream
 * TODO support adding files to the prompt
 * TODO unit test Turn class
 * TODO unit test conversation turn component
+* TODO unit test conversation component
 * TODO update ConversationForm unit tests
-* TODO move flash messages to it's own stream

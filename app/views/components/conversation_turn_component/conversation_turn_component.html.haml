@@ -8,4 +8,9 @@
           - if pending?
             = render SpinnerComponent.new
           - else
-            = content.html_safe
+            - if assistant?
+              = render ClipboardComponent.new(css_class: 'assistant-response', position: :bottom) do |c|
+                = c.with_copyable do
+                  %div{ data: { 'clipboard-target' => 'source' } }= content.html_safe
+            - else
+              = content
