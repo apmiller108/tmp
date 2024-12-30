@@ -8,13 +8,13 @@ class GenerativeText
 
     MODELS = {
       haiku3: Model.new(api_name: 'claude-3-haiku-20240307', name: 'Claude 3 Haiku', max_tokens: 4096),
+      haiku35: Model.new(api_name: 'claude-3-5-haiku-latest', name: 'Claude 3.5 Haiku Latest', max_tokens: 8192),
       sonnet3: Model.new(api_name: 'claude-3-sonnet-20240229', name: 'Claude 3 Sonnet', max_tokens: 4096),
-      sonnet35: Model.new(api_name: 'claude-3-5-sonnet-20240620', name: 'Claude 3.5 Sonnet', max_tokens: 8192),
-      sonnet35l: Model.new(api_name: 'claude-3-5-sonnet-latest', name: 'Claude 3.5 Sonnet Latest', max_tokens: 8192),
+      sonnet35: Model.new(api_name: 'claude-3-5-sonnet-latest', name: 'Claude 3.5 Sonnet Latest', max_tokens: 8192),
       opus3: Model.new(api_name: 'claude-3-opus-20240229', name: 'Claude 3 Opus', max_tokens: 4096)
     }.with_indifferent_access.freeze
 
-    DEFAULT_MODEL = MODELS.fetch(:haiku3)
+    DEFAULT_MODEL = MODELS.fetch(:haiku35)
 
     ClientError = Class.new(StandardError)
   end
