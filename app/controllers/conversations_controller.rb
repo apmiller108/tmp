@@ -63,6 +63,13 @@ class ConversationsController < ApplicationController
   end
 
   def destroy
+    @conversation.destroy
+    respond_to do |format|
+      format.turbo_stream do
+        redirect_to user_conversations_path(current_user), status: :see_other, notice: 'Memo was deleted'
+      end
+      format.html { redirect_to user_conversations_path(current_user) }
+    end
   end
 
   private

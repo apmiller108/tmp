@@ -1,5 +1,12 @@
 .conversation.conversation-container{ data: { controller: :conversation } }
-  #conversation-turns.conversation-turns{ data: { 'conversation-target': 'turns' }}
+  #conversation-turns.conversation-turns.mb-2{ data: { 'conversation-target': 'turns' }}
     - conversation.turns.each do |t|
       = render ConversationTurnComponent.new(t)
   = render PromptFormComponent.new(conversation:)
+  - if deletable?
+    .grid
+      .g-start-11.g-col-1
+      = link_to [current_user, conversation], data: { turbo_method: 'delete', turbo_confirm: 'Are you sure?',
+                                              'bs-toggle' => 'tooltip', 'bs-title' => t('conversation.delete') },
+                                              class: 'btn btn-danger icon-btn my-2' do
+        %i.bi.bi-trash3.text-white

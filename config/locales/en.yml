@@ -34,6 +34,8 @@ en:
   cancel: 'Cancel'
   color: 'Color'
   content: 'Content'
+  conversation:
+    delete: 'Delete Conversation'
   copy: 'copy'
   create: 'Create'
   download: 'Download'
