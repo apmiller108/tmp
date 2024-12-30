@@ -23,7 +23,13 @@ class GenerateTextRequestsController < ApplicationController
           flash.now.alert = t('unable_to_generate_text')
           flash_component = FlashMessageComponent.new(flash:, record: generatate_text_request)
 
-          render turbo_stream: turbo_stream.update(flash_component.id, flash_component),
+          render turbo_stream: [
+                   turbo_stream.update(flash_component.id, flash_component),
+                   turbo_stream.replace(
+                     'prompt-form',
+                     PromptFormComponent.new(conversation:).render_in(view_context)
+                   )
+                 ],
                  status: :unprocessable_entity
         end
       end
