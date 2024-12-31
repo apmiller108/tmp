@@ -38,6 +38,9 @@ CLOSED: [2024-12-30 Mon 16:27]
 CLOSED: [2024-12-29 Sun 19:35]
 * DONE add coversation settings (eg, temperature, system prompt etc)
 CLOSED: [2024-12-31 Tue 15:12]
+* TODO preserve advanced options collapse state
+* TODO add conversation title
+  Show the title at the top in a fixed container. Editable
 * TODO edit the last prompt. Trigger regenerate on the last assistant response.
 * TODO add regenerate button to last assistant response
 * TODO extact gentext generator to class
