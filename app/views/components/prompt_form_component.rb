@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class PromptFormComponent < ApplicationViewComponent
-  attr_reader :conversation
+  attr_reader :generate_text_request
 
-  def initialize(conversation:)
-    @conversation = conversation
+  def initialize(generate_text_request:)
+    @generate_text_request = generate_text_request
   end
 end

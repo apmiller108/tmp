@@ -2,7 +2,7 @@
   #conversation-turns.conversation-turns.mb-2{ data: { 'conversation-target': 'turns' }}
     - conversation.turns.each do |t|
       = render ConversationTurnComponent.new(t)
-  = render PromptFormComponent.new(conversation:)
+  = render PromptFormComponent.new(generate_text_request:)
   - if deletable?
     .grid
       .g-start-11.g-col-1

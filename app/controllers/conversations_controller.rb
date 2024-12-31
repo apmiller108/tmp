@@ -40,10 +40,6 @@ class ConversationsController < ApplicationController
               turbo_stream.replace(
                 ConversationTurnComponent::PENDING_RESPONSE_DOM_ID,
                 ConversationTurnComponent.new(assistant_response_to_turn).render_in(view_context)
-              ),
-              turbo_stream.replace(
-                'prompt-form',
-                PromptFormComponent.new(conversation: @conversation).render_in(view_context)
               )
             ],
             status: :ok

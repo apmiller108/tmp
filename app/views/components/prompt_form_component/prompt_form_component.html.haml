@@ -1,13 +1,26 @@
-.c-prompt-form.my-1#prompt-form{ data: { controller: 'prompt-form', action: 'my-channel:generateText@window->prompt-form#onGenerateText' }}
-  = form_for :generate_text_request, url: generate_text_requests_path, method: :post, data: { 'prompt-form-target' => 'form' } do |form|
-    .grid
+.c-prompt-form.my-2#prompt-form{ data: { controller: 'prompt-form', action: 'my-channel:generateText@window->prompt-form#onGenerateText' }}
+  = form_for generate_text_request, url: generate_text_requests_path, method: :post, data: { 'prompt-form-target' => 'form' } do |form|
+    = form.hidden_field :conversation_id, data: { 'prompt-form-target' => 'conversationId' }
+    = form.hidden_field :user_id, value: current_user.id, data: { 'prompt-form-target' => 'userId' }
+    = form.hidden_field :text_id, value: "gentext_#{Time.current.to_i}_#{rand(1000)}"
+    = form.hidden_field :temperature, value: 1
+    = form.hidden_field :generate_text_preset_id, value: nil
+    .grid{ style: '--bs-gap: 0.5rem;'}
       .g-start-2.g-col-10
-        = form.text_area :prompt, class: 'form-control', data: { 'prompt-form-target' => 'promptInput' }
-        = form.hidden_field :conversation_id, value: @conversation.id, data: { 'prompt-form-target' => 'conversationId' }
-        = form.hidden_field :user_id, value: current_user.id, data: { 'prompt-form-target' => 'userId' }
-        = form.hidden_field :text_id, value: "gentext_#{Time.current.to_i}_#{rand(1000)}"
-        = form.hidden_field :temperature, value: 1
-        = form.hidden_field :generate_text_preset_id, value: nil
+        %button.btn.btn-primary{ type: "button", 'data-bs-toggle' => 'collapse', 'data-bs-target' => '#advanced-options' } advanced options
+      .g-start-2.g-col-10.collapse.show#advanced-options
+        .grid
+          .g-col-3
+            .form-floating
+              = form.collection_select :generate_text_preset_id, GenerateTextPreset.all, :id, :name, { include_blank: true },
+                { class: 'form-select' }
+              = form.label :generate_text_preset_id, 'Preset'
+          .g-col-2
+            .form-floating
+              = form.select :temperature, 0.step(to: 1, by: 0.1).map { |n| n = n.round(1); [n, n] }, {}, { class: 'form-select' }
+              = form.label :temperature, 'Temperature'
+      .g-start-2.g-col-10
+        = form.text_area :prompt, class: 'form-control', data: { 'prompt-form-target' => 'promptInput' }, placeholder: 'Type a message', rows: 3
       .g-col-1.d-flex.align-items-center
         %button.btn.btn-primary.icon-btn{type: 'submit', name: 'commit', data: { 'prompt-form-target' => 'submitButton' }}
           %i.bi.bi-send-fill

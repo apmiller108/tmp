@@ -31,21 +31,26 @@ CLOSED: [2024-12-25 Wed 18:20]
 CLOSED: [2024-12-29 Sun 18:54]
   This form is still disabled I think
 * TODO link to memo
-* TODO delete conversation
+* DONE delete conversation
+CLOSED: [2024-12-30 Mon 16:27]
   for those conversations not linked to a memo
 * DONE add copy button to assistant response
 CLOSED: [2024-12-29 Sun 19:35]
-* TODO allow editing of the last prompt. Trigger regenerate on the last assistant response.
+* DONE add coversation settings (eg, temperature, system prompt etc)
+CLOSED: [2024-12-31 Tue 15:12]
+* TODO edit the last prompt. Trigger regenerate on the last assistant response.
 * TODO add regenerate button to last assistant response
-* TODO add coversation settings (eg, temperature, system prompt etc)
 * TODO extact gentext generator to class
   - use it in the propmt_form_controller to set the text_id input
 * DONE extract conversation component
 CLOSED: [2024-12-29 Sun 19:07]
   This is used for both the new and edit actions
 * TODO move flash messages to it's own stream
-* TODO support adding files to the prompt
 * TODO unit test Turn class
 * TODO unit test conversation turn component
 * TODO unit test conversation component
 * TODO update ConversationForm unit tests
+* TODO support adding files to the prompt
+  Extract to feature (images only: jpg, png, webp see antropics docs)
+* TODO add audio transcription to conversations
+  Extract feature

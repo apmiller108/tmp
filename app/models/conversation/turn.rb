@@ -1,6 +1,6 @@
 class Conversation
   class Turn
-    attr_reader :exchange_part
+    attr_reader :turn_data
 
     def self.for_prompt(prompt)
       new(
@@ -15,15 +15,15 @@ class Conversation
       new({ 'role' => ASSISTANT, 'content' => response })
     end
 
-    # @param [Array<Hash>] exchange_part
+    # @param [Array<Hash>] turn_data
     #  User prompt:
     #    { "role" => "user",
     #      "content" => [{ "text" => "Hello?", "type" => "text" }] }
     #  Assistant response:
     #    { "role" => "assistant",
     #      "content" => "Is it me you're looking for?" }
-    def initialize(exchange_part)
-      @exchange_part = exchange_part
+    def initialize(turn_data)
+      @turn_data = turn_data
     end
 
     def assistant? = role == ASSISTANT
@@ -31,14 +31,14 @@ class Conversation
     def user? = role == USER
 
     def role
-      exchange_part['role']
+      turn_data['role']
     end
 
     def content
       if user?
-        exchange_part.fetch('content').first['text']
+        turn_data.fetch('content').first['text']
       else
-        exchange_part.fetch('content')
+        turn_data.fetch('content')
       end
     end
   end
