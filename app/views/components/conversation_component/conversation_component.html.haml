@@ -4,7 +4,7 @@
       = render ConversationTurnComponent.new(t)
   = render PromptFormComponent.new(generate_text_request:)
   - if deletable?
-    .grid
+    .grid{ style: '--bs-gap: 0.5rem;' }
       .g-start-11.g-col-1
       = link_to [current_user, conversation], data: { turbo_method: 'delete', turbo_confirm: 'Are you sure?',
                                               'bs-toggle' => 'tooltip', 'bs-title' => t('conversation.delete') },
