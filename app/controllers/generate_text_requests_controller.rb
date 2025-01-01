@@ -14,11 +14,14 @@ class GenerateTextRequestsController < ApplicationController
               ),
               turbo_stream.append(
                 'conversation-turns',
-                ConversationTurnComponent.new(Conversation::Turn.for_response(''), pending: true).render_in(view_context)
+                ConversationTurnComponent.new(pending_response_turn, pending: true).render_in(view_context)
               ),
               turbo_stream.replace(
                 'prompt-form',
-                PromptFormComponent.new(generate_text_request: new_generate_text_request).render_in(view_context)
+                PromptFormComponent.new(
+                  generate_text_request: new_generate_text_request,
+                  show_options:
+                ).render_in(view_context)
               )
             ],
             status: :created
@@ -31,7 +34,7 @@ class GenerateTextRequestsController < ApplicationController
                    turbo_stream.update(flash_component.id, flash_component),
                    turbo_stream.replace(
                      'prompt-form',
-                     PromptFormComponent.new(generate_text_request:).render_in(view_context)
+                     PromptFormComponent.new(generate_text_request:, show_options:).render_in(view_context)
                    )
                  ],
                  status: :unprocessable_entity
@@ -46,10 +49,18 @@ class GenerateTextRequestsController < ApplicationController
     Conversation::Turn.for_prompt(generate_text_request_params[:prompt])
   end
 
+  def pending_response_turn
+    Conversation::Turn.for_response('')
+  end
+
   def new_generate_text_request
     current_user.generate_text_requests.new(
       generate_text_request_params.slice(:temperature, :generate_text_preset_id, :conversation_id)
     )
+  end
+
+  def show_options
+    ActiveModel::Type::Boolean.new.cast(params[:show_options].downcase)
   end
 
   def generate_text_request_params

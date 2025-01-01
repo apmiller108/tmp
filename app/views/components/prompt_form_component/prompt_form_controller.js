@@ -2,7 +2,7 @@ import { Controller } from '@hotwired/stimulus'
 import { createUserConversation, updateUserConversation } from '@javascript/http'
 
 export default class PromptFormController extends Controller {
-  static targets = ['promptInput', 'userId', 'conversationId', 'form', 'submitButton']
+  static targets = ['promptInput', 'userId', 'conversationId', 'form', 'submitButton', 'showOptionsInput']
 
   connect() {
     this.focusOnPromptInput()
@@ -70,5 +70,14 @@ export default class PromptFormController extends Controller {
     } finally {
       this.enableForm()
     }
+  }
+
+  toggleShowOptions() {
+    if (this.showOptionsInputTarget.value == 'true') {
+      this.showOptionsInputTarget.value = 'false'
+    } else {
+      this.showOptionsInputTarget.value = 'true'
+    }
+    console.log(this.showOptionsInputTarget.value)
   }
 }

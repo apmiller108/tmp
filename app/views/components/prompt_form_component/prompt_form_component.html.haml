@@ -3,12 +3,14 @@
     = form.hidden_field :conversation_id, data: { 'prompt-form-target' => 'conversationId' }
     = form.hidden_field :user_id, value: current_user.id, data: { 'prompt-form-target' => 'userId' }
     = form.hidden_field :text_id, value: "gentext_#{Time.current.to_i}_#{rand(1000)}"
-    = form.hidden_field :temperature, value: 1
-    = form.hidden_field :generate_text_preset_id, value: nil
+    = hidden_field_tag :show_options, show_options?, data: { 'prompt-form-target' => 'showOptionsInput' }
     .grid{ style: '--bs-gap: 0.5rem;'}
       .g-start-2.g-col-10
-        %button.btn.btn-primary{ type: "button", 'data-bs-toggle' => 'collapse', 'data-bs-target' => '#advanced-options' } advanced options
-      .g-start-2.g-col-10.collapse.show#advanced-options
+        %button.btn.btn-primary{ type: "button",
+                                 'data-bs-toggle' => 'collapse',
+                                 'data-bs-target' => '#advanced-options',
+                                 'data-action' => 'click->prompt-form#toggleShowOptions' } advanced options
+      .g-start-2.g-col-10.collapse#advanced-options{ class: show_options? && 'show' }
         .grid
           .g-col-3
             .form-floating
