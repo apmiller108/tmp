@@ -16,18 +16,17 @@
         = link_to root_path, class: 'logo navbar-brand' do
           = render inline: Rails.application.assets.find_asset('tmp.svg').source
       - if current_user
-        .container.collapse.navbar-collapse{ data: { controller: 'my-channel' } }
+        .container.collapse.navbar-collapse.justify-content-center{ data: { controller: 'my-channel' } }
           %ul.navbar-nav
             %li.nav-item
-              = link_to "Memos", user_memos_path(current_user), class: 'nav-link text-light fs-3'
+              = link_to "Memos", user_memos_path(current_user), class: 'nav-link text-light'
             %li.nav-item
-              = link_to "Conversations", user_conversations_path(current_user), class: 'nav-link text-light fs-3'
+              = link_to "Conversations", user_conversations_path(current_user), class: 'nav-link text-light'
             %li.nav-item
-              = link_to "Settings", user_path(current_user), class: 'nav-link text-light fs-3'
+              = link_to "Settings", user_path(current_user), class: 'nav-link text-light'
       .container-fluid.justify-content-end
         - if current_user
-          = button_to 'Sign Out', destroy_user_session_path, method: :delete, data: { turbo: false },
-          class: ['btn', 'btn-sm', 'btn-outline-secondary']
+          = link_to 'Sign Out', destroy_user_session_path, method: :delete, data: { turbo: false }
     .container-sm
       .flash-message.d-flex.justify-content-center
         %p.alert-info= notice

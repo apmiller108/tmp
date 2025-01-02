@@ -1,12 +1,12 @@
 .conversation.conversation-container{ data: { controller: :conversation } }
+  .title.text-center.fw-bold= truncate(conversation.starter, length: 35, separator: ' ')
   #conversation-turns.conversation-turns.mb-2{ data: { 'conversation-target': 'turns' }}
     - conversation.turns.each do |t|
       = render ConversationTurnComponent.new(t)
-  = render PromptFormComponent.new(generate_text_request:)
-  - if deletable?
-    .grid{ style: '--bs-gap: 0.5rem;' }
-      .g-start-11.g-col-1
-      = link_to [current_user, conversation], data: { turbo_method: 'delete', turbo_confirm: 'Are you sure?',
-                                              'bs-toggle' => 'tooltip', 'bs-title' => t('conversation.delete') },
-                                              class: 'btn btn-danger icon-btn my-2' do
-        %i.bi.bi-trash3.text-white
+  = render PromptFormComponent.new(generate_text_request:) do |c|
+    - if deletable?
+      - c.with_delete_button do
+        = link_to [current_user, conversation], data: { turbo_method: 'delete', turbo_confirm: 'Are you sure?',
+                                                'bs-toggle' => 'tooltip', 'bs-title' => t('conversation.delete') },
+                                                class: 'btn btn-danger icon-btn' do
+          %i.bi.bi-trash3.text-white

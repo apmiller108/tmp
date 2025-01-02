@@ -40,11 +40,24 @@ CLOSED: [2024-12-29 Sun 19:35]
 CLOSED: [2024-12-31 Tue 15:12]
 * DONE preserve advanced options collapse state
 CLOSED: [2024-12-31 Tue 23:45]
-* TODO add conversation title
-  Show the title at the top in a fixed container. Editable
-* TODO edit the last prompt. Trigger regenerate on the last assistant response.
+* TODO add conversation title [1/4]
+  - [X] Show the title at the top in a fixed container.
+  - [ ] makie it Editable using the inline edit component
+  - [ ] add title to conversations table
+  - [ ] set title default based on first message
+* TODO show meta data about the assistant response (model, present, temp, token count) [/]
+  - [ ] add response jsonb field to generate_text_requests
+  - [ ] update generate_text_request record with the full response
+  - [ ] when displaying the turns, do so from the generate text requests
+    associated to the conversation
+  - [ ] Show info icon in the tray of the assistant response. On click, show the
+    token usage and model used.
+  - [ ] refactor the concept of an exchange from the conversation jsonb field to
+    being constructed from the generate_text_requests.
+* TODO show token count for entire conversation
 * TODO add regenerate button to last assistant response
-* TODO extact gentext generator to class
+* TODO edit the last prompt. Trigger regenerate on the last assistant response.
+* TODO extract gentext generator to class
   - use it in the propmt_form_controller to set the text_id input
 * DONE extract conversation component
 CLOSED: [2024-12-29 Sun 19:07]

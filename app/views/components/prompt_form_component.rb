@@ -3,6 +3,8 @@
 class PromptFormComponent < ApplicationViewComponent
   attr_reader :generate_text_request
 
+  renders_one :delete_button
+
   def initialize(generate_text_request:, **opts)
     @generate_text_request = generate_text_request
     @opts = opts

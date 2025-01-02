@@ -55,7 +55,7 @@ class GenerateTextRequestsController < ApplicationController
 
   def new_generate_text_request
     current_user.generate_text_requests.new(
-      generate_text_request_params.slice(:temperature, :generate_text_preset_id, :conversation_id)
+      generate_text_request_params.slice(:temperature, :generate_text_preset_id, :conversation_id, :model)
     )
   end
 
@@ -65,7 +65,7 @@ class GenerateTextRequestsController < ApplicationController
 
   def generate_text_request_params
     params.require(:generate_text_request).permit(
-      :prompt, :text_id, :temperature, :generate_text_preset_id, :conversation_id
-    ).merge(model: current_user.setting.text_model)
+      :prompt, :text_id, :temperature, :generate_text_preset_id, :conversation_id, :model
+    ).reverse_merge(model: current_user.setting.text_model)
   end
 end
