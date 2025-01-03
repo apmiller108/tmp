@@ -1,5 +1,5 @@
 %turbo-frame{id: 'blob_details' }
-  .blob-details{ data: { controller: 'blob-details' } }
+  .blob-details{ data: { controller: 'tooltip' } }
     - if @blob.generate_image_request
       .generate-image-details
         - gen_img_params = @blob.generate_image_request.parameterize

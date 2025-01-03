@@ -21,6 +21,7 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 @import 'attachment_summary_component/attachment_summary_component';
 @import 'blob_component/blob_component';
 @import 'color_picker_component/color_picker_component';
+@import 'conversation_component/conversation_component';
 @import 'conversation_turn_component/conversation_turn_component';
 @import 'flash_message_component/flash_message_component';
 @import 'inline_edit_component/inline_edit_component';

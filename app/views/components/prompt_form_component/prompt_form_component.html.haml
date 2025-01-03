@@ -7,9 +7,9 @@
     .grid{ style: '--bs-gap: 0.5rem;'}
       .g-start-2.g-col-10
         %button.btn.btn-secondary.fs-6{ type: "button",
-                                      'data-bs-toggle' => 'collapse',
-                                      'data-bs-target' => '#advanced-options',
-                                      'data-action' => 'click->prompt-form#toggleShowOptions' } advanced options
+                                        'data-bs-toggle' => 'collapse',
+                                        'data-bs-target' => '#advanced-options',
+                                        'data-action' => 'click->prompt-form#toggleShowOptions' } advanced options
       .g-start-2.g-col-10.collapse#advanced-options{ class: show_options? && 'show' }
         .grid
           .g-col-3

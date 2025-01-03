@@ -35,15 +35,7 @@ class ConversationsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         if form.save
-          render(
-            turbo_stream: [
-              turbo_stream.replace(
-                ConversationTurnComponent::PENDING_RESPONSE_DOM_ID,
-                ConversationTurnComponent.new(assistant_response_to_turn).render_in(view_context)
-              )
-            ],
-            status: :ok
-          )
+          render 'conversations/update', locals: { form: }, status: :ok
         else
           flash.now.alert = t('unable_to_generate_text')
           flash_component = FlashMessageComponent.new(flash:, record: form)
@@ -70,10 +62,6 @@ class ConversationsController < ApplicationController
 
   private
 
-  def assistant_response_to_turn
-    Conversation::Turn.for_response(conversation_params[:assistant_response])
-  end
-
   def form_params
     conversation_params.merge(user: current_user, conversation: @conversation)
   end
@@ -83,6 +71,6 @@ class ConversationsController < ApplicationController
   end
 
   def conversation_params
-    params.require(:conversation).permit(:assistant_response, :text_id)
+    params.require(:conversation).permit(:assistant_response, :text_id, :title)
   end
 end

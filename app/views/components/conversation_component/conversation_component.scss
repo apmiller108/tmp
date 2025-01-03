@@ -1,0 +1,12 @@
+.c-conversation {
+  .title {
+    height: 2.5rem;
+    .title-field {
+      @include clickableThing;
+    }
+
+    form {
+      width: 30rem;
+    }
+  }
+}

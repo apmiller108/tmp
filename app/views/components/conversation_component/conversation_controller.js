@@ -2,7 +2,7 @@ import { Controller } from '@hotwired/stimulus'
 import ToolTippable from '@javascript/mixins/ToolTippable'
 
 export default class ConversationController extends Controller {
-  static targets = ['turns']
+  static targets = ['turns', 'titleField', 'editTitleForm', 'editTitleInput']
 
   observer;
 
@@ -32,7 +32,39 @@ export default class ConversationController extends Controller {
     ToolTippable.disconnect.bind(this)()
   }
 
+  // Scrolls the turns container as far down as possible so the most recent turn
+  // is in view
   scrollTurns() {
     this.turnsTarget.scrollTop = this.turnsTarget.scrollHeight
+  }
+
+  onEditTitle() {
+    this.showTitleForm()
+    this.editTitleInputTarget.focus()
+  }
+
+  showTitleForm() {
+    this.editTitleFormTarget.classList.remove('d-none')
+    this.titleFieldTarget.classList.add('d-none')
+  }
+
+  hideTitleForm() {
+    // On blur if the element is not dirty just hide the form.
+    // The change event (eg, element will be dirty) will submit the form, thereby replacing it
+    if (this.editTitleInputTarget.value === this.editTitleInputTarget.defaultValue) {
+      this.editTitleFormTarget.classList.add('d-none')
+      this.titleFieldTarget.classList.remove('d-none')
+    }
+  }
+
+  // On change event (blur and the value has changed) submits the form via turbo stream request
+  saveTitle() {
+    this.editTitleFormTarget.requestSubmit()
+  }
+
+  // On enter blue the input. If value changed, a change event will be emitted
+  // thereby submitting the form; otherwise the form will be hidden without submitting the form
+  blurTitle() {
+    this.editTitleInputTarget.blur()
   }
 }

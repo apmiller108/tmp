@@ -40,12 +40,13 @@ CLOSED: [2024-12-29 Sun 19:35]
 CLOSED: [2024-12-31 Tue 15:12]
 * DONE preserve advanced options collapse state
 CLOSED: [2024-12-31 Tue 23:45]
-* TODO add conversation title [3/4]
+* DONE add conversation title [7/7]
+CLOSED: [2025-01-03 Fri 14:53]
   - [X] Show the title at the top in a fixed container.
-  - [ ] Show form on click of edit icon (hide field) and put focus on input
-  - [ ] Hide form and show field when input loses focus
-  - [ ] Extract partial
-  - [ ] On update, render turbo stream partial
+  - [X] Show form on click of edit icon (hide field) and put focus on input
+  - [X] Hide form and show field when input loses focus
+  - [X] Extract partial
+  - [X] On update, render turbo stream partial
   - [X] add title to conversaions table
   - [X] set title default based on first message
 * TODO show meta data about the assistant response (model, present, temp, token count) [/]

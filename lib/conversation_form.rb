@@ -5,7 +5,7 @@ class ConversationForm
 
   attr_reader :generate_text_request
 
-  validates :assistant_response, presence: true
+  validates :assistant_response, presence: true, if: -> { generate_text_request.present? }
   validate :conversation_valid
   validate :generate_text_request_valid
 
@@ -32,8 +32,8 @@ class ConversationForm
   private
 
   def save!
-    conversation.save!
     generate_text_request&.save!
+    conversation.save!
   end
 
   def conversation_valid
@@ -45,7 +45,7 @@ class ConversationForm
   end
 
   def generate_text_request_valid
-    return if generate_text_request.valid?
+    return if generate_text_request.nil? || generate_text_request.valid?
 
     generate_text_request.errors.each do |error|
       errors.add(error.attribute, error.message)
