@@ -1,7 +1,7 @@
 class ConversationForm
   include ActiveModel::Model
 
-  attr_accessor :assistant_response, :text_id, :user, :conversation
+  attr_accessor :assistant_response, :text_id, :user, :conversation, :title
 
   attr_reader :generate_text_request
 
@@ -11,13 +11,18 @@ class ConversationForm
 
   def initialize(params)
     super(params)
-    @generate_text_request = user.generate_text_requests.find_by!(text_id:)
+    @generate_text_request = user.generate_text_requests.find_by!(text_id:) if text_id
   end
 
   def save
-    conversation.exchange << { role: :user, content: [{ type: :text, text: generate_text_request.prompt }] }
-    conversation.exchange << { role: :assistant, content: assistant_response }
-    generate_text_request.conversation = conversation
+    if generate_text_request
+      conversation.exchange << Conversation::Turn.for_prompt(generate_text_request.prompt).turn_data
+      generate_text_request.conversation = conversation
+    end
+
+    conversation.exchange << Conversation::Turn.for_response(assistant_response).turn_data if assistant_response
+
+    conversation.title = title if title
 
     return false if invalid?
 
@@ -28,7 +33,7 @@ class ConversationForm
 
   def save!
     conversation.save!
-    generate_text_request.save!
+    generate_text_request&.save!
   end
 
   def conversation_valid
