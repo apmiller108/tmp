@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_23_202254) do
+ActiveRecord::Schema[7.1].define(version: 2025_01_02_175935) do
   create_schema "rollback"
 
   # These are extensions that must be enabled in order to support this database
@@ -70,6 +70,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_23_202254) do
     t.jsonb "exchange", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "title", limit: 100, null: false
     t.index ["memo_id"], name: "index_conversations_on_memo_id"
     t.index ["user_id"], name: "index_conversations_on_user_id"
   end
