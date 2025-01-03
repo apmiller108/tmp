@@ -1,4 +1,5 @@
 import { Controller } from '@hotwired/stimulus'
+import ToolTippable from '@javascript/mixins/ToolTippable'
 
 export default class ConversationController extends Controller {
   static targets = ['turns']
@@ -22,10 +23,13 @@ export default class ConversationController extends Controller {
     this.observer.observe(this.turnsTarget, {
       childList: true,
     });
+
+    ToolTippable.connect.bind(this)()
   }
 
   disconnect() {
     this.observer.disconnect();
+    ToolTippable.disconnect.bind(this)()
   }
 
   scrollTurns() {
