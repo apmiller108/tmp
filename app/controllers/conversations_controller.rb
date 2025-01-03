@@ -46,7 +46,7 @@ class ConversationsController < ApplicationController
           )
         else
           flash.now.alert = t('unable_to_generate_text')
-          flash_component = FlashMessageComponent.new(flash:)
+          flash_component = FlashMessageComponent.new(flash:, record: form)
 
           render turbo_stream: [
                    turbo_stream.update(flash_component.id, flash_component),
