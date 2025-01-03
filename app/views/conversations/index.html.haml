@@ -3,4 +3,4 @@
     = link_to 'New Conversation', new_user_conversation_path(current_user)
     - @conversations.each do |c|
       .conversation
-        = link_to truncate(c.starter, length: 35, separator: ' '), edit_user_conversation_path(current_user, c)
+        = link_to truncate(c.title, length: 35, separator: ' '), edit_user_conversation_path(current_user, c)

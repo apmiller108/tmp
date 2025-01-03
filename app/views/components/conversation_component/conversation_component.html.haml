@@ -1,5 +1,5 @@
 .conversation.conversation-container{ data: { controller: :conversation } }
-  .title.text-center.fw-bold= truncate(conversation.starter, length: 35, separator: ' ')
+  .title.text-center.fw-bold= truncate(conversation.title, length: 40, separator: ' ')
   #conversation-turns.conversation-turns.mb-2{ data: { 'conversation-target': 'turns' }}
     - conversation.turns.each do |t|
       = render ConversationTurnComponent.new(t)
