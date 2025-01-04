@@ -49,7 +49,7 @@ CLOSED: [2025-01-03 Fri 14:53]
   - [X] On update, render turbo stream partial
   - [X] add title to conversaions table
   - [X] set title default based on first message
-* TODO show meta data about the assistant response (model, present, temp, token count) [4/8]
+* TODO show meta data about the assistant response (model, present, temp, token count) [5/9]
   - [X] add response jsonb field to generate_text_requests
   - [X] update generate_text_request record with the full response.
     - This would be done in the GenerateTextJob
@@ -62,7 +62,7 @@ CLOSED: [2025-01-03 Fri 14:53]
       response.content. Wrap the json blob in a InovkeModelResponse obj.
   - [X] refactor the concept of an exchange from the conversation jsonb field to
     being constructed from the generate_text_requests.
-  - [ ] Migrate existing conversation exchange to the associated
+  - [X] Migrate existing conversation exchange to the associated
     generate_text_requests objects. Stub the token counts and what not.
   - [ ] Remove code that updates the conversation from the conversations view. Drop the form object. Do we
     still need a separate controller for the memo conversations?
