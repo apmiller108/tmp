@@ -12,7 +12,7 @@ class Conversation
     end
 
     def self.for_response(response)
-      new({ 'role' => ASSISTANT, 'content' => response })
+      new({ 'role' => ASSISTANT, 'content' => response || 'no content' })
     end
 
     # @param [Array<Hash>] turn_data

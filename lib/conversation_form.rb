@@ -18,6 +18,9 @@ class ConversationForm
     if generate_text_request
       conversation.exchange << Conversation::Turn.for_prompt(generate_text_request.prompt).turn_data
       generate_text_request.conversation = conversation
+      if conversation.title.blank?
+        conversation.title = generate_text_request.prompt.truncate(35)
+      end
     end
 
     conversation.exchange << Conversation::Turn.for_response(assistant_response).turn_data if assistant_response

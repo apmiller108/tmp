@@ -9,14 +9,21 @@ class Conversation < ApplicationRecord
 
   validates :title, presence: true, length: { maximum: 100 }
 
-  before_validation :set_title_from_prompt, on: :create
-
   attribute :exchange, default: []
 
   delegate :first, to: :exchange
 
+  def exchange
+    turns.map(&:turn_data)
+  end
+
   def turns
-    @turns ||= exchange.map { |e| Turn.new(e) }
+    generate_text_requests.order(:created_at).flat_map do |gtr|
+      [
+        Turn.for_prompt(gtr.prompt),
+        Turn.for_response(gtr.response&.content) 
+      ]
+    end
   end
 
   private

@@ -29,9 +29,7 @@ class GenerativeText
       end
 
       def content
-        results.select { |c| c['type'] == 'text' }
-               .map    { |c| c['text'] }
-               .join("\n")
+        results.find { |c| c['type'] == 'text' }.fetch('text')
       end
 
       def results
