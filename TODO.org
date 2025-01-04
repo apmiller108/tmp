@@ -49,17 +49,17 @@ CLOSED: [2025-01-03 Fri 14:53]
   - [X] On update, render turbo stream partial
   - [X] add title to conversaions table
   - [X] set title default based on first message
-* TODO show meta data about the assistant response (model, present, temp, token count) [1/8]
+* TODO show meta data about the assistant response (model, present, temp, token count) [2/8]
   - [X] add response jsonb field to generate_text_requests
-  - [ ] update generate_text_request record with the full response.
+  - [X] update generate_text_request record with the full response.
     - This would be done in the GenerateTextJob
   - [ ] when displaying the turns, do so from the generate text requests
     associated to the conversation.
     - Conversations has an turns method that maps each message or response to a
       Conversation::Turn object. Update this method to map each
-      generate_text_request prompt and response. Use the helper method for the
-      prompt. Use helper method on the response obj.content. Wrap the json blob
-      in a InovkeModelResponse obj.
+      generate_text_request, in order by created_at, prompt and response. Use
+      the helper method for the prompt. Use helper method on the
+      response.content. Wrap the json blob in a InovkeModelResponse obj.
   - [ ] Show info icon in the tray of the assistant response. On click, show the
     token usage and model used. A generic Field component with options to be copyable?
   - [ ] refactor the concept of an exchange from the conversation jsonb field to

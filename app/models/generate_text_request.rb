@@ -22,4 +22,8 @@ class GenerateTextRequest < ApplicationRecord
   def system_message
     "#{MARKDOWN_FORMAT_SYSTEM_MESSAGE}\n#{generate_text_preset&.system_message}"
   end
+
+  def response
+    GenerativeText::Anthropic::InvokeModelResponse.new(super) if super.present?
+  end
 end

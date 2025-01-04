@@ -1,9 +1,10 @@
 class GenerativeText
   module Anthropic
     class InvokeModelResponse
-      attr_reader :response_data
+      attr_reader :data
 
-      # JSON response will look like this
+      # @param [Hash | String] data
+      # Parsed JSON response will look like this
       # {
       #     "id" => "msg_01DMcCdRr6gaWDuZs7Y63rhe",
       #     "type" => "message",
@@ -19,8 +20,12 @@ class GenerativeText
       #         "input_tokens" => 79, "output_tokens" => 942
       #     }
       # }
-      def initialize(json)
-        @response_data = JSON.parse(json)
+      def initialize(data)
+        @data = if data.respond_to? :keys
+                  data
+                else
+                  JSON.parse(data)
+                end
       end
 
       def content
@@ -30,12 +35,12 @@ class GenerativeText
       end
 
       def results
-        response_data.fetch('content')
+        data.fetch('content')
       end
 
       def completion_reason
         # stop_reason could be one of ["end_turn", "max_tokens", "stop_sequence"]
-        response_data.fetch('stop_reason')
+        data.fetch('stop_reason')
       end
 
       def token_count
@@ -45,7 +50,7 @@ class GenerativeText
       private
 
       def usage
-        response_data.fetch('usage')
+        data.fetch('usage')
       end
     end
   end

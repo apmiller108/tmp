@@ -10,6 +10,7 @@ class GenerateTextJob
     response = invoke_model(generate_text_request)
 
     if response
+      generate_text_request.update!(response: response.data)
       broadcast_content(generate_text_request, user, response)
     else
       broadcast_error(generate_text_request, user)
