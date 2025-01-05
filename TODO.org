@@ -49,7 +49,7 @@ CLOSED: [2025-01-03 Fri 14:53]
   - [X] On update, render turbo stream partial
   - [X] add title to conversaions table
   - [X] set title default based on first message
-* TODO show meta data about the assistant response (model, present, temp, token count) [8/12]
+* TODO show meta data about the assistant response (model, present, temp, token count) [10/13]
   - [X] add response jsonb field to generate_text_requests
   - [X] update generate_text_request record with the full response.
     - This would be done in the GenerateTextJob
@@ -71,7 +71,8 @@ CLOSED: [2025-01-03 Fri 14:53]
     #+begin_src js
       window.history.pushState('converstion', 'Edit Conversation', '/users/3/conversations/3/edit');
     #+end_src
-  - [ ] Remove the code that updates the conversation from the memo feature.
+  - [X] Remove the code that updates the conversation from the memo feature.
+  - [X] Consolidate memo conversation controller with conversations controller
   - [ ] Replace memos stream with main
   - [ ] Drop the exchange column and remove the exchange attr
   - [ ] Show info icon in the tray of the assistant response. On click, show the

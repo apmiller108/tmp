@@ -2,8 +2,9 @@
   = form_with model: [current_user, memo],
     data: { controller: 'memo-form',
             action: 'color-picker:colorChosen->memo-form#onColorChosen color-picker:colorRemoved->memo-form#onColorRemoved wysiwyg-editor:generatedTextInserted->memo-form#onGeneratedTextInserted wysiwyg-editor:generatedImageInserted->memo-form#onGeneratedImageInserted',
-    'memo-id' => memo.id,
-    'conversation-id' => conversation&.id },
+            'memo-id' => memo.id,
+            'conversation-id' => conversation&.id,
+            'user-id' => current_user.id },
     html: { class: 'c-memo-form p-3', style: border_styles } do |form|
     .grid
       .g-col-12.g-col-xl-10

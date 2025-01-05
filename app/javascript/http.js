@@ -21,7 +21,7 @@ export const generateText = ({ prompt, text_id, temperature, generate_text_prese
   })
 }
 
-export const createConversation = ({ text_id, memo_id, assistant_response, user_id }) => {
+export const updateConversation = ({ conversation_id, memo_id, user_id  }) => {
   const headers = {
     'Content-Type': 'application/json',
     Accept: 'application/json',
@@ -29,45 +29,32 @@ export const createConversation = ({ text_id, memo_id, assistant_response, user_
   }
   const body = JSON.stringify({
     conversation: {
-      assistant_response, text_id
+      memo_id
     }
   })
 
-  const url = memo_id ? `/memos/${memo_id}/conversations` : `/users/${user_id}/conversations`
-
-  return fetch(url, { method: 'POST', headers, body })
-}
-
-export const updateConversation = ({ conversation_id, text_id, memo_id, assistant_response }) => {
-  const headers = {
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
-    'X-CSRF-Token': getCsrfToken()
-  }
-  const body = JSON.stringify({
-    conversation: {
-      assistant_response, text_id
-    }
-  })
-
-  const url = `/memos/${memo_id}/conversations/${conversation_id}`
+  const url = `/users/${user_id}/conversations/${conversation_id}`
 
   return fetch(url, { method: 'PUT', headers, body })
 }
 
-export const getConversation = async (memo_id) => {
+export const getConversations = async (user_id, searchParams) => {
   const headers = {
     'Content-Type': 'application/json',
     Accept: 'application/json',
     'X-CSRF-Token': getCsrfToken()
   }
-  const response = await fetch(`/memos/${memo_id}/conversations`, {
+  const q = Object.entries(searchParams).map(([k, v]) => {
+    `q[${k}]=${encodeURIComponent(v)}`
+  }).join('&')
+
+  const response = await fetch(`/users/${user_id}/conversations?${q}`, {
     method: 'GET',
     headers
   })
 
   const data = await response.json()
-  return data[0]
+  return data
 }
 
 export const autoSaveMemo = (memo) => {
@@ -119,9 +106,9 @@ export const generateImage = ({ prompt, negative_prompt, image_name, style, aspe
 }
 
 export default {
+  getConversations,
   generateText,
   generateImage,
-  createConversation,
   updateConversation,
   autoSaveMemo
 }

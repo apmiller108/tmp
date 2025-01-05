@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
-import { createConversation, updateConversation, getConversation, autoSaveMemo } from '@javascript/http'
+import { updateConversation, getConversations, autoSaveMemo } from '@javascript/http'
 import ToolTippable from '@javascript/mixins/ToolTippable'
 
 export default class MemoFormController extends Controller {
@@ -19,18 +19,24 @@ export default class MemoFormController extends Controller {
     this.element.dataset.conversationId = id
   }
 
+  get userId() {
+    return this.element.dataset.userId
+  }
+
   async connect() {
     ToolTippable.connect.bind(this)()
 
-    // A new memo turbo stream created from an autosave action will not have the
-    // conversation ID since the conversation creation happens after the memo is
-    // created. In this case, fetch the converstation ID after the turbo stream
-    // is handled and emit it for any listeners who depend on it (eg, wywiwyg
-    // editor). See also onGeneratedTextInserted callback below.
+    // A newly created memo turbo stream created from an autosave action will
+    // not have the conversation ID since the conversation will have been
+    // created before the memo is created and therefore it will not yet be
+    // associated to the memo yet. In this case, fetch the converstation ID
+    // after the turbo stream is handled (rendered) and emit it for any
+    // listeners who depend on it (eg, wywiwyg editor). See also
+    // onGeneratedTextInserted callback below.
     if (this.memoId && !this.conversationId) {
-      const conversation = await getConversation(this.memoId)
-      if (conversation) {
-        this.conversationId = conversation.id
+      const conversations = await getConversations(this.userId, { memo_id: this.memoId })
+      if (conversations.length == 1) {
+        this.conversationId = conversations[0].id
         this.emitConversationCreated()
       }
     }
@@ -60,31 +66,26 @@ export default class MemoFormController extends Controller {
   }
 
   async onGeneratedTextInserted(e) {
-    const { detail: { text_id, content } } = e
-    const conversationParams = {
-      text_id,
-      assistant_response: content,
-      memo_id: this.memoId
-    }
+    const { detail: { conversation_id } } = e
+    const conversationParams = { memo_id: this.memoId, user_id: this.userId }
 
+    this.conversationId = conversation_id
     const autoSaveTurboStream = await this.autoSave()
+    const tempTemplate = document.createElement('template')
+    tempTemplate.innerHTML = autoSaveTurboStream
 
     if (autoSaveTurboStream.length) {
       if (!conversationParams.memo_id) {
-        // Due to new memos which aren't persisted yet, the conversation is
-        // created after the autosave action so the memo_id can be set on the
-        // conversation.
-        //
         // For new memos, there will not be a memo_id. After autosave completes,
         // however, the memo_id will exist. The memo_id is then extracted from
-        // the tuboframe's form element and added to the conversation params.
-        const tempTemplate = document.createElement('template')
-        tempTemplate.innerHTML = autoSaveTurboStream
+        // the tuboframe's form element and added to the conversation params in
+        // order to associate the conversation to the memo.
         conversationParams.memo_id = tempTemplate.content.querySelector('template')
           .content.querySelector('form').dataset.memoId
-      }
 
-      await this.createOrUpdateConversation(conversationParams)
+        // Update conversation to associate it to the memo
+        await updateConversation({ conversation_id: this.conversationId, ...conversationParams })
+      }
 
       Turbo.renderStreamMessage(autoSaveTurboStream)
     }
@@ -110,17 +111,6 @@ export default class MemoFormController extends Controller {
       return await response.text()
     } catch (error) {
       console.log(error)
-    }
-  }
-
-  async createOrUpdateConversation(params) {
-    if (this.conversationId) {
-      await updateConversation({ conversation_id: this.conversationId, ...params })
-    } else {
-      const response = await createConversation(params)
-      const conversation = await response.json()
-      this.conversationId = conversation.id
-      this.emitConversationCreated()
     }
   }
 

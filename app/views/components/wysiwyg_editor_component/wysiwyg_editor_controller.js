@@ -238,16 +238,16 @@ export default class WysiwygEditor extends Controller {
     Generate content event handlers:
 
     Content is generated asynchonously and delivered as JSON objects over
-    websocket messages. Those JSON objects are received by an ActionCable
-    channel, emitted as CustomEvents and handled here. I was unable to render
-    turbo streams into the Trix editor.
+    websocket messages. Those JSON objects transmitted to the client via an
+    ActionCable channel, emitted as CustomEvents which are handled here. I was
+    unable to render turbo streams into the Trix editor; hence this hack that
+    inserts the text or image with the Trix editor functions. Generated content
+    is therefore inserted into the editor programatically.
 
-    Generated content is inserted into the editor programatically.
-
-    Notifcation is removed in a finally block.
+    The notifcation is removed in a finally block.
   */
   onGenerateText(event) {
-    const { generate_text: { text_id, content, error }} = event.detail
+    const { generate_text: { text_id, content, conversation_id, error }} = event.detail
     // TODO store the selected range in an object with the text_id/image_id.
     // When inserting the generated content, place it at the cached location
     // const selectedRange = this.editor.getSelectedRange()
@@ -269,7 +269,7 @@ export default class WysiwygEditor extends Controller {
         this.editor.insertLineBreak()
         this.editor.insertLineBreak()
 
-        this.dispatch('generatedTextInserted', { detail: { content, text_id } });
+        this.dispatch('generatedTextInserted', { detail: { content, text_id, conversation_id } });
       }
     } catch (err) {
       console.log(err)

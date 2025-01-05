@@ -9,6 +9,8 @@ class Conversation < ApplicationRecord
 
   validates :title, presence: true, length: { maximum: 100 }
 
+  validate :memo_user_matches_conversation_user, if: :memo_id_changed?
+
   attribute :exchange, default: []
 
   delegate :first, to: :exchange
@@ -30,5 +32,15 @@ class Conversation < ApplicationRecord
 
   def set_title_from_prompt
     self.title = turns.first.content.truncate(35) if title.blank?
+  end
+
+  def memo_user_matches_conversation_user
+    return if memo_id.blank?
+
+    memo_user_id = Memo.where(id: memo_id).pluck(:user_id)[0]
+
+    return if user_id == memo_user_id
+
+    errors.add(:memo_id, 'must belong to the same user as the conversation')
   end
 end

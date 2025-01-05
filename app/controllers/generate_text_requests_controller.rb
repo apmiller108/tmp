@@ -61,7 +61,7 @@ class GenerateTextRequestsController < ApplicationController
   end
 
   def show_options
-    ActiveModel::Type::Boolean.new.cast(params[:show_options].downcase)
+    ActiveModel::Type::Boolean.new.cast(params[:show_options].downcase) if params[:show_options]
   end
 
   def create_conversation(generate_text_request)
@@ -76,6 +76,6 @@ class GenerateTextRequestsController < ApplicationController
   def generate_text_request_params
     params.require(:generate_text_request).permit(
       :prompt, :text_id, :temperature, :generate_text_preset_id, :conversation_id, :model
-    )
+    ).reverse_merge(model: current_user.setting.text_model)
   end
 end
