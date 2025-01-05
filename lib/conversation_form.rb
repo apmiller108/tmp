@@ -1,11 +1,10 @@
 class ConversationForm
   include ActiveModel::Model
 
-  attr_accessor :assistant_response, :text_id, :user, :conversation, :title
+  attr_accessor :text_id, :user, :conversation, :title
 
   attr_reader :generate_text_request
 
-  validates :assistant_response, presence: true, if: -> { generate_text_request.present? }
   validate :conversation_valid
   validate :generate_text_request_valid
 
@@ -15,16 +14,13 @@ class ConversationForm
   end
 
   def save
+    # For new converstations a generate_text_request is created without a conversation ID
+    # This ensures the association is made when the conversation is created
     if generate_text_request
-      conversation.exchange << Conversation::Turn.for_prompt(generate_text_request.prompt).turn_data
       generate_text_request.conversation = conversation
-      if conversation.title.blank?
-        conversation.title = generate_text_request.prompt.truncate(35)
-      end
     end
 
-    conversation.exchange << Conversation::Turn.for_response(assistant_response).turn_data if assistant_response
-
+    conversation.title = generate_text_request.prompt.truncate(35) if conversation.title.blank?
     conversation.title = title if title
 
     return false if invalid?

@@ -11,7 +11,7 @@ class GenerateTextJob
 
     if response
       generate_text_request.update!(response: response.data)
-      broadcast_content(generate_text_request, user, response)
+      broadcast_content(generate_text_request, user, response.content)
     else
       broadcast_error(generate_text_request, user)
       broadcast_flash_error(user)
@@ -24,10 +24,16 @@ class GenerateTextJob
 
   private
 
-  def broadcast_content(generate_text_request, user, model_response)
+  def broadcast_content(generate_text_request, user, content)
     MyChannel.broadcast_to(user, {
-      generate_text: { text_id: generate_text_request.text_id, content: model_response.content, error: nil }
+      generate_text: { text_id: generate_text_request.text_id, content:, error: nil }
     })
+    ViewComponentBroadcaster.call(
+      [user, TurboStreams::STREAMS[:main]],
+      component: ConversationTurnComponent.new(Conversation::Turn.for_response(content)),
+      target: ConversationTurnComponent::PENDING_RESPONSE_DOM_ID,
+      action: :replace
+    )
   end
 
   def broadcast_error(generate_text_request, user)
@@ -39,7 +45,7 @@ class GenerateTextJob
   def broadcast_flash_error(user)
     flash.alert = I18n.t('unable_to_generate_text')
     ViewComponentBroadcaster.call(
-      [user, TurboStreams::STREAMS[:memos]],
+      [user, TurboStreams::STREAMS[:main]],
       component: FlashMessageComponent.new(flash:),
       action: :update
     )

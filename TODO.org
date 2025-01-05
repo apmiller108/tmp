@@ -49,7 +49,7 @@ CLOSED: [2025-01-03 Fri 14:53]
   - [X] On update, render turbo stream partial
   - [X] add title to conversaions table
   - [X] set title default based on first message
-* TODO show meta data about the assistant response (model, present, temp, token count) [5/9]
+* TODO show meta data about the assistant response (model, present, temp, token count) [6/10]
   - [X] add response jsonb field to generate_text_requests
   - [X] update generate_text_request record with the full response.
     - This would be done in the GenerateTextJob
@@ -64,9 +64,11 @@ CLOSED: [2025-01-03 Fri 14:53]
     being constructed from the generate_text_requests.
   - [X] Migrate existing conversation exchange to the associated
     generate_text_requests objects. Stub the token counts and what not.
-  - [ ] Remove code that updates the conversation from the conversations view. Drop the form object. Do we
-    still need a separate controller for the memo conversations?
+  - [X] Remove code that updates the conversation from the conversations view.
+  - [ ] Can we remove the code that creates the conversation too? And ditch that
+    form object?
   - [ ] Remove the code that updates the conversation from the memo feature.
+  - [ ] Replace memos stream with main
   - [ ] Drop the exchange column and remove the exchange attr
   - [ ] Show info icon in the tray of the assistant response. On click, show the
     token usage and model used. A generic Field component with options to be copyable?

@@ -1,6 +1,6 @@
 module TurboStreams
   STREAMS = {
-    memos: 'memos',
-    blobs: 'blobs'
+    main: 'main',
+    memos: 'memos'
   }.freeze
 end

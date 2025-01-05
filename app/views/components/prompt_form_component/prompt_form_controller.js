@@ -1,5 +1,5 @@
 import { Controller } from '@hotwired/stimulus'
-import { createUserConversation, updateUserConversation } from '@javascript/http'
+import { createUserConversation } from '@javascript/http'
 
 export default class PromptFormController extends Controller {
   static targets = ['promptInput', 'userId', 'conversationId', 'form', 'submitButton', 'showOptionsInput']
@@ -40,28 +40,21 @@ export default class PromptFormController extends Controller {
   }
 
   async onGenerateText(event) {
-    const { generate_text: { text_id, content, error }} = event.detail
+    const { generate_text: { text_id, error }} = event.detail
 
     try {
-      if (!error && content) {
-        const conversationParams = { text_id, assistant_response: content, user_id: this.userIdTarget.value }
+      if (!error) {
+        const conversationParams = { text_id, user_id: this.userIdTarget.value }
         const conversationId =  this.conversationIdTarget.value
-        let body;
-
-        // Create or Update a conversation
-        if (conversationId) {
-          const response = await updateUserConversation({ conversation_id: conversationId, ...conversationParams })
-          body = await response.text()
-        } else {
+        // Create a conversation
+        if (!conversationId) {
           const response = await createUserConversation(conversationParams)
           if (response.redirected) { // redirects to edit after creating a new conversation
             window.location.href = response.url
           } else {
             body = await response.json()
+            Turbo.renderStreamMessage(body)
           }
-        }
-        if (body) {
-          Turbo.renderStreamMessage(body)
         }
       }
     } catch (err) {
