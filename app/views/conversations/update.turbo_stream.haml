@@ -1,6 +1,2 @@
-- if form.assistant_response.present?
-  = turbo_stream.replace ConversationTurnComponent::PENDING_RESPONSE_DOM_ID do
-    = render ConversationTurnComponent.new(Conversation::Turn.for_response(form.assistant_response))
-- if form.title.present?
   = turbo_stream.replace 'conversation-title' do
-    = render partial: 'conversations/title_form', locals: { conversation: form.conversation }, formats: [:html]
+    = render partial: 'conversations/title_form', locals: { conversation: }, formats: [:html]

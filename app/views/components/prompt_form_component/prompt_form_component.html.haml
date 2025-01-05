@@ -1,4 +1,4 @@
-.c-prompt-form.pt-2.pb-4#prompt-form{ data: { controller: 'prompt-form', action: 'my-channel:generateText@window->prompt-form#onGenerateText' }}
+.c-prompt-form.pt-2.pb-4#prompt-form{ data: { controller: 'prompt-form' } }
   = form_for generate_text_request, url: generate_text_requests_path, method: :post, data: { 'prompt-form-target' => 'form' } do |form|
     = form.hidden_field :conversation_id, data: { 'prompt-form-target' => 'conversationId' }
     = form.hidden_field :user_id, value: current_user.id, data: { 'prompt-form-target' => 'userId' }

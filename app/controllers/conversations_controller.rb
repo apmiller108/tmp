@@ -9,35 +9,16 @@ class ConversationsController < ApplicationController
     @conversation = current_user.conversations.new
   end
 
-  def create
-    @conversation = current_user.conversations.new
-    form = ConversationForm.new(form_params)
-
-    if form.save
-      redirect_to edit_user_conversation_path(current_user, @conversation)
-    else
-      flash.now.alert = t('unable_to_generate_text')
-      flash_component = FlashMessageComponent.new(flash:, record: form)
-
-      render turbo_stream: turbo_stream.update(flash_component.id, flash_component),
-             status: :unprocessable_entity
-    end
-  end
-
-  def edit
-    render template: 'conversations/edit', formats: %i[html]
-  end
+  def edit; end
 
   def update
-    form = ConversationForm.new(form_params)
-
     respond_to do |format|
       format.turbo_stream do
-        if form.save
-          render 'conversations/update', locals: { form: }, status: :ok
+        if @conversation.update(conversation_params)
+          render 'conversations/update', locals: { conversation: @conversation }, status: :ok
         else
           flash.now.alert = t('unable_to_generate_text')
-          flash_component = FlashMessageComponent.new(flash:, record: form)
+          flash_component = FlashMessageComponent.new(flash:, record: @conversation)
 
           render turbo_stream: [
                    turbo_stream.update(flash_component.id, flash_component),
@@ -53,7 +34,7 @@ class ConversationsController < ApplicationController
     @conversation.destroy
     respond_to do |format|
       format.turbo_stream do
-        redirect_to user_conversations_path(current_user), status: :see_other, notice: 'Memo was deleted'
+        redirect_to user_conversations_path(current_user), status: :see_other, notice: 'Conversation was deleted'
       end
       format.html { redirect_to user_conversations_path(current_user) }
     end
@@ -61,15 +42,11 @@ class ConversationsController < ApplicationController
 
   private
 
-  def form_params
-    conversation_params.merge(user: current_user, conversation: @conversation)
-  end
-
   def set_conversation
     @conversation = current_user.conversations.find(params[:id])
   end
 
   def conversation_params
-    params.require(:conversation).permit(:text_id, :title)
+    params.require(:conversation).permit(:title)
   end
 end

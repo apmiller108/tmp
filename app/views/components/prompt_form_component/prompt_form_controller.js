@@ -1,5 +1,4 @@
 import { Controller } from '@hotwired/stimulus'
-import { createUserConversation } from '@javascript/http'
 
 export default class PromptFormController extends Controller {
   static targets = ['promptInput', 'userId', 'conversationId', 'form', 'submitButton', 'showOptionsInput']
@@ -39,38 +38,11 @@ export default class PromptFormController extends Controller {
     this.submitButtonTarget.disabled = false
   }
 
-  async onGenerateText(event) {
-    const { generate_text: { text_id, error }} = event.detail
-
-    try {
-      if (!error) {
-        const conversationParams = { text_id, user_id: this.userIdTarget.value }
-        const conversationId =  this.conversationIdTarget.value
-        // Create a conversation
-        if (!conversationId) {
-          const response = await createUserConversation(conversationParams)
-          if (response.redirected) { // redirects to edit after creating a new conversation
-            window.location.href = response.url
-          } else {
-            body = await response.json()
-            Turbo.renderStreamMessage(body)
-          }
-        }
-      }
-    } catch (err) {
-      console.log(err)
-      alert('An error occurred. Try again')
-    } finally {
-      this.enableForm()
-    }
-  }
-
   toggleShowOptions() {
     if (this.showOptionsInputTarget.value == 'true') {
       this.showOptionsInputTarget.value = 'false'
     } else {
       this.showOptionsInputTarget.value = 'true'
     }
-    console.log(this.showOptionsInputTarget.value)
   }
 }

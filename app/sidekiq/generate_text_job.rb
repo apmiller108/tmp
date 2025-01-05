@@ -26,7 +26,7 @@ class GenerateTextJob
 
   def broadcast_content(generate_text_request, user, content)
     MyChannel.broadcast_to(user, {
-      generate_text: { text_id: generate_text_request.text_id, content:, error: nil }
+      generate_text: { **generate_text_request.slice(:text_id, :conversation_id, :user_id), content:, error: nil }
     })
     ViewComponentBroadcaster.call(
       [user, TurboStreams::STREAMS[:main]],
