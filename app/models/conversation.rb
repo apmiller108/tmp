@@ -21,9 +21,13 @@ class Conversation < ApplicationRecord
     generate_text_requests.order(:created_at).flat_map do |gtr|
       [
         Turn.for_prompt(gtr.prompt),
-        Turn.for_response(gtr.response&.content) 
+        Turn.for_response(gtr.response&.content)
       ]
     end
+  end
+
+  def token_count
+    generate_text_requests.reduce(0) { |sum, gtr| sum + gtr.token_count }
   end
 
   private

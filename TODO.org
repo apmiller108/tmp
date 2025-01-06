@@ -75,10 +75,28 @@ CLOSED: [2025-01-05 Sun 22:23]
   - [X] Remove the code that updates the conversation from the memo feature.
   - [X] Consolidate memo conversation controller with conversations controller
   - [X] Drop the exchange column and remove the exchange attr
+* TODO Remove conversation::turn classes
+  - [ ] Use the gtrs in the conversation view. Refactor the
+    conversation_turn_component to get the data from gtr. It will render both
+    the user and assistant response
+  - [ ] Add the concept of pending_response to gtr. Use that to determine when
+    to show the spinner
+  - [ ] Implement a to_message_turn method on gtr that will return a tuple of
+    properly formatted user and assistant hashes that will be serialied for the
+    http request
+  - [ ] For the exchange loop over the gtrs and call to_message_turn to produce
+    the tuple of user, assistant response
+  - [ ] Delete the conversaion::turn objects
+* TODO move the delete button out of the form slot
+* TODO redirect to edit view on first generate text request response with a disabled form
+  Remove the hack that sets the browser history state
+  Make sure the title is editable
 * TODO turn meta data
    model, preset, temp, token count
-  - [ ] Show info icon in the tray of the assistant response. On click, show the
-    token usage and model used. A generic Field component with options to be copyable?
+   Show info icon in the tray of the assistant response. On click, show the
+   token usage and model used. Extract a generic Field component with options to
+   be copyable (see blob details show view)? See the blob info component. Might
+   use the MoreInfoComponent
 * TODO show token count for entire conversation
 * TODO add regenerate button to last assistant response
 * TODO edit the last prompt. Trigger regenerate on the last assistant response.
@@ -100,3 +118,6 @@ CLOSED: [2025-01-05 Sun 22:20]
 * TODO implement prompt caching for large user messages
   Extract feature
   https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching
+* TODO Move the aws invoke model response
+  Write a shared example the enforce the interface
+  https://morningcoffee.io/interfaces-in-ruby.html

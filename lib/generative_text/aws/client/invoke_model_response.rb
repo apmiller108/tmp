@@ -2,7 +2,7 @@ class GenerativeText
   module AWS
     class Client
       class InvokeModelResponse
-        attr_reader :response_data
+        attr_reader :data
 
         # JSON response will look like this
         # {"inputTextTokenCount"=>5,
@@ -11,7 +11,7 @@ class GenerativeText
         #       "outputText"=> "\nHere are 10 fruits:\n1. Apple\n2. Banana\n3..."
         #       "completionReason"=>"FINISH"}]}
         def initialize(json)
-          @response_data = JSON.parse(json)
+          @data = JSON.parse(json)
         end
 
         def content
@@ -19,7 +19,7 @@ class GenerativeText
         end
 
         def results
-          response_data.fetch('results')[0]
+          data.fetch('results')[0]
         end
 
         def completion_reason
@@ -29,7 +29,7 @@ class GenerativeText
         end
 
         def token_count
-          (response_data['inputTextTokenCount'] || 0) + (results['tokenCount'] || 0)
+          (data['inputTextTokenCount'] || 0) + (results['tokenCount'] || 0)
         end
       end
     end
