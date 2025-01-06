@@ -13,4 +13,8 @@ class PromptFormComponent < ApplicationViewComponent
   def show_options?
     @opts[:show_options]
   end
+
+  def disabled?
+    @opts[:disabled]
+  end
 end

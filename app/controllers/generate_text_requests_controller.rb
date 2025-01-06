@@ -1,12 +1,12 @@
 class GenerateTextRequestsController < ApplicationController
   def create
-    generatate_text_request = current_user.generate_text_requests.create(generate_text_request_params)
+    generate_text_request = current_user.generate_text_requests.create(generate_text_request_params)
 
     respond_to do |format|
       format.turbo_stream do
-        if generatate_text_request.persisted?
-          create_conversation(generatate_text_request) if generatate_text_request.conversation_id.nil?
-          GenerateTextJob.perform_async(generatate_text_request.id)
+        if generate_text_request.persisted?
+          create_conversation(generate_text_request) if generate_text_request.conversation_id.nil?
+          GenerateTextJob.perform_async(generate_text_request.id)
           render(
             turbo_stream: [
               turbo_stream.append(
@@ -20,8 +20,9 @@ class GenerateTextRequestsController < ApplicationController
               turbo_stream.replace(
                 'prompt-form',
                 PromptFormComponent.new(
-                  generate_text_request: new_generate_text_request(generatate_text_request),
-                  show_options:
+                  generate_text_request: new_generate_text_request(generate_text_request),
+                  show_options:,
+                  disabled: true
                 ).render_in(view_context)
               )
             ],
@@ -29,7 +30,7 @@ class GenerateTextRequestsController < ApplicationController
           )
         else
           flash.now.alert = t('unable_to_generate_text')
-          flash_component = FlashMessageComponent.new(flash:, record: generatate_text_request)
+          flash_component = FlashMessageComponent.new(flash:, record: generate_text_request)
 
           render turbo_stream: [
                    turbo_stream.update(flash_component.id, flash_component),

@@ -19,7 +19,7 @@ export default class PromptFormController extends Controller {
   }
 
   submitOnEnter(e) {
-    if (this.formTarget.disabled) {
+    if (this.submitButtonTarget.disabled) {
       return e.preventDefault()
     }
     if (e.key === "Enter" && !e.shiftKey) {
@@ -29,12 +29,10 @@ export default class PromptFormController extends Controller {
   }
 
   disableForm() {
-    this.formTarget.disabled = true
     this.submitButtonTarget.disabled = true
   }
 
   enableForm() {
-    this.formTarget.disabled = false
     this.submitButtonTarget.disabled = false
   }
 
@@ -44,5 +42,11 @@ export default class PromptFormController extends Controller {
     } else {
       this.showOptionsInputTarget.value = 'true'
     }
+  }
+
+  onGenerateText(event) {
+    const { generate_text: { error }} = event.detail
+    this.enableForm()
+    this.focusOnPromptInput()
   }
 }

@@ -72,7 +72,7 @@ export default class ConversationController extends Controller {
     const { generate_text: { user_id, conversation_id, error }} = event.detail
     const editPath = `/users/${user_id}/conversations/${conversation_id}/edit`
 
-    // If a new conversation was created, update the history state. Hate this.
+    // If a new conversation was created, update the history state. I hate this.
     if (window.location.pathname === `/users/${user_id}/conversations/new`) {
       window.history.pushState('converstion', 'Edit Conversation', editPath);
     }
