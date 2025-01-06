@@ -11,8 +11,6 @@ class Conversation < ApplicationRecord
 
   validate :memo_user_matches_conversation_user, if: :memo_id_changed?
 
-  attribute :exchange, default: []
-
   delegate :first, to: :exchange
 
   def exchange
