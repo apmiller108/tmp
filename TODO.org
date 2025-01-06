@@ -49,7 +49,8 @@ CLOSED: [2025-01-03 Fri 14:53]
   - [X] On update, render turbo stream partial
   - [X] add title to conversaions table
   - [X] set title default based on first message
-* TODO show meta data about the assistant response (model, present, temp, token count) [11/12]
+* DONE refactor [11/11]
+CLOSED: [2025-01-05 Sun 22:23]
   - [X] add response jsonb field to generate_text_requests
   - [X] update generate_text_request record with the full response.
     - This would be done in the GenerateTextJob
@@ -74,6 +75,8 @@ CLOSED: [2025-01-03 Fri 14:53]
   - [X] Remove the code that updates the conversation from the memo feature.
   - [X] Consolidate memo conversation controller with conversations controller
   - [X] Drop the exchange column and remove the exchange attr
+* TODO turn meta data
+   model, preset, temp, token count
   - [ ] Show info icon in the tray of the assistant response. On click, show the
     token usage and model used. A generic Field component with options to be copyable?
 * TODO show token count for entire conversation
@@ -84,7 +87,8 @@ CLOSED: [2025-01-03 Fri 14:53]
 * DONE extract conversation component
 CLOSED: [2024-12-29 Sun 19:07]
   This is used for both the new and edit actions
-* TODO move flash messages to it's own stream
+* DONE move flash messages to it's own stream
+CLOSED: [2025-01-05 Sun 22:20]
 * TODO unit test Turn class
 * TODO unit test conversation turn component
 * TODO unit test conversation component
@@ -93,3 +97,6 @@ CLOSED: [2024-12-29 Sun 19:07]
   Extract to feature (images only: jpg, png, webp see antropics docs)
 * TODO add audio transcription to conversations
   Extract feature
+* TODO implement prompt caching for large user messages
+  Extract feature
+  https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching

@@ -8,6 +8,8 @@ class GenerateTextRequest < ApplicationRecord
 
   store_accessor :response
 
+  delegate :token_count, to: :response, allow_nil: true
+
   belongs_to :user
   belongs_to :generate_text_preset, optional: true
   belongs_to :conversation, optional: true
@@ -24,6 +26,6 @@ class GenerateTextRequest < ApplicationRecord
   end
 
   def response
-    GenerativeText::Anthropic::InvokeModelResponse.new(super) if super.present?
+    @response ||= GenerativeText::Anthropic::InvokeModelResponse.new(super) if super.present?
   end
 end
