@@ -11,11 +11,7 @@ class GenerateTextRequestsController < ApplicationController
             turbo_stream: [
               turbo_stream.append(
                 'conversation-turns',
-                ConversationTurnComponent.new(prompt_to_turn).render_in(view_context)
-              ),
-              turbo_stream.append(
-                'conversation-turns',
-                ConversationTurnComponent.new(pending_response_turn, pending: true).render_in(view_context)
+                ConversationTurnComponent.new(generate_text_request:).render_in(view_context)
               ),
               turbo_stream.replace(
                 'prompt-form',
@@ -46,14 +42,6 @@ class GenerateTextRequestsController < ApplicationController
   end
 
   private
-
-  def prompt_to_turn
-    Conversation::Turn.for_prompt(generate_text_request_params[:prompt])
-  end
-
-  def pending_response_turn
-    Conversation::Turn.for_response('')
-  end
 
   def new_generate_text_request(generate_text_request)
     current_user.generate_text_requests.new(

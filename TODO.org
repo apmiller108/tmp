@@ -75,11 +75,11 @@ CLOSED: [2025-01-05 Sun 22:23]
   - [X] Remove the code that updates the conversation from the memo feature.
   - [X] Consolidate memo conversation controller with conversations controller
   - [X] Drop the exchange column and remove the exchange attr
-* TODO Remove conversation::turn classes
-  - [ ] Use the gtrs in the conversation view. Refactor the
+* TODO Remove conversation::turn classes [2/7]
+  - [X] Use the gtrs in the conversation view. Refactor the
     conversation_turn_component to get the data from gtr. It will render both
     the user and assistant response
-  - [ ] Add the concept of pending_response to gtr. Use that to determine when
+  - [X] Add the concept of pending_response to gtr. Use that to determine when
     to show the spinner
   - [ ] Implement a to_message_turn method on gtr that will return a tuple of
     properly formatted user and assistant hashes that will be serialied for the
@@ -87,6 +87,11 @@ CLOSED: [2025-01-05 Sun 22:23]
   - [ ] For the exchange loop over the gtrs and call to_message_turn to produce
     the tuple of user, assistant response
   - [ ] Delete the conversaion::turn objects
+  - [ ] Add enum to gtr (pending_response, complete, error)
+  - [ ] When the status is error, show an error message where the content would
+    have been
+  - [ ] When the generate text job errors, update the gtr to error and broadcast
+    the component
 * TODO move the delete button out of the form slot
 * TODO redirect to edit view on first generate text request response with a disabled form
   Remove the hack that sets the browser history state

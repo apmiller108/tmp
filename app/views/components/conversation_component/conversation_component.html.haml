@@ -1,8 +1,8 @@
 .c-conversation.conversation-container{ data: { controller: :conversation, action: 'my-channel:generateText@window->conversation#onGenerateText' } }
   = render partial: 'conversations/title_form', locals: { conversation: }
   #conversation-turns.conversation-turns.mb-2{ data: { 'conversation-target': 'turns' } }
-    - conversation.turns.each do |t|
-      = render ConversationTurnComponent.new(t)
+    - conversation.generate_text_requests.each do |gtr|
+      = render ConversationTurnComponent.new(generate_text_request: gtr)
   = render PromptFormComponent.new(generate_text_request:) do |c|
     - if deletable?
       - c.with_delete_button do

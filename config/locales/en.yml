@@ -35,6 +35,7 @@ en:
   color: 'Color'
   content: 'Content'
   conversation:
+    name: 'Conversation'
     delete: 'Delete Conversation'
   copy: 'copy'
   create: 'Create'

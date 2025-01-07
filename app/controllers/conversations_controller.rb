@@ -30,11 +30,10 @@ class ConversationsController < ApplicationController
         end
       else
         format.turbo_stream do
-          flash.now.alert = t('unable_to_generate_text')
+          flash.now.alert = t('unable_to_save', model_name: t('conversation.name'))
           flash_component = FlashMessageComponent.new(flash:, record: @conversation)
 
-          render turbo_stream: [turbo_stream.update(flash_component.id, flash_component),
-                                turbo_stream.remove(ConversationTurnComponent::PENDING_RESPONSE_DOM_ID)],
+          render turbo_stream: [turbo_stream.update(flash_component.id, flash_component)],
                  status: :unprocessable_entity
         end
         format.json do

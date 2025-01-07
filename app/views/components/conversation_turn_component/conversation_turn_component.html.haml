@@ -1,16 +1,20 @@
-.c-conversation-turn.mb-3{ id: }
-  .turn.grid
+.c-conversation-turn{ id: }
+  .turn.grid.mb-3
     .g-col-1
-      %i{ class: [icon_class, 'fs-1'] }
+      %i.bi-person-fill.fs-1
     .g-col-11
-      .card.segment{ class: "segment-#{turn.role}" }
-        .card-body{ class: pending? && 'text-center' }
-          - if pending?
+      .card.segment{ class: "segment-user" }
+        .card-body
+          = prompt
+  .turn.grid.mb-3
+    .g-col-1
+      %i.bi-robot.fs-1
+    .g-col-11
+      .card.segment.segment-assistant
+        .card-body{ class: pending_response? && 'text-center' }
+          - if pending_response?
             = render SpinnerComponent.new
           - else
-            - if assistant?
-              = render ClipboardComponent.new(css_class: 'assistant-response', position: :bottom) do |c|
-                = c.with_copyable do
-                  %div{ data: { 'clipboard-target' => 'source' } }= content.html_safe
-            - else
-              = content
+            = render ClipboardComponent.new(css_class: 'assistant-response', position: :bottom) do |c|
+              = c.with_copyable do
+                %div{ data: { 'clipboard-target' => 'source' } }= assistant_response.html_safe

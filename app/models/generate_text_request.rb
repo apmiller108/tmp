@@ -28,4 +28,8 @@ class GenerateTextRequest < ApplicationRecord
   def response
     @response ||= GenerativeText::Anthropic::InvokeModelResponse.new(super) if super.present?
   end
+
+  def pending_response?
+    response.blank?
+  end
 end

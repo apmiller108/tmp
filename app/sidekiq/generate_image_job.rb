@@ -60,7 +60,7 @@ class GenerateImageJob
   end
 
   def broadcast_flash(user)
-    flash.alert = I18n.t('unable_to_generate_text')
+    flash.alert = I18n.t('unable_to_generate_image')
     ViewComponentBroadcaster.call([user, TurboStreams::STREAMS[:memos]],
                                   component: FlashMessageComponent.new(flash:),
                                   action: :replace)
