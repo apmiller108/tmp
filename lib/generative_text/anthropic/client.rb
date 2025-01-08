@@ -11,6 +11,7 @@ class GenerativeText
           }
         ) do |f|
           f.response :raise_error
+          # f.response :logger, nil, { bodies: { request: true, response: false } } # Log request and response to stdout
         end
       end
 

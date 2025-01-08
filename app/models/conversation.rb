@@ -1,40 +1,22 @@
 class Conversation < ApplicationRecord
-  ASSISTANT = 'assistant'.freeze
-  USER = 'user'.freeze
-
   belongs_to :memo, optional: true
   belongs_to :user, optional: false
 
-  has_many :generate_text_requests, dependent: :nullify
+  has_many :generate_text_requests, -> { order(:created_at) }, dependent: :nullify
 
   validates :title, presence: true, length: { maximum: 100 }
 
   validate :memo_user_matches_conversation_user, if: :memo_id_changed?
 
-  delegate :first, to: :exchange
-
   def exchange
-    turns.map(&:turn_data)
-  end
-
-  def turns
-    generate_text_requests.order(:created_at).flat_map do |gtr|
-      [
-        Turn.for_prompt(gtr.prompt),
-        Turn.for_response(gtr.response&.content)
-      ]
-    end
+    generate_text_requests.flat_map(&:to_turn)
   end
 
   def token_count
-    generate_text_requests.reduce(0) { |sum, gtr| sum + gtr.token_count }
+    generate_text_requests.reduce(0) { |sum, gtr| sum + gtr.response_token_count }
   end
 
   private
-
-  def set_title_from_prompt
-    self.title = turns.first.content.truncate(35) if title.blank?
-  end
 
   def memo_user_matches_conversation_user
     return if memo_id.blank?

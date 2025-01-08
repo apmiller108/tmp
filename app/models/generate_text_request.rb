@@ -6,9 +6,10 @@ class GenerateTextRequest < ApplicationRecord
     bold, italic, links, tables, lists, code blocks, and blockquotes.
   TXT
 
+  # Stores the raw JSON response from the HTTP request to the LLM
   store_accessor :response
 
-  delegate :token_count, to: :response, allow_nil: true
+  delegate :token_count, :content, to: :response, allow_nil: true, prefix: true
 
   belongs_to :user
   belongs_to :generate_text_preset, optional: true
@@ -31,5 +32,10 @@ class GenerateTextRequest < ApplicationRecord
 
   def pending_response?
     response.blank?
+  end
+
+  # @returns [Array<Hash>] A tuple of a user message and assistant response
+  def to_turn
+    GenerativeText::Anthropic::Turn.for(self)
   end
 end

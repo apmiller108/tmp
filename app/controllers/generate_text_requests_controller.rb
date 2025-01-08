@@ -56,7 +56,7 @@ class GenerateTextRequestsController < ApplicationController
   def create_conversation(generate_text_request)
     generate_text_request.update(
       conversation: Conversation.create!(
-        title: generate_text_request.prompt.truncate(35),
+        title: generate_text_request.prompt.truncate(40, separator: ' '),
         user: current_user
       )
     )
