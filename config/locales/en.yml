@@ -67,4 +67,5 @@ en:
   unable_to_save: "Unable to save %{model_name}"
   unable_to_generate_text: 'Unable to generate text'
   unable_to_generate_image: 'Unable to generate image'
+  failed_to_generate_text: 'Failed to generate text. Try resubmitting the last message.'
 

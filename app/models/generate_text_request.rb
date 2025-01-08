@@ -32,10 +32,6 @@ class GenerateTextRequest < ApplicationRecord
     @response ||= GenerativeText::Anthropic::InvokeModelResponse.new(super) if super.present?
   end
 
-  def pending_response?
-    response.blank?
-  end
-
   # @returns [Array<Hash>] A tuple of a user message and assistant response
   def to_turn
     GenerativeText::Anthropic::Turn.for(self)

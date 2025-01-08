@@ -11,9 +11,12 @@
       %i.bi-robot.fs-1
     .g-col-11
       .card.segment.segment-assistant
-        .card-body{ class: pending_response? && 'text-center' }
-          - if pending_response?
-            = render SpinnerComponent.new
+        .card-body
+          - if created? || in_progress?
+            .text-center
+              = render SpinnerComponent.new
+          - elsif failed?
+            = t('failed_to_generate_text')
           - else
             = render ClipboardComponent.new(css_class: 'assistant-response', position: :bottom) do |c|
               = c.with_copyable do

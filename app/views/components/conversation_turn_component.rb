@@ -3,7 +3,7 @@
 class ConversationTurnComponent < ApplicationViewComponent
   attr_reader :generate_text_request
 
-  delegate :prompt, :response, :pending_response?, to: :generate_text_request
+  delegate :prompt, :response, :created?, :in_progress?, :failed?, :completed?, to: :generate_text_request
 
   # @param [GenerateTextRequest] generate_text_request
   def initialize(generate_text_request:)
