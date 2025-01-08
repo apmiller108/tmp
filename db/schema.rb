@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_06_025735) do
+ActiveRecord::Schema[7.1].define(version: 2025_01_08_032856) do
   create_schema "rollback"
 
   # These are extensions that must be enabled in order to support this database
@@ -104,10 +104,12 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_06_025735) do
     t.bigint "conversation_id"
     t.string "model"
     t.jsonb "response", default: {}
+    t.text "status", null: false
     t.index ["conversation_id"], name: "index_generate_text_requests_on_conversation_id"
     t.index ["generate_text_preset_id"], name: "index_generate_text_requests_on_generate_text_preset_id"
     t.index ["user_id", "text_id"], name: "index_generate_text_requests_on_user_id_and_text_id", unique: true
     t.index ["user_id"], name: "index_generate_text_requests_on_user_id"
+    t.check_constraint "status = ANY (ARRAY['created'::text, 'queued'::text, 'in_progress'::text, 'failed'::text, 'completed'::text])", name: "status_check"
   end
 
   create_table "memos", force: :cascade do |t|

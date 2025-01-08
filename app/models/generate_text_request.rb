@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class GenerateTextRequest < ApplicationRecord
+  include StatusEnumable
+
   MARKDOWN_FORMAT_SYSTEM_MESSAGE = <<~TXT
     You always answer the with markdown formatting which can inlcude headings,
     bold, italic, links, tables, lists, code blocks, and blockquotes.
