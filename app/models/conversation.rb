@@ -9,7 +9,7 @@ class Conversation < ApplicationRecord
   validate :memo_user_matches_conversation_user, if: :memo_id_changed?
 
   def exchange
-    generate_text_requests.flat_map(&:to_turn)
+    generate_text_requests.completed.flat_map(&:to_turn)
   end
 
   def token_count

@@ -1,18 +1,9 @@
 class GenerateTextJob
   include Sidekiq::Job
-  include Flashable
+  extend Flashable
 
   sidekiq_options retry: 1
 
-  sidekiq_retries_exhausted do |job, ex|
-    # Sidekiq.logger.warn "Failed #{job['class']} with #{job['args']}: #{job['error_message']}"
-
-    # generate_text_request.failed!
-    # broadcast_error(generate_text_request, user)
-    # broadcast_flash_error(user)
-  end
-
-  # rubocop:disable Metrics/AbcSize
   def perform(generate_text_request_id)
     generate_text_request = GenerateTextRequest.find(generate_text_request_id)
     user = generate_text_request.user
@@ -23,10 +14,7 @@ class GenerateTextJob
     generate_text_request.update!(response: response.data, status: GenerateTextRequest.statuses[:completed])
     broadcast_component(generate_text_request, user)
     broadcast_content(generate_text_request, user, response.content)
-  rescue StandardError => e
-    Rails.logger.warn("#{self.class}: #{e} : #{e.cause}")
   end
-  # rubocop:enable Metrics/AbcSize
 
   private
 
@@ -44,21 +32,6 @@ class GenerateTextJob
     )
   end
 
-  def broadcast_error(generate_text_request, user)
-    MyChannel.broadcast_to(user, {
-      generate_text: { text_id: generate_text_request.text_id, content: nil, error: true }
-    })
-  end
-
-  def broadcast_flash_error(user)
-    flash.alert = I18n.t('unable_to_generate_text')
-    ViewComponentBroadcaster.call(
-      [user, TurboStreams::STREAMS[:main]],
-      component: FlashMessageComponent.new(flash:),
-      action: :update
-    )
-  end
-
   def invoke_model(generate_text_request)
     client = GenerativeText::Anthropic::Client.new
     GenerativeText.new(client).invoke_model(
@@ -66,5 +39,37 @@ class GenerateTextJob
       messages: generate_text_request.conversation.exchange,
       max_tokens: 500
     )
+  end
+
+  class << self
+    def on_retries_exhausted(generate_text_request_id)
+      generate_text_request = GenerateTextRequest.find(generate_text_request_id)
+      user = generate_text_request.user
+
+      generate_text_request.failed!
+
+      ViewComponentBroadcaster.call(
+        [user, TurboStreams::STREAMS[:main]],
+        component: ConversationTurnComponent.new(generate_text_request:),
+        action: :replace
+      )
+
+      MyChannel.broadcast_to(user, {
+        generate_text: { text_id: generate_text_request.text_id, content: nil, error: true }
+      })
+
+      flash.alert = I18n.t('unable_to_generate_text')
+
+      ViewComponentBroadcaster.call(
+        [user, TurboStreams::STREAMS[:main]],
+        component: FlashMessageComponent.new(flash:),
+        action: :update
+      )
+    end
+  end
+
+  sidekiq_retries_exhausted do |job, _ex|
+    Rails.logger.warn("#{job['class']}: failed with #{job['args']} : #{job['error_message']}")
+    on_retries_exhausted(job['args'][0])
   end
 end
