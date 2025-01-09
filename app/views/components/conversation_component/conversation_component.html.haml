@@ -1,12 +1,15 @@
-.c-conversation.conversation-container{ data: { controller: :conversation, action: 'my-channel:generateText@window->conversation#onGenerateText' } }
-  = render partial: 'conversations/title_form', locals: { conversation: }
+.c-conversation.conversation-container{ data: { controller: :conversation,
+                                                action: 'my-channel:generateText@window->conversation#onGenerateText' } }
+  .grid.mb-1
+    .g-start-5.g-col-4
+      = render partial: 'conversations/title_form', locals: { conversation: }
+    .g-col-4.d-flex.align-items-center.justify-content-end
+      - if deletable?
+        = link_to [current_user, conversation], data: { turbo_method: 'delete', turbo_confirm: 'Are you sure?',
+                                                'bs-toggle' => 'tooltip', 'bs-title' => t('conversation.delete') },
+                                                class: 'btn btn-danger icon-btn icon-btn-sm' do
+          %i.bi.bi-trash3.text-white
   #conversation-turns.conversation-turns.mb-2{ data: { 'conversation-target': 'turns' } }
     - conversation.generate_text_requests.each do |gtr|
       = render ConversationTurnComponent.new(generate_text_request: gtr)
-  = render PromptFormComponent.new(generate_text_request:) do |c|
-    - if deletable?
-      - c.with_delete_button do
-        = link_to [current_user, conversation], data: { turbo_method: 'delete', turbo_confirm: 'Are you sure?',
-                                                'bs-toggle' => 'tooltip', 'bs-title' => t('conversation.delete') },
-                                                class: 'btn btn-danger icon-btn' do
-          %i.bi.bi-trash3.text-white
+  = render PromptFormComponent.new(generate_text_request:)

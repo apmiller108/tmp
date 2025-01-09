@@ -1,6 +1,6 @@
-.title.d-flex.justify-content-center.mb-1#conversation-title{ data: { controller: 'tooltip' } }
-  .d-flex.justify-content-center.align-items-center{ data: { 'conversation-target' => 'titleField' }}
-    .title-field.fw-bold.me-1{ data: { action: 'click->conversation#onEditTitle:prevent', 'bs-toggle' => 'tooltip', 'bs-title' => conversation.title } }
+.title.d-flex.justify-content-center.align-items-center#conversation-title{ data: { controller: 'tooltip' } }
+  %div{ data: { 'conversation-target' => 'titleField' }}
+    .title-field.fw-bold{ data: { action: 'click->conversation#onEditTitle:prevent', 'bs-toggle' => 'tooltip', 'bs-title' => conversation.title } }
       = truncate(conversation.title, length: 50, separator: ' ')
   = form_with model: [current_user, conversation], class: 'd-none', data: { 'conversation-target' => 'editTitleForm' } do |form|
     .d-flex.justify-content-center.align-items-center
