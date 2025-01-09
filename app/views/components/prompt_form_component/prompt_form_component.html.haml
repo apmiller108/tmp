@@ -25,7 +25,7 @@
             .form-floating
               = form.collection_select :model, GenerativeText::Anthropic::MODELS.values, :api_name, :name, {}, { class: 'form-select' }
               = form.label :model, 'Model'
-      .g-start-2.g-col-9
+      .g-start-2.g-col-10
         = form.text_area :prompt, class: 'form-control', data: { 'prompt-form-target' => 'promptInput' },
                          placeholder: 'Type a message', rows: 2
       .g-col-1.d-flex.align-items-center.justify-content-center
