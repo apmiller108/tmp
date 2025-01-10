@@ -1,12 +1,13 @@
 import { Controller } from '@hotwired/stimulus'
 
 export default class PromptFormController extends Controller {
-  static targets = ['promptInput', 'userId', 'conversationId', 'form', 'submitButton', 'showOptionsInput']
+  static targets = ['promptInput', 'userId', 'conversationId', 'form', 'submitButton', 'showOptionsInput', 'showOptionsButton', 'options']
 
   connect() {
     this.focusOnPromptInput()
     this.promptInputTarget.addEventListener('keypress', this.submitOnEnter.bind(this))
     this.formTarget.addEventListener('submit', this.disableForm.bind(this))
+    this.showOptions()
   }
 
   disconnect() {
@@ -16,6 +17,16 @@ export default class PromptFormController extends Controller {
 
   focusOnPromptInput() {
     this.promptInputTarget.focus()
+  }
+
+  showOptions() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const showOptions = urlParams.get('show_options');
+    if (showOptions === 'true') {
+      if (!this.optionsTarget.classList.contains('show')) {
+        this.showOptionsButtonTarget.click()
+      }
+    }
   }
 
   submitOnEnter(e) {
@@ -36,7 +47,7 @@ export default class PromptFormController extends Controller {
     this.submitButtonTarget.disabled = false
   }
 
-  toggleShowOptions() {
+  onClickShowOptions() {
     if (this.showOptionsInputTarget.value == 'true') {
       this.showOptionsInputTarget.value = 'false'
     } else {

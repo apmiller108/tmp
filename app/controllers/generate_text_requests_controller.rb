@@ -7,34 +7,12 @@ class GenerateTextRequestsController < ApplicationController
         if generate_text_request.persisted?
           create_conversation(generate_text_request) if generate_text_request.conversation_id.nil?
           GenerateTextJob.perform_async(generate_text_request.id)
-          render(
-            turbo_stream: [
-              turbo_stream.append(
-                'conversation-turns',
-                ConversationTurnComponent.new(generate_text_request:).render_in(view_context)
-              ),
-              turbo_stream.replace(
-                'prompt-form',
-                PromptFormComponent.new(
-                  generate_text_request: new_generate_text_request(generate_text_request),
-                  show_options:,
-                  disabled: true
-                ).render_in(view_context)
-              )
-            ],
-            status: :created
-          )
+          head :created
         else
           flash.now.alert = t('unable_to_generate_text')
           flash_component = FlashMessageComponent.new(flash:, record: generate_text_request)
 
-          render turbo_stream: [
-                   turbo_stream.update(flash_component.id, flash_component),
-                   turbo_stream.replace(
-                     'prompt-form',
-                     PromptFormComponent.new(generate_text_request:, show_options:).render_in(view_context)
-                   )
-                 ],
+          render turbo_stream: turbo_stream.update(flash_component.id, flash_component),
                  status: :unprocessable_entity
         end
       end
@@ -43,20 +21,10 @@ class GenerateTextRequestsController < ApplicationController
 
   private
 
-  def new_generate_text_request(generate_text_request)
-    current_user.generate_text_requests.new(
-      generate_text_request.slice(:temperature, :generate_text_preset_id, :conversation_id, :model)
-    )
-  end
-
-  def show_options
-    ActiveModel::Type::Boolean.new.cast(params[:show_options].downcase) if params[:show_options]
-  end
-
   def create_conversation(generate_text_request)
     generate_text_request.update(
       conversation: Conversation.create!(
-        title: generate_text_request.prompt.truncate(40, separator: ' '),
+        title: Conversation.title_from_prompt(generate_text_request.prompt),
         user: current_user
       )
     )

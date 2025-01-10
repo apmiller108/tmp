@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 class PromptFormComponent < ApplicationViewComponent
-  attr_reader :generate_text_request
+  attr_reader :conversation, :generate_text_request
 
-  def initialize(generate_text_request:, **opts)
-    @generate_text_request = generate_text_request
+  def initialize(conversation:, **opts)
+    @conversation = conversation
+    @generate_text_request = conversation.generate_text_requests.new(user: current_user, model:)
     @opts = opts
   end
 
@@ -14,5 +15,9 @@ class PromptFormComponent < ApplicationViewComponent
 
   def disabled?
     @opts[:disabled]
+  end
+
+  def model
+    current_user.setting.text_model
   end
 end

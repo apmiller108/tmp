@@ -1,34 +1,36 @@
-.c-prompt-form.pt-2.pb-4#prompt-form{ data: { controller: 'prompt-form', action: 'my-channel:generateText@window->prompt-form#onGenerateText'  } }
-  = form_for generate_text_request, url: generate_text_requests_path, method: :post, data: { 'prompt-form-target' => 'form' } do |form|
-    = form.hidden_field :conversation_id, data: { 'prompt-form-target' => 'conversationId' }
-    = form.hidden_field :user_id, value: current_user.id, data: { 'prompt-form-target' => 'userId' }
-    = form.hidden_field :text_id, value: "gentext_#{Time.current.to_i}_#{rand(1000)}"
-    = hidden_field_tag :show_options, show_options?, data: { 'prompt-form-target' => 'showOptionsInput' }
-    .grid{ style: '--bs-gap: 0.5rem;'}
-      .g-start-2.g-col-10
-        %button.btn.btn-secondary.fs-6{ type: "button",
-                                        'data-bs-toggle' => 'collapse',
-                                        'data-bs-target' => '#advanced-options',
-                                        'data-action' => 'click->prompt-form#toggleShowOptions' } advanced options
-      .g-start-2.g-col-10.collapse#advanced-options{ class: show_options? && 'show' }
-        .grid
-          .g-col-3
-            .form-floating
-              = form.collection_select :generate_text_preset_id, GenerateTextPreset.all, :id, :name, { include_blank: true },
-                { class: 'form-select' }
-              = form.label :generate_text_preset_id, 'Preset'
-          .g-col-2
-            .form-floating
-              = form.select :temperature, 0.step(to: 1, by: 0.1).map { |n| n = n.round(1); [n, n] }, {}, { class: 'form-select' }
-              = form.label :temperature, 'Temperature'
-          .g-col-2
-            .form-floating
-              = form.collection_select :model, GenerativeText::Anthropic::MODELS.values, :api_name, :name, {}, { class: 'form-select' }
-              = form.label :model, 'Model'
-      .g-start-2.g-col-10
-        = form.text_area :prompt, class: 'form-control', data: { 'prompt-form-target' => 'promptInput' },
-                         placeholder: 'Type a message', rows: 2
-      .g-col-1.d-flex.align-items-center.justify-content-center
-        %button.btn.btn-primary.icon-btn{type: 'submit', name: 'commit', data: { 'prompt-form-target' => 'submitButton' },
-                                         disabled: disabled?}
-          %i.bi.bi-send-fill
+.c-prompt-form.pt-2.pb-4#prompt-form{ data: { controller: 'prompt-form' } }
+  = form_with model: [current_user, conversation], data: { 'prompt-form-target' => 'form' } do |form|
+    = form.fields_for :generate_text_requests, generate_text_request do |gtr_fields|
+      = gtr_fields.hidden_field :conversation_id, data: { 'prompt-form-target' => 'conversationId' }
+      = gtr_fields.hidden_field :user_id, data: { 'prompt-form-target' => 'userId' }
+      = gtr_fields.hidden_field :text_id, value: "gentext_#{Time.current.to_i}_#{rand(1000)}"
+      = hidden_field_tag :show_options, show_options?, data: { 'prompt-form-target' => 'showOptionsInput' }
+      .grid{ style: '--bs-gap: 0.5rem;'}
+        .g-start-2.g-col-10
+          %button.btn.btn-secondary.fs-6{ type: "button",
+                                          'data-bs-toggle' => 'collapse',
+                                          'data-bs-target' => '#advanced-options',
+                                          'data-prompt-form-target' => 'showOptionsButton',
+                                          'data-action' => 'click->prompt-form#onClickShowOptions' } advanced options
+        .g-start-2.g-col-10.collapse#advanced-options{ class: show_options? && 'show', data: { 'prompt-form-target' => 'options' } }
+          .grid
+            .g-col-3
+              .form-floating
+                = gtr_fields.collection_select :generate_text_preset_id, GenerateTextPreset.all, :id, :name, { include_blank: true },
+                  { class: 'form-select' }
+                = gtr_fields.label :generate_text_preset_id, 'Preset'
+            .g-col-2
+              .form-floating
+                = gtr_fields.select :temperature, 0.step(to: 1, by: 0.1).map { |n| n = n.round(1); [n, n] }, {}, { class: 'form-select' }
+                = gtr_fields.label :temperature, 'Temperature'
+            .g-col-2
+              .form-floating
+                = gtr_fields.collection_select :model, GenerativeText::Anthropic::MODELS.values, :api_name, :name, {}, { class: 'form-select' }
+                = gtr_fields.label :model, 'Model'
+        .g-start-2.g-col-10
+          = gtr_fields.text_area :prompt, class: 'form-control', data: { 'prompt-form-target' => 'promptInput' },
+                          placeholder: 'Type a message', rows: 2
+        .g-col-1.d-flex.align-items-center.justify-content-center
+          %button.btn.btn-primary.icon-btn{type: 'submit', name: 'commit', data: { 'prompt-form-target' => 'submitButton' },
+                                          disabled: disabled?}
+            %i.bi.bi-send-fill

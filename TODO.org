@@ -95,18 +95,20 @@ CLOSED: [2025-01-08 Wed 20:15]
     the component. Do this in a exhausted retries block
 * DONE move the delete button out of the form slot
 CLOSED: [2025-01-08 Wed 21:14]
-* TODO redirect to edit view on first generate text request response with a disabled form [0/8]
-  - [ ] add accepts_nested_attributes_for generate_text_request to conversation
-  - [ ] Change the prompt form component to the conversation form component.
+* TODO redirect to edit view on first generate text request response with a disabled form [11/11]
+  - [X] add accepts_nested_attributes_for generate_text_request to conversation
+  - [X] Change the prompt form component to the conversation form component.
     Most of the fields will be for the generate text request
-  - [ ] Submit the form to the conversation post/put endpoints
-  - [ ] Redirect to conversation edit on create. Enqueue the GenerateTextJob
-  - [ ] Render the form and conversation turn components from the update action.
+  - [X] Submit the form to the conversation post/put endpoints
+  - [X] Redirect to conversation edit on create. Enqueue the GenerateTextJob
+  - [X] Render the form and conversation turn components from the update action.
     Enqueue the GenerateTextJob
-  - [ ] Remove rendering the turbo streams from the generate text requests controller
-  - [ ] Remove the hack that sets the browser history state
-  - [ ] Make sure the title is editable
-  - [ ] Make sure generating text still works for memos
+  - [X] Remove rendering the turbo streams from the generate text requests controller
+  - [X] Remove the hack that sets the browser history state
+  - [X] Make sure the title is editable
+  - [X] Use the show_options query param
+  - [X] Make sure generating text still works for memos
+  - [X] Fix bug where creating memo enqueues two GenerateTextJobs
 * TODO turn meta data
    model, preset, temp, token count
    Show info icon in the tray of the assistant response. On click, show the
@@ -127,6 +129,7 @@ CLOSED: [2025-01-05 Sun 22:20]
 * TODO unit test conversation turn component
 * TODO unit test conversation component
 * TODO update ConversationForm unit tests
+* TODO search conversations
 * TODO add image generation to conversations
 * TODO add video generation to conversations
 * TODO add audio generation to conversations

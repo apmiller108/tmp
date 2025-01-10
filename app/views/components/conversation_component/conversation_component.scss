@@ -1,4 +1,5 @@
 .c-conversation {
+  height: 75vh;
   .title {
     height: 2.5rem;
     .title-field {
@@ -8,5 +9,10 @@
     form {
       width: 30rem;
     }
+  }
+  .conversation-turns {
+    height: 90%;
+    overflow-y: scroll;
+    scrollbar-width: none;
   }
 }

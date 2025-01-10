@@ -12,4 +12,4 @@
   #conversation-turns.conversation-turns.mb-2{ data: { 'conversation-target': 'turns' } }
     - conversation.generate_text_requests.each do |gtr|
       = render ConversationTurnComponent.new(generate_text_request: gtr)
-  = render PromptFormComponent.new(generate_text_request:)
+  = render PromptFormComponent.new(conversation:)
