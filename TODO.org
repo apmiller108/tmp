@@ -95,9 +95,18 @@ CLOSED: [2025-01-08 Wed 20:15]
     the component. Do this in a exhausted retries block
 * DONE move the delete button out of the form slot
 CLOSED: [2025-01-08 Wed 21:14]
-* TODO redirect to edit view on first generate text request response with a disabled form
-  Remove the hack that sets the browser history state
-  Make sure the title is editable
+* TODO redirect to edit view on first generate text request response with a disabled form [0/8]
+  - [ ] add accepts_nested_attributes_for generate_text_request to conversation
+  - [ ] Change the prompt form component to the conversation form component.
+    Most of the fields will be for the generate text request
+  - [ ] Submit the form to the conversation post/put endpoints
+  - [ ] Redirect to conversation edit on create. Enqueue the GenerateTextJob
+  - [ ] Render the form and conversation turn components from the update action.
+    Enqueue the GenerateTextJob
+  - [ ] Remove rendering the turbo streams from the generate text requests controller
+  - [ ] Remove the hack that sets the browser history state
+  - [ ] Make sure the title is editable
+  - [ ] Make sure generating text still works for memos
 * TODO turn meta data
    model, preset, temp, token count
    Show info icon in the tray of the assistant response. On click, show the
@@ -105,8 +114,7 @@ CLOSED: [2025-01-08 Wed 21:14]
    be copyable (see blob details show view)? See the blob info component. Might
    use the MoreInfoComponent
 * TODO show token count for entire conversation
-* TODO add regenerate button to last assistant response
-* TODO edit the last prompt. Trigger regenerate on the last assistant response.
+* TODO Edit the last prompt. Trigger regenerate on the last assistant response.
 * TODO extract gentext generator to class
   - use it in the propmt_form_controller to set the text_id input
 * TODO delete assistant response
@@ -119,6 +127,9 @@ CLOSED: [2025-01-05 Sun 22:20]
 * TODO unit test conversation turn component
 * TODO unit test conversation component
 * TODO update ConversationForm unit tests
+* TODO add image generation to conversations
+* TODO add video generation to conversations
+* TODO add audio generation to conversations
 * TODO support adding files to the prompt
   Extract to feature (images only: jpg, png, webp see antropics docs)
 * TODO add audio transcription to conversations
