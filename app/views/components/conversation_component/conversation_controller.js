@@ -7,7 +7,7 @@ export default class ConversationController extends Controller {
   observer;
 
   connect() {
-    this.scrollTurns()
+    setTimeout(this.scrollTurns.bind(this), 0)
 
     // Check for changes in child nodes might affect the conversation container's height
     // When a conversation turn is added, scroll the container down so the new
@@ -35,7 +35,7 @@ export default class ConversationController extends Controller {
   // Scrolls the turns container as far down as possible so the most recent turn
   // is in view
   scrollTurns() {
-    this.turnsTarget.scrollTop = this.turnsTarget.scrollHeight
+    this.element.scrollTop = this.element.scrollHeight
   }
 
   onEditTitle() {

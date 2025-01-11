@@ -1,4 +1,17 @@
 .c-prompt-form {
-  background: $more-info-background-color;
-  border-radius: 1rem;
+  .form-container {
+    background: $more-info-background-color;
+    border-radius: 1rem;
+    padding: 1rem 1rem 3rem;
+  }
+  .prompt-input-container {
+    textarea {
+      padding-right: 4rem;
+    }
+    button {
+      position: absolute;
+      right: 0.5rem;
+      top: 0.5rem;
+    }
+  }
 }

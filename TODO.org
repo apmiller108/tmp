@@ -110,12 +110,15 @@ CLOSED: [2025-01-10 Fri 19:51]
   - [X] Use the show_options query param
   - [X] Make sure generating text still works for memos
   - [X] Fix bug where creating memo enqueues two GenerateTextJobs
+* DONE fix bug where button is still disabled after submitting on edit
+CLOSED: [2025-01-11 Sat 09:53]
 * TODO turn meta data
    Show model, preset, temp, token count
    - [ ] Show info icon in the tray of the assistant response.
    - [ ] Extract a generic Field component with options to be copyable. See the
      blob info component.
    - [ ] On click, show the details
+* TODO Add model, temp and preset to query params after create redirect
 * TODO show token count for entire conversation
 * TODO Edit the last prompt. Trigger regenerate on the last assistant response.
 * TODO extract gentext generator to class

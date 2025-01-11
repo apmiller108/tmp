@@ -14,6 +14,7 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 @import 'global';
 @import 'nav';
 @import 'blob_details';
+@import 'conversations';
 
 // View component style sheets
 @import 'attachment_icon_component/attachment_icon_component';
