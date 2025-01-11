@@ -1,4 +1,6 @@
 class ConversationsController < ApplicationController
+  layout 'conversations'
+
   before_action :set_conversation, only: %i[edit update destroy]
 
   def index

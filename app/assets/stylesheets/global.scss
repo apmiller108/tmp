@@ -73,3 +73,7 @@
   }
 }
 
+.scroll-no-bar-container {
+  overflow: auto;
+  scrollbar-width: none;
+}

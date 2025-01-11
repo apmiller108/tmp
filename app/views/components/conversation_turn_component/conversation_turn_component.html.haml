@@ -1,13 +1,13 @@
 .c-conversation-turn{ id: }
   .turn.grid.mb-3
-    .g-col-1
+    .g-col-1.d-flex.justify-content-center
       %i.bi-person-fill.fs-1
     .g-col-11
       .card.segment{ class: "segment-user" }
         .card-body
           = prompt
   .turn.grid.mb-3
-    .g-col-1
+    .g-col-1.d-flex.justify-content-center
       %i.bi-robot.fs-1
     .g-col-11
       .card.segment.segment-assistant
@@ -18,6 +18,8 @@
           - elsif failed?
             = t('failed_to_generate_text')
           - else
-            = render ClipboardComponent.new(css_class: 'assistant-response', position: :bottom) do |c|
-              = c.with_copyable do
-                %div{ data: { 'clipboard-target' => 'source' } }= assistant_response.html_safe
+            .tool-tray
+              = render ClipboardComponent.new(css_class: 'assistant-response', position: :bottom) do |clipboard|
+                = clipboard.with_copyable do
+                  %div{ data: { 'clipboard-target' => 'source' } }= assistant_response.html_safe
+              %i.bi-info-square

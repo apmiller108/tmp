@@ -1,5 +1,5 @@
-.c-conversation.conversation-container{ data: { controller: :conversation,
-                                                action: 'my-channel:generateText@window->conversation#onGenerateText' } }
+.c-conversation.conversation-container.container{ data: { controller: :conversation,
+                                                  action: 'my-channel:generateText@window->conversation#onGenerateText' } }
   .grid.mb-1
     .g-start-5.g-col-4
       = render partial: 'conversations/title_form', locals: { conversation: }
