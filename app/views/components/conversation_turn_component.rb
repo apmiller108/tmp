@@ -3,7 +3,9 @@
 class ConversationTurnComponent < ApplicationViewComponent
   attr_reader :generate_text_request
 
-  delegate :prompt, :response, :created?, :in_progress?, :failed?, :completed?, to: :generate_text_request
+  delegate :prompt, :response, :created?, :in_progress?, :failed?, :completed?,
+           :model, :temperature, :generate_text_preset, :response_token_count,
+           to: :generate_text_request
 
   # @param [GenerateTextRequest] generate_text_request
   def initialize(generate_text_request:)
@@ -19,6 +21,15 @@ class ConversationTurnComponent < ApplicationViewComponent
   end
 
   def id
-    dom_id(generate_text_request) 
+    dom_id(generate_text_request)
+  end
+
+  def dataset
+    {
+      model: model.name,
+      temperature:,
+      preset: generate_text_preset&.name,
+      token_count: response_token_count
+    }.compact
   end
 end

@@ -2,6 +2,7 @@
 
 class ClipboardComponent < ApplicationViewComponent
   renders_one :copyable
+  renders_one :sibling
 
   attr_reader :css_class, :position
 

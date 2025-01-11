@@ -1,6 +1,7 @@
 = turbo_stream.replace 'conversation-title' do
   = render partial: 'conversations/title_form', locals: { conversation: }, formats: [:html]
-= turbo_stream.append 'conversation-turns' do
-  = render ConversationTurnComponent.new(generate_text_request: conversation.generate_text_requests.last)
-= turbo_stream.replace 'prompt-form' do
-  = render PromptFormComponent.new(conversation:, show_options:, disabled: true)
+- if generate_text_request
+  = turbo_stream.append 'conversation-turns' do
+    = render ConversationTurnComponent.new(generate_text_request:)
+  = turbo_stream.replace 'prompt-form' do
+    = render PromptFormComponent.new(conversation:, show_options:, disabled: true)

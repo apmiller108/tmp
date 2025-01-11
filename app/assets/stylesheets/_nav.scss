@@ -1,4 +1,5 @@
 nav {
+  z-index: calc($zindex-popover + 1); // So the BS poppers flow under the nav
   .logo {
     svg {
       height: 2rem;

@@ -1,4 +1,4 @@
-.c-conversation-turn{ id: }
+.c-conversation-turn{ id:, data: { controller: 'conversation-turn', **dataset } }
   .turn.grid.mb-3
     .g-col-1.d-flex.justify-content-center
       %i.bi-person-fill.fs-1
@@ -18,8 +18,9 @@
           - elsif failed?
             = t('failed_to_generate_text')
           - else
-            .tool-tray
-              = render ClipboardComponent.new(css_class: 'assistant-response', position: :bottom) do |clipboard|
-                = clipboard.with_copyable do
-                  %div{ data: { 'clipboard-target' => 'source' } }= assistant_response.html_safe
-              %i.bi-info-square
+            = render ClipboardComponent.new(css_class: 'assistant-response', position: :bottom) do |clipboard|
+              = clipboard.with_copyable do
+                %div{ data: { 'clipboard-target' => 'source' } }= assistant_response.html_safe
+              = clipboard.with_sibling do
+                %button.btn.icon-btn.icon-btn-sm.more-info{ data: { 'conversation-turn-target' => 'moreInfo' }}
+                  %i.bi-info-square

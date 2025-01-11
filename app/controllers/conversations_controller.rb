@@ -1,7 +1,7 @@
 class ConversationsController < ApplicationController
   layout 'conversations'
 
-  before_action :set_conversation, only: %i[edit update destroy]
+  before_action :set_conversation, only: %i[update destroy]
 
   def index
     @conversations = current_user.conversations.order(created_at: :desc)
@@ -25,7 +25,7 @@ class ConversationsController < ApplicationController
     )
     respond_to do |format|
       if conversation.save
-        GenerateTextJob.perform_async(conversation.generate_text_requests.created.last.id)
+        enqueue_generate_text_job(conversation.generate_text_requests.created.last)
         format.turbo_stream do
           redirect_to edit_user_conversation_path(current_user, conversation, show_options:), status: :see_other
         end
@@ -47,14 +47,21 @@ class ConversationsController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    @conversation = current_user.conversations
+                                .includes(generate_text_requests: :generate_text_preset)
+                                .find(params[:id])
+  end
 
   def update
     respond_to do |format|
       if @conversation.update(conversation_params)
-        GenerateTextJob.perform_async(@conversation.generate_text_requests.created.last.id)
+        generate_text_request = @conversation.generate_text_requests.created.last
+        enqueue_generate_text_job(generate_text_request)
         format.turbo_stream do
-          render 'conversations/update', locals: { conversation: @conversation, show_options: }, status: :ok
+          render 'conversations/update',
+                 locals: { conversation: @conversation, show_options:, generate_text_request: },
+                 status: :ok
         end
         format.json do
           render json: @conversation.as_json(only: %i[id memo_id created_at updated_at]), status: :ok
@@ -86,6 +93,12 @@ class ConversationsController < ApplicationController
   end
 
   private
+
+  def enqueue_generate_text_job(generate_text_request)
+    return unless generate_text_request
+
+    GenerateTextJob.perform_async(generate_text_request.id)
+  end
 
   def set_conversation
     @conversation = current_user.conversations.find(params[:id])

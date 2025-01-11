@@ -1,0 +1,20 @@
+%nav.navbar.navbar-expand-lg.bg-dark.p-0
+  .container
+    = link_to root_path, class: 'logo navbar-brand' do
+      = render inline: Rails.application.assets.find_asset('tmp.svg').source
+  - if current_user
+    .container.collapse.navbar-collapse.justify-content-center{ data: { controller: 'my-channel' } }
+      %ul.navbar-nav
+        %li.nav-item
+          = link_to "Memos", user_memos_path(current_user), class: 'nav-link text-light'
+        %li.nav-item
+          = link_to "Conversations", user_conversations_path(current_user), class: 'nav-link text-light'
+        %li.nav-item
+          = link_to "Settings", user_path(current_user), class: 'nav-link text-light'
+  .container-fluid.justify-content-end
+    - if current_user
+      = link_to 'Sign Out', destroy_user_session_path, method: :delete, data: { turbo: false }
+      = turbo_stream_from current_user, TurboStreams::STREAMS[:main]
+.flash-message.d-flex.justify-content-center
+  %p.alert-info= notice
+  %p.alert-warning= alert
