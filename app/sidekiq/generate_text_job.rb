@@ -1,5 +1,6 @@
 class GenerateTextJob
   include Sidekiq::Job
+  include Dry::Effects::Handler.Reader(:current_user)
   extend Flashable
 
   sidekiq_options retry: 1
@@ -30,6 +31,13 @@ class GenerateTextJob
       component: ConversationTurnComponent.new(generate_text_request:),
       action: :replace
     )
+    with_current_user(user) do
+      ViewComponentBroadcaster.call(
+        [user, TurboStreams::STREAMS[:main]],
+        component: PromptFormComponent.new(conversation: generate_text_request.conversation.reload),
+        action: :replace
+      )
+    end
   end
 
   def invoke_model(generate_text_request)

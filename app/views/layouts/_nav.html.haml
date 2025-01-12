@@ -15,6 +15,3 @@
     - if current_user
       = link_to 'Sign Out', destroy_user_session_path, method: :delete, data: { turbo: false }
       = turbo_stream_from current_user, TurboStreams::STREAMS[:main]
-.flash-message.d-flex.justify-content-center
-  %p.alert-info= notice
-  %p.alert-warning= alert

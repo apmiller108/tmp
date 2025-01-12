@@ -11,7 +11,7 @@
     = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
     = hotwire_livereload_tags if Rails.env.development?
   %body
-     = render partial: 'layouts/nav'
+    = render partial: 'layouts/nav'
     .container-sm
       = render partial: 'layouts/flash'
       = yield

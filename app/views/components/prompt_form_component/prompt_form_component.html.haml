@@ -1,4 +1,4 @@
-.c-prompt-form#prompt-form{ data: { controller: 'prompt-form', action: 'my-channel:generateText@window->prompt-form#onGenerateText' } }
+.c-prompt-form{ id:, data: { controller: 'prompt-form', action: 'my-channel:generateText@window->prompt-form#onGenerateText' } }
   = form_with model: [current_user, conversation], data: { 'prompt-form-target' => 'form' } do |form|
     = form.fields_for :generate_text_requests, generate_text_request do |gtr_fields|
       = gtr_fields.hidden_field :conversation_id, data: { 'prompt-form-target' => 'conversationId' }
@@ -18,17 +18,17 @@
               .g-col-3
                 .form-floating
                   = gtr_fields.collection_select :generate_text_preset_id, GenerateTextPreset.all, :id, :name, { include_blank: true },
-                    { class: 'form-select' }
+                    { class: 'form-select', data: { 'prompt-form-target' => 'presetSelect' } }
                   = gtr_fields.label :generate_text_preset_id, 'Preset'
               .g-col-2
                 .form-floating
                   = gtr_fields.select :temperature, 0.step(to: 1, by: 0.1).map { |n| n = n.round(1); [n, n] }, {},
-                  { class: 'form-select' }
+                  { class: 'form-select', data: { 'prompt-form-target' => 'temperatureSelect' } }
                   = gtr_fields.label :temperature, 'Temperature'
               .g-col-2
                 .form-floating
                   = gtr_fields.collection_select :model, GenerativeText::Anthropic::MODELS.values, :api_name, :name, {},
-                  { class: 'form-select' }
+                  { class: 'form-select', data: { 'prompt-form-target' => 'modelSelect' } }
                   = gtr_fields.label :model, 'Model'
           .grid.prompt-input-container
             .g-col-12.position-relative

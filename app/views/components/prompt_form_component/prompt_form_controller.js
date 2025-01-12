@@ -1,7 +1,9 @@
 import { Controller } from '@hotwired/stimulus'
 
 export default class PromptFormController extends Controller {
-  static targets = ['promptInput', 'userId', 'conversationId', 'form', 'submitButton', 'showOptionsInput', 'showOptionsButton', 'options']
+  static targets = ['promptInput', 'userId', 'conversationId', 'form', 'submitButton',
+                    'showOptionsInput', 'showOptionsButton', 'options', 'temperatureSelect',
+                    'modelSelect', 'presetSelect']
 
   connect() {
     this.focusOnPromptInput()
@@ -48,14 +50,21 @@ export default class PromptFormController extends Controller {
   }
 
   onClickShowOptions() {
+    let url = new URL(window.location.href);
+
     if (this.showOptionsInputTarget.value == 'true') {
       this.showOptionsInputTarget.value = 'false'
+      url.searchParams.set('show_options', 'false');
     } else {
       this.showOptionsInputTarget.value = 'true'
+      url.searchParams.set('show_options', 'true');
       this.dispatch('promptOptionsShow', { detail: {} })
     }
+
+    history.pushState({}, '', url);
   }
 
+  // If there is an error in the background job, enabled the form
   onGenerateText() {
     this.enableForm()
     this.focusOnPromptInput()

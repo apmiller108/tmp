@@ -27,7 +27,7 @@ class ConversationsController < ApplicationController
       if conversation.save
         enqueue_generate_text_job(conversation.generate_text_requests.created.last)
         format.turbo_stream do
-          redirect_to edit_user_conversation_path(current_user, conversation, show_options:), status: :see_other
+          redirect_to edit_user_conversation_path(current_user, conversation, redirect_query_params), status: :see_other
         end
       else
         format.turbo_stream do
@@ -105,7 +105,17 @@ class ConversationsController < ApplicationController
   end
 
   def prompt
-    conversation_params[:generate_text_requests_attributes]['0'][:prompt]
+    generate_text_requests_attributes[:prompt]
+  end
+
+  def generate_text_requests_attributes
+    conversation_params[:generate_text_requests_attributes]['0']
+  end
+
+  def redirect_query_params
+    {
+      show_options:
+    }
   end
 
   def show_options
