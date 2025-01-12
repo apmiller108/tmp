@@ -2,7 +2,7 @@
   .form-container {
     background: $more-info-background-color;
     border-radius: 1rem;
-    padding: 1rem 1rem 3rem;
+    padding: 1rem 1rem 1rem;
   }
   .prompt-input-container {
     textarea {
@@ -12,6 +12,7 @@
       position: absolute;
       right: 0.5rem;
       top: 0.5rem;
+      color: var(--bs-primary);
     }
   }
 }

@@ -13,7 +13,7 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 
 @import 'global';
 @import 'nav';
-@import 'details_popover';
+@import 'details_fields';
 @import 'conversations';
 
 // View component style sheets

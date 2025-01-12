@@ -6,14 +6,16 @@ export default class ConversationTurnController extends Controller {
 
   connect() {
     const conversationElem = document.getElementById('conversation')
-    new Popover(this.moreInfoTarget, {
-      content: this.moreInfoTemplate(),
-      container: this.element,
-      html: true,
-      boundary: conversationElem,
-      placement: 'right',
-      fallbackPlacements: ['bottom', 'top']
-    })
+    if (this.hasMoreInfoTarget) {
+      new Popover(this.moreInfoTarget, {
+        content: this.moreInfoTemplate(),
+        container: this.element,
+        html: true,
+        boundary: conversationElem,
+        placement: 'right',
+        fallbackPlacements: ['bottom', 'top']
+      })
+    }
   }
 
   moreInfoData() {
@@ -26,17 +28,18 @@ export default class ConversationTurnController extends Controller {
 
   moreInfoTemplate() {
     return `
-<div class="details-popover p-0">
+<div class="details-fields p-0">
   ${Object.entries(this.moreInfoData()).map(([k, v]) => this.moreInfoField(k, v)).join("\n")}
 </diev>
 `
   }
 
   moreInfoField(key, value) {
+    const label = String(key).charAt(0).toUpperCase() + String(key).slice(1)
     return `
 <div class="d-flex align-items-center justify-content-between">
-  <span class="label me-1">${key}: </span>
-  <pre class="value mb-0">${value}</pre>
+  <span class="label me-1">${label}: </span>
+  <pre class="value mb-0 p-1">${value}</pre>
 </div>
 `
   }

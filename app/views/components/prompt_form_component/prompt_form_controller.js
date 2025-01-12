@@ -52,11 +52,11 @@ export default class PromptFormController extends Controller {
       this.showOptionsInputTarget.value = 'false'
     } else {
       this.showOptionsInputTarget.value = 'true'
+      this.dispatch('promptOptionsShow', { detail: {} })
     }
   }
 
-  onGenerateText(event) {
-    const { generate_text: { error }} = event.detail
+  onGenerateText() {
     this.enableForm()
     this.focusOnPromptInput()
   }

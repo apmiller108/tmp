@@ -117,11 +117,11 @@ CLOSED: [2025-01-11 Sat 14:58]
    Show model, preset, temp, token count
    - [X] Show info icon in the tray of the assistant response.
    - [X] On click, show the details
-* TODO Add model, temp and preset to query params after create redirect
 * TODO show token count for entire conversation
-* TODO Edit the last prompt. Trigger regenerate on the last assistant response.
+* TODO Add model, temp and preset to query params after create redirect
 * TODO extract gentext generator to class
   - use it in the propmt_form_controller to set the text_id input
+  - Or delete text_id? Do I even use this?
 * TODO delete assistant response
 * DONE extract conversation component
 CLOSED: [2024-12-29 Sun 19:07]
@@ -132,6 +132,7 @@ CLOSED: [2025-01-05 Sun 22:20]
 * TODO unit test conversation turn component
 * TODO unit test conversation component
 * TODO update ConversationForm unit tests
+* TODO Edit the last prompt. Trigger regenerate on the last assistant response.
 * TODO search conversations
 * TODO add image generation to conversations
 * TODO add video generation to conversations
@@ -146,5 +147,4 @@ CLOSED: [2025-01-05 Sun 22:20]
 * TODO Move the aws invoke model response
   Write a shared example the enforce the interface
   https://morningcoffee.io/interfaces-in-ruby.html
-* TODO drop text_id
 * TODO add support for other LLM services?

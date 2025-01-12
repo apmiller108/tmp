@@ -7,7 +7,7 @@ export default class ConversationController extends Controller {
   observer;
 
   connect() {
-    setTimeout(this.scrollTurns.bind(this), 0)
+    this.scrollTurns()
 
     // Check for changes in child nodes might affect the conversation container's height
     // When a conversation turn is added, scroll the container down so the new
@@ -35,7 +35,9 @@ export default class ConversationController extends Controller {
   // Scrolls the turns container as far down as possible so the most recent turn
   // is in view
   scrollTurns() {
-    this.element.scrollTop = this.element.scrollHeight
+    setTimeout(() => {
+      this.element.scrollTop = this.element.scrollHeight
+    }, 0)
   }
 
   onEditTitle() {
@@ -66,5 +68,9 @@ export default class ConversationController extends Controller {
   // thereby submitting the form; otherwise the form will be hidden without submitting the form
   blurTitle() {
     this.editTitleInputTarget.blur()
+  }
+
+  onPromptOptionsShow() {
+    this.scrollTurns()
   }
 }

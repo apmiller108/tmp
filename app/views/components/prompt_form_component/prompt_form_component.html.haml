@@ -13,7 +13,7 @@
                                             'data-bs-target' => '#advanced-options',
                                             'data-prompt-form-target' => 'showOptionsButton',
                                             'data-action' => 'click->prompt-form#onClickShowOptions' } advanced options
-          .collapse.mb-1#advanced-options{ class: show_options? && 'show', data: { 'prompt-form-target' => 'options' } }
+          .collapse.mb-2#advanced-options{ class: show_options? && 'show', data: { 'prompt-form-target' => 'options' } }
             .grid
               .g-col-3
                 .form-floating
@@ -30,10 +30,14 @@
                   = gtr_fields.collection_select :model, GenerativeText::Anthropic::MODELS.values, :api_name, :name, {},
                   { class: 'form-select' }
                   = gtr_fields.label :model, 'Model'
-          .grid.mb-1.prompt-input-container
+          .grid.prompt-input-container
             .g-col-12.position-relative
               = gtr_fields.text_area :prompt, class: 'form-control', data: { 'prompt-form-target' => 'promptInput' },
                                      placeholder: 'Type a message', rows: 2
-              %button.btn.btn-primary.icon-btn{type: 'submit', name: 'commit', data: { 'prompt-form-target' => 'submitButton' },
-                                               disabled: disabled?}
+              %button.btn.icon-btn{type: 'submit', name: 'commit', data: { 'prompt-form-target' => 'submitButton' },
+                                   disabled: disabled?}
                 %i.bi.bi-send-fill
+            .g-col-12.details-fields.p-0
+              %div.d-flex.align-items-center.justify-content-end.mt-1
+                %span.label.me-2 Tokens:
+                %pre.value= conversation.token_count
