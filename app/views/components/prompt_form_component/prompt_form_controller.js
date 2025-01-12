@@ -1,14 +1,16 @@
 import { Controller } from '@hotwired/stimulus'
+import { createGenTextId, createGenImageId } from '@javascript/helpers'
 
 export default class PromptFormController extends Controller {
   static targets = ['promptInput', 'userId', 'conversationId', 'form', 'submitButton',
                     'showOptionsInput', 'showOptionsButton', 'options', 'temperatureSelect',
-                    'modelSelect', 'presetSelect']
+                    'modelSelect', 'presetSelect', 'textId']
 
   connect() {
     this.focusOnPromptInput()
     this.promptInputTarget.addEventListener('keypress', this.submitOnEnter.bind(this))
     this.formTarget.addEventListener('submit', this.disableForm.bind(this))
+    this.textIdTarget.value = createGenTextId();
     this.showOptions()
   }
 

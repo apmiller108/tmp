@@ -4,6 +4,7 @@ import TrixConfiguration from '@wysiwyg/TrixConfiguration'
 import { generateText, generateImage } from '@javascript/http'
 import TurboScrollPreservation from '@javascript/TurboScrollPreservation'
 import { initializeTooltipsFor } from '@javascript/mixins/ToolTippable'
+import { createGenTextId, createGenImageId} from '@javascript/helpers'
 
 export default class WysiwygEditor extends Controller {
   // This should be invoked as early as possible before the trix editor is
@@ -136,7 +137,7 @@ export default class WysiwygEditor extends Controller {
 
   async submitGenerateText(e) {
     const { params: { type } } = e
-    const id = this.createGenerativeId(`gen${type}`)
+    const id = createGenTextId()
 
     if (!this.generateTextInputTarget.value.length) {
       return
@@ -183,7 +184,7 @@ export default class WysiwygEditor extends Controller {
 
   async submitGenerateImage(e) {
     const { params: { type } } = e
-    const id = this.createGenerativeId(`gen${type}`)
+    const id = createGenImageId()
 
     if (this.generateImagePromptTarget.value.length === 0) {
       return
@@ -317,12 +318,6 @@ export default class WysiwygEditor extends Controller {
     } finally {
       this.clearNotification()
     }
-  }
-
-  createGenerativeId(prefix) {
-    const timestamp = new Date().getTime()
-    const random = Math.floor(Math.random() * 10000)
-    return `${prefix}_${timestamp}_${random}`
   }
 
   setNotification(text) {

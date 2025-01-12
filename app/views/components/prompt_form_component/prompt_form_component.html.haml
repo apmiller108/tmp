@@ -3,7 +3,7 @@
     = form.fields_for :generate_text_requests, generate_text_request do |gtr_fields|
       = gtr_fields.hidden_field :conversation_id, data: { 'prompt-form-target' => 'conversationId' }
       = gtr_fields.hidden_field :user_id, data: { 'prompt-form-target' => 'userId' }
-      = gtr_fields.hidden_field :text_id, value: "gentext_#{Time.current.to_i}_#{rand(1000)}"
+      = gtr_fields.hidden_field :text_id, data: { 'prompt-form-target' => 'textId' }
       = hidden_field_tag :show_options, show_options?, data: { 'prompt-form-target' => 'showOptionsInput' }
       .grid{ style: '--bs-gap: 0.5rem;'}
         .g-start-2.g-col-11.form-container

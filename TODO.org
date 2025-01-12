@@ -122,9 +122,8 @@ CLOSED: [2025-01-11 Sat 19:02]
 CLOSED: [2025-01-11 Sat 20:45]
 * DONE Update total token count on successful generate requests
 CLOSED: [2025-01-11 Sat 22:27]
-* TODO extract gentext generator to class
-  - use it in the propmt_form_controller to set the text_id input
-  - Or delete text_id? Do I even use this?
+* DONE extract gentext generator to class
+CLOSED: [2025-01-12 Sun 10:37]
 * TODO delete assistant response
 * TODO link to memo/conversation
 * DONE extract conversation component
