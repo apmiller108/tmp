@@ -19,7 +19,7 @@ class Conversation < ApplicationRecord
   end
 
   def token_count
-    generate_text_requests.reduce(0) { |sum, gtr| sum + gtr.response_token_count }
+    generate_text_requests.sum(&:response_token_count)
   end
 
   private
