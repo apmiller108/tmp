@@ -126,12 +126,15 @@ CLOSED: [2025-01-11 Sat 22:27]
 CLOSED: [2025-01-12 Sun 10:37]
 * DONE delete assistant response
 CLOSED: [2025-01-12 Sun 16:08]
-* TODO link to memo/conversation
 * DONE extract conversation component
 CLOSED: [2024-12-29 Sun 19:07]
   This is used for both the new and edit actions
 * DONE move flash messages to it's own stream
 CLOSED: [2025-01-05 Sun 22:20]
+* TODO custom presets
+  - [ ] Make and name your own presets
+  - [ ] Make these available in the preset drop down
+* TODO link to memo/conversation
 * TODO unit test Turn class
 * TODO unit test conversation turn component
 * TODO unit test conversation component
