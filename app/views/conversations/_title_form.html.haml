@@ -1,9 +1,9 @@
-.title.d-flex.justify-content-center.align-items-center#conversation-title{ data: { controller: 'tooltip' } }
-  %div{ data: { 'conversation-target' => 'titleField' }}
-    .title-field.fw-bold{ data: { action: 'click->conversation#onEditTitle:prevent', 'bs-toggle' => 'tooltip', 'bs-title' => conversation.title } }
+.title.d-flex.justify-content-center.align-items-center#conversation-title{ data: { controller: 'tooltip inline-edit' } }
+  %div{ data: { 'inline-edit-target' => 'field' }}
+    .title-field.fw-bold{ data: { action: 'click->inline-edit#onClickField', 'bs-toggle' => 'tooltip', 'bs-title' => conversation.title } }
       = truncate(conversation.title, length: 50, separator: ' ')
-  = form_with model: [current_user, conversation], class: 'd-none', data: { 'conversation-target' => 'editTitleForm' } do |form|
+  = form_with model: [current_user, conversation], class: 'd-none', data: { 'inline-edit-target' => 'form' } do |form|
     .d-flex.justify-content-center.align-items-center
       = form.text_field :title, class: 'form-control me-1 title-input',
-        data: { 'conversation-target' => 'editTitleInput',
-                action: 'change->conversation#saveTitle keypress.enter->conversation#blurTitle:prevent blur->conversation#hideTitleForm' }
+        data: { 'inline-edit-target' => 'input',
+                action: 'change->inline-edit#save keypress.enter->inline-edit#blurInput:prevent blur->inline-edit#hideForm' }

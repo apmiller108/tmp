@@ -1,11 +1,13 @@
 import { Tooltip } from 'bootstrap'
 
-export const initializeTooltipsFor = (elem) => Array.from(elem.querySelectorAll('[data-bs-toggle="tooltip"]')).map(e => new Tooltip(e))
+export const initializeTooltipsFor = (elem, opts = {}) => {
+  return Array.from(elem.querySelectorAll('[data-bs-toggle="tooltip"]')).map(e => new Tooltip(e, opts))
+}
 
 export default {
   connect() {
     try {
-      this.toolTippable = initializeTooltipsFor(this.element)
+      this.toolTippable = initializeTooltipsFor(this.element, { delay: 500 })
     } catch (error) {
       if (error.stack.includes("_Tooltip._setListeners")) {
         // this error happens when a new controller is instantiated (eg after a

@@ -4,6 +4,15 @@
     border-radius: 1rem;
     padding: 1rem 1rem 1rem;
   }
+  .options-toggle-btn {
+    i {
+      transition: transform 0.3s ease;
+      display: block;
+      &.down {
+        transform: rotate(180deg);
+      }
+    }
+  }
   .prompt-input-container {
     textarea {
       padding-right: 4rem;

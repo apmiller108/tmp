@@ -1,5 +1,6 @@
 import { Controller } from '@hotwired/stimulus'
 import { createGenTextId, createGenImageId } from '@javascript/helpers'
+import ToolTippable from '@javascript/mixins/ToolTippable'
 
 export default class PromptFormController extends Controller {
   static targets = ['promptInput', 'userId', 'conversationId', 'form', 'submitButton',
@@ -7,6 +8,7 @@ export default class PromptFormController extends Controller {
                     'modelSelect', 'presetSelect', 'textId']
 
   connect() {
+    ToolTippable.connect.bind(this)()
     this.focusOnPromptInput()
     this.promptInputTarget.addEventListener('keypress', this.submitOnEnter.bind(this))
     this.formTarget.addEventListener('submit', this.disableForm.bind(this))
@@ -17,6 +19,7 @@ export default class PromptFormController extends Controller {
   disconnect() {
     document.removeEventListener('keypress', this.submitOnEnter.bind(this))
     document.removeEventListener('submit', this.disableForm.bind(this))
+    ToolTippable.disconnect.bind(this)()
   }
 
   focusOnPromptInput() {
@@ -57,9 +60,11 @@ export default class PromptFormController extends Controller {
     if (this.showOptionsInputTarget.value == 'true') {
       this.showOptionsInputTarget.value = 'false'
       url.searchParams.set('show_options', 'false');
+      this.showOptionsButtonTarget.querySelector('i').classList.remove('down')
     } else {
       this.showOptionsInputTarget.value = 'true'
       url.searchParams.set('show_options', 'true');
+      this.showOptionsButtonTarget.querySelector('i').classList.add('down')
       this.dispatch('promptOptionsShow', { detail: {} })
     }
 

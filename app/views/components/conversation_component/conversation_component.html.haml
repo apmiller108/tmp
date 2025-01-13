@@ -1,14 +1,4 @@
-.c-conversation.conversation-container.scroll-no-bar-container.container-sm.pb-1#conversation{ data:
-{ controller: :conversation, action: 'prompt-form:promptOptionsShow@window->conversation#onPromptOptionsShow' } }
-  .grid.mb-1
-    .g-start-5.g-col-4
-      = render partial: 'conversations/title_form', locals: { conversation: }
-    .g-col-4.d-flex.align-items-center.justify-content-end
-      - if deletable?
-        = link_to [current_user, conversation], data: { turbo_method: 'delete', turbo_confirm: 'Are you sure?',
-                                                'bs-toggle' => 'tooltip', 'bs-title' => t('conversation.delete') },
-                                                class: 'btn btn-danger icon-btn icon-btn-sm' do
-          %i.bi.bi-trash3.text-white
+.c-conversation.conversation-container.scroll-no-bar-container.container-sm.pb-1#conversation{ data: { controller: :conversation, action: 'prompt-form:promptOptionsShow@window->conversation#onPromptOptionsShow' } }
   #conversation-turns.conversation-turns.mb-2{ data: { 'conversation-target': 'turns' } }
     - conversation.generate_text_requests.each do |gtr|
       = render ConversationTurnComponent.new(generate_text_request: gtr)

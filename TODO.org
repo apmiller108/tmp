@@ -124,7 +124,8 @@ CLOSED: [2025-01-11 Sat 20:45]
 CLOSED: [2025-01-11 Sat 22:27]
 * DONE extract gentext generator to class
 CLOSED: [2025-01-12 Sun 10:37]
-* TODO delete assistant response
+* DONE delete assistant response
+CLOSED: [2025-01-12 Sun 16:08]
 * TODO link to memo/conversation
 * DONE extract conversation component
 CLOSED: [2024-12-29 Sun 19:07]

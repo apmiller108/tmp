@@ -7,29 +7,30 @@
       = hidden_field_tag :show_options, show_options?, data: { 'prompt-form-target' => 'showOptionsInput' }
       .grid{ style: '--bs-gap: 0.5rem;'}
         .g-start-2.g-col-11.form-container
-          .mb-2
-            %button.btn.btn-secondary.fs-6{ type: "button",
-                                            'data-bs-toggle' => 'collapse',
-                                            'data-bs-target' => '#advanced-options',
-                                            'data-prompt-form-target' => 'showOptionsButton',
-                                            'data-action' => 'click->prompt-form#onClickShowOptions' } advanced options
-          .collapse.mb-2#advanced-options{ class: show_options? && 'show', data: { 'prompt-form-target' => 'options' } }
-            .grid
-              .g-col-3
-                .form-floating
-                  = gtr_fields.collection_select :generate_text_preset_id, GenerateTextPreset.all, :id, :name, { include_blank: true },
-                    { class: 'form-select', data: { 'prompt-form-target' => 'presetSelect' } }
-                  = gtr_fields.label :generate_text_preset_id, 'Preset'
-              .g-col-2
-                .form-floating
-                  = gtr_fields.select :temperature, 0.step(to: 1, by: 0.1).map { |n| n = n.round(1); [n, n] }, {},
-                  { class: 'form-select', data: { 'prompt-form-target' => 'temperatureSelect' } }
-                  = gtr_fields.label :temperature, 'Temperature'
-              .g-col-2
-                .form-floating
-                  = gtr_fields.collection_select :model, GenerativeText::Anthropic::MODELS.values, :api_name, :name, {},
-                  { class: 'form-select', data: { 'prompt-form-target' => 'modelSelect' } }
-                  = gtr_fields.label :model, 'Model'
+          .options.d-flex.justify-content-start.align-items-center
+            .mb-2
+              %button.btn.fs-6.options-toggle-btn{ 'data-bs-toggle' => 'collapse',
+                                                   'data-bs-target' => '#advanced-options',
+                                                   'data-prompt-form-target' => 'showOptionsButton',
+                                                   'data-action' => 'click->prompt-form#onClickShowOptions:prevent' }
+                %i.bi.bi-chevron-up{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => 'toggle options' }}
+            .collapse.mb-2#advanced-options{ class: show_options? && 'show', data: { 'prompt-form-target' => 'options' } }
+              .grid
+                .g-col-3
+                  .form-floating
+                    = gtr_fields.collection_select :model, GenerativeText::Anthropic::MODELS.values, :api_name, :name, {},
+                    { class: 'form-select', data: { 'prompt-form-target' => 'modelSelect' } }
+                    = gtr_fields.label :model, 'Model'
+                .g-col-2
+                  .form-floating
+                    = gtr_fields.collection_select :generate_text_preset_id, GenerateTextPreset.all, :id, :name, { include_blank: true },
+                      { class: 'form-select', data: { 'prompt-form-target' => 'presetSelect' } }
+                    = gtr_fields.label :generate_text_preset_id, 'Preset'
+                .g-col-1
+                  .form-floating
+                    = gtr_fields.select :temperature, 0.step(to: 1, by: 0.1).map { |n| n = n.round(1); [n, n] }, {},
+                    { class: 'form-select', data: { 'prompt-form-target' => 'temperatureSelect' } }
+                    = gtr_fields.label :temperature, 'Temp'
           .grid.prompt-input-container
             .g-col-12.position-relative
               = gtr_fields.text_area :prompt, class: 'form-control', data: { 'prompt-form-target' => 'promptInput' },
