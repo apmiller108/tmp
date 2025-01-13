@@ -7,7 +7,9 @@ export const initializeTooltipsFor = (elem, opts = {}) => {
 export default {
   connect() {
     try {
-      this.toolTippable = initializeTooltipsFor(this.element, { delay: 500 })
+      this.toolTippable = initializeTooltipsFor(this.element, {
+        delay: { show: 750, hide: 0 }
+      })
     } catch (error) {
       if (error.stack.includes("_Tooltip._setListeners")) {
         // this error happens when a new controller is instantiated (eg after a
