@@ -33,12 +33,14 @@ en:
   back: 'Back'
   cancel: 'Cancel'
   color: 'Color'
+  confirm: 'Are you sure?'
   content: 'Content'
   conversation:
     name: 'Conversation'
     delete: 'Delete Conversation'
   copy: 'copy'
   create: 'Create'
+  delete: 'Delete %{name}'
   download: 'Download'
   download_image: 'Download image'
   download_to_save: 'Download to save a copy'
@@ -52,6 +54,7 @@ en:
     new: 'New Memo'
     update: 'Update Memo'
   new: 'New'
+  response: 'response'
   save: 'Save'
   successfully_saved: "%{model_name} saved"
   summary:

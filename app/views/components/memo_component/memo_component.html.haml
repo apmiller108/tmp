@@ -11,7 +11,7 @@
       = link_to edit_user_memo_path(current_user, memo), class: 'btn btn-primary edit-memo-link icon-btn me-3',
       data: { 'bs-toggle' => 'tooltip', 'bs-title' => t('memo.edit') }  do
         %i.bi.bi-pencil-square
-      = link_to [current_user, memo], data: { turbo_method: 'delete', turbo_confirm: 'Are you sure?',
+      = link_to [current_user, memo], data: { turbo_method: 'delete', turbo_confirm: t('confirm'),
                                               'bs-toggle' => 'tooltip', 'bs-title' => t('memo.delete') },
                                       class: 'btn btn-danger icon-btn' do
         %i.bi.bi-trash3.text-white

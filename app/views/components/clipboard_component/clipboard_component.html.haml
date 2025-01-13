@@ -7,7 +7,7 @@
                                                             'bs-title' => tip } }
     %i.bi.bi-copy{ data: { 'clipboard-target' => 'copyIcon' } }
     %i.bi.bi-check2-square.text-success.d-none{ data: { 'clipboard-target' => 'successIcon' }}
-  - if sibling?
-    = sibling
+  - if additional_content?
+    = additional_content
   - if top?
     = copyable

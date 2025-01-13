@@ -6,8 +6,4 @@ class ConversationComponent < ApplicationViewComponent
   def initialize(conversation:)
     @conversation = conversation
   end
-
-  def deletable?
-    conversation.persisted? && conversation.memo.nil?
-  end
 end

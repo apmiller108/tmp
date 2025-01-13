@@ -39,11 +39,7 @@ Rails.application.routes.draw do
     resources :autosaves, only: %i[create update], param: :memo_id
   end
 
-  resources :memos, only: [] do
-    resources :conversations, only: %i[index create update], controller: 'memo_conversations'
-  end
-
-  resources :generate_text_requests, only: %i[create]
+  resources :generate_text_requests, only: %i[create destroy]
   resources :generate_image_requests, only: %i[create]
 
   resources :blobs, only: %i[show], param: :active_storage_blob_id

@@ -21,6 +21,12 @@
             = render ClipboardComponent.new(css_class: 'assistant-response', position: :bottom) do |clipboard|
               = clipboard.with_copyable do
                 %div{ data: { 'clipboard-target' => 'source' } }= assistant_response.html_safe
-              = clipboard.with_sibling do
-                %button.btn.icon-btn.icon-btn-sm.more-info{ data: { 'conversation-turn-target' => 'moreInfo' }}
-                  %i.bi-info-square
+              = clipboard.with_additional_content do
+                %button.btn.icon-btn.icon-btn-sm.more-info{ data: { 'conversation-turn-target' => 'moreInfo' } }
+                  %i.bi-info-square{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => 'Info' } }
+                = link_to generate_text_request_path(generate_text_request),
+                  class: 'float-end fs-5',
+                  data: { turbo_method: 'delete', turbo_confirm: t('confirm'),
+                        'bs-toggle' => 'tooltip',
+                        'bs-title' => t('delete', name: t('response')) } do
+                  %i.bi-trash3.text-black
