@@ -26,7 +26,7 @@ FactoryBot.define do
           'role' => 'assistant',
           'content' => [{
             'type' => 'text',
-            'text' => 'response content goes here'
+            'text' => 'test response'
           }],
           'model' => 'claude-3-haiku-20240307',
           'stop_reason' => 'end_turn',

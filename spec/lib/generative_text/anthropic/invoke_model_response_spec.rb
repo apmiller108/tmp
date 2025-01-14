@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe GenerativeText::Anthropic::InvokeModelResponse do
   let(:json_response) do
@@ -42,7 +42,6 @@ RSpec.describe GenerativeText::Anthropic::InvokeModelResponse do
       end
     end
   end
-
 
   describe '#content' do
     it 'returns the text content of the response' do
