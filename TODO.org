@@ -131,27 +131,23 @@ CLOSED: [2024-12-29 Sun 19:07]
   This is used for both the new and edit actions
 * DONE move flash messages to it's own stream
 CLOSED: [2025-01-05 Sun 22:20]
+* TODO lib specs
+* TODO request specs
+* TODO view component specs
+* TODO feature specs
 * TODO custom presets
   - [ ] Make and name your own presets
   - [ ] Make these available in the preset drop down
+* TODO support adding files to the prompt
+  - [ ] implement prompt caching for large user messages
+        https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching
 * TODO link to memo/conversation
-* TODO unit test Turn class
-* TODO unit test conversation turn component
-* TODO unit test conversation component
-* TODO update ConversationForm unit tests
 * TODO Edit the last prompt. Trigger regenerate on the last assistant response.
 * TODO search conversations
 * TODO add image generation to conversations
 * TODO add video generation to conversations
 * TODO add audio generation to conversations
-* TODO support adding files to the prompt
-  Extract to feature (images only: jpg, png, webp see antropics docs)
 * TODO add audio transcription to conversations
-  Extract feature
-* TODO implement prompt caching for large user messages
-  Extract feature
-  https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching
 * TODO Move the aws invoke model response
-  Write a shared example the enforce the interface
+  - [ ] Write a shared example the enforce the interface
   https://morningcoffee.io/interfaces-in-ruby.html
-* TODO add support for other LLM services?
