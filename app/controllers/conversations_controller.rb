@@ -2,6 +2,7 @@ class ConversationsController < ApplicationController
   layout 'conversations'
 
   before_action :set_conversation, only: %i[update destroy]
+  before_action :verify_user_id, only: %i[create update]
 
   def index
     @conversations = current_user.conversations.order(created_at: :desc)
@@ -21,7 +22,9 @@ class ConversationsController < ApplicationController
 
   def create
     conversation = current_user.conversations.new(
-      conversation_params.merge(title: Conversation.title_from_prompt(prompt))
+      conversation_params.merge(
+        title: Conversation.title_from_prompt(prompt)
+      )
     )
     respond_to do |format|
       if conversation.save
@@ -55,7 +58,8 @@ class ConversationsController < ApplicationController
 
   def update
     respond_to do |format|
-      if @conversation.update(conversation_params)
+      p conversation_params
+      if @conversation.update!(conversation_params)
         generate_text_request = @conversation.generate_text_requests.created.last
         enqueue_generate_text_job(generate_text_request)
         format.turbo_stream do
@@ -104,12 +108,18 @@ class ConversationsController < ApplicationController
     @conversation = current_user.conversations.find(params[:id])
   end
 
+  def verify_user_id
+    generate_text_requests_attributes.each_value do |attributes|
+      raise 'Invalid user_id' if attributes[:user_id] != current_user.id.to_s
+    end
+  end
+
   def prompt
-    generate_text_requests_attributes[:prompt]
+    generate_text_requests_attributes['0'][:prompt]
   end
 
   def generate_text_requests_attributes
-    conversation_params[:generate_text_requests_attributes]['0']
+    conversation_params[:generate_text_requests_attributes]
   end
 
   def redirect_query_params

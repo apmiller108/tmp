@@ -131,8 +131,10 @@ CLOSED: [2024-12-29 Sun 19:07]
   This is used for both the new and edit actions
 * DONE move flash messages to it's own stream
 CLOSED: [2025-01-05 Sun 22:20]
-* TODO lib specs
+* DONE lib specs
+CLOSED: [2025-01-14 Tue 11:55]
 * TODO request specs
+  - [ ] finish conversation spec
 * TODO view component specs
 * TODO feature specs
 * TODO custom presets
