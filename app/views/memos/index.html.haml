@@ -1,4 +1,4 @@
-.memos-index{ data: { controller: 'memos', action: 'memo-card:memoConnected@window->memos#onMemoConnected' } }
+.memos-index.mt-3{ data: { controller: 'memos', action: 'memo-card:memoConnected@window->memos#onMemoConnected' } }
   = turbo_stream_from current_user, TurboStreams::STREAMS[:memos]
   = render ModalComponent.new(size: :xl)
   .container
