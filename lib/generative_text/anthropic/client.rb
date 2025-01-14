@@ -21,7 +21,7 @@ class GenerativeText
         model = params.fetch(:model)
         request_body = {
           model: model.api_name,
-          max_tokens: model.max_tokens,
+          max_tokens: params.fetch(:max_tokens, model.max_tokens),
           temperature: params[:temperature],
           messages: messages.push(
             {
