@@ -5,10 +5,10 @@ RSpec.describe GenerativeText::Anthropic::Client do
   let(:client) { described_class.new }
   let(:prompt) { 'Write a haiku about a rainy day.' }
   let(:messages) { [] }
-  let(:params) { { temperature: 0.7, system_message: 'this is the system message' } }
+  let(:model) { GenerativeText::Anthropic::DEFAULT_MODEL }
+  let(:params) { { temperature: 0.7, system_message: 'this is the system message', model: } }
 
   describe '#invoke_model' do
-    let(:model) { GenerativeText::Anthropic::DEFAULT_MODEL }
     let(:request_body) do
       { model: model.api_name,
         max_tokens: model.max_tokens,
@@ -38,7 +38,7 @@ RSpec.describe GenerativeText::Anthropic::Client do
 
       context 'with the model param' do
         let(:model) { GenerativeText::Anthropic::MODELS.fetch(:sonnet35) }
-        let(:params) { { temperature: 0.7, system_message: 'this is the system message', model: model.api_name } }
+        let(:params) { { temperature: 0.7, system_message: 'this is the system message', model: model } }
 
         it 'returns an InvokeModelResponse object' do
           response = client.invoke_model(prompt:, messages:, **params)
