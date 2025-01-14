@@ -26,6 +26,24 @@ RSpec.describe GenerativeText::Anthropic::InvokeModelResponse do
 
   let(:response) { described_class.new(json_response) }
 
+  describe '#initialize' do
+    context 'when initialized with JSON' do
+      it 'parses the JSON' do
+        data = described_class.new(json_response).data
+        expect(data).to eq JSON.parse(json_response)
+      end
+    end
+
+    context 'when initialized with a Hash' do
+      it 'does not attempt JSON parsing' do
+        json_hash = JSON.parse(json_response)
+        data = described_class.new(json_hash).data
+        expect(data).to eq json_hash
+      end
+    end
+  end
+
+
   describe '#content' do
     it 'returns the text content of the response' do
       expect(response.content).to eq('response content goes here')
