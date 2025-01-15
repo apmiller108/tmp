@@ -6,7 +6,7 @@ FactoryBot.define do
     model { GenerativeText::Anthropic::MODELS.values.sample.api_name }
     user
 
-    trait :with_generate_text_preset do
+    trait :with_preset do
       generate_text_preset
     end
 

@@ -5,7 +5,7 @@ RSpec.describe ClipboardComponent, type: :component do
 
   before do
     render_inline(
-      described_class.new('my-clipboard').tap do |c|
+      described_class.new(css_class: 'my-clipboard').tap do |c|
         c.with_copyable { '<input type="text" name="copyable"></input>'.html_safe }
       end
     )

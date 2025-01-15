@@ -10,7 +10,7 @@ RSpec.describe GenerateTextJob, type: :job do
   describe '#perform' do
     subject(:perform) { described_class.new.perform(generate_text_request.id) }
 
-    let(:generate_text_request) { build_stubbed :generate_text_request, :with_generate_text_preset, conversation: }
+    let(:generate_text_request) { build_stubbed :generate_text_request, :with_preset, conversation: }
     let(:user) { generate_text_request.user }
     let(:conversation) { build_stubbed :conversation }
     let(:response_data) { { 'content' => 'response data' } }
