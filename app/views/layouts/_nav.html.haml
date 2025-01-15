@@ -13,5 +13,5 @@
           = link_to "Settings", user_path(current_user), class: 'nav-link text-light'
   .container-fluid.justify-content-end
     - if current_user
-      = link_to 'Sign Out', destroy_user_session_path, method: :delete, data: { turbo: false }
+      = link_to 'Sign Out', destroy_user_session_path, method: :delete, data: { turbo_method: :delete }
       = turbo_stream_from current_user, TurboStreams::STREAMS[:main]

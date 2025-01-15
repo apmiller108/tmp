@@ -139,9 +139,11 @@ CLOSED: [2025-01-14 Tue 22:14]
   - [X] generate text requests
 * DONE view component specs
 CLOSED: [2025-01-15 Wed 15:33]
-* TODO view component browser specs
-  - [ ] Conversation component
+* DONE view component browser specs
+CLOSED: [2025-01-15 Wed 15:48]
 * TODO feature specs
+  - [ ] fix memos
+  - [ ] Conversation feature
 * TODO custom presets
   - [ ] Make and name your own presets
   - [ ] Make these available in the preset drop down

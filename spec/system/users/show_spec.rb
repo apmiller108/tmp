@@ -1,7 +1,7 @@
 require 'system_helper'
 
 RSpec.describe 'User show', type: :system do
-  let!(:user) { create :user }
+  let!(:user) { create :user, :with_setting }
 
   specify 'user views their details' do
     login(user:)

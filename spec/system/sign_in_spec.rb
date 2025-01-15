@@ -2,7 +2,7 @@ require 'system_helper'
 
 RSpec.describe 'signing in', type: :system do
   let(:password) { 'Password' }
-  let!(:user) { create :user, password: }
+  let!(:user) { create :user, :with_setting, password: }
 
   specify 'user signs in' do
     visit '/'
@@ -13,6 +13,6 @@ RSpec.describe 'signing in', type: :system do
     click_button 'Log in'
     expect(page).to have_text I18n.t('devise.sessions.signed_in')
     expect(page).to have_current_path('/')
-    expect(page).to have_button('Sign Out')
+    expect(page).to have_link('Sign Out')
   end
 end

@@ -2,7 +2,7 @@ require 'system_helper'
 
 RSpec.describe 'Signing out', type: :system do
   let(:password) { 'Password' }
-  let!(:user) { create :user, password: }
+  let!(:user) { create :user, :with_setting, password: }
 
   specify 'user logs out' do
     visit new_user_session_path
@@ -10,7 +10,7 @@ RSpec.describe 'Signing out', type: :system do
     fill_in 'Password', with: password
     click_button 'Log in'
 
-    click_button 'Sign Out'
+    click_link 'Sign Out'
     expect(page).to have_current_path '/'
   end
 end

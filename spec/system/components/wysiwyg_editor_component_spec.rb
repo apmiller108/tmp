@@ -70,7 +70,8 @@ RSpec.describe 'WysiwygEditorComponent', type: :system do
       .with(
         body: {
           model: claude_model.api_name, max_tokens: claude_model.max_tokens, temperature: 0.0,
-          messages: [{ 'role' => 'user', 'content' => [{ 'type' => 'text', 'text' => 'This is my prompt' }] }]
+          messages: [{ 'role' => 'user', 'content' => [{ 'type' => 'text', 'text' => 'This is my prompt' }] }],
+          system: GenerateTextRequest::MARKDOWN_FORMAT_SYSTEM_MESSAGE
         }.to_json
       ).to_return(status: 200, body: claude_generative_text_response)
 

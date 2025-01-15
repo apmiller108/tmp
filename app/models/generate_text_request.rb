@@ -25,7 +25,10 @@ class GenerateTextRequest < ApplicationRecord
   end
 
   def system_message
-    "#{MARKDOWN_FORMAT_SYSTEM_MESSAGE}\n#{generate_text_preset&.system_message}"
+    [
+      MARKDOWN_FORMAT_SYSTEM_MESSAGE,
+      generate_text_preset&.system_message
+    ].compact.join("\n")
   end
 
   def response
