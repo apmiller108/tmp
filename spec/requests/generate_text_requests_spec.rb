@@ -34,7 +34,7 @@ RSpec.describe 'Generate text requests', type: :request do
           expect(response).to have_http_status(:created)
         end
 
-        it 'renders the turbo stream with generated content' do
+        it 'returns an empty body' do
           request
           expect(response.body).to be_empty
         end
@@ -42,7 +42,9 @@ RSpec.describe 'Generate text requests', type: :request do
         it 'creates a generate_text_requests record' do
           expect { request }.to(
             change(
-              user.generate_text_requests.where(prompt:, text_id:, conversation:, generate_text_preset:),
+              user.generate_text_requests.where(
+                prompt:, text_id:, conversation:, generate_text_preset:, conversation_id: conversation.id
+              ),
               :count
             ).by(1)
           )
@@ -51,6 +53,21 @@ RSpec.describe 'Generate text requests', type: :request do
         it 'enqueues a GenerateTextJob' do
           request
           expect(GenerateTextJob).to have_received(:perform_async).with(user.generate_text_request_ids.last)
+        end
+
+        context 'without a conversation id' do
+          let(:params) do
+            {
+              generate_text_request: {
+                prompt:, text_id:, temperature:,
+                generate_text_preset_id: generate_text_preset.id, conversation_id: ''
+              }
+            }
+          end
+
+          it 'creates a conversation' do
+            expect { request }.to change(user.conversations, :count).by(1)
+          end
         end
       end
 
@@ -65,6 +82,35 @@ RSpec.describe 'Generate text requests', type: :request do
 
         it { is_expected.to have_turbo_stream(action: :update, target: 'alert-stream') }
       end
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    let(:user) { create :user, :with_setting }
+    let!(:generate_text_request) { create :generate_text_request, user: }
+
+    let(:request) do
+      delete generate_text_request_path(generate_text_request), as: :turbo_stream
+    end
+
+    before do
+      sign_in user
+    end
+
+    it_behaves_like 'an authenticated route'
+
+    it 'delete the generate_text_request' do
+      expect { request }.to change(user.generate_text_requests, :count).by(-1)
+    end
+
+    it 'responds with OK' do
+      request
+      expect(response).to have_http_status :ok
+    end
+
+    it 'removes the element' do
+      request
+      expect(response).to have_turbo_stream(action: :remove, target: generate_text_request)
     end
   end
 end

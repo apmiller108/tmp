@@ -133,8 +133,10 @@ CLOSED: [2024-12-29 Sun 19:07]
 CLOSED: [2025-01-05 Sun 22:20]
 * DONE lib specs
 CLOSED: [2025-01-14 Tue 11:55]
-* TODO request specs
-  - [ ] finish conversation spec
+* DONE request specs [2/2]
+CLOSED: [2025-01-14 Tue 22:14]
+  - [X] finish conversation spec
+  - [X] generate text requests
 * TODO view component specs
 * TODO feature specs
 * TODO custom presets

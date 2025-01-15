@@ -58,8 +58,7 @@ class ConversationsController < ApplicationController
 
   def update
     respond_to do |format|
-      p conversation_params
-      if @conversation.update!(conversation_params)
+      if @conversation.update(conversation_params)
         generate_text_request = @conversation.generate_text_requests.created.last
         enqueue_generate_text_job(generate_text_request)
         format.turbo_stream do

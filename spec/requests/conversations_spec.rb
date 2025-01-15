@@ -159,7 +159,7 @@ RSpec.describe 'Conversations', type: :request do
       }
     end
 
-    let(:request) { put "/users/#{user.id}/conversations/#{conversation.id}", headers:, params:, as: :json }
+    let(:request) { put "/users/#{user.id}/conversations/#{conversation.id}", headers:, params: }
 
     before do
       sign_in user
@@ -175,8 +175,93 @@ RSpec.describe 'Conversations', type: :request do
     it 'updates the conversation' do
       expect { request }.to change { conversation.reload.title }.to title
     end
+
+    it 'enqueus a GenerateTextJob' do
+      allow(GenerateTextJob).to receive(:perform_async)
+      request
+      expect(GenerateTextJob).to have_received(:perform_async).with(user.generate_text_requests.last.id)
+    end
+
+    it 'renders the conversation title' do
+      request
+      expect(response).to have_turbo_stream(action: 'replace', target: 'conversation-title')
+    end
+
+    it 'render the conversation turn component' do
+      request
+      expect(response).to have_turbo_stream(action: 'append', target: 'conversation-turns') {
+        assert_select '.c-conversation-turn'
+      }
+    end
+
+    context 'with JSON format' do
+      let(:request) { put "/users/#{user.id}/conversations/#{conversation.id}", headers:, params:, as: :json }
+      let(:headers) { { 'ACCEPT' => 'application/json', 'Content-Type' => 'application/json' } }
+
+      before { request }
+
+      it { is_expected.to have_http_status :ok }
+
+      it 'returns the conversation JSON' do
+        expect(JSON.parse(response.body)).to(
+          eq conversation.reload.as_json(only: [:id, :memo_id, :created_at, :updated_at])
+        )
+      end
+    end
+
+    context 'with invalid params' do
+      let(:request_attrs) { attributes_for(:generate_text_request).merge(prompt: '') }
+
+      before { request }
+
+      it { is_expected.to have_http_status :unprocessable_entity }
+
+      it 'shows the errors' do
+        expect(response).to have_turbo_stream(action: 'update', target: 'alert-stream') {
+          assert_select '.validation-errors'
+        }
+      end
+
+      context 'with JSON format' do
+        let(:request) { put "/users/#{user.id}/conversations/#{conversation.id}", headers:, params:, as: :json }
+        let(:headers) { { 'ACCEPT' => 'application/json', 'Content-Type' => 'application/json' } }
+
+        it { is_expected.to have_http_status :unprocessable_entity }
+
+        it 'returns the conversation JSON' do
+          request
+          expect(JSON.parse(response.body)['error']).to eq 'message' => 'Generate text requests prompt can\'t be blank'
+        end
+      end
+    end
   end
 
   describe 'DELETE #destroy' do
+    subject { response }
+
+    let(:user) { create :user }
+    let!(:conversation) { create :conversation, user: }
+    let(:headers) { { 'Accept' => 'text/vnd.turbo-stream.html' } }
+    let(:request) { delete "/users/#{user.id}/conversations/#{conversation.id}" }
+
+    before do
+      sign_in user
+    end
+
+    it_behaves_like 'an authenticated route'
+
+    it 'returns an 302 response' do
+      request
+      expect(response).to have_http_status :found
+    end
+
+    it 'redirects to conversations index' do
+      request
+      expect(response).to redirect_to "/users/#{user.id}/conversations"
+    end
+
+    it 'deletes the conversation' do
+      expect { request }.to change(user.conversations, :count).by(-1)
+    end
   end
 end
