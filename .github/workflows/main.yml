@@ -114,7 +114,7 @@ jobs:
         uses: ruby/setup-ruby@v1 # https://github.com/ruby/setup-ruby
         with:
           bundler-cache: true
-          ruby-version: 3.3
+          ruby-version: 3.3.0
       - name: Update apt
         env:
           DEBIAN_FRONTEND: noninteractive
