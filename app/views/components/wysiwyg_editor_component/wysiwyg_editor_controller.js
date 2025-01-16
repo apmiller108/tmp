@@ -135,7 +135,7 @@ export default class WysiwygEditor extends Controller {
     this.selectedText = window.getSelection().toString()
   }
 
-  async submitGenerateText(e) {
+  async submitGenerateText() {
     const id = createGenTextId()
 
     if (!this.generateTextInputTarget.value.length) {
@@ -181,7 +181,7 @@ export default class WysiwygEditor extends Controller {
     }
   }
 
-  async submitGenerateImage(e) {
+  async submitGenerateImage() {
     const id = createGenImageId()
 
     if (this.generateImagePromptTarget.value.length === 0) {

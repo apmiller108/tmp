@@ -1,6 +1,6 @@
 ARG RUBY_VERSION=3.3.0
 
-FROM ruby:$RUBY_VERSION-slim as base
+FROM ruby:$RUBY_VERSION-slim AS base
 
 RUN apt-get update -qq \
     && apt-get install --no-install-recommends -y build-essential ca-certificates curl gnupg locales libvips libpq-dev \
@@ -23,19 +23,19 @@ RUN mkdir -p /etc/apt/keyrings && \
     npm install -g yarn@$YARN_VERSION
 
 # Install JS dependencies
-FROM base as node
+FROM base AS node
 
 COPY package.json yarn.lock ./
 RUN yarn install
 
 # Install Ruby dependencies
-FROM base as gems
+FROM base AS gems
 
 COPY Gemfile Gemfile.lock ./
 RUN gem install bundler && bundle install --jobs 20 --retry 5
 
 # Final build
-FROM base as build
+FROM base AS build
 
 WORKDIR /rails
 
