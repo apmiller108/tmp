@@ -82,11 +82,9 @@ export default class MemoFormController extends Controller {
         // order to associate the conversation to the memo.
         conversationParams.memo_id = tempTemplate.content.querySelector('template')
           .content.querySelector('form').dataset.memoId
-
-        // Update conversation to associate it to the memo
-        await updateConversation({ conversation_id: this.conversationId, ...conversationParams })
       }
-
+      // Update conversation to associate it to the memo
+      await updateConversation({ conversation_id: this.conversationId, ...conversationParams })
       Turbo.renderStreamMessage(autoSaveTurboStream)
     }
   }

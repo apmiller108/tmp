@@ -108,6 +108,8 @@ class ConversationsController < ApplicationController
   end
 
   def verify_user_id
+    return if generate_text_requests_attributes.nil?
+
     generate_text_requests_attributes.each_value do |attributes|
       raise 'Invalid user_id' if attributes[:user_id] != current_user.id.to_s
     end
