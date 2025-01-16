@@ -42,7 +42,8 @@ RSpec.describe 'create conversation', type: :system do
         body: {
           model: claude_model.api_name, max_tokens: claude_model.max_tokens,
           temperature:,
-          messages: conversation.exchange.push({ 'role' => 'user', 'content' => [{ 'type' => 'text', 'text' => prompt }] }),
+          messages: conversation.exchange
+                                .push({ 'role' => 'user', 'content' => [{ 'type' => 'text', 'text' => prompt }] }),
           system: GenerateTextRequest.new(generate_text_preset:).system_message
         }.to_json
       ).to_return(status: 200, body: claude_generative_text_response)
@@ -76,7 +77,7 @@ RSpec.describe 'create conversation', type: :system do
     within('#advanced-options') do
       find("option[value='#{claude_model.api_name}']").select_option
       find("option[value='#{generate_text_preset.id}']").select_option
-      find("option[value='#{temperature.to_s}']").select_option
+      find("option[value='#{temperature}']").select_option
     end
 
     find('button[type=submit]').click

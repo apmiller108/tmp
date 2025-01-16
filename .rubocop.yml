@@ -69,7 +69,7 @@ RSpec/MultipleExpectations:
 RSpec/MultipleMemoizedHelpers:
   Enabled: false
 RSpec/NestedGroups:
-  Max: 4
+  Max: 5
 
 Style/Documentation:
   Enabled: false

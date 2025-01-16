@@ -126,7 +126,7 @@ RSpec.describe 'Conversations', type: :request do
 
   describe 'GET #edit' do
     let(:user) { create :user, :with_setting }
-    let(:conversation) { create :conversation, user:}
+    let(:conversation) { create :conversation, user: }
     let(:request) { get "/users/#{user.id}/conversations/#{conversation.id}/edit", headers: }
     let(:headers) { { 'ACCEPT' => 'text/html' } }
 

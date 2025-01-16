@@ -39,7 +39,7 @@ RSpec.describe GenerateTextRequest, type: :model do
       let(:preset) { nil }
 
       it 'returns only the markdown format message' do
-        expect(request.system_message).to eq("#{described_class::MARKDOWN_FORMAT_SYSTEM_MESSAGE}")
+        expect(request.system_message).to eq(described_class::MARKDOWN_FORMAT_SYSTEM_MESSAGE)
       end
     end
   end

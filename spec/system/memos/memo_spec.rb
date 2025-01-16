@@ -51,7 +51,7 @@ RSpec.describe 'Create and view memo', type: :system do
           model: claude_model.api_name, max_tokens: claude_model.max_tokens,
           temperature: generate_text_preset.temperature,
           messages: [{ 'role' => 'user', 'content' => [{ 'type' => 'text', 'text' => generate_text_prompt }] }],
-          system: GenerateTextRequest.new(generate_text_preset:).system_message 
+          system: GenerateTextRequest.new(generate_text_preset:).system_message
         }.to_json
       ).to_return(status: 200, body: claude_generative_text_response)
   end

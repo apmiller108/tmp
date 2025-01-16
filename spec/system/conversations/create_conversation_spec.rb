@@ -65,7 +65,7 @@ RSpec.describe 'create conversation', type: :system do
     within('#advanced-options') do
       find("option[value='#{claude_model.api_name}']").select_option
       find("option[value='#{generate_text_preset.id}']").select_option
-      find("option[value='#{temperature.to_s}']").select_option
+      find("option[value='#{temperature}']").select_option
     end
 
     find('button[type=submit]').click
