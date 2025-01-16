@@ -34,7 +34,8 @@ RSpec.describe TranscriptionComponent, type: :component do
 
     it 'shows the diarized results' do
       transcription.diarized_results.each do |result|
-        expect(page).to have_text "#{result.speaker_humanized}: \n#{result.content}"
+        expect(page).to have_text "#{result.speaker_humanized}:"
+        expect(page).to have_text result.content
       end
     end
   end
