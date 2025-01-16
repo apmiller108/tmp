@@ -39,7 +39,7 @@ jobs:
         uses: ruby/setup-ruby@v1 # https://github.com/ruby/setup-ruby
         with:
           bundler-cache: true
-          ruby-version: 3.3
+          ruby-version: 3.3.0
       - name: Run rubocop
         run: |
           bundle exec rubocop
@@ -83,7 +83,7 @@ jobs:
         uses: ruby/setup-ruby@v1 # https://github.com/ruby/setup-ruby
         with:
           bundler-cache: true
-          ruby-version: 3.3
+          ruby-version: 3.3.0
       - name: Install bundler-audit
         run: |
           gem install bundler-audit
