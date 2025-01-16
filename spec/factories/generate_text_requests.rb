@@ -19,6 +19,7 @@ FactoryBot.define do
     end
 
     trait :with_response do
+      status { 'completed' }
       response do
         {
           'id' => 'msg_01DMcCdRr6gaWDuZs7Y63rhe',
