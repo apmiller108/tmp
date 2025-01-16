@@ -52,4 +52,6 @@ COPY --from=node /rails/node_modules /rails/node_modules
 
 EXPOSE 3000
 
+ENV RUBY_YJIT_ENABLE="1"
+
 CMD ["bin/dev"]
