@@ -20,7 +20,7 @@ export default class ConversationController extends Controller {
     });
 
     this.observer.observe(this.turnsTarget, {
-      childList: true,
+      childList: true
     });
   }
 

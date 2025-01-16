@@ -1,5 +1,5 @@
 import { Controller } from '@hotwired/stimulus'
-import { createGenTextId, createGenImageId } from '@javascript/helpers'
+import { createGenTextId } from '@javascript/helpers'
 import ToolTippable from '@javascript/mixins/ToolTippable'
 
 export default class PromptFormController extends Controller {

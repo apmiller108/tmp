@@ -20,7 +20,7 @@ export default class ConversationTurnController extends Controller {
 
   moreInfoData() {
     const { model, preset, temperature, tokenCount } = this.element.dataset
-    const entries = Object.entries({ model, preset, temperature, tokens: tokenCount }).filter(([_, v]) => {
+    const entries = Object.entries({ model, preset, temperature, tokens: tokenCount }).filter(([, v]) => {
       return !!v
     })
     return Object.fromEntries(entries)
