@@ -5,7 +5,8 @@ require 'rails_helper'
 RSpec.describe PromptFormComponent, type: :component do
   subject(:component) { described_class.new(conversation:, **opts) }
 
-  let(:user) { build_stubbed(:user, :with_setting) }
+  let(:user) { build_stubbed(:user, setting:) }
+  let(:setting) { build_stubbed(:setting) }
   let(:conversation) { build_stubbed(:conversation, user:) }
   let(:token_count) { 99 }
   let(:opts) { {} }

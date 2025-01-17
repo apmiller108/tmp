@@ -82,6 +82,8 @@ RSpec.describe 'create conversation', type: :system do
 
     find('button[type=submit]').click
 
+    page.driver.wait_for_network_idle
+
     expect(page).to have_css('.c-conversation-turn', count: 4)
 
     within('.c-prompt-form') do

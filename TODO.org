@@ -141,19 +141,30 @@ CLOSED: [2025-01-14 Tue 22:14]
 CLOSED: [2025-01-15 Wed 15:33]
 * DONE view component browser specs
 CLOSED: [2025-01-15 Wed 15:48]
-* TODO feature specs [2/4]
+* DONE feature specs [4/4]
+CLOSED: [2025-01-17 Fri 08:27]
   - [X] fix memos
   - [X] create Conversation
-  - [ ] update conversation
-  - [ ] delete conversation
+  - [X] update conversation
+  - [X] delete conversation
+* TODO normalize the routes
 * TODO custom presets
+  - [ ] Add preset_type enum to generate_text_presets table (default, custom)
+  - [ ] Add join table users_presets. belongs to user and preset
+  - [ ] Add route and CRUD actions
+  - [ ] Add the views
   - [ ] Make and name your own presets
-  - [ ] Make these available in the preset drop down
+  - [ ] Link to new preset from conversation
+  - [ ] Cache a reference to the conversation it was linked from so when
+    creating it redirects back to the conversation
+  - [ ] Make custom presets available in the preset drop down
 * TODO support adding files to the prompt
   - [ ] implement prompt caching for large user messages
         https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching
+* TODO Add a scrollspy to conversations
+  - [ ] each heading can be the first few words of the user message
 * TODO link to memo/conversation
-* TODO Edit the last prompt. Trigger regenerate on the last assistant response.
+* TODO Edit the last prompt. Trigger regenerate the last assistant response.
 * TODO search conversations
 * TODO add image generation to conversations
 * TODO add video generation to conversations

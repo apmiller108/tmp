@@ -4,7 +4,9 @@ FactoryBot.define do
     password      { Faker::Internet.password }
 
     trait :with_setting do
-      setting
+      after(:create) do |user|
+        create :setting, user:
+      end
     end
   end
 end
