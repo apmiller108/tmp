@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_08_032856) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_17_161901) do
   create_schema "rollback"
 
   # These are extensions that must be enabled in order to support this database
@@ -91,6 +91,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_08_032856) do
     t.float "temperature", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "preset_type", null: false
+    t.check_constraint "preset_type = ANY (ARRAY['default'::text, 'custom'::text])", name: "preset_type_check"
   end
 
   create_table "generate_text_requests", force: :cascade do |t|
