@@ -9,6 +9,8 @@ class User < ApplicationRecord
   has_many :conversations, dependent: :destroy
   has_many :generate_image_requests, dependent: :destroy
   has_many :generate_text_requests, dependent: :destroy
+  has_many :generate_text_presets_users, dependent: :destroy
+  has_many :generate_text_presets, through: :generate_text_presets_users
   has_many :memos, dependent: :destroy
   has_many :transcriptions, through: :memos
   has_many :transcription_summaries, through: :transcriptions, source: :summary

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_17_161901) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_17_191052) do
   create_schema "rollback"
 
   # These are extensions that must be enabled in order to support this database
@@ -86,13 +86,22 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_17_161901) do
 
   create_table "generate_text_presets", force: :cascade do |t|
     t.string "name", null: false
-    t.string "description", null: false
+    t.string "description"
     t.text "system_message", null: false
     t.float "temperature", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "preset_type", null: false
     t.check_constraint "preset_type = ANY (ARRAY['default'::text, 'custom'::text])", name: "preset_type_check"
+  end
+
+  create_table "generate_text_presets_users", force: :cascade do |t|
+    t.bigint "generate_text_preset_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["generate_text_preset_id"], name: "index_generate_text_presets_users_on_generate_text_preset_id"
+    t.index ["user_id"], name: "index_generate_text_presets_users_on_user_id"
   end
 
   create_table "generate_text_requests", force: :cascade do |t|
@@ -208,6 +217,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_17_161901) do
   add_foreign_key "conversations", "memos"
   add_foreign_key "conversations", "users"
   add_foreign_key "generate_image_requests", "users"
+  add_foreign_key "generate_text_presets_users", "generate_text_presets"
+  add_foreign_key "generate_text_presets_users", "users"
   add_foreign_key "generate_text_requests", "conversations"
   add_foreign_key "generate_text_requests", "generate_text_presets"
   add_foreign_key "generate_text_requests", "users"
