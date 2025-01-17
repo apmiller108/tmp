@@ -28,7 +28,7 @@
                     = gtr_fields.label :generate_text_preset_id, 'Preset'
                 .g-col-1
                   .form-floating
-                    = gtr_fields.select :temperature, 0.step(to: 1, by: 0.1).map { |n| n = n.round(1); [n, n] }, {},
+                    = gtr_fields.select :temperature, helpers.temp_select_options, {},
                     { class: 'form-select', data: { 'prompt-form-target' => 'temperatureSelect' } }
                     = gtr_fields.label :temperature, 'Temp'
           .grid.prompt-input-container

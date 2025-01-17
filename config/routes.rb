@@ -40,6 +40,7 @@ Rails.application.routes.draw do
   end
 
   resources :generate_text_requests, only: %i[create destroy]
+  resources :generate_text_presets
   resources :generate_image_requests, only: %i[create]
 
   resources :blobs, only: %i[show], param: :active_storage_blob_id

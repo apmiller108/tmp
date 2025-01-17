@@ -1,0 +1,26 @@
+.container-fluid.mt-4
+  .row.mb-3
+    .col-12.d-flex.justify-content-between.align-items-center
+      %h1 Generate Text Presets
+      = link_to 'Create New Preset', new_generate_text_preset_path, class: 'btn btn-primary'
+
+  .row
+    .col-md-8.offset-md-2
+      - if @generate_text_presets.any?
+        .list-group.shadow-sm
+          - @generate_text_presets.each do |preset|
+            .preset.list-group-item
+              .d-flex.justify-content-between.align-items-start
+                .d-flex.flex-column
+                  %h5.mb-1= preset.name
+                  %p.text-muted.mb-1= truncate(preset.description, length: 100)
+                %div
+                  %span.badge.bg-primary= "Temp: #{preset.temperature}"
+              .btn-group.mt-2
+                = link_to 'Edit', edit_generate_text_preset_path(preset), class: 'btn btn-sm btn-outline-secondary'
+                = link_to 'Delete', generate_text_preset_path(preset), method: :delete, data: { confirm: t('confirm') },
+                class: 'btn btn-sm btn-outline-danger'
+      - else
+        .alert.alert-info.text-center
+          %p No generate text presets found.
+

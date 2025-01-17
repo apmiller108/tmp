@@ -8,6 +8,8 @@ class GenerateTextRequest < ApplicationRecord
     bold, italic, links, tables, lists, code blocks, and blockquotes.
   TXT
 
+  TEMPERATURE_VALUES = 0.step(to: 1, by: 0.1).map { _1.round(1) }
+
   # Stores the raw JSON response from the HTTP request to the LLM
   store_accessor :response
 
@@ -19,6 +21,7 @@ class GenerateTextRequest < ApplicationRecord
 
   validates :text_id, presence: true, length: { maximum: 50 }
   validates :prompt, presence: true, length: { maximum: 24_000 }
+  validates :temperature, inclusion: { in: TEMPERATURE_VALUES }, allow_nil: true
 
   def conversation
     super || NullConversation.new
