@@ -6,7 +6,7 @@ namespace :conversations do
       requests = conversation.generate_text_requests.order(:created_at)
       conversation.read_attribute(:exchange).select { |e| e['role'] == 'assistant' }
                   .each_with_index do |exchange, i|
-        next if requests[i].response.present?
+        next if requests[i].nil? || requests[i].response.present?
 
         requests[i].response = {
           'id' => "migrated_#{Time.current}",

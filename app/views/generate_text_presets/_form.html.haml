@@ -1,0 +1,19 @@
+= form_with(model: @generate_text_preset, local: true, class: 'needs-validation', novalidate: true) do |form|
+  .card-body
+    .mb-3
+      = form.label :name, class: 'form-label'
+      = form.text_field :name, class: 'form-control', required: true, minlength: 3, maxlength: 20
+
+    .mb-3
+      = form.label :system_message, class: 'form-label'
+      = form.text_area :system_message, class: 'form-control', required: true, rows: 4, maxlength: 500
+
+    .mb-3
+      = form.label :description, class: 'form-label'
+      = form.text_area :description, class: 'form-control', rows: 1, maxlength: 100
+
+    .mb-3
+      = form.label :temperature, class: 'form-label'
+      = form.select :temperature, temp_select_options, {} , class: 'form-select'
+  .card-footer
+    = form.submit 'Save Preset', class: 'btn btn-primary'
