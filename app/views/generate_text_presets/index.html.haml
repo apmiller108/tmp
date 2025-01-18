@@ -19,10 +19,14 @@
                   %span.updated_at.mb-2= "Updated #{time_ago_in_words(preset.updated_at)} ago"
                   .d-flex.justify-content-end
                     %span.badge.bg-primary= "Temp: #{preset.temperature}"
-              .btn-group
-                = link_to 'Edit', edit_generate_text_preset_path(preset), class: 'btn btn-sm btn-outline-secondary'
-                = link_to 'Delete', generate_text_preset_path(preset), data: { turbo_method: :delete, turbo_confirm: t('confirm') },
-                class: 'btn btn-sm btn-outline-danger'
+              %div{ data: { controller: 'tooltip' }}
+                = link_to edit_generate_text_preset_path(preset), class: 'btn icon-btn icon-btn-sm',
+                data: { 'bs-toggle' => 'tooltip', 'bs-title' => t('edit') }  do
+                  %i.bi.bi-pencil-square.text-secondary
+                = link_to preset, data: { turbo_method: 'delete', turbo_confirm: t('confirm'),
+                                                        'bs-toggle' => 'tooltip', 'bs-title' => t('delete') },
+                                                        class: 'btn icon-btn icon-btn-sm' do
+                  %i.bi.bi-trash3.text-danger
       - else
         .alert.alert-info.text-center
           %p No generate text presets found.

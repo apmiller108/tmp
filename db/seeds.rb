@@ -8,11 +8,6 @@
 
 puts 'Creating users...'
 users = []
-users << User.find_or_create_by!(email: 'alex@example.com') do |user|
-  user.password = 'Password!'
-  user.password_confirmation = 'Password!'
-end
-
 users << User.find_or_create_by!(email: 'rick@example.com') do |user|
   user.password = 'Password!'
   user.password_confirmation = 'Password!'
