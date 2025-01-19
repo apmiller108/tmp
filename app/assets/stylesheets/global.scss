@@ -77,3 +77,10 @@
   overflow: auto;
   scrollbar-width: none;
 }
+
+a[disabled] {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.6;
+}
+

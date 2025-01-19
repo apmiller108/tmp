@@ -1,18 +1,14 @@
-.container.mt-4
-  .row.mb-3
-    .col-md-6
+.container.mt-2
+  .grid.mb-4
+    .g-col-6.mb-2
       = link_to 'New Conversation', new_user_conversation_path(current_user), class: 'btn btn-primary'
-    .col-md-6
+    .g-col-6
       = form_with(url: user_conversations_path(current_user), method: :get, class: 'form-inline justify-content-end') do |f|
         .input-group
           = f.text_field :query, placeholder: 'Search conversations', class: 'form-control'
-          .input-group-append
-            = f.submit 'Search', class: 'btn btn-outline-secondary'
+          = f.submit 'Search', class: 'btn btn-outline-secondary'
 
-  .list-group
-    - @conversations.each do |conversation|
-      = link_to edit_user_conversation_path(current_user, conversation), class: 'list-group-item list-group-item-action' do
-        .d-flex.w-100.justify-content-between
-          %h5.mb-1= truncate(conversation.title, length: 50, separator: ' ')
-          %small.text-muted= conversation.updated_at.strftime('%B %d, %Y')
+  = render PaginationComponent.new(path: [:user_conversations_path, current_user]) do |pagination|
+    = pagination.with_container do
+      #conversations.list-group
 

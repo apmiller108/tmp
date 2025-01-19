@@ -6,11 +6,13 @@ class ConversationsController < ApplicationController
   before_action :verify_user_id, only: %i[create update]
 
   def index
-    @conversations = current_user.conversations.order(created_at: :desc)
-    @conversations = @conversations.where(memo_id: search_params[:q][:memo_id]) if search_params.dig(:q, :memo_id)
+    relation = current_user.conversations
+    relation = relation.where(memo_id: search_params[:q][:memo_id]) if search_params.dig(:q, :memo_id)
+    @conversations, @cursor = Paginate.call(relation:, limit: 10, cursor: params[:c], order: { updated_at: :desc })
 
     respond_to do |format|
       format.html
+      format.turbo_stream
       format.json do
         render json: @conversations.as_json(only: %i[id created_at updated_at]), status: :ok
       end
@@ -90,9 +92,9 @@ class ConversationsController < ApplicationController
     @conversation.destroy
     respond_to do |format|
       format.turbo_stream do
-        redirect_to user_conversations_path(current_user), status: :see_other, notice: 'Conversation was deleted'
+        render turbo_stream: turbo_stream.remove(@conversation)
       end
-      format.html { redirect_to user_conversations_path(current_user) }
+      format.html { redirect_to user_conversations_path(current_user), notice: 'Conversation deleted' }
     end
   end
 

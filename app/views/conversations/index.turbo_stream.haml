@@ -1,0 +1,16 @@
+= render PaginationComponent.new(cursor: @cursor, container_id: :conversations,
+                                 path: [:user_conversations_path, current_user]) do |pagination|
+  = pagination.with_list do
+    - @conversations.each do |conversation|
+      .list-group-item.list-group-item-action.d-flex.w-100.justify-content-between{ id: dom_id(conversation) }
+        = link_to edit_user_conversation_path(current_user, conversation) do
+          %h5.mb-1= truncate(conversation.title, length: 50, separator: ' ')
+        .d-flex.justify-content-between.align-items-center
+          .text-muted.me-3= conversation.updated_at.strftime('%B %d, %Y')
+          = link_to user_conversation_path(current_user, conversation),
+            class: 'float-end fs-5',
+            disabled: conversation.memo_id.present?,
+            data: { turbo_method: 'delete', turbo_confirm: t('confirm'),
+                  'bs-toggle' => 'tooltip',
+                  'bs-title' => t('delete', name: t('conversation.name')) } do
+            %i.bi-trash3.text-black
