@@ -23,10 +23,22 @@ class PromptFormComponent < ApplicationViewComponent
     @opts[:disabled]
   end
 
+  def preset_options
+    GenerateTextPreset.for_user_options(current_user.id).pluck(:name, :id)
+  end
+
+  def after_create_preset_redirect_path
+    if conversation.persisted?
+      user_conversation_path(current_user, conversation)
+    else
+      new_user_conversation_path(current_user)
+    end
+  end
+
   private
 
   def last_used_options
-    request = generate_text_requests.completed.last || generate_text_requests.in_progress.last
+    request = generate_text_requests.last
 
     if request
       {

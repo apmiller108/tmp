@@ -13,7 +13,7 @@ class GenerateTextPresetsController < ApplicationController
       if @generate_text_preset.save
         current_user.generate_text_presets << @generate_text_preset
         format.turbo_stream do
-          redirect_to generate_text_presets_path, status: :see_other
+          redirect_to after_create_redirect_path(@generate_text_preset), status: :see_other
         end
       else
         format.turbo_stream do
@@ -70,6 +70,14 @@ class GenerateTextPresetsController < ApplicationController
   end
 
   private
+
+  def after_create_redirect_path(preset)
+    if params[:redirect_after_create]
+      "#{params[:redirect_after_create]}?text_preset_id=#{preset.id}"
+    else
+      generate_text_presets_path
+    end
+  end
 
   def generate_text_preset_params
     params.require(:generate_text_preset).permit(:name, :description, :system_message, :temperature)

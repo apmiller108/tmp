@@ -21,11 +21,13 @@
                     = gtr_fields.collection_select :model, GenerativeText::Anthropic::MODELS.values, :api_name, :name, {},
                     { class: 'form-select', data: { 'prompt-form-target' => 'modelSelect' } }
                     = gtr_fields.label :model, 'Model'
-                .g-col-2
+                .g-col-2.d-flex.align-items-center
                   .form-floating
-                    = gtr_fields.collection_select :generate_text_preset_id, GenerateTextPreset.all, :id, :name, { include_blank: true },
+                    = gtr_fields.select :generate_text_preset_id, preset_options, { include_blank: true },
                       { class: 'form-select', data: { 'prompt-form-target' => 'presetSelect' } }
                     = gtr_fields.label :generate_text_preset_id, 'Preset'
+                  = link_to new_generate_text_preset_path(redirect_after_create: after_create_preset_redirect_path), class: 'icon-btn' do
+                    %i.bi.bi-plus{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => t('generate_text_preset.add') }}
                 .g-col-1
                   .form-floating
                     = gtr_fields.select :temperature, helpers.temp_select_options, {},

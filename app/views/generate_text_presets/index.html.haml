@@ -24,7 +24,7 @@
                 data: { 'bs-toggle' => 'tooltip', 'bs-title' => t('edit') }  do
                   %i.bi.bi-pencil-square.text-secondary
                 = link_to preset, data: { turbo_method: 'delete', turbo_confirm: t('confirm'),
-                                                        'bs-toggle' => 'tooltip', 'bs-title' => t('delete') },
+                                                        'bs-toggle' => 'tooltip', 'bs-title' => t('delete', name: '') },
                                                         class: 'btn icon-btn icon-btn-sm' do
                   %i.bi.bi-trash3.text-danger
       - else

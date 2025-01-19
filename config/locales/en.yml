@@ -45,6 +45,8 @@ en:
   download_image: 'Download image'
   download_to_save: 'Download to save a copy'
   edit: 'Edit'
+  generate_text_preset:
+    add: 'Add text preset'
   memo:
     content: 'Content'
     create: 'Create Memo'

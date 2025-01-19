@@ -148,16 +148,18 @@ CLOSED: [2025-01-17 Fri 08:27]
   - [X] update conversation
   - [X] delete conversation
 * TODO normalize the routes
-* TODO custom presets [2/8]
+* TODO custom presets [6/8]
   - [X] Add preset_type enum to generate_text_presets table (default, custom)
   - [X] Add join table users_presets. belongs to user and preset
-  - [ ] Add route and CRUD actions
-  - [ ] Add the views
-  - [ ] Make and name your own presets
+  - [X] Add route and CRUD actions
+  - [X] Add the views
+  - [X] Make and name your own presets
   - [ ] Link to new preset from conversation
   - [ ] Cache a reference to the conversation it was linked from so when
     creating it redirects back to the conversation
-  - [ ] Make custom presets available in the preset drop down
+  - [X] Make custom presets available in the preset drop down
+* TODO find another way to cache show_options
+  Maybe use local storage?
 * TODO support adding files to the prompt
   - [ ] implement prompt caching for large user messages
         https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching

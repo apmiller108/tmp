@@ -68,7 +68,7 @@ export default class PromptFormController extends Controller {
       this.dispatch('promptOptionsShow', { detail: {} })
     }
 
-    history.pushState({}, '', url);
+    history.replaceState({}, '', url);
   }
 
   // If there is an error in the background job, enabled the form
