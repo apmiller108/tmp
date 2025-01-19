@@ -14,6 +14,7 @@ export default class PromptFormController extends Controller {
     this.formTarget.addEventListener('submit', this.disableForm.bind(this))
     this.textIdTarget.value = createGenTextId();
     this.showOptions()
+    this.setPreset()
   }
 
   disconnect() {
@@ -33,6 +34,14 @@ export default class PromptFormController extends Controller {
       if (!this.optionsTarget.classList.contains('show')) {
         this.showOptionsButtonTarget.click()
       }
+    }
+  }
+
+  setPreset() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const presetId = urlParams.get('text_preset_id');
+    if (presetId) {
+      this.presetSelectTarget.value = presetId
     }
   }
 

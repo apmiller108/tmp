@@ -5,6 +5,7 @@ class GenerateTextPresetsController < ApplicationController
 
   def new
     @generate_text_preset = current_user.generate_text_presets.new
+    @redirect_after_create = params[:redirect_after_create]
   end
 
   def create

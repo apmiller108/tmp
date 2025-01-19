@@ -1,4 +1,5 @@
-= form_with(model: @generate_text_preset, local: true, class: 'needs-validation', novalidate: true) do |form|
+= form_with(model: @generate_text_preset) do |form|
+  = hidden_field_tag :redirect_after_create, @redirect_after_create
   .card-body
     .mb-3
       = form.label :name, class: 'form-label'

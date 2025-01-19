@@ -1,5 +1,6 @@
 class ConversationsController < ApplicationController
-  layout 'conversations'
+  layout 'conversations', except: :index
+  layout 'application', only: :index
 
   before_action :set_conversation, only: %i[update destroy]
   before_action :verify_user_id, only: %i[create update]
