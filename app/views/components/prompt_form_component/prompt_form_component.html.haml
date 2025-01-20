@@ -25,7 +25,8 @@
                     = gtr_fields.select :generate_text_preset_id, preset_options, { include_blank: true },
                       { class: 'form-select', data: { 'prompt-form-target' => 'presetSelect' } }
                     = gtr_fields.label :generate_text_preset_id, 'Preset'
-                  = link_to new_generate_text_preset_path(redirect_after_create: after_create_preset_redirect_path), class: 'icon-btn' do
+                  = link_to new_generate_text_preset_path(redirect_after_create: after_create_preset_redirect_path),
+                  class: 'icon-btn', id: 'new_preset_link' do
                     %i.bi.bi-plus{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => t('generate_text_preset.add') }}
                 .g-col-1
                   .form-floating

@@ -163,6 +163,8 @@ CLOSED: [2025-01-18 Sat 23:49]
 * DONE find another way to cache show_options
 CLOSED: [2025-01-19 Sun 20:24]
   Maybe use local storage?
+* TODO preset updates [/]
+  - [ ] auto select the temperature of the preset
 * TODO normalize the routes
 * TODO support adding files to the prompt
   - [ ] implement prompt caching for large user messages

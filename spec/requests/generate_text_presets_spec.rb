@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Generate text presets', type: :request do
   let(:user) { create(:user) }
   let(:preset) { create(:generate_text_preset, user:) }
-  
+
   before { sign_in user }
 
   describe 'GET #index' do
@@ -44,9 +44,7 @@ RSpec.describe 'Generate text presets', type: :request do
     it_behaves_like 'an authenticated route'
 
     it 'creates a new preset' do
-      expect {
-        request
-      }.to change(user.generate_text_presets, :count).by(1)
+      expect { request }.to change(user.generate_text_presets, :count).by(1)
     end
 
     it 'redirects to index page' do
@@ -75,12 +73,12 @@ RSpec.describe 'Generate text presets', type: :request do
     end
 
     context 'with invalid parameters' do
-      let(:invalid_params) do
+      let(:params) do
         { generate_text_preset: { name: '' } }
       end
 
       it 'returns unprocessable entity status' do
-        post generate_text_presets_path, params: invalid_params, as: :turbo_stream
+        request
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
@@ -155,4 +153,3 @@ RSpec.describe 'Generate text presets', type: :request do
     end
   end
 end
-
