@@ -1,7 +1,7 @@
 require 'system_helper'
 require 'sidekiq/testing'
 
-RSpec.describe 'create conversation', type: :system do
+RSpec.describe 'update conversation', type: :system do
   let!(:user) { create :user, :with_setting }
 
   let(:style_preset) { 'comic-book' }
@@ -80,7 +80,9 @@ RSpec.describe 'create conversation', type: :system do
       find("option[value='#{temperature}']").select_option
     end
 
-    find('button[type=submit]').click
+    within('.c-prompt-form') do
+      find('button[type=submit]').click
+    end
 
     page.driver.wait_for_network_idle
 

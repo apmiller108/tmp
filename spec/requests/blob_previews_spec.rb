@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'BlobPreviews', type: :request do
-  describe 'GET /show' do
+  describe 'GET #show' do
     subject { response }
 
     let(:request) { get "/blob_previews/#{blob.id}", headers: }
