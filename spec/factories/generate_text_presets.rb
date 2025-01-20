@@ -9,5 +9,6 @@ FactoryBot.define do
       'these challenges might be addressed.'
     end
     temperature { 1 }
+    preset_type { 'default' }
   end
 end

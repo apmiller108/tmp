@@ -1,10 +1,12 @@
 import { Controller } from '@hotwired/stimulus'
 import { createGenTextId } from '@javascript/helpers'
 import ToolTippable from '@javascript/mixins/ToolTippable'
+import LocalStorage from '@javascript/LocalStorage'
+import { Collapse } from 'bootstrap'
 
 export default class PromptFormController extends Controller {
   static targets = ['promptInput', 'userId', 'conversationId', 'form', 'submitButton',
-                    'showOptionsInput', 'showOptionsButton', 'options', 'temperatureSelect',
+                    'showOptionsButton', 'options', 'temperatureSelect',
                     'modelSelect', 'presetSelect', 'textId']
 
   connect() {
@@ -28,12 +30,13 @@ export default class PromptFormController extends Controller {
   }
 
   showOptions() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const showOptions = urlParams.get('show_options');
-    if (showOptions === 'true') {
-      if (!this.optionsTarget.classList.contains('show')) {
-        this.showOptionsButtonTarget.click()
-      }
+    const localStore = new LocalStorage()
+    const options = new Collapse(this.optionsTarget, {
+      toggle: false
+    })
+
+    if (localStore.getConvoShowOptions() === 'true') {
+      options.show()
     }
   }
 
@@ -64,20 +67,16 @@ export default class PromptFormController extends Controller {
   }
 
   onClickShowOptions() {
-    let url = new URL(window.location.href);
+    const localStore = new LocalStorage()
 
-    if (this.showOptionsInputTarget.value == 'true') {
-      this.showOptionsInputTarget.value = 'false'
-      url.searchParams.set('show_options', 'false');
+    if (localStore.getConvoShowOptions() == 'true') {
+      localStore.setConvoShowOptions(false)
       this.showOptionsButtonTarget.querySelector('i').classList.remove('down')
     } else {
-      this.showOptionsInputTarget.value = 'true'
-      url.searchParams.set('show_options', 'true');
+      localStore.setConvoShowOptions(true)
       this.showOptionsButtonTarget.querySelector('i').classList.add('down')
       this.dispatch('promptOptionsShow', { detail: {} })
     }
-
-    history.replaceState({}, '', url);
   }
 
   // If there is an error in the background job, enabled the form

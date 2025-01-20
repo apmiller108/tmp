@@ -33,7 +33,7 @@ class ConversationsController < ApplicationController
       if conversation.save
         enqueue_generate_text_job(conversation.generate_text_requests.created.last)
         format.turbo_stream do
-          redirect_to edit_user_conversation_path(current_user, conversation, redirect_query_params), status: :see_other
+          redirect_to edit_user_conversation_path(current_user, conversation), status: :see_other
         end
       else
         format.turbo_stream do
@@ -44,7 +44,7 @@ class ConversationsController < ApplicationController
                    turbo_stream.update(flash_component.id, flash_component),
                    turbo_stream.replace(
                      'prompt-form',
-                     PromptFormComponent.new(conversation:, show_options:).render_in(view_context)
+                     PromptFormComponent.new(conversation:).render_in(view_context)
                    )
                  ],
                  status: :unprocessable_entity
@@ -66,7 +66,7 @@ class ConversationsController < ApplicationController
         enqueue_generate_text_job(generate_text_request)
         format.turbo_stream do
           render 'conversations/update',
-                 locals: { conversation: @conversation, show_options:, generate_text_request: },
+                 locals: { conversation: @conversation, generate_text_request: },
                  status: :ok
         end
         format.json do
@@ -124,16 +124,6 @@ class ConversationsController < ApplicationController
 
   def generate_text_requests_attributes
     conversation_params[:generate_text_requests_attributes]
-  end
-
-  def redirect_query_params
-    {
-      show_options:
-    }
-  end
-
-  def show_options
-    ActiveModel::Type::Boolean.new.cast(params[:show_options].downcase) if params[:show_options]
   end
 
   def search_params

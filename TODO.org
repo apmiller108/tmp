@@ -160,7 +160,8 @@ CLOSED: [2025-01-18 Sat 23:49]
   - [X] Make custom presets available in the preset drop down
   - [X] on redirect to conversations set the new preset selected option
   - [X] link to gen text presets from settings
-* TODO find another way to cache show_options
+* DONE find another way to cache show_options
+CLOSED: [2025-01-19 Sun 20:24]
   Maybe use local storage?
 * TODO normalize the routes
 * TODO support adding files to the prompt

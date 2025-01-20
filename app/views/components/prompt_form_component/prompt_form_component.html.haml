@@ -4,7 +4,6 @@
       = gtr_fields.hidden_field :conversation_id, data: { 'prompt-form-target' => 'conversationId' }
       = gtr_fields.hidden_field :user_id, data: { 'prompt-form-target' => 'userId' }
       = gtr_fields.hidden_field :text_id, data: { 'prompt-form-target' => 'textId' }
-      = hidden_field_tag :show_options, show_options?, data: { 'prompt-form-target' => 'showOptionsInput' }
       .grid{ style: '--bs-gap: 0.5rem;'}
         .g-start-2.g-col-11.form-container
           .options.d-flex.justify-content-start.align-items-center
@@ -14,7 +13,7 @@
                                                    'data-prompt-form-target' => 'showOptionsButton',
                                                    'data-action' => 'click->prompt-form#onClickShowOptions:prevent' }
                 %i.bi.bi-chevron-up{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => 'toggle options' }}
-            .collapse.mb-2#advanced-options{ class: show_options? && 'show', data: { 'prompt-form-target' => 'options' } }
+            .collapse.mb-2#advanced-options{ data: { 'prompt-form-target' => 'options' } }
               .grid
                 .g-col-3
                   .form-floating
