@@ -7,7 +7,7 @@ import { Collapse } from 'bootstrap'
 export default class PromptFormController extends Controller {
   static targets = ['promptInput', 'userId', 'conversationId', 'form', 'submitButton',
                     'showOptionsButton', 'options', 'temperatureSelect',
-                    'modelSelect', 'presetSelect', 'textId']
+    'modelSelect', 'presetSelect', 'textId']
 
   connect() {
     ToolTippable.connect.bind(this)()
@@ -17,12 +17,17 @@ export default class PromptFormController extends Controller {
     this.textIdTarget.value = createGenTextId();
     this.showOptions()
     this.setPreset()
+    this.setTemperature()
   }
 
   disconnect() {
     document.removeEventListener('keypress', this.submitOnEnter.bind(this))
     document.removeEventListener('submit', this.disableForm.bind(this))
     ToolTippable.disconnect.bind(this)()
+  }
+
+  get generateTextPresetData() {
+    return JSON.parse(this.presetSelectTarget.dataset.presetJson)
   }
 
   focusOnPromptInput() {
@@ -46,6 +51,11 @@ export default class PromptFormController extends Controller {
     if (presetId) {
       this.presetSelectTarget.value = presetId
     }
+  }
+
+  setTemperature() {
+    const presetId = this.presetSelectTarget.value
+    this.setTemperatureFromSelectedPreset(presetId)
   }
 
   submitOnEnter(e) {
@@ -78,6 +88,23 @@ export default class PromptFormController extends Controller {
       this.dispatch('promptOptionsShow', { detail: {} })
     }
   }
+
+  onChangePreset(e) {
+    const presetId = e.target.value
+    this.setTemperatureFromSelectedPreset(presetId)
+  }
+
+  setTemperatureFromSelectedPreset(presetId) {
+    if (presetId) {
+      const presetData = this.generateTextPresetData.find(d => d.id === Number(presetId))
+      const temperatureValues = Array.from(this.temperatureSelectTarget.querySelectorAll('option')).map(o => o.value)
+
+      if (presetData && temperatureValues.includes(presetData.temperature)) {
+        this.temperatureSelectTarget.value = presetData.temperature
+      }
+    }
+  }
+
 
   // If there is an error in the background job, enabled the form
   onGenerateText() {

@@ -23,7 +23,8 @@
                 .g-col-2.d-flex.align-items-center
                   .form-floating
                     = gtr_fields.select :generate_text_preset_id, preset_options, { include_blank: true },
-                      { class: 'form-select', data: { 'prompt-form-target' => 'presetSelect' } }
+                      { class: 'form-select', data: { 'prompt-form-target' => 'presetSelect', 'preset-json' => preset_json,
+                                                      action: 'change->prompt-form#onChangePreset' } }
                     = gtr_fields.label :generate_text_preset_id, 'Preset'
                   = link_to new_generate_text_preset_path(redirect_after_create: after_create_preset_redirect_path),
                   class: 'icon-btn', id: 'new_preset_link' do

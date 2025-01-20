@@ -20,7 +20,13 @@ class PromptFormComponent < ApplicationViewComponent
   end
 
   def preset_options
-    GenerateTextPreset.for_user_options(current_user.id).pluck(:name, :id)
+    presets.map { |p| [p.name, p.id] }
+  end
+
+  def preset_json
+    presets.map do |p|
+      { id: p.id, temperature: p.temperature.to_s }
+    end.to_json
   end
 
   def after_create_preset_redirect_path
@@ -48,5 +54,9 @@ class PromptFormComponent < ApplicationViewComponent
 
   def default_values
     { model: current_user.setting.text_model, user: current_user }.merge(last_used_options)
+  end
+
+  def presets
+    @presets ||= GenerateTextPreset.for_user_options(current_user.id)
   end
 end

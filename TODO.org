@@ -163,14 +163,15 @@ CLOSED: [2025-01-18 Sat 23:49]
 * DONE find another way to cache show_options
 CLOSED: [2025-01-19 Sun 20:24]
   Maybe use local storage?
-* TODO preset updates [/]
-  - [ ] auto select the temperature of the preset
-* TODO normalize the routes
+* DONE preset updates [1/1]
+CLOSED: [2025-01-20 Mon 13:49]
+  - [X] auto select the temperature of the preset
 * TODO support adding files to the prompt
   - [ ] implement prompt caching for large user messages
         https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching
 * TODO Add a scrollspy to conversations
   - [ ] each heading can be the first few words of the user message
+* TODO normalize the routes
 * TODO link to memo/conversation
 * TODO Edit the last prompt. Trigger regenerate the last assistant response.
 * TODO search conversations

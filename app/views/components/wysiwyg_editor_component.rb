@@ -30,7 +30,9 @@ class WysiwygEditorComponent < ApplicationViewComponent
   end
 
   def gen_text_preset_options_json
-    GenerateTextPreset.all.map { |p| { value: p.id, label: p.name.titleize, temperature: p.temperature.to_s } }.to_json
+    GenerateTextPreset.for_user_options(current_user).map do |p|
+      { value: p.id, label: p.name.titleize, temperature: p.temperature.to_s }
+    end.to_json
   end
 
   def gen_text_temperature_options_json
