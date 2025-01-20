@@ -27,28 +27,6 @@ RSpec.describe PromptFormComponent, type: :component do
     end
   end
 
-  describe '#show_options?' do
-    before do
-      with_current_user(user) { render_inline component }
-    end
-
-    context 'when show_options is true' do
-      let(:opts) { { show_options: true } }
-
-      it 'sets the hidden field to true' do
-        expect(page).to have_css 'input[value="true"]#show_options', visible: false
-      end
-    end
-
-    context 'when show_options is false' do
-      let(:opts) { { show_options: false } }
-
-      it 'sets the hidden field to true' do
-        expect(page).to have_css 'input[value="false"]#show_options', visible: false
-      end
-    end
-  end
-
   describe '#disabled?' do
     before do
       with_current_user(user) { render_inline component }
@@ -100,7 +78,7 @@ RSpec.describe PromptFormComponent, type: :component do
 
       before do
         allow(conversation).to receive(:generate_text_requests).and_return(generate_text_requests)
-        allow(generate_text_requests).to receive(:completed).and_return [previous_request]
+        allow(generate_text_requests).to receive(:last).and_return previous_request
         with_current_user(user) { render_inline component }
       end
 

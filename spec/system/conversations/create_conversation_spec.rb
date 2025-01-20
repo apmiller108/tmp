@@ -71,7 +71,7 @@ RSpec.describe 'create conversation', type: :system do
     find('button[type=submit]').click
 
     conversation = user.conversations.last
-    expect(page).to have_current_path edit_user_conversation_path(user, conversation, show_options: true)
+    expect(page).to have_current_path edit_user_conversation_path(user, conversation)
 
     expect(page).to have_css('.segment-user', text: prompt)
 

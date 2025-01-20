@@ -72,7 +72,7 @@ RSpec.describe 'create conversation', type: :system do
     fill_in 'conversation_generate_text_requests_attributes_0_prompt', with: prompt
 
     find('.options-toggle-btn').click
-    expect(page).to have_current_path edit_user_conversation_path(user, conversation, show_options: true)
+    expect(page).to have_current_path edit_user_conversation_path(user, conversation)
 
     within('#advanced-options') do
       find("option[value='#{claude_model.api_name}']").select_option

@@ -9,7 +9,9 @@ class GenerateTextPresetsController < ApplicationController
   end
 
   def create
-    @generate_text_preset = current_user.generate_text_presets.new(generate_text_preset_params.merge(preset_type: :custom))
+    @generate_text_preset = current_user.generate_text_presets.new(
+      generate_text_preset_params.merge(preset_type: :custom)
+    )
     respond_to do |format|
       if @generate_text_preset.save
         current_user.generate_text_presets << @generate_text_preset

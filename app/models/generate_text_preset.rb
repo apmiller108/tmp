@@ -14,7 +14,8 @@ class GenerateTextPreset < ApplicationRecord
     custom: 'custom'
   }
 
-  validates :preset_type, inclusion: { in: preset_types.values, message: "%<value>s must be one of #{preset_types.values}" }
+  validates :preset_type, inclusion: { in: preset_types.values,
+                                       message: "%<value>s must be one of #{preset_types.values}" }
 
   scope :for_user_options, ->(user_id) {
     left_joins(generate_text_presets_user: :user)
