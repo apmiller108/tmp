@@ -11,12 +11,7 @@ class GenerateTextRequest < ApplicationRecord
   TEMPERATURE_VALUES = 0.step(to: 1, by: 0.1).map { _1.round(1) }
 
   SUPPORTED_MIME_TYPES = %w[image/jpeg image/gif image/png/ image/webp].freeze
-  has_one_attached :file do |attachable|
-    attachable.variant :for_display, { resize_to_limit: [1920, 1920],
-                                       preprocessed: true,
-                                       **ActiveStorage::Blob::WEBP_VARIANT_OPTS }
-  end
-  before_save :optimize_image, if: -> { file.attached? && file_changed? && file.blob.image? }
+  has_one_attached :file
 
   # Stores the raw JSON response from the HTTP request to the LLM
   store_accessor :response
@@ -72,19 +67,5 @@ class GenerateTextRequest < ApplicationRecord
 
     errors.add(:file, 'must be less that 10 MB') if file.blob.byte_size > 10.megabytes
     errors.add(:file, 'must be GIF, JPEG, PNG or WEBP') unless file.blob.content_type.in? SUPPORTED_MIME_TYPES
-  end
-
-  def optimize_image
-    return unless file.blob.image?
-
-    processed_image = file.variant(
-      resize_to_limit: [1920, 1920],
-      saver: {
-        strip: true,
-        quality: 80
-      }
-    ).processed
-
-    file.attach(processed_image.blob)
   end
 end

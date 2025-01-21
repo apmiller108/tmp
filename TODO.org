@@ -182,3 +182,4 @@ CLOSED: [2025-01-20 Mon 13:49]
 * TODO Move the aws invoke model response
   - [ ] Write a shared example the enforce the interface
   https://morningcoffee.io/interfaces-in-ruby.html
+* TODO look into using https://runware.ai/
