@@ -1,5 +1,3 @@
-version: "3.6"
-
 x-base: &base
   env_file: .env
   tty: true
@@ -24,6 +22,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    mem_limit: 200m
   redis:
     image: redis:7
     restart: always
@@ -36,6 +35,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    mem_limit: 100m
   ws:
     image: anycable/anycable-go:1.4
     ports:
@@ -44,6 +44,7 @@ services:
     depends_on:
       redis:
         condition: service_healthy
+    mem_limit: 100m
   app:
     <<: *base
     command: bash -c "rm -f tmp/pids/server.pid && /rails/bin/dev"
@@ -59,6 +60,7 @@ services:
     depends_on:
       database:
         condition: service_healthy
+    mem_limit: 500m
   sidekiq:
     <<: *base
     depends_on:
@@ -71,6 +73,7 @@ services:
     volumes:
       - ".:/rails"
       - "/rails/tmp" # don't mount tmp
+    mem_limit: 500m
   anycable:
     <<: *base
     command: bundle exec anycable
@@ -86,6 +89,7 @@ services:
     env_file:
       - ".env"
       - ".anycable.env"
+    mem_limit: 200m
   nginx:
     image: nginx:1.27
     links:
@@ -95,6 +99,7 @@ services:
       - "./app/assets:/app/public"
     ports:
       - "3000:80"
+    mem_limit: 100m
   chrome: # docker-compose up -d chrome
     image: browserless/chrome:latest # See https://www.browserless.io/docs/docker
     ports:
@@ -104,6 +109,7 @@ services:
     environment:
       PORT: 3333
       CONNECTION_TIMEOUT: -1 # No timeout
+    mem_limit: 250m
 
 volumes:
   redis:
