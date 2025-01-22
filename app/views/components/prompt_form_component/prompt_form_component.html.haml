@@ -1,5 +1,5 @@
 .c-prompt-form.mb-5{ id:, data: { controller: 'prompt-form', action: 'my-channel:generateText@window->prompt-form#onGenerateText' } }
-  = form_with model: [current_user, conversation], data: { 'prompt-form-target' => 'form' } do |form|
+  = form_with model: [current_user, conversation], data: { 'prompt-form-target' => 'form', action: 'direct-uploads:start->prompt-form#disableForm' } do |form|
     = form.fields_for :generate_text_requests, generate_text_request do |gtr_fields|
       = gtr_fields.hidden_field :conversation_id, data: { 'prompt-form-target' => 'conversationId' }
       = gtr_fields.hidden_field :user_id, data: { 'prompt-form-target' => 'userId' }
@@ -42,7 +42,8 @@
                                    disabled: disabled?}
                 %i.bi.bi-send-fill
             .g-col-6
-              = gtr_fields.file_field :file, direct_upload: true, class: 'form-control mt-1'
+              .upload-progress
+                = gtr_fields.file_field :file, direct_upload: true, class: 'form-control mt-1'
 
             .g-col-6.details-fields.p-0
               %div.d-flex.align-items-center.justify-content-end.mt-1
