@@ -133,7 +133,7 @@ class ConversationsController < ApplicationController
   def conversation_params
     params.require(:conversation).permit(
       :title, :memo_id, generate_text_requests_attributes: [
-        :prompt, :text_id, :temperature, :generate_text_preset_id, :conversation_id, :user_id, :model
+        :prompt, :text_id, :temperature, :generate_text_preset_id, :conversation_id, :user_id, :model, :file
       ]
     )
   end
