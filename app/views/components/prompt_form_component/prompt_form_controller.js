@@ -62,7 +62,9 @@ export default class PromptFormController extends Controller {
     if (this.submitButtonTarget.disabled) {
       return e.preventDefault()
     }
-    if (e.key === "Enter" && !e.shiftKey) {
+
+    const value = this.promptInputTarget.value.trim()
+    if (e.key === "Enter" && !e.shiftKey && value) {
       e.preventDefault();
       this.formTarget.requestSubmit(); // requestSubmit instead of submit to submit turbo form
     }

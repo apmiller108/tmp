@@ -1,4 +1,4 @@
-.c-prompt-form{ id:, data: { controller: 'prompt-form', action: 'my-channel:generateText@window->prompt-form#onGenerateText' } }
+.c-prompt-form.mb-5{ id:, data: { controller: 'prompt-form', action: 'my-channel:generateText@window->prompt-form#onGenerateText' } }
   = form_with model: [current_user, conversation], data: { 'prompt-form-target' => 'form' } do |form|
     = form.fields_for :generate_text_requests, generate_text_request do |gtr_fields|
       = gtr_fields.hidden_field :conversation_id, data: { 'prompt-form-target' => 'conversationId' }
@@ -36,12 +36,15 @@
                     = gtr_fields.label :temperature, 'Temp'
           .grid.prompt-input-container
             .g-col-12.position-relative
-              = gtr_fields.text_area :prompt, class: 'form-control', data: { 'prompt-form-target' => 'promptInput' },
+              = gtr_fields.text_area :prompt, class: 'form-control scroll-no-bar-container', data: { 'prompt-form-target' => 'promptInput' },
                                      placeholder: 'Type a message', rows: 2
               %button.btn.icon-btn{type: 'submit', name: 'commit', data: { 'prompt-form-target' => 'submitButton' },
                                    disabled: disabled?}
                 %i.bi.bi-send-fill
-            .g-col-12.details-fields.p-0
+            .g-col-6
+              = gtr_fields.file_field :file, class: 'form-control mt-1'
+
+            .g-col-6.details-fields.p-0
               %div.d-flex.align-items-center.justify-content-end.mt-1
                 %span.label.me-2 Tokens:
                 %pre.value= conversation.token_count
