@@ -1,18 +1,20 @@
 # frozen_string_literal: true
 
 class PromptFormComponent < ApplicationViewComponent
+  ID = 'prompt-form'
+
   attr_reader :conversation, :generate_text_request
 
   delegate :generate_text_requests, to: :conversation
 
   def initialize(conversation:, **opts)
+    @opts = opts
     @conversation = conversation
     @generate_text_request = conversation.generate_text_requests.new(default_values)
-    @opts = opts
   end
 
   def id
-    'prompt-form'
+    ID
   end
 
   def disabled?
@@ -40,7 +42,7 @@ class PromptFormComponent < ApplicationViewComponent
   private
 
   def last_used_options
-    request = generate_text_requests.last
+    request = @opts.fetch(:last_request, generate_text_requests.last)
 
     if request
       {

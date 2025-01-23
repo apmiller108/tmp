@@ -41,9 +41,8 @@
               %button.btn.icon-btn{type: 'submit', name: 'commit', data: { 'prompt-form-target' => 'submitButton' },
                                    disabled: disabled?}
                 %i.bi.bi-send-fill
-            .g-col-6
-              .upload-progress
-                = gtr_fields.file_field :file, direct_upload: true, class: 'form-control mt-1'
+            .g-col-6.mt-1
+              = render FileInputComponent.new(form: gtr_fields)
 
             .g-col-6.details-fields.p-0
               %div.d-flex.align-items-center.justify-content-end.mt-1
