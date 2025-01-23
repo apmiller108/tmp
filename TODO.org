@@ -167,8 +167,12 @@ CLOSED: [2025-01-19 Sun 20:24]
 CLOSED: [2025-01-20 Mon 13:49]
   - [X] auto select the temperature of the preset
 * TODO support adding files to the prompt
+  - [X] Add file input and attachment to generate text requests
+  - [ ] Include the image in the HTTP request
   - [ ] implement prompt caching for large user messages
         https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching
+  - [ ] Look into client side validation of mime types and file size
+  - [ ] Look into backend validation of mime types and file size
 * TODO Add a scrollspy to conversations
   - [ ] each heading can be the first few words of the user message
 * TODO normalize the routes
