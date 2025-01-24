@@ -1,20 +1,20 @@
+# frozen_string_literal: true
+
 class GenerativeText
   module Anthropic
     VERSION = '2023-06-01'.freeze
     HOST = 'https://api.anthropic.com/'.freeze
     MESSAGES_PATH = '/v1/messages'.freeze
 
-    Model = Struct.new(:api_name, :name, :max_tokens, keyword_init: true)
+    def self.vendor = :anthropic
 
-    MODELS = {
-      haiku3: Model.new(api_name: 'claude-3-haiku-20240307', name: 'Claude 3 Haiku', max_tokens: 4096),
-      haiku35: Model.new(api_name: 'claude-3-5-haiku-latest', name: 'Claude 3.5 Haiku Latest', max_tokens: 8192),
-      sonnet3: Model.new(api_name: 'claude-3-sonnet-20240229', name: 'Claude 3 Sonnet', max_tokens: 4096),
-      sonnet35: Model.new(api_name: 'claude-3-5-sonnet-latest', name: 'Claude 3.5 Sonnet Latest', max_tokens: 8192),
-      opus3: Model.new(api_name: 'claude-3-opus-20240229', name: 'Claude 3 Opus', max_tokens: 4096)
-    }.with_indifferent_access.freeze
-
-    DEFAULT_MODEL = MODELS.fetch(:haiku35)
+    MODELS = [
+      Model.new(api_name: 'claude-3-haiku-20240307', name: 'Claude 3 Haiku', vendor:, max_tokens: 4096),
+      Model.new(api_name: 'claude-3-5-haiku-latest', name: 'Claude 3.5 Haiku Latest', vendor:, max_tokens: 8192),
+      Model.new(api_name: 'claude-3-5-sonnet-latest', name: 'Claude 3.5 Sonnet Latest', vendor:, max_tokens: 8192),
+      Model.new(api_name: 'claude-3-sonnet-20240229', name: 'Claude 3 Sonnet', vendor:, max_tokens: 4096),
+      Model.new(api_name: 'claude-3-opus-20240229', name: 'Claude 3 Opus', vendor:, max_tokens: 4096)
+    ].freeze
 
     ClientError = Class.new(StandardError)
   end

@@ -14,13 +14,18 @@ class ModalComponent < ApplicationViewComponent
 
   attr_reader :size
 
-  def initialize(size: nil)
+  def initialize(size: nil, centered: true)
     @size = size
+    @centered = centered
   end
 
   def bs_size_class
     return '' if size.blank?
 
     "modal-#{size}"
+  end
+
+  def position_class
+    @centered ? 'modal-dialog-centered' : ''
   end
 end

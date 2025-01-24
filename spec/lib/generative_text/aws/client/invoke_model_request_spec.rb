@@ -12,11 +12,12 @@ RSpec.describe GenerativeText::AWS::Client::InvokeModelRequest do
       top_p: 0.9
     }
   end
+  let(:model_id) { 'amazon.titan-text-express-v1' }
 
   describe '#to_h' do
     it 'returns the request as a hash' do
       expected_hash = {
-        model_id: GenerativeText::AWS::TITAN_EXPRESS,
+        model_id:,
         content_type: 'application/json',
         accept: 'application/json',
         body: {
@@ -35,16 +36,17 @@ RSpec.describe GenerativeText::AWS::Client::InvokeModelRequest do
 
     context 'with default values' do
       let(:params) { {} }
+      let(:default_model) { GenerativeText::AWS::MODELS.find { _1.api_name == 'amazon.titan-text-express-v1' } }
 
       it 'sets default values for each of the text gen config params' do
         expected_hash = {
-          model_id: GenerativeText::AWS::TITAN_EXPRESS,
+          model_id: default_model.api_name,
           content_type: 'application/json',
           accept: 'application/json',
           body: {
             'inputText' => prompt,
             'textGenerationConfig' => {
-              'maxTokenCount' => described_class::MAX_TOKENS,
+              'maxTokenCount' => default_model.max_tokens,
               'stopSequences' => [],
               'temperature' => described_class::TEMP,
               'topP' => described_class::TOP_P

@@ -56,14 +56,14 @@ RSpec.describe PromptFormComponent, type: :component do
       end
 
       it 'sets the model to the users setting model' do
-        model_name = GenerativeText::Anthropic::MODELS.values.find { _1.api_name == user.setting.text_model }.name
+        model_name = GenerativeText::MODELS.find { _1.api_name == setting.text_model }.name
         expect(page).to have_select 'conversation_generate_text_requests_attributes_0_model',
                                     selected: model_name
       end
     end
 
     context 'with previous completed request' do
-      let(:model) { GenerativeText::Anthropic::MODELS.values.sample }
+      let(:model) { GenerativeText::MODELS.sample }
       let(:temperature) { '0.7' }
       let!(:preset) { create :generate_text_preset }
       let(:generate_text_requests) { GenerateTextRequest.none }

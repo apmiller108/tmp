@@ -145,7 +145,7 @@ RSpec.describe 'Conversations', type: :request do
   describe 'PUT #update' do
     subject { response }
 
-    let(:user) { create :user }
+    let(:user) { create :user, :with_setting }
     let(:conversation) { create :conversation, user: }
     let(:headers) { { 'Accept' => 'text/vnd.turbo-stream.html' } }
     let(:request_attrs) { attributes_for :generate_text_request }

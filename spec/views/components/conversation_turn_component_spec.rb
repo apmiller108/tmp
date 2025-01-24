@@ -4,7 +4,7 @@ RSpec.describe ConversationTurnComponent, type: :component do
   let(:generate_text_request) do
     build_stubbed :generate_text_request, :with_preset, :with_response, model: model.api_name
   end
-  let(:model) { GenerativeText::Anthropic::DEFAULT_MODEL }
+  let(:model) { GenerativeText::DEFAULT_MODEL }
   let(:component) { described_class.new(generate_text_request:) }
   let(:token_count) { 1008 }
 

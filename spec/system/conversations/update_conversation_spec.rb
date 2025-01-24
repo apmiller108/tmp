@@ -2,15 +2,16 @@ require 'system_helper'
 require 'sidekiq/testing'
 
 RSpec.describe 'update conversation', type: :system do
-  let!(:user) { create :user, :with_setting }
+  let!(:user) { create :user }
+  let(:setting) { create :setting, :with_anthropic_text_model, user: }
 
   let(:style_preset) { 'comic-book' }
   let(:prompt) { 'This is my prompt' }
   let!(:generate_text_preset) { create :generate_text_preset }
   let(:assistant_response) { 'This is the assistant response.' }
-  let(:claude_model) { GenerativeText::Anthropic::MODELS.values.find { _1.api_name == user.setting.text_model } }
+  let(:model) { GenerativeText::MODELS.find { _1.api_name == setting.text_model } }
   let(:temperature) { 0.5 }
-  let(:claude_generative_text_response) do
+  let(:generative_text_response) do
     <<~JSON
       {
         "id": "msg_01DMcCdRr6gaWDuZs7Y63rhe",
@@ -40,13 +41,13 @@ RSpec.describe 'update conversation', type: :system do
     stub_request(:post, 'https://api.anthropic.com/v1/messages')
       .with(
         body: {
-          model: claude_model.api_name, max_tokens: claude_model.max_tokens,
+          model: model.api_name, max_tokens: model.max_tokens,
           temperature:,
           messages: conversation.exchange
                                 .push({ 'role' => 'user', 'content' => [{ 'type' => 'text', 'text' => prompt }] }),
           system: GenerateTextRequest.new(generate_text_preset:).system_message
         }.to_json
-      ).to_return(status: 200, body: claude_generative_text_response)
+      ).to_return(status: 200, body: generative_text_response)
   end
 
   after(:context) do
@@ -75,7 +76,7 @@ RSpec.describe 'update conversation', type: :system do
     expect(page).to have_current_path edit_user_conversation_path(user, conversation)
 
     within('#advanced-options') do
-      find("option[value='#{claude_model.api_name}']").select_option
+      find("option[value='#{model.api_name}']").select_option
       find("option[value='#{generate_text_preset.id}']").select_option
       find("option[value='#{temperature}']").select_option
     end

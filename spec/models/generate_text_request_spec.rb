@@ -106,9 +106,9 @@ RSpec.describe GenerateTextRequest, type: :model do
   end
 
   describe '#model' do
-    let(:model) { GenerativeText::Anthropic::MODELS.values.sample }
+    let(:model) { GenerativeText::MODELS.sample }
 
-    it 'returns the matching model from GenerativeText::Anthropic::MODELS' do
+    it 'returns the matching model from GenerativeText::MODELS' do
       request = build(:generate_text_request, model: model.api_name)
       expect(request.model).to eq(model)
     end

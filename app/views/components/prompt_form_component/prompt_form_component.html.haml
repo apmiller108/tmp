@@ -17,7 +17,7 @@
               .grid
                 .g-col-3
                   .form-floating
-                    = gtr_fields.collection_select :model, GenerativeText::Anthropic::MODELS.values, :api_name, :name, {},
+                    = gtr_fields.collection_select :model, GenerativeText::MODELS.sort_by(&:vendor), :api_name, :name, {},
                     { class: 'form-select', data: { 'prompt-form-target' => 'modelSelect' } }
                     = gtr_fields.label :model, 'Model'
                 .g-col-2.d-flex.align-items-center

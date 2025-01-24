@@ -2,7 +2,8 @@ require 'system_helper'
 require 'sidekiq/testing'
 
 RSpec.describe 'Create and view memo', type: :system do
-  let!(:user) { create :user, :with_setting }
+  let!(:user) { create :user }
+  let(:setting) { create :setting, :with_anthropic_text_model, user: }
 
   let(:style_preset) { 'comic-book' }
   let(:image_height) { 1024 }
@@ -12,8 +13,8 @@ RSpec.describe 'Create and view memo', type: :system do
   let(:generate_text_prompt) { 'This is my prompt' }
   let!(:generate_text_preset) { create :generate_text_preset }
   let(:generative_text) { 'This is AI slop' }
-  let(:claude_model) { GenerativeText::Anthropic::MODELS.values.find { _1.api_name == user.setting.text_model } }
-  let(:claude_generative_text_response) do
+  let(:model) { GenerativeText::MODELS.find { _1.api_name == setting.text_model } }
+  let(:generative_text_response) do
     <<~JSON
       {
         "id": "msg_01DMcCdRr6gaWDuZs7Y63rhe",
@@ -48,12 +49,12 @@ RSpec.describe 'Create and view memo', type: :system do
     stub_request(:post, 'https://api.anthropic.com/v1/messages')
       .with(
         body: {
-          model: claude_model.api_name, max_tokens: claude_model.max_tokens,
+          model: model.api_name, max_tokens: model.max_tokens,
           temperature: generate_text_preset.temperature,
           messages: [{ 'role' => 'user', 'content' => [{ 'type' => 'text', 'text' => generate_text_prompt }] }],
           system: GenerateTextRequest.new(generate_text_preset:).system_message
         }.to_json
-      ).to_return(status: 200, body: claude_generative_text_response)
+      ).to_return(status: 200, body: generative_text_response)
   end
 
   after(:context) do

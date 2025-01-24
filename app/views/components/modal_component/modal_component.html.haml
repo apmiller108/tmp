@@ -2,7 +2,7 @@
                     tabindex: -1,
                     id: self.class.id,
                     data: { controller: :modal, 'bs-backdrop' => :static, 'bs-keyboard' => 'false' }}
-  .modal-dialog{ class: bs_size_class }
+  .modal-dialog{ class: [bs_size_class, position_class] }
     .modal-content
       .modal-header{ data: { 'modal-target' => 'header' } }
         -if title?

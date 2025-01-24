@@ -1,53 +1,127 @@
 :PROPERTIES:
 :CATEGORY: tmp
 :END:
-* DONE extract Turn to class
-CLOSED: [2024-11-26 Tue 12:29]
-* DONE Add form to submit conversation [4/4]
-CLOSED: [2024-12-13 Fri 15:15]
-  - [X] Add form
-  - [X] respond with user conversation turn over turbo stream
-  - [X] respond with empty form as well that is disabled
-  - [X] onGenerateText updates conversation with user prompt and assistant
-        response. Enable the form on successful conversation update.
-* DONE create conversation Turn component
-CLOSED: [2024-11-26 Tue 14:14]
-* DONE Style edit page
-CLOSED: [2024-12-20 Fri 14:37]
-* DONE Come up with something for new conversations
-CLOSED: [2024-12-22 Sun 14:41]
-* DONE disable input on submit [3/3]
-CLOSED: [2024-12-22 Sun 19:34]
-  - [X] disable the form on submit
-  - [X] Move the onGenerateText event handler to the prompt form controller.
-  - [X] On a successful conversation update, re-enable the form, and text input
-* DONE add a spinner
-CLOSED: [2024-12-23 Mon 21:54]
-  Maybe this could be a placeholder component that is removed with the turbo
-  stream response
-* DONE format content returned by llm
-CLOSED: [2024-12-25 Wed 18:20]
-* DONE fix unable to submit prompt after validation error
-CLOSED: [2024-12-29 Sun 18:54]
-  This form is still disabled I think
-* DONE delete conversation
-CLOSED: [2024-12-30 Mon 16:27]
-  for those conversations not linked to a memo
-* DONE add copy button to assistant response
-CLOSED: [2024-12-29 Sun 19:35]
-* DONE add coversation settings (eg, temperature, system prompt etc)
-CLOSED: [2024-12-31 Tue 15:12]
-* DONE preserve advanced options collapse state
-CLOSED: [2024-12-31 Tue 23:45]
-* DONE add conversation title [7/7]
-CLOSED: [2025-01-03 Fri 14:53]
-  - [X] Show the title at the top in a fixed container.
-  - [X] Show form on click of edit icon (hide field) and put focus on input
-  - [X] Hide form and show field when input loses focus
-  - [X] Extract partial
-  - [X] On update, render turbo stream partial
-  - [X] add title to conversaions table
-  - [X] set title default based on first message
+* TODO look into using https://runware.ai/
+* TODO Move the aws invoke model response
+  - [ ] Write a shared example the enforce the interface
+  https://morningcoffee.io/interfaces-in-ruby.html
+* TODO add audio transcription to conversations
+* TODO add audio generation to conversations
+* TODO add video generation to conversations
+* TODO add image generation to conversations
+  Look into doing this via tool use
+  https://docs.anthropic.com/en/docs/build-with-claude/tool-use#single-tool-example
+* TODO search conversations
+* TODO Edit the last prompt. Trigger regenerate the last assistant response.
+* TODO link to memo/conversation
+* TODO normalize the routes
+* TODO Add a scrollspy to conversations
+  - [ ] each heading can be the first few words of the user message
+* TODO support adding files to the prompt [3/9]
+  - [X] Add file input and attachment to generate text requests
+  - [X] Refactor: normalize models across vendors. Just an array. Move default
+    to property on the struct.
+  - [X] Refactor: Add vendor to model.
+  - [ ] Pass in just the generate text request obj to invoke model, forward that
+    to the client and wrap it in a vendor specific request object.
+  - [ ] Instantiate the client based on vendor from selected model
+  - [ ] Include the image in the HTTP request
+  - [ ] implement prompt caching for large user messages
+        https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching
+  - [ ] Look into client side validation of mime types and file size
+  - [ ] Look into backend validation of mime types and file size
+* DONE preset updates [1/1]
+CLOSED: [2025-01-20 Mon 13:49]
+  - [X] auto select the temperature of the preset
+* DONE find another way to cache show_options
+CLOSED: [2025-01-19 Sun 20:24]
+  Maybe use local storage?
+* DONE custom presets [10/10]
+CLOSED: [2025-01-18 Sat 23:49]
+  - [X] Add preset_type enum to generate_text_presets table (default, custom)
+  - [X] Add join table users_presets. belongs to user and preset
+  - [X] Add route and CRUD actions
+  - [X] Add the views
+  - [X] Make and name your own presets
+  - [X] Link to new preset from conversation
+  - [X] Cache a reference to the conversation it was linked from so when
+    creating it redirects back to the conversation
+  - [X] Make custom presets available in the preset drop down
+  - [X] on redirect to conversations set the new preset selected option
+  - [X] link to gen text presets from settings
+* DONE feature specs [4/4]
+CLOSED: [2025-01-17 Fri 08:27]
+  - [X] fix memos
+  - [X] create Conversation
+  - [X] update conversation
+  - [X] delete conversation
+* DONE view component browser specs
+CLOSED: [2025-01-15 Wed 15:48]
+* DONE view component specs
+CLOSED: [2025-01-15 Wed 15:33]
+* DONE request specs [2/2]
+CLOSED: [2025-01-14 Tue 22:14]
+  - [X] finish conversation spec
+  - [X] generate text requests
+* DONE lib specs
+CLOSED: [2025-01-14 Tue 11:55]
+* DONE move flash messages to it's own stream
+CLOSED: [2025-01-05 Sun 22:20]
+* DONE extract conversation component
+CLOSED: [2024-12-29 Sun 19:07]
+  This is used for both the new and edit actions
+* DONE delete assistant response
+CLOSED: [2025-01-12 Sun 16:08]
+* DONE extract gentext generator to class
+CLOSED: [2025-01-12 Sun 10:37]
+* DONE Update total token count on successful generate requests
+CLOSED: [2025-01-11 Sat 22:27]
+* DONE Add model, temp and preset to query params after create redirect
+CLOSED: [2025-01-11 Sat 20:45]
+* DONE show token count for entire conversation
+CLOSED: [2025-01-11 Sat 19:02]
+* DONE turn meta data
+CLOSED: [2025-01-11 Sat 14:58]
+   Show model, preset, temp, token count
+   - [X] Show info icon in the tray of the assistant response.
+   - [X] On click, show the details
+* DONE fix bug where button is still disabled after submitting on edit
+CLOSED: [2025-01-11 Sat 09:53]
+* DONE redirect to edit view on first generate text request response with a disabled form [11/11]
+CLOSED: [2025-01-10 Fri 19:51]
+  - [X] add accepts_nested_attributes_for generate_text_request to conversation
+  - [X] Change the prompt form component to the conversation form component.
+    Most of the fields will be for the generate text request
+  - [X] Submit the form to the conversation post/put endpoints
+  - [X] Redirect to conversation edit on create. Enqueue the GenerateTextJob
+  - [X] Render the form and conversation turn components from the update action.
+    Enqueue the GenerateTextJob
+  - [X] Remove rendering the turbo streams from the generate text requests controller
+  - [X] Remove the hack that sets the browser history state
+  - [X] Make sure the title is editable
+  - [X] Use the show_options query param
+  - [X] Make sure generating text still works for memos
+  - [X] Fix bug where creating memo enqueues two GenerateTextJobs
+* DONE move the delete button out of the form slot
+CLOSED: [2025-01-08 Wed 21:14]
+* DONE Remove conversation::turn classes [8/8]
+CLOSED: [2025-01-08 Wed 20:15]
+  - [X] Use the gtrs in the conversation view. Refactor the
+    conversation_turn_component to get the data from gtr. It will render both
+    the user and assistant response
+  - [X] Add the concept of pending_response to gtr. Use that to determine when
+    to show the spinner
+  - [X] Implement a to_message_turn method on gtr that will return a tuple of
+    properly formatted user and assistant hashes that will be serialied for the
+    http request
+  - [X] For the exchange loop over the gtrs and call to_message_turn to produce
+    the tuple of user, assistant response
+  - [X] Delete the conversaion::turn objects
+  - [X] Add enum to gtr (pending_response, complete, error)
+  - [X] When the status is error, show an error message where the content would
+    have been
+  - [X] When the generate text job errors, update the gtr to error and broadcast
+    the component. Do this in a exhausted retries block
 * DONE refactor [11/11]
 CLOSED: [2025-01-05 Sun 22:23]
   - [X] add response jsonb field to generate_text_requests
@@ -74,124 +148,50 @@ CLOSED: [2025-01-05 Sun 22:23]
   - [X] Remove the code that updates the conversation from the memo feature.
   - [X] Consolidate memo conversation controller with conversations controller
   - [X] Drop the exchange column and remove the exchange attr
-* DONE Remove conversation::turn classes [8/8]
-CLOSED: [2025-01-08 Wed 20:15]
-  - [X] Use the gtrs in the conversation view. Refactor the
-    conversation_turn_component to get the data from gtr. It will render both
-    the user and assistant response
-  - [X] Add the concept of pending_response to gtr. Use that to determine when
-    to show the spinner
-  - [X] Implement a to_message_turn method on gtr that will return a tuple of
-    properly formatted user and assistant hashes that will be serialied for the
-    http request
-  - [X] For the exchange loop over the gtrs and call to_message_turn to produce
-    the tuple of user, assistant response
-  - [X] Delete the conversaion::turn objects
-  - [X] Add enum to gtr (pending_response, complete, error)
-  - [X] When the status is error, show an error message where the content would
-    have been
-  - [X] When the generate text job errors, update the gtr to error and broadcast
-    the component. Do this in a exhausted retries block
-* DONE move the delete button out of the form slot
-CLOSED: [2025-01-08 Wed 21:14]
-* DONE redirect to edit view on first generate text request response with a disabled form [11/11]
-CLOSED: [2025-01-10 Fri 19:51]
-  - [X] add accepts_nested_attributes_for generate_text_request to conversation
-  - [X] Change the prompt form component to the conversation form component.
-    Most of the fields will be for the generate text request
-  - [X] Submit the form to the conversation post/put endpoints
-  - [X] Redirect to conversation edit on create. Enqueue the GenerateTextJob
-  - [X] Render the form and conversation turn components from the update action.
-    Enqueue the GenerateTextJob
-  - [X] Remove rendering the turbo streams from the generate text requests controller
-  - [X] Remove the hack that sets the browser history state
-  - [X] Make sure the title is editable
-  - [X] Use the show_options query param
-  - [X] Make sure generating text still works for memos
-  - [X] Fix bug where creating memo enqueues two GenerateTextJobs
-* DONE fix bug where button is still disabled after submitting on edit
-CLOSED: [2025-01-11 Sat 09:53]
-* DONE turn meta data
-CLOSED: [2025-01-11 Sat 14:58]
-   Show model, preset, temp, token count
-   - [X] Show info icon in the tray of the assistant response.
-   - [X] On click, show the details
-* DONE show token count for entire conversation
-CLOSED: [2025-01-11 Sat 19:02]
-* DONE Add model, temp and preset to query params after create redirect
-CLOSED: [2025-01-11 Sat 20:45]
-* DONE Update total token count on successful generate requests
-CLOSED: [2025-01-11 Sat 22:27]
-* DONE extract gentext generator to class
-CLOSED: [2025-01-12 Sun 10:37]
-* DONE delete assistant response
-CLOSED: [2025-01-12 Sun 16:08]
-* DONE extract conversation component
-CLOSED: [2024-12-29 Sun 19:07]
-  This is used for both the new and edit actions
-* DONE move flash messages to it's own stream
-CLOSED: [2025-01-05 Sun 22:20]
-* DONE lib specs
-CLOSED: [2025-01-14 Tue 11:55]
-* DONE request specs [2/2]
-CLOSED: [2025-01-14 Tue 22:14]
-  - [X] finish conversation spec
-  - [X] generate text requests
-* DONE view component specs
-CLOSED: [2025-01-15 Wed 15:33]
-* DONE view component browser specs
-CLOSED: [2025-01-15 Wed 15:48]
-* DONE feature specs [4/4]
-CLOSED: [2025-01-17 Fri 08:27]
-  - [X] fix memos
-  - [X] create Conversation
-  - [X] update conversation
-  - [X] delete conversation
-* DONE custom presets [10/10]
-CLOSED: [2025-01-18 Sat 23:49]
-  - [X] Add preset_type enum to generate_text_presets table (default, custom)
-  - [X] Add join table users_presets. belongs to user and preset
-  - [X] Add route and CRUD actions
-  - [X] Add the views
-  - [X] Make and name your own presets
-  - [X] Link to new preset from conversation
-  - [X] Cache a reference to the conversation it was linked from so when
-    creating it redirects back to the conversation
-  - [X] Make custom presets available in the preset drop down
-  - [X] on redirect to conversations set the new preset selected option
-  - [X] link to gen text presets from settings
-* DONE find another way to cache show_options
-CLOSED: [2025-01-19 Sun 20:24]
-  Maybe use local storage?
-* DONE preset updates [1/1]
-CLOSED: [2025-01-20 Mon 13:49]
-  - [X] auto select the temperature of the preset
-* TODO support adding files to the prompt [/]
-  - [X] Add file input and attachment to generate text requests
-  - [ ] Refactor: normalize models across vendors. Just an array. Move default
-    to property on the struct.
-  - [ ] Refactor: Add vendor to model. Instantiate the client based on vendor from
-    selected model
-  - [ ] Pass in just the generate text request obj to invoke model, forward that
-    to the client and wrap it in a vendor specific request object.
-  - [ ] Include the image in the HTTP request
-  - [ ] implement prompt caching for large user messages
-        https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching
-  - [ ] Look into client side validation of mime types and file size
-  - [ ] Look into backend validation of mime types and file size
-* TODO Add a scrollspy to conversations
-  - [ ] each heading can be the first few words of the user message
-* TODO normalize the routes
-* TODO link to memo/conversation
-* TODO Edit the last prompt. Trigger regenerate the last assistant response.
-* TODO search conversations
-* TODO add image generation to conversations
-  Look into doing this via tool use
-  https://docs.anthropic.com/en/docs/build-with-claude/tool-use#single-tool-example
-* TODO add video generation to conversations
-* TODO add audio generation to conversations
-* TODO add audio transcription to conversations
-* TODO Move the aws invoke model response
-  - [ ] Write a shared example the enforce the interface
-  https://morningcoffee.io/interfaces-in-ruby.html
-* TODO look into using https://runware.ai/
+* DONE add conversation title [7/7]
+CLOSED: [2025-01-03 Fri 14:53]
+  - [X] Show the title at the top in a fixed container.
+  - [X] Show form on click of edit icon (hide field) and put focus on input
+  - [X] Hide form and show field when input loses focus
+  - [X] Extract partial
+  - [X] On update, render turbo stream partial
+  - [X] add title to conversaions table
+  - [X] set title default based on first message
+* DONE preserve advanced options collapse state
+CLOSED: [2024-12-31 Tue 23:45]
+* DONE add coversation settings (eg, temperature, system prompt etc)
+CLOSED: [2024-12-31 Tue 15:12]
+* DONE add copy button to assistant response
+CLOSED: [2024-12-29 Sun 19:35]
+* DONE delete conversation
+CLOSED: [2024-12-30 Mon 16:27]
+  for those conversations not linked to a memo
+* DONE fix unable to submit prompt after validation error
+CLOSED: [2024-12-29 Sun 18:54]
+  This form is still disabled I think
+* DONE format content returned by llm
+CLOSED: [2024-12-25 Wed 18:20]
+* DONE add a spinner
+CLOSED: [2024-12-23 Mon 21:54]
+  Maybe this could be a placeholder component that is removed with the turbo
+  stream response
+* DONE disable input on submit [3/3]
+CLOSED: [2024-12-22 Sun 19:34]
+  - [X] disable the form on submit
+  - [X] Move the onGenerateText event handler to the prompt form controller.
+  - [X] On a successful conversation update, re-enable the form, and text input
+* DONE Come up with something for new conversations
+CLOSED: [2024-12-22 Sun 14:41]
+* DONE Style edit page
+CLOSED: [2024-12-20 Fri 14:37]
+* DONE create conversation Turn component
+CLOSED: [2024-11-26 Tue 14:14]
+* DONE Add form to submit conversation [4/4]
+CLOSED: [2024-12-13 Fri 15:15]
+  - [X] Add form
+  - [X] respond with user conversation turn over turbo stream
+  - [X] respond with empty form as well that is disabled
+  - [X] onGenerateText updates conversation with user prompt and assistant
+        response. Enable the form on successful conversation update.
+* DONE extract Turn to class
+CLOSED: [2024-11-26 Tue 12:29]

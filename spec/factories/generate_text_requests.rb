@@ -3,7 +3,7 @@ FactoryBot.define do
     text_id { Faker::Alphanumeric.alpha(number: 20) }
     prompt { Faker::Lorem.paragraph }
     temperature { GenerateTextRequest::TEMPERATURE_VALUES.sample }
-    model { GenerativeText::Anthropic::MODELS.values.sample.api_name }
+    model { GenerativeText::MODELS.sample.api_name }
     user
 
     trait :with_preset do

@@ -2,7 +2,8 @@ require 'system_helper'
 require 'sidekiq/testing'
 
 RSpec.describe 'WysiwygEditorComponent', type: :system do
-  let(:user) { create :user, :with_setting }
+  let!(:user) { create :user }
+  let(:setting) { create :setting, :with_anthropic_text_model, user: }
   let(:prompt) { 'This is my prompt' }
   let(:generative_text) { 'this is the generated text' }
   let(:titan_generative_text_response) do
@@ -20,7 +21,7 @@ RSpec.describe 'WysiwygEditorComponent', type: :system do
     JSON
   end
 
-  let(:claude_model) { GenerativeText::Anthropic::MODELS.values.find { _1.api_name == user.setting.text_model } }
+  let(:model) { GenerativeText::MODELS.find { _1.api_name == setting.text_model } }
   let(:claude_generative_text_response) do
     <<~JSON
       {
@@ -69,7 +70,7 @@ RSpec.describe 'WysiwygEditorComponent', type: :system do
     stub_request(:post, 'https://api.anthropic.com/v1/messages')
       .with(
         body: {
-          model: claude_model.api_name, max_tokens: claude_model.max_tokens, temperature: 0.0,
+          model: model.api_name, max_tokens: model.max_tokens, temperature: 0.0,
           messages: [{ 'role' => 'user', 'content' => [{ 'type' => 'text', 'text' => 'This is my prompt' }] }],
           system: GenerateTextRequest::MARKDOWN_FORMAT_SYSTEM_MESSAGE
         }.to_json

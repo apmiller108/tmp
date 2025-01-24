@@ -57,7 +57,7 @@ class GenerateTextRequest < ApplicationRecord
   end
 
   def model
-    GenerativeText::Anthropic::MODELS.values.find { |m| m.api_name == super }
+    GenerativeText::MODELS.find { |m| m.api_name == super }
   end
 
   private

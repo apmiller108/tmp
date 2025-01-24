@@ -19,12 +19,16 @@ class GenerativeText
         params[:event_stream_handler] = EventStreamHandler.new(&block).to_proc
         params = InvokeModelRequest.new(prompt:, **params).to_h
         invoke_model_with_response_stream(params)
+      rescue Aws::BedrockRuntime::Errors
+        raise InvalidRequestError
       end
 
       def invoke_model(prompt:, **params)
         params = InvokeModelRequest.new(prompt:, **params).to_h
         response = @client.invoke_model(params)
         InvokeModelResponse.new(response.body.read)
+      rescue Aws::BedrockRuntime::Errors
+        raise InvalidRequestError
       end
     end
   end

@@ -2,7 +2,6 @@ class GenerativeText
   module AWS
     class Client
       class InvokeModelRequest
-        MAX_TOKENS = 1000 # Seems to be max output tokens only. Supports up to 8k.
         TEMP = 0.2 # Between 0..1. Increase for more randomness.
         TOP_P = 0.8 # Between 0..1. Only consider possibilities gte this value. Lower it for weirdness.
 
@@ -11,11 +10,12 @@ class GenerativeText
         def initialize(prompt:, **params)
           @prompt = prompt
           @params = params
+          @model = MODELS.find { _1.api_name == 'amazon.titan-text-express-v1' }
         end
 
         def to_h
           {
-            model_id: TITAN_EXPRESS,
+            model_id: @model.api_name,
             content_type: 'application/json',
             accept: 'application/json',
             body:
@@ -33,7 +33,7 @@ class GenerativeText
 
         def text_gen_config
           {
-            'maxTokenCount' => params.fetch(:max_tokens, MAX_TOKENS),
+            'maxTokenCount' => params.fetch(:max_tokens, @model.max_tokens),
             'stopSequences' => params.fetch(:stop_sequences, []),
             'temperature' => params.fetch(:temp, TEMP),
             'topP' => params.fetch(:top_p, TOP_P)
