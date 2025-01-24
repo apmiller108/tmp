@@ -10,8 +10,12 @@ class GenerativeText
         #     [{"tokenCount"=>55,
         #       "outputText"=> "\nHere are 10 fruits:\n1. Apple\n2. Banana\n3..."
         #       "completionReason"=>"FINISH"}]}
-        def initialize(json)
-          @data = JSON.parse(json)
+        def initialize(data)
+          @data = if data.respond_to? :keys
+                    data
+                  else
+                    JSON.parse(data)
+                  end
         end
 
         def content

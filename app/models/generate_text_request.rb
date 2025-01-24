@@ -40,7 +40,7 @@ class GenerateTextRequest < ApplicationRecord
   end
 
   def response
-    @response ||= GenerativeText::Anthropic::InvokeModelResponse.new(super) if super.present?
+    @response ||= response_wrapper_class.new(super) if super.present?
   end
 
   def response_token_count
@@ -67,5 +67,14 @@ class GenerateTextRequest < ApplicationRecord
 
     errors.add(:file, 'must be less that 10 MB') if file.blob.byte_size > 10.megabytes
     errors.add(:file, 'must be GIF, JPEG, PNG or WEBP') unless file.blob.content_type.in? SUPPORTED_MIME_TYPES
+  end
+
+  def response_wrapper_class
+    case model.vendor
+    when :aws
+      GenerativeText::AWS::Client::InvokeModelResponse
+    when :anthropic
+      GenerativeText::Anthropic::InvokeModelResponse
+    end
   end
 end

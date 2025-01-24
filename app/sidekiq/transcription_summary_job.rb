@@ -7,11 +7,12 @@ class TranscriptionSummaryJob
     transcription = user.transcriptions.find(transcription_id)
     summary = transcription.summary
     prompt = GenerativeText.summary_prompt_for(transcription:)
+    client = GenerativeText::AWS::Client.new
 
     summary.in_progress!
 
     # @stream_response [InvokeModelStreamResponse, #content, #final_chunk?]
-    GenerativeText.new.invoke_model_stream(prompt:) do |stream_response|
+    GenerativeText.new.invoke_model_stream(client:, prompt:) do |stream_response|
       summary.content += stream_response.content
 
       if stream_response.final_chunk?
