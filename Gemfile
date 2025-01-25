@@ -56,7 +56,6 @@ group :development do
   gem 'rubocop-rspec', '~> 2.18', require: false
   gem 'spring'
   gem 'spring-commands-rspec'
-  gem 'web-console'
 end
 
 group :test do
