@@ -53,7 +53,12 @@ class GenerateTextRequest < ApplicationRecord
 
   # @returns [Array<Hash>] A tuple of a user message and assistant response
   def to_turn
-    GenerativeText::Anthropic::Turn.for(self)
+    case model.vendor
+    when :anthropic
+      GenerativeText::Anthropic::Turn.for(self)
+    when :aws
+      GenerativeText::AWS::Turn.for(self)
+    end
   end
 
   def model
@@ -71,10 +76,10 @@ class GenerateTextRequest < ApplicationRecord
 
   def response_wrapper_class
     case model.vendor
-    when :aws
-      GenerativeText::AWS::Client::InvokeModelResponse
     when :anthropic
       GenerativeText::Anthropic::InvokeModelResponse
+    when :aws
+      GenerativeText::AWS::Client::InvokeModelResponse
     end
   end
 end

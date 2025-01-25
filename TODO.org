@@ -17,7 +17,7 @@
 * TODO normalize the routes
 * TODO Add a scrollspy to conversations
   - [ ] each heading can be the first few words of the user message
-* TODO support adding files to the prompt [5/9]
+* TODO support adding files to the prompt [7/12]
   - [X] Add file input and attachment to generate text requests
   - [X] Refactor: normalize models across vendors. Just an array. Move default
     to property on the struct.
@@ -25,10 +25,10 @@
   - [X] Pass in just the generate text request obj to invoke model, forward that
     to the client and wrap it in a vendor specific request object
   - [X] Instantiate the client based on vendor from selected model
-  - [ ] Remove AWS models from conversations
-  - [ ] Remove LLAM model
-  - [ ] Fix summaries not completing
-  - [ ] Include the image in the HTTP request
+  - [X] Add support for conversations to titan
+  - [X] Remove LLAM model
+  - [ ] Disable file input on titan selected. Maybe add capabilities to model config?
+  - [ ] Include the image in the HTTP request Anthropic models
   - [ ] implement prompt caching for large user messages
         https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching
   - [ ] Look into client side validation of mime types and file size

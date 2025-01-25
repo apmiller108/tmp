@@ -26,9 +26,24 @@ class GenerativeText
 
         def body
           {
-            'inputText' => prompt,
+            'inputText' => input_text,
             'textGenerationConfig' => text_gen_config
           }.to_json
+        end
+
+        def input_text
+          <<~TXT
+            #{generate_text_request.system_message}
+            #{turns.join}
+          TXT
+        end
+
+        def turns
+          generate_text_request.conversation.exchange << next_turn
+        end
+
+        def next_turn
+          format(Turn::TEMPLATE, prompt:, response: '')
         end
 
         def text_gen_config

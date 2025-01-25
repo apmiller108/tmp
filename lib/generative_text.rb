@@ -1,7 +1,8 @@
 class GenerativeText
   InvalidRequestError = Class.new(StandardError)
 
-  Model = Struct.new(:api_name, :name, :max_tokens, :vendor, keyword_init: true)
+  Model = Struct.new(:api_name, :name, :max_tokens, :vendor, :capabilities, keyword_init: true)
+  Model::Capabilities = Struct.new(:images, :presets)
 
   MODELS = [
     *Anthropic::MODELS,
