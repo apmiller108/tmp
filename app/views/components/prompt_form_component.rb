@@ -21,14 +21,26 @@ class PromptFormComponent < ApplicationViewComponent
     @opts[:disabled]
   end
 
+  def file_input_disabled?
+    !generate_text_request.model.capabilities.image?
+  end
+
   def preset_options
     presets.map { |p| [p.name, p.id] }
   end
 
-  def preset_json
+  def preset_data
     presets.map do |p|
       { id: p.id, temperature: p.temperature.to_s }
     end.to_json
+  end
+
+  def model_options
+    GenerativeText::MODELS.sort_by(&:vendor).map { |m| [m.name, m.api_name] }
+  end
+
+  def model_data
+    GenerativeText::MODELS.to_json(only: [:api_name, :capabilities, :image?])
   end
 
   def after_create_preset_redirect_path

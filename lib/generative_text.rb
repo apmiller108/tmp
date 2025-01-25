@@ -1,13 +1,13 @@
 class GenerativeText
   InvalidRequestError = Class.new(StandardError)
 
-  Model = Struct.new(:api_name, :name, :max_tokens, :vendor, :capabilities, keyword_init: true)
-  Model::Capabilities = Struct.new(:images, :presets)
+  Model = Struct.new('Model', :api_name, :name, :max_tokens, :vendor, :capabilities, keyword_init: true)
+  Model::Capabilities = Struct.new('ModelCapabilities', :image?)
 
   MODELS = [
     *Anthropic::MODELS,
     *AWS::MODELS
-  ]
+  ].freeze
 
   DEFAULT_MODEL = MODELS.find { _1.api_name == 'claude-3-5-haiku-latest' }
 

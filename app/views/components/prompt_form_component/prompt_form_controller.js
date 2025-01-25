@@ -6,8 +6,8 @@ import { Collapse } from 'bootstrap'
 
 export default class PromptFormController extends Controller {
   static targets = ['promptInput', 'userId', 'conversationId', 'form', 'submitButton',
-                    'showOptionsButton', 'options', 'temperatureSelect',
-    'modelSelect', 'presetSelect', 'textId']
+                    'showOptionsButton', 'options', 'temperatureSelect', 'modelSelect',
+                    'presetSelect', 'textId']
 
   connect() {
     ToolTippable.connect.bind(this)()
@@ -18,6 +18,7 @@ export default class PromptFormController extends Controller {
     this.showOptions()
     this.setPreset()
     this.setTemperature()
+    this.initializeFileInput()
   }
 
   disconnect() {
@@ -27,7 +28,11 @@ export default class PromptFormController extends Controller {
   }
 
   get generateTextPresetData() {
-    return JSON.parse(this.presetSelectTarget.dataset.presetJson)
+    return JSON.parse(this.presetSelectTarget.dataset.presetData)
+  }
+
+  get modelData() {
+    return JSON.parse(this.modelSelectTarget.dataset.modelData)
   }
 
   focusOnPromptInput() {
@@ -107,6 +112,14 @@ export default class PromptFormController extends Controller {
     }
   }
 
+  onChangeModel() {
+    this.initializeFileInput()
+  }
+
+  initializeFileInput() {
+    const selectedModel = this.modelData.find(m => m.api_name === this.modelSelectTarget.value)
+    this.dispatch('toggleFileInput', { detail: { disabled: selectedModel.capabilities['image?'] } })
+  }
 
   // If there is an error in the background job, enabled the form
   onGenerateText() {

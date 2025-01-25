@@ -70,6 +70,7 @@ class GenerateTextRequest < ApplicationRecord
   def acceptable_file
     return unless file.attached?
 
+    errors.add(:file, 'is not a capability of this model') unless model.capabilities.image?
     errors.add(:file, 'must be less that 10 MB') if file.blob.byte_size > 10.megabytes
     errors.add(:file, 'must be GIF, JPEG, PNG or WEBP') unless file.blob.content_type.in? SUPPORTED_MIME_TYPES
   end

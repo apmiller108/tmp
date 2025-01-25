@@ -1,4 +1,4 @@
 .c-file-input{ data: { controller: 'file-input' }}
   .upload-progress{ data: { 'file-input-target' => 'uploadProgress' }}
-  = form.file_field :file, direct_upload: true, class: 'form-control',
+  = form.file_field :file, direct_upload: true, disabled:, class: 'form-control',
     data: { 'file-input-target' => 'input', action:  }

@@ -17,13 +17,14 @@
               .grid
                 .g-col-3
                   .form-floating
-                    = gtr_fields.collection_select :model, GenerativeText::MODELS.sort_by(&:vendor), :api_name, :name, {},
-                    { class: 'form-select', data: { 'prompt-form-target' => 'modelSelect' } }
+                    = gtr_fields.select :model, model_options, {},
+                    { class: 'form-select', data: { 'prompt-form-target' => 'modelSelect',
+                                                    'model-data' => model_data, action: 'change->prompt-form#onChangeModel' } }
                     = gtr_fields.label :model, 'Model'
                 .g-col-2.d-flex.align-items-center
                   .form-floating
                     = gtr_fields.select :generate_text_preset_id, preset_options, { include_blank: true },
-                      { class: 'form-select', data: { 'prompt-form-target' => 'presetSelect', 'preset-json' => preset_json,
+                      { class: 'form-select', data: { 'prompt-form-target' => 'presetSelect', 'preset-data' => preset_data,
                                                       action: 'change->prompt-form#onChangePreset' } }
                     = gtr_fields.label :generate_text_preset_id, 'Preset'
                   = link_to new_generate_text_preset_path(redirect_after_create: after_create_preset_redirect_path),
@@ -42,7 +43,7 @@
                                    disabled: disabled?}
                 %i.bi.bi-send-fill
             .g-col-6.mt-1
-              = render FileInputComponent.new(form: gtr_fields)
+              = render FileInputComponent.new(form: gtr_fields, disabled: file_input_disabled?)
 
             .g-col-6.details-fields.p-0
               %div.d-flex.align-items-center.justify-content-end.mt-1
