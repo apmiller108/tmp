@@ -71,9 +71,21 @@ class GenerateTextRequest < ApplicationRecord
   def acceptable_file
     return unless file.attached?
 
-    errors.add(:file, 'is not a capability of this model') unless model.capabilities.image?
-    errors.add(:file, 'must be less that 4 MB') if file.blob.byte_size > MAX_FILE_SIZE 
+    validate_file_size
+    validate_file_type
+    validate_file_for_model
+  end
+
+  def validate_file_size
+    errors.add(:file, 'must be less that 4 MB') if file.blob.byte_size > MAX_FILE_SIZE
+  end
+
+  def validate_file_type
     errors.add(:file, 'must be GIF, JPEG, PNG or WEBP') unless file.blob.content_type.in? SUPPORTED_MIME_TYPES
+  end
+
+  def validate_file_for_model
+    errors.add(:file, 'is not a capability of this model') unless model.capabilities.image?
   end
 
   def response_wrapper_class

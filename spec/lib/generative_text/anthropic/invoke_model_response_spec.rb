@@ -18,7 +18,9 @@ RSpec.describe GenerativeText::Anthropic::InvokeModelResponse do
         "stop_sequence": null,
         "usage": {
           "input_tokens": 79,
-          "output_tokens": 942
+          "output_tokens": 942,
+          "cache_creation_input_tokens": 1,
+          "cache_read_input_tokens": 100
         }
       }
     JSON
@@ -65,7 +67,7 @@ RSpec.describe GenerativeText::Anthropic::InvokeModelResponse do
 
   describe '#token_count' do
     it 'returns the total number of input and output tokens' do
-      expect(response.token_count).to eq(1021)
+      expect(response.token_count).to eq(1122)
     end
   end
 end
