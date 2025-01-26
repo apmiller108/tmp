@@ -4,8 +4,8 @@ import autoAnimate from '@formkit/auto-animate'
 export default class extends Controller {
   static targets = ['bodyTurboFrame', 'closeButton', 'header']
 
-  onOpenLister = 'modal-opener:openModal@window->modal#onOpenModal'
-  onCloseListner = 'modal-closer:closeModal@window->modal#onCloseModal'
+  onOpenListener = 'modal-opener:openModal@window->modal#onOpenModal'
+  onCloseListener = 'modal-closer:closeModal@window->modal#onCloseModal'
   observer = new MutationObserver((mutations) => {
     mutations.forEach(() => {
       if (this.bodyTurboFrameTarget.innerHTML.trim() === '') {
@@ -15,7 +15,7 @@ export default class extends Controller {
   })
 
   connect() {
-    this.element.dataset.action = [this.onOpenLister, this.onCloseListner].join(' ')
+    this.element.dataset.action = [this.onOpenListener, this.onCloseListener].join(' ')
     this.element.addEventListener('hide.bs.modal', e => this.reset(e));
     // Automatically close the modal if the body is blank (eg, on turbo deletion of a resource)
     this.observer.observe(this.bodyTurboFrameTarget, { childList: true, subtree: true })

@@ -5,7 +5,7 @@ class ConversationTurnComponent < ApplicationViewComponent
 
   delegate :prompt, :response, :created?, :in_progress?, :failed?, :completed?,
            :model, :temperature, :generate_text_preset, :response_token_count,
-           to: :generate_text_request
+           :file, to: :generate_text_request
 
   # @param [GenerateTextRequest] generate_text_request
   def initialize(generate_text_request:)
@@ -31,5 +31,16 @@ class ConversationTurnComponent < ApplicationViewComponent
       preset: generate_text_preset&.name,
       token_count: response_token_count
     }.compact
+  end
+
+  def image?
+    file.attached? && file.image?
+  end
+
+  def image_variant_options
+    {
+      resize_to_limit: [100, 100],
+      **ActiveStorage::Blob::WEBP_VARIANT_OPTS
+    }
   end
 end

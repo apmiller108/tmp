@@ -14,9 +14,10 @@ class ModalComponent < ApplicationViewComponent
 
   attr_reader :size
 
-  def initialize(size: nil, centered: true)
+  def initialize(size: nil, centered: true, id: nil)
     @size = size
     @centered = centered
+    @id = nil
   end
 
   def bs_size_class

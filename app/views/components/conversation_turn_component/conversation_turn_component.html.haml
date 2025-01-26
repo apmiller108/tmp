@@ -1,11 +1,17 @@
 .c-conversation-turn{ id:, data: { controller: 'conversation-turn', **dataset } }
+  = render ModalComponent.new(size: :lg)
   .turn.grid.mb-3
     .g-col-1.d-flex.justify-content-center
       %i.bi-person-fill.fs-1
     .g-col-11
       .card.segment{ class: "segment-user" }
-        .card-body
-          = prompt
+        .card-body.d-flex
+          - if image?
+            .image
+              = image_tag file.variant(**image_variant_options), data: { 'conversation-turn-target' => 'image' },
+              title: file.filename
+          .prompt
+            = prompt
   .turn.grid.mb-3
     .g-col-1.d-flex.justify-content-center
       %i.bi-robot.fs-1
