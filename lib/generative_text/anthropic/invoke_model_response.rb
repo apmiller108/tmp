@@ -45,8 +45,6 @@ class GenerativeText
         usage.fetch('input_tokens') + usage.fetch('output_tokens')
       end
 
-      private
-
       def usage
         data.fetch('usage')
       end

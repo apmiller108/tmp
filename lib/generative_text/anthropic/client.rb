@@ -18,27 +18,12 @@ class GenerativeText
       # rubocop:disable Metrics/AbcSize
       # @return [InvokeModelResponse]
       def invoke_model(generate_text_request)
-        model = generate_text_request.model
-        messages = generate_text_request.conversation.exchange
-        request_body = {
-          model: model.api_name,
-          max_tokens: model.max_tokens,
-          temperature: generate_text_request.temperature,
-          messages: messages.push(
-            {
-              role: :user,
-              content: [
-                type: :text,
-                text: generate_text_request.prompt
-              ]
-            }
-          )
-        }
-        request_body[:system] = generate_text_request.system_message if generate_text_request.system_message
         response = conn.post(MESSAGES_PATH) do |req|
-          req.body = request_body.to_json
+          req.body = InvokeModelRequest.new(generate_text_request).to_json
         end
-        InvokeModelResponse.new(response.body)
+        InvokeModelResponse.new(response.body).tap do |r| 
+          Rails.logger.info "#{self.class}: invoke_model usage: #{r.usage}"
+        end
       rescue Faraday::Error => e
         raise ClientError, "#{e.response_status}: #{e.response_body}"
       end

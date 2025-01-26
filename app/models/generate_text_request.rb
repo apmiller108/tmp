@@ -10,7 +10,8 @@ class GenerateTextRequest < ApplicationRecord
 
   TEMPERATURE_VALUES = 0.step(to: 1, by: 0.1).map { _1.round(1) }
 
-  SUPPORTED_MIME_TYPES = %w[image/jpeg image/gif image/png/ image/webp].freeze
+  SUPPORTED_MIME_TYPES = %w[image/jpeg image/gif image/png image/webp].freeze
+  MAX_FILE_SIZE = 4.megabytes
   has_one_attached :file
 
   # Stores the raw JSON response from the HTTP request to the LLM
@@ -71,7 +72,7 @@ class GenerateTextRequest < ApplicationRecord
     return unless file.attached?
 
     errors.add(:file, 'is not a capability of this model') unless model.capabilities.image?
-    errors.add(:file, 'must be less that 10 MB') if file.blob.byte_size > 10.megabytes
+    errors.add(:file, 'must be less that 4 MB') if file.blob.byte_size > MAX_FILE_SIZE 
     errors.add(:file, 'must be GIF, JPEG, PNG or WEBP') unless file.blob.content_type.in? SUPPORTED_MIME_TYPES
   end
 

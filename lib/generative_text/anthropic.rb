@@ -15,7 +15,8 @@ class GenerativeText
                 max_tokens: 8192),
       Model.new(api_name: 'claude-3-5-sonnet-latest', name: 'Claude 3.5 Sonnet Latest', vendor:, capabilities:,
                 max_tokens: 8192),
-      Model.new(api_name: 'claude-3-sonnet-20240229', name: 'Claude 3 Sonnet', vendor:, capabilities:, max_tokens: 4096),
+      Model.new(api_name: 'claude-3-sonnet-20240229', name: 'Claude 3 Sonnet', vendor:, capabilities:,
+                max_tokens: 4096),
       Model.new(api_name: 'claude-3-opus-20240229', name: 'Claude 3 Opus', vendor:, capabilities:, max_tokens: 4096)
     ].freeze
 

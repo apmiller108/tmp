@@ -12,14 +12,32 @@ class GenerativeText
       # @return [Array<Hash>]
       def for(generate_text_request)
         [
-          {
-            'role' => USER,
-            'content' => [
-              { 'text' => generate_text_request.prompt, 'type' => 'text' }
-            ]
-          },
+          user_turn(generate_text_request),
           { 'role' => ASSISTANT, 'content' => generate_text_request.response_content || 'no content' }
         ]
+      end
+
+      def user_turn(generate_text_request)
+        {
+          'role' => USER,
+          'content' => [
+            { 'text' => generate_text_request.prompt, 'type' => 'text' }
+          ].tap do |content|
+            if generate_text_request.file.attached?
+              content.prepend(
+                {
+                  'type' => 'image',
+                  'source' => {
+                    'type' => 'base64',
+                    'media_type' => generate_text_request.file.content_type,
+                    'data' => BlobEncoder.encode64(generate_text_request.file)
+                  },
+                  'cache_control' => { 'type' => 'ephemeral' }
+                }
+              )
+            end
+          end
+        }
       end
     end
   end
