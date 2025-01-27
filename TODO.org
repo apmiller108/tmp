@@ -41,6 +41,7 @@
   - [ ] Look into client side validation of mime types and file size
   - [ ] Make system messages dynamic. Make transcription  system message.
   - [ ] Make generate_text_requests.model not null
+  - [ ] Add support for PDFs (only sonnet 3-5) https://docs.anthropic.com/en/docs/build-with-claude/pdf-support
 * DONE preset updates [1/1]
 CLOSED: [2025-01-20 Mon 13:49]
   - [X] auto select the temperature of the preset

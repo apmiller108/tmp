@@ -1,7 +1,7 @@
 class FileInputComponent < ApplicationViewComponent
   attr_reader :form, :disabled
 
-  def initialize(form:, disabled: true)
+  def initialize(form:, disabled: false, file_types: [])
     @form = form
     @disabled = disabled
   end
