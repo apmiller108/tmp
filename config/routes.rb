@@ -39,7 +39,11 @@ Rails.application.routes.draw do
     resources :autosaves, only: %i[create update], param: :memo_id
   end
 
-  resources :generate_text_requests, only: %i[create destroy]
+  resources :generate_text_requests, only: %i[create destroy] do
+    member do
+      get 'file'
+    end
+  end
   resources :generate_text_presets, except: %i[show]
   resources :generate_image_requests, only: %i[create]
 

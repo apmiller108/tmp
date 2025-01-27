@@ -1,0 +1,5 @@
+%turbo-frame{id: ModalComponent.turbo_frame_body_id }
+  .position-relative
+    %button.btn.icon-btn.position-absolute.top-0.end-0{data: { controller: 'modal-closer' } }
+      %i.bi.bi-x-lg
+    = render BlobPreviewComponent.new(blob: @blob, resize_to_limit: [1000, 1000], contain: true)

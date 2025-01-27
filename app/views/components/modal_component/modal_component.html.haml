@@ -3,7 +3,7 @@
                     id: self.class.id,
                     data: { controller: :modal, 'bs-backdrop' => :static, 'bs-keyboard' => 'false' }}
   .modal-dialog{ class: [bs_size_class, position_class] }
-    .modal-content
+    .modal-content{ style: 'min-height: 3rem;'}
       .modal-header{ data: { 'modal-target' => 'header' } }
         -if title?
           %h1.modal-title.fs-5

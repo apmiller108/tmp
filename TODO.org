@@ -20,7 +20,7 @@
 * TODO normalize the routes
 * TODO Add a scrollspy to conversations
   - [ ] each heading can be the first few words of the user message
-* TODO support adding files to the prompt [12/16]
+* TODO support adding files to the prompt [13/16]
   - [X] Add file input and attachment to generate text requests
   - [X] Refactor: normalize models across vendors. Just an array. Move default
     to property on the struct.
@@ -36,11 +36,11 @@
         https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching
   - [X] take into account cache tokens in the token usage count
         "cache_creation_input_tokens"=>0, "cache_read_input_tokens"=>1601,
-  - [ ] Display the image in the conversation
-  - [ ] Look into client side validation of mime types and file size
+  - [X] Display the image in the conversation
   - [X] Look into backend validation of mime types and file size
+  - [ ] Look into client side validation of mime types and file size
   - [ ] Make system messages dynamic. Make transcription  system message.
-  - [ ] Make generate_text_requests.model no null
+  - [ ] Make generate_text_requests.model not null
 * DONE preset updates [1/1]
 CLOSED: [2025-01-20 Mon 13:49]
   - [X] auto select the temperature of the preset
