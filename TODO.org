@@ -20,7 +20,12 @@
 * TODO normalize the routes
 * TODO Add a scrollspy to conversations
   - [ ] each heading can be the first few words of the user message
-* TODO support adding files to the prompt [13/16]
+* TODO Hide file input
+  Use only the drag and drop API. Show file name on the form.
+* TODO Add support for PDFs
+  (only sonnet 3-5)
+  https://docs.anthropic.com/en/docs/build-with-claude/pdf-support
+* TODO support adding files to the prompt [15/17]
   - [X] Add file input and attachment to generate text requests
   - [X] Refactor: normalize models across vendors. Just an array. Move default
     to property on the struct.
@@ -38,10 +43,10 @@
         "cache_creation_input_tokens"=>0, "cache_read_input_tokens"=>1601,
   - [X] Display the image in the conversation
   - [X] Look into backend validation of mime types and file size
-  - [ ] Look into client side validation of mime types and file size
-  - [ ] Make system messages dynamic. Make transcription  system message.
+  - [X] Look into client side validation of mime types and file size
+  - [X] Implement drag and drop
+  - [ ] Make system messages dynamic. Make transcription system message.
   - [ ] Make generate_text_requests.model not null
-  - [ ] Add support for PDFs (only sonnet 3-5) https://docs.anthropic.com/en/docs/build-with-claude/pdf-support
 * DONE preset updates [1/1]
 CLOSED: [2025-01-20 Mon 13:49]
   - [X] auto select the temperature of the preset

@@ -43,7 +43,7 @@
                                    disabled: disabled?}
                 %i.bi.bi-send-fill
             .g-col-6.mt-1
-              = render FileInputComponent.new(form: gtr_fields, disabled: file_input_disabled?)
+              = render FileInputComponent.new(form: gtr_fields, disabled: file_input_disabled?, file_types:, max_size: max_file_size)
 
             .g-col-6.details-fields.p-0
               %div.d-flex.align-items-center.justify-content-end.mt-1

@@ -25,6 +25,14 @@ class PromptFormComponent < ApplicationViewComponent
     !generate_text_request.model.capabilities.image?
   end
 
+  def max_file_size
+    generate_text_request.class::MAX_FILE_SIZE
+  end
+
+  def file_types
+    generate_text_request.class::SUPPORTED_MIME_TYPES
+  end
+
   def preset_options
     presets.map { |p| [p.name, p.id] }
   end
