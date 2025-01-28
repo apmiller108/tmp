@@ -15,19 +15,17 @@ class GenerativeText
         end
       end
 
-      # rubocop:disable Metrics/AbcSize
       # @return [InvokeModelResponse]
       def invoke_model(generate_text_request)
         response = conn.post(MESSAGES_PATH) do |req|
           req.body = InvokeModelRequest.new(generate_text_request).to_json
         end
-        InvokeModelResponse.new(response.body).tap do |r| 
+        InvokeModelResponse.new(response.body).tap do |r|
           Rails.logger.info "#{self.class}: invoke_model usage: #{r.usage}"
         end
       rescue Faraday::Error => e
         raise ClientError, "#{e.response_status}: #{e.response_body}"
       end
-      # rubocop:enable Metrics/AbcSize
 
       private
 

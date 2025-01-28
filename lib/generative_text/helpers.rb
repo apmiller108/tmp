@@ -1,6 +1,6 @@
 class GenerativeText
   module Helpers
-    MARKDOWN_FORMAT_SYSTEM_MESSAGE = <<~TXT
+    MARKDOWN_FORMAT_SYSTEM_MESSAGE = <<~TXT.freeze
       You always answer the with markdown formatting which can inlcude headings,
       bold, italic, links, tables, lists, code blocks, and blockquotes.
     TXT
@@ -19,7 +19,7 @@ class GenerativeText
                           content: transcription.diarized_results_to_text
                         }
                       else
-                        { preamble: '',  description: :transcription, content: transcription.content }
+                        { preamble: '', description: :transcription, content: transcription.content }
                       end
       SUMMARY_TEMPLATE % template_vars
     end

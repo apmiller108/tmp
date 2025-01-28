@@ -28,7 +28,7 @@ export default class FileInputController extends Controller {
     this.uploadProgressTarget.style.zIndex = '2'
   }
 
-  onUploadProgress(e) {
+  onUploadProgress() {
     const { progress } = event.detail
     this.uploadProgressTarget.style.width = `${progress}%`
   }
@@ -53,7 +53,7 @@ export default class FileInputController extends Controller {
   }
 
   onChange(e) {
-    const isValid = this.validate(e)
+    this.validate(e)
   }
 
   validate() {
