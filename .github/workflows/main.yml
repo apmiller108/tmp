@@ -27,7 +27,7 @@ jobs:
         run: |
           yarn install
       - name: Run ESlint
-        run: node_modules/.bin/eslint --ext .js ./app
+        run: node_modules/.bin/eslint ./app
 
   rubocop:
     name: Rubocop
