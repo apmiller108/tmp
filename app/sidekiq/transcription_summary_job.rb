@@ -7,12 +7,13 @@ class TranscriptionSummaryJob
     transcription = user.transcriptions.find(transcription_id)
     summary = transcription.summary
     prompt = GenerativeText.summary_prompt_for(transcription:)
-    client = GenerativeText::AWS::Client.new
-
+    request = GenerateTextRequest.new(prompt:,
+                                      model: 'amazon.titan-text-express-v1',
+                                      temperature: 0.2)
     summary.in_progress!
 
     # @stream_response [InvokeModelStreamResponse, #content, #final_chunk?]
-    GenerativeText.new.invoke_model_stream(client:, prompt:) do |stream_response|
+    GenerativeText.new.invoke_model_stream(request) do |stream_response|
       summary.content += stream_response.content
 
       if stream_response.final_chunk?

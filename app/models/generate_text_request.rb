@@ -3,11 +3,6 @@
 class GenerateTextRequest < ApplicationRecord
   include StatusEnumable
 
-  MARKDOWN_FORMAT_SYSTEM_MESSAGE = <<~TXT
-    You always answer the with markdown formatting which can inlcude headings,
-    bold, italic, links, tables, lists, code blocks, and blockquotes.
-  TXT
-
   TEMPERATURE_VALUES = 0.step(to: 1, by: 0.1).map { _1.round(1) }
 
   SUPPORTED_MIME_TYPES = %w[image/jpeg image/gif image/png image/webp].freeze
@@ -18,6 +13,7 @@ class GenerateTextRequest < ApplicationRecord
   store_accessor :response
 
   delegate :content, to: :response, allow_nil: true, prefix: true
+  delegate :system_message, to: :generate_text_preset, allow_nil: true, prefix: :preset
 
   belongs_to :user
   belongs_to :generate_text_preset, optional: true
@@ -34,10 +30,7 @@ class GenerateTextRequest < ApplicationRecord
   end
 
   def system_message
-    [
-      MARKDOWN_FORMAT_SYSTEM_MESSAGE,
-      generate_text_preset&.system_message
-    ].compact.join("\n")
+    [markdown_format_system_message, preset_system_message].compact.join("\n")
   end
 
   def response
@@ -95,5 +88,9 @@ class GenerateTextRequest < ApplicationRecord
     when :aws
       GenerativeText::AWS::Client::InvokeModelResponse
     end
+  end
+
+  def markdown_format_system_message
+    GenerativeText::Helpers.markdown_sys_msg if markdown_format?
   end
 end

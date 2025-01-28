@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_17_191052) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_28_024539) do
   create_schema "rollback"
 
   # These are extensions that must be enabled in order to support this database
@@ -113,9 +113,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_17_191052) do
     t.float "temperature"
     t.bigint "generate_text_preset_id"
     t.bigint "conversation_id"
-    t.string "model"
+    t.string "model", null: false
     t.jsonb "response", default: {}
     t.text "status", null: false
+    t.boolean "markdown_format", default: true, null: false
     t.index ["conversation_id"], name: "index_generate_text_requests_on_conversation_id"
     t.index ["generate_text_preset_id"], name: "index_generate_text_requests_on_generate_text_preset_id"
     t.index ["user_id", "text_id"], name: "index_generate_text_requests_on_user_id_and_text_id", unique: true

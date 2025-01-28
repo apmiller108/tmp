@@ -12,7 +12,7 @@ class GenerativeText
   DEFAULT_MODEL = MODELS.find { _1.api_name == 'claude-3-5-haiku-latest' }
 
   def self.summary_prompt_for(transcription:)
-    Prompt.transcription_summary_prompt(transcription)
+    Helpers.transcription_summary_prompt(transcription)
   end
 
   def self.client_for(generate_text_request)
@@ -24,10 +24,11 @@ class GenerativeText
     end
   end
 
+  # @param [GenerateTextRequest] request object
   # The block is what should yield to each stream chunk
-  # Only the AWS client supports streaming at this time
-  def invoke_model_stream(prompt:, client: AWS::Client.new, **opts, &block)
-    client.invoke_model_stream(prompt:, **opts, &block)
+  def invoke_model_stream(generate_text_request, **opts, &block)
+    client = self.class.client_for(generate_text_request).new
+    client.invoke_model_stream(generate_text_request, **opts, &block)
   end
 
   # @param [GenerateTextRequest] request object

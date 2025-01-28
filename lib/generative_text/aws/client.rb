@@ -15,12 +15,9 @@ class GenerativeText
         )
       end
 
-      def invoke_model_stream(prompt:, **params, &block)
-        params[:event_stream_handler] = EventStreamHandler.new(&block).to_proc
-        request = GenerateTextRequest.new(prompt:,
-                                          model: 'amazon.titan-text-express-v1',
-                                          temperature: 0.2)
-        params = InvokeModelRequest.new(request, **params).to_h
+      def invoke_model_stream(generate_text_request, **opts, &block)
+        opts[:event_stream_handler] = EventStreamHandler.new(&block).to_proc
+        params = InvokeModelRequest.new(generate_text_request, **opts).to_h
         invoke_model_with_response_stream(params)
       rescue Aws::BedrockRuntime::Errors
         raise InvalidRequestError
