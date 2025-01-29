@@ -9,7 +9,7 @@ RSpec.describe TranscriptionSummaryJob, type: :job do
   let(:transcriptions) { Transcription.none }
   let(:generative_text) { instance_double(GenerativeText) }
   let(:invoke_model_stream_response) do
-    instance_double GenerativeText::AWS::Client::InvokeModelStreamResponse,
+    instance_double GenerativeText::AWS::InvokeModelStreamResponse,
                     content: 'response content', final_chunk?: final_chunk?
   end
   let(:final_chunk?) { false }

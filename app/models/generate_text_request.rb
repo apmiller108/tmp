@@ -86,7 +86,7 @@ class GenerateTextRequest < ApplicationRecord
     when :anthropic
       GenerativeText::Anthropic::InvokeModelResponse
     when :aws
-      GenerativeText::AWS::Client::InvokeModelResponse
+      GenerativeText::AWS::InvokeModelResponse
     end
   end
 

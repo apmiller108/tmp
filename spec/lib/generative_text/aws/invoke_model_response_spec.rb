@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe GenerativeText::AWS::Client::InvokeModelResponse do
+RSpec.describe GenerativeText::AWS::InvokeModelResponse do
   subject(:response) { described_class.new(json_response) }
 
   let(:content) { Faker::Lorem.paragraph }

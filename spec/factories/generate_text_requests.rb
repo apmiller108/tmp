@@ -6,6 +6,14 @@ FactoryBot.define do
     model { GenerativeText::MODELS.sample.api_name }
     user
 
+    trait :with_anthropic_model do
+      model { GenerativeText::Anthropic::MODELS.sample.api_name }
+    end
+
+    trait :with_aws_model do
+      model { GenerativeText::AWS::MODELS.sample.api_name }
+    end
+
     trait :with_preset do
       generate_text_preset
     end
@@ -19,6 +27,7 @@ FactoryBot.define do
     end
 
     trait :with_response do
+      model { GenerativeText::Anthropic::MODELS.sample.api_name }
       status { 'completed' }
       response do
         {

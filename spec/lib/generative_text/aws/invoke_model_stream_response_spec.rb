@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe GenerativeText::AWS::Client::InvokeModelStreamResponse do
+RSpec.describe GenerativeText::AWS::InvokeModelStreamResponse do
   let(:input_token_count) { 9 }
   let(:output_token_count) { 104 }
   let(:data) do

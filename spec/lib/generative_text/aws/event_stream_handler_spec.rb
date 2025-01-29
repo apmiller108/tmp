@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe GenerativeText::AWS::Client::EventStreamHandler do
+RSpec.describe GenerativeText::AWS::EventStreamHandler do
   describe '#initialize' do
     it 'stores the block' do
       block = proc { |event| puts event }
@@ -24,8 +24,8 @@ RSpec.describe GenerativeText::AWS::Client::EventStreamHandler do
     it 'calls the provided block with the event' do
       bytes = double
       event = instance_double(Aws::BedrockRuntime::Types::PayloadPart, bytes:)
-      response = instance_double(GenerativeText::AWS::Client::InvokeModelStreamResponse)
-      allow(GenerativeText::AWS::Client::InvokeModelStreamResponse).to receive(:new).with(bytes).and_return(response)
+      response = instance_double(GenerativeText::AWS::InvokeModelStreamResponse)
+      allow(GenerativeText::AWS::InvokeModelStreamResponse).to receive(:new).with(bytes).and_return(response)
       block = proc { |e| e }
       handler = described_class.new(&block)
 
