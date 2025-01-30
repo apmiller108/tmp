@@ -37,7 +37,9 @@ RSpec.describe 'WysiwygEditorComponent', type: :system do
         "stop_sequence": null,
         "usage": {
             "input_tokens": 79,
-            "output_tokens": 942
+            "output_tokens": 942,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0
         }
       }
     JSON
@@ -71,8 +73,8 @@ RSpec.describe 'WysiwygEditorComponent', type: :system do
       .with(
         body: {
           model: model.api_name, max_tokens: model.max_tokens, temperature: 0.0,
-          messages: [{ 'role' => 'user', 'content' => [{ 'type' => 'text', 'text' => 'This is my prompt' }] }],
-          system: GenerateTextRequest::MARKDOWN_FORMAT_SYSTEM_MESSAGE
+          messages: [{ 'role' => 'user', 'content' => [{ 'text' => 'This is my prompt', 'type' => 'text' }] }],
+          system: GenerativeText::Helpers::MARKDOWN_FORMAT_SYSTEM_MESSAGE
         }.to_json
       ).to_return(status: 200, body: claude_generative_text_response)
 

@@ -26,7 +26,9 @@ RSpec.describe 'update conversation', type: :system do
         "stop_sequence": null,
         "usage": {
             "input_tokens": 79,
-            "output_tokens": 942
+            "output_tokens": 942,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0
         }
       }
     JSON
@@ -44,7 +46,7 @@ RSpec.describe 'update conversation', type: :system do
           model: model.api_name, max_tokens: model.max_tokens,
           temperature:,
           messages: conversation.exchange
-                                .push({ 'role' => 'user', 'content' => [{ 'type' => 'text', 'text' => prompt }] }),
+                                .push({ 'role' => 'user', 'content' => [{ 'text' => prompt, 'type' => 'text' }] }),
           system: GenerateTextRequest.new(generate_text_preset:).system_message
         }.to_json
       ).to_return(status: 200, body: generative_text_response)

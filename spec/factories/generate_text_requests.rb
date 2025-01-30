@@ -42,7 +42,10 @@ FactoryBot.define do
           'stop_reason' => 'end_turn',
           'stop_sequence' => nil,
           'usage' => {
-            'input_tokens' => 79, 'output_tokens' => 942
+            'input_tokens' => 79,
+            'output_tokens' => 942,
+            'cache_creation_input_tokens' => 0,
+            'cache_read_input_tokens' => 0
           }
         }
       end
