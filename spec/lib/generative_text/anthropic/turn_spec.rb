@@ -52,7 +52,7 @@ RSpec.describe GenerativeText::Anthropic::Turn do
               'source' => {
                 'type' => 'base64',
                 'media_type' => 'image/png',
-                'data' => 'base64 string' 
+                'data' => 'base64 string'
               },
               'cache_control' => { 'type' => 'ephemeral' }
             },

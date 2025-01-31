@@ -110,4 +110,37 @@ RSpec.describe 'update conversation', type: :system do
       end
     end
   end
+
+  context 'with the default options' do
+    let(:last_request) { conversation.generate_text_requests.last }
+
+    before do
+      stub_request(:post, 'https://api.anthropic.com/v1/messages')
+        .with(
+          body: {
+            model: last_request.model.api_name, max_tokens: last_request.model.max_tokens,
+            temperature: last_request.temperature,
+            messages: conversation.exchange
+                                  .push({ 'role' => 'user',
+                                          'content' => [
+                                            { 'text' => prompt, 'type' => 'text' }
+                                          ] }),
+            system: GenerativeText::Helpers.markdown_sys_msg
+          }.to_json
+        ).to_return(status: 200, body: generative_text_response)
+    end
+
+    it 'sets the default options to the options used in the last request' do
+      login(user:)
+      visit edit_user_conversation_path(user, conversation)
+
+      fill_in 'conversation_generate_text_requests_attributes_0_prompt', with: prompt
+
+      within('.c-prompt-form') do
+        find('button[type=submit]').click
+      end
+
+      expect(page).to have_css('.c-conversation-turn', count: 4)
+    end
+  end
 end

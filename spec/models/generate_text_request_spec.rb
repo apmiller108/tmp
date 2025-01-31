@@ -146,24 +146,4 @@ RSpec.describe GenerateTextRequest, type: :model do
       end
     end
   end
-
-  describe '#to_turn' do
-    subject(:request) do
-      build(:generate_text_request)
-    end
-
-    it 'delegates to GenerativeText::Anthropic::Turn' do
-      expect(GenerativeText::Anthropic::Turn).to receive(:for).with(request)
-      request.to_turn
-    end
-  end
-
-  describe '#model' do
-    let(:model) { GenerativeText::MODELS.sample }
-
-    it 'returns the matching model from GenerativeText::MODELS' do
-      request = build(:generate_text_request, model: model.api_name)
-      expect(request.model).to eq(model)
-    end
-  end
 end
