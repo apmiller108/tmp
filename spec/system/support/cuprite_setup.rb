@@ -21,13 +21,6 @@ module CupriteHelpers
   def pause
     page.driver.pause
   end
-
-  def debug(binding = nil)
-    $stdout.puts 'Open Chrome inspector at http://localhost:3333'
-    return binding.break if binding
-
-    page.driver.pause
-  end
 end
 
 RSpec.configure do |c|

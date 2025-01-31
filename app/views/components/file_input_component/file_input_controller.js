@@ -64,7 +64,7 @@ export default class FileInputController extends Controller {
     this.resetError()
 
     if (file.size > Number(this.maxSize)) {
-      this.showError(`File size must be less than ${this.maxSize.charAt(0)}MB`)
+      this.showError(`File size must be less than ${this.invalidFeedbackTarget.dataset.maxSizeInWords}`)
       return false
     }
 

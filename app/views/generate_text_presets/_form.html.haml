@@ -3,11 +3,12 @@
   .card-body
     .mb-3
       = form.label :name, class: 'form-label'
-      = form.text_field :name, class: 'form-control', required: true, minlength: 3, maxlength: 20
+      = form.text_field :name, class: 'form-control', required: true, minlength: 3, maxlength: @generate_text_preset.class::NAME_MAX_LENGTH
 
     .mb-3
       = form.label :system_message, class: 'form-label'
-      = form.text_area :system_message, class: 'form-control', required: true, rows: 4, maxlength: 500
+      = form.text_area :system_message, class: 'form-control', required: true, rows: 4,
+        maxlength: @generate_text_preset.class::SYSTEM_MESSAGE_MAX_LENGTH
 
     .mb-3
       = form.label :description, class: 'form-label'

@@ -1,0 +1,5 @@
+.container.p-3
+  = form_with(url: false) do |form|
+    .card-body
+      .mb-3
+        = render FileInputComponent.new(form: form, disabled: false, file_types:, max_size:)

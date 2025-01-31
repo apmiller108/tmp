@@ -22,4 +22,8 @@ class FileInputComponent < ApplicationViewComponent
     'dragleave->file-input#onDragLeave '\
     'drop->file-input#onDrop'
   end
+
+  def max_size_in_words
+    number_to_human_size(max_size)
+  end
 end
