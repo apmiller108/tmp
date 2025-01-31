@@ -2,7 +2,7 @@ class Conversation < ApplicationRecord
   belongs_to :memo, optional: true
   belongs_to :user, optional: false
 
-  has_many :generate_text_requests, -> { order(:created_at) }, dependent: :nullify, inverse_of: :conversation
+  has_many :generate_text_requests, -> { order(:created_at) }, dependent: :destroy, inverse_of: :conversation
   accepts_nested_attributes_for :generate_text_requests
 
   validates :title, presence: true, length: { maximum: 100 }
