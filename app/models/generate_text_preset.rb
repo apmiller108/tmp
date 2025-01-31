@@ -1,12 +1,15 @@
 # frozen_string_literal: true
 
 class GenerateTextPreset < ApplicationRecord
+  NAME_MAX_LENGTH = 40
+  SYSTEM_MESSAGE_MAX_LENGTH = 5000
+
   has_one :generate_text_request, dependent: :nullify
   has_one :generate_text_presets_user, dependent: :destroy
   has_one :user, through: :generate_text_presets_user
 
-  validates :name, presence: true, length: { minimum: 3, maximum: 30 }
-  validates :system_message, presence: true, length: { maximum: 500 }
+  validates :name, presence: true, length: { minimum: 3, maximum: NAME_MAX_LENGTH }
+  validates :system_message, presence: true, length: { maximum: SYSTEM_MESSAGE_MAX_LENGTH }
   validates :temperature, presence: true, inclusion: { in: GenerateTextRequest::TEMPERATURE_VALUES }
 
   enum :preset_type, {
