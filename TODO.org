@@ -2,7 +2,8 @@
 :CATEGORY: tmp
 :END:
 * TODO look into using https://runware.ai/
-* TODO Move the aws invoke model response
+* TODO Move the aws invoke model response [1/2]
+  - [X] Move it
   - [ ] Write a shared example the enforce the interface
   https://morningcoffee.io/interfaces-in-ruby.html
 * TODO add audio transcription to conversations

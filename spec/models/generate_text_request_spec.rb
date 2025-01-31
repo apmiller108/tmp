@@ -89,6 +89,36 @@ RSpec.describe GenerateTextRequest, type: :model do
     end
   end
 
+  describe '#to_turn' do
+    context 'when model vendor is Anthropic' do
+      subject(:request) { build_stubbed :generate_text_request, :with_anthropic_model }
+
+      let(:anthropic_turn_data) { double }
+
+      before do
+        allow(GenerativeText::Anthropic::Turn).to receive(:for).with(request).and_return(anthropic_turn_data)
+      end
+
+      it 'calls Turn.for on Anthropic::Turn' do
+        expect(request.to_turn).to eq anthropic_turn_data
+      end
+    end
+
+    context 'when model vendor is AWS' do
+      subject(:request) { build_stubbed :generate_text_request, :with_aws_model }
+
+      let(:aws_turn_data) { double }
+
+      before do
+        allow(GenerativeText::AWS::Turn).to receive(:for).with(request).and_return(aws_turn_data)
+      end
+
+      it 'calls Turn.for on AWS::Turn' do
+        expect(request.to_turn).to eq aws_turn_data
+      end
+    end
+  end
+
   describe '#response_token_count' do
     context 'when request is completed' do
       subject(:request) do
