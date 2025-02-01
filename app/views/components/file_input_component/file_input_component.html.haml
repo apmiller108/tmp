@@ -1,6 +1,6 @@
-.c-file-input{ data: { controller: 'file-input', file_types: file_types, max_size:, action: drop_action }}
+.c-file-input{ data: { controller: 'file-input', file_types: file_types, max_size:, action: drop_actions }}
   .input-field
     .upload-progress{ data: { 'file-input-target' => 'uploadProgress' }}
     = form.file_field :file, direct_upload: true, disabled:, class: 'form-control',
-      data: { 'file-input-target' => 'input', action: }
+      data: { 'file-input-target' => 'input', action: field_actions }
   .invalid-feedback{ data: { 'file-input-target' => 'invalidFeedback', max_size_in_words: max_size_in_words }}

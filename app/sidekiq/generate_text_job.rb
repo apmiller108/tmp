@@ -15,6 +15,10 @@ class GenerateTextJob
     generate_text_request.update!(response: response.data, status: GenerateTextRequest.statuses[:completed])
     broadcast_component(generate_text_request, user)
     broadcast_content(generate_text_request, user, response.content)
+
+    if response.tool_use?
+      puts "#{self.class}: *** #{response.generate_image_inputs}"
+    end
   end
 
   private

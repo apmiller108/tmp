@@ -1,59 +1,63 @@
+# frozen_string_literal: true
+
 class GenerativeText
   module Anthropic
     module ToolBox
       class GenerateImage
-        def name
-          :generate_image
-        end
-
-        def description
-          'Create a request to generate an image using a JSON API for a Stable Diffusion model'
-        end
+        NAME = 'generate_image'
+        DESCRIPTION = <<~TXT
+          Creates a request to generate an image using a Stable Diffusion
+          generative image AI model. A prompt and aspect ratio are required.
+          Optimize the prompt to produce the best image possible. Use adjectives
+          and detailed descriptive phrases. Be clear about the subject or main
+          focal point of the image. A negative prompt and style are optional. It
+          should be used when the user is asking you to create an image.
+        TXT
 
         def input_schema
           {
             'type' => 'object',
             'properties' => {
-              'image_name' => { 'type' => 'string', 'description' => 'image name' },
               'options' => {
                 'type' => 'object',
                 'properties' => {
                   'style' => {
                     'type' => 'string',
                     'enum' => GenerativeImage::Stability::STYLE_PRESETS,
-                    'description' => "preset used to guide the model's stylistic output"
+                    'description' => "Preset used to guide the model's stylistic output."
                   },
                   'aspect_ratio' => {
                     'type' => 'string',
                     'enum' => GenerativeImage::Stability::CORE_ASPECT_RATIOS,
-                    'description' => 'image dimensions'
+                    'description' => 'Image dimensions.'
                   }
                 },
                 'required' => ['aspect_ratio']
               },
               'prompts' => {
-                'description' => 'The prompt and an optional negative prompt to generate an image using Stable Diffusion',
+                'description' => 'Prompt and negative prompt to generate an image using Stable Diffusion.',
                 'type' => 'object',
                 'properties' => {
                   'prompt' => {
                     'type' => 'string',
-                    'description' => 'a prompt to generate an image using Stable Diffusion'
+                    'description' => 'Prompt to generate an image using Stable Diffusion.'
                   },
                   'negative_prompt' => {
                     'type' => 'string',
-                    'description' => 'a negative prompt to generate an image using Stable Diffusion'
+                    'description' => 'Negative prompt to generate an image using Stable Diffusion.'
                   }
                 },
                 'required' => ['prompt']
               }
-            }
+            },
+            'required' => %w[options prompts]
           }
         end
 
         def to_h
           {
-            name:,
-            description:,
+            name: NAME,
+            description: DESCRIPTION,
             input_schema:
           }
         end

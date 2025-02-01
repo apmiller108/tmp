@@ -2,7 +2,7 @@ class GenerateImageRequestForm
   include ActiveModel::Model
   include ActiveModel::Attributes
 
-  attribute :image_name, :string
+  attribute :image_name, :string, default: -> { GenerateImageRequest.generate_name }
   attribute :style, :string
   attribute :aspect_ratio, :string
   attribute :prompt, :string

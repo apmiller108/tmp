@@ -8,7 +8,7 @@ class FileInputComponent < ApplicationViewComponent
     @max_size = max_size
   end
 
-  def action
+  def field_actions
     'direct-upload:start->file-input#onUploadStart '\
     'direct-upload:progress->file-input#onUploadProgress '\
     'direct-upload:end->file-input#onUploadEnd '\
@@ -17,7 +17,7 @@ class FileInputComponent < ApplicationViewComponent
     'change->file-input#onChange'
   end
 
-  def drop_action
+  def drop_actions
     'dragover->file-input#onDragOver '\
     'dragleave->file-input#onDragLeave '\
     'drop->file-input#onDrop'

@@ -3,8 +3,10 @@ class GenerativeText
     class InvokeModelResponse
       attr_reader :data
 
+      TOOL_USE = 'tool_use'.freeze
+
       # @param [Hash | String] data
-      # Parsed JSON response will look like this
+      # Parsed JSON response will look like this.
       # {
       #     "id" => "msg_01DMcCdRr6gaWDuZs7Y63rhe",
       #     "type" => "message",
@@ -21,6 +23,14 @@ class GenerativeText
       #         "cache_creation_input_tokens"=>0, "cache_read_input_tokens"=>1601
       #     }
       # }
+      #
+      # If the stop_reason is `tool_use`, the tool input objects will be in the
+      # content array. Example tool_input object:
+      #
+      # { "id" => "toolu_01MdQEyXJfvM5hUpabMKKwMU",
+      #   "name"=>"generate_image",
+      #   "type"=>"tool_use",
+      #   "input"=>{ "tool_use_input_json" => "here" }
       def initialize(data)
         @data = if data.respond_to? :keys
                   data
@@ -38,8 +48,12 @@ class GenerativeText
       end
 
       def completion_reason
-        # stop_reason could be one of ["end_turn", "max_tokens", "stop_sequence"]
+        # stop_reason could be one of ["end_turn", "max_tokens", "stop_sequence", "tool_use"]
         data.fetch('stop_reason')
+      end
+
+      def tool_use?
+        completion_reason == TOOL_USE
       end
 
       def token_count
@@ -49,6 +63,11 @@ class GenerativeText
 
       def usage
         data.fetch('usage')
+      end
+
+      def generate_image_inputs
+        results.select { |c| c['type'] == TOOL_USE && c['name'] == ToolBox::GenerateImage::NAME }
+               .take(1)
       end
     end
   end

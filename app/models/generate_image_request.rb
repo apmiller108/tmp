@@ -20,6 +20,12 @@ class GenerateImageRequest < ApplicationRecord
   OPTION_FIELDS = %w[style aspect_ratio].freeze
   LEGACY_OPTION_FIELDS = %w[dimensions].freeze
 
+  def self.generate_name
+    timestamp = Time.now.to_i
+    random = rand(10_000)
+    "genimage_#{timestamp}_#{random}"
+  end
+
   def parameterize
     {
       **flat_attributes.slice(*OPTION_FIELDS, *LEGACY_OPTION_FIELDS),

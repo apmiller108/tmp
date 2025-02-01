@@ -8,7 +8,7 @@ class ConversationsController < ApplicationController
   def index
     relation = current_user.conversations
     relation = relation.where(memo_id: search_params[:q][:memo_id]) if search_params.dig(:q, :memo_id)
-    @conversations, @cursor = Paginate.call(relation:, limit: 10, cursor: params[:c], order: { updated_at: :desc })
+    @conversations, @cursor = Paginate.call(relation:, limit: 15, cursor: params[:c], order: { updated_at: :desc })
 
     respond_to do |format|
       format.html
