@@ -6,6 +6,7 @@ class GenerateImageRequest < ApplicationRecord
   validates :aspect_ratio, inclusion: { in: GenerativeImage::Stability::CORE_ASPECT_RATIOS }
 
   belongs_to :user
+  belongs_to :conversation, optional: true
   belongs_to :active_storage_blob, optional: true, class_name: 'ActiveStorage::Blob',
                                    inverse_of: :generate_image_request
   has_many :prompts, dependent: :destroy

@@ -5,6 +5,8 @@ class Conversation < ApplicationRecord
   has_many :generate_text_requests, -> { order(:created_at) }, dependent: :destroy, inverse_of: :conversation
   accepts_nested_attributes_for :generate_text_requests
 
+  has_many :generate_image_requests, -> { order(:created_at) }, dependent: :destroy, inverse_of: :conversation
+
   validates :title, presence: true, length: { maximum: 100 }
 
   validate :memo_user_matches_conversation_user, if: :memo_id_changed?
