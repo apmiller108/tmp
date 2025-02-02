@@ -43,7 +43,6 @@ export default class FileInputController extends Controller {
   }
 
   onToggleInput(e) {
-    console.log(e)
     const { disabled } = event.detail
     if (disabled) {
       this.inputTarget.removeAttribute('disabled')
