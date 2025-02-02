@@ -16,9 +16,7 @@ class GenerateTextJob
     broadcast_component(generate_text_request, user)
     broadcast_content(generate_text_request, user, response.content)
 
-    if response.tool_use?
-      puts "#{self.class}: *** #{response.generate_image_inputs}"
-    end
+    GenerateTextToolInputJob.perform_async(generate_text_request_id) if response.tool_use?
   end
 
   private
@@ -65,13 +63,8 @@ class GenerateTextJob
         generate_text: { text_id: generate_text_request.text_id, content: nil, error: true }
       })
 
-      flash.alert = I18n.t('unable_to_generate_text')
-
-      ViewComponentBroadcaster.call(
-        [user, TurboStreams::STREAMS[:main]],
-        component: FlashMessageComponent.new(flash:),
-        action: :update
-      )
+      message = I18n.t('unable_to_generate_text')
+      broadcast_flash_to_user(message:, user:)
     end
   end
 

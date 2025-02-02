@@ -21,24 +21,27 @@
 * TODO Add support for PDFs
   (only sonnet 3-5)
   https://docs.anthropic.com/en/docs/build-with-claude/pdf-support
-* TODO add image generation to conversations [4/14]
+* TODO add image generation to conversations [6/14]
   - [X] Look into doing this via tool use
   https://docs.anthropic.com/en/docs/build-with-claude/tool-use#single-tool-example
   - [X] build a tool for producing a JSON object that represents a generate
     image request and associated positive and negative prompts.
   - [X] Review and optimize tool descriptions
   - [X] Test tool by logging responses.
-  - [ ] Create job to handle tool responses. Create a generate_image_request and
+  - [X] Create job to handle tool responses. Create a generate_image_request and
     prompts.
-  - [ ] Kick off a generate image job
-  - [ ] Associate generate image requests to a conversation
-  - [ ] Show generate image requests in the conversation
-  - [ ] When the generate image request
+  - [X] Kick off a generate image job
+  - [ ] Associate generate image requests to a conversation.
+  - [ ] Interleave the text and image requests
+  - [ ] Support generate image requests in the conversation turn component
   - [ ] Broadcast the created generate image request when it is created above
   - [ ] Broadcast the in progress generate image request when the job starts
   - [ ] Broadcast the completed or failed generate image request
   - [ ] What happens if a user asks for multiple images in a single request?
   - [ ] Create an InvokeModelResponse base class
+  - [ ] Add the generated image to the next user request
+  - [ ] Test uploading an image and asking it to generate an image like it with
+    some changes.
 * DONE support adding files to the prompt [17/17]
 CLOSED: [2025-01-27 Mon 20:52]
   - [X] Add file input and attachment to generate text requests

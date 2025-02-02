@@ -15,7 +15,7 @@ class GenerateImageRequestForm
 
   def initialize(attrs)
     super(attrs)
-    self.generate_image_request = GenerateImageRequest.new(attrs.slice(:image_name, :style, :aspect_ratio, :user))
+    self.generate_image_request = GenerateImageRequest.new(image_name:, style:, aspect_ratio:, user:)
   end
 
   def submit

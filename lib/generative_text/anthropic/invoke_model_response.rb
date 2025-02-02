@@ -67,6 +67,7 @@ class GenerativeText
 
       def generate_image_inputs
         results.select { |c| c['type'] == TOOL_USE && c['name'] == ToolBox::GenerateImage::NAME }
+               .map { _1['input'] }
                .take(1)
       end
     end
