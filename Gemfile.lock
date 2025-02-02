@@ -429,6 +429,9 @@ GEM
     ruby-vips (2.2.0)
       ffi (~> 1.12)
     ruby2_keywords (0.0.5)
+    scenic (1.8.0)
+      activerecord (>= 4.0.0)
+      railties (>= 4.0.0)
     securerandom (0.4.1)
     sidekiq (7.2.4)
       concurrent-ruby (< 2)
@@ -539,6 +542,7 @@ DEPENDENCIES
   rubocop-performance (~> 1.15)
   rubocop-rails (~> 2.17)
   rubocop-rspec (~> 2.18)
+  scenic
   sidekiq (~> 7.0)
   sidekiq-cron (~> 1.12)
   sidekiq-unique-jobs (~> 8.0)
@@ -555,4 +559,4 @@ RUBY VERSION
    ruby 3.3.0p0
 
 BUNDLED WITH
-   2.5.10
+   2.6.3
