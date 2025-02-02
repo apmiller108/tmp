@@ -32,6 +32,8 @@
     prompts.
   - [X] Kick off a generate image job
   - [ ] Associate generate image requests to a conversation.
+        Wrap a database view in a model associate to a conversation.
+        ConversationTurn.
   - [ ] Interleave the text and image requests
   - [ ] Support generate image requests in the conversation turn component
   - [ ] Broadcast the created generate image request when it is created above
@@ -42,6 +44,8 @@
   - [ ] Add the generated image to the next user request
   - [ ] Test uploading an image and asking it to generate an image like it with
     some changes.
+  - [ ] Convert generate text request file to webp with optimum size. Attach
+    that variant to the request params.
 * DONE support adding files to the prompt [17/17]
 CLOSED: [2025-01-27 Mon 20:52]
   - [X] Add file input and attachment to generate text requests

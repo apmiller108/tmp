@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_28_024539) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_02_041331) do
   create_schema "rollback"
 
   # These are extensions that must be enabled in order to support this database
@@ -80,6 +80,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_28_024539) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "options", default: {}
+    t.bigint "conversation_id"
+    t.index ["conversation_id"], name: "index_generate_image_requests_on_conversation_id"
     t.index ["image_name"], name: "index_generate_image_requests_on_image_name"
     t.index ["user_id"], name: "index_generate_image_requests_on_user_id"
   end
@@ -217,6 +219,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_28_024539) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "conversations", "memos"
   add_foreign_key "conversations", "users"
+  add_foreign_key "generate_image_requests", "conversations"
   add_foreign_key "generate_image_requests", "users"
   add_foreign_key "generate_text_presets_users", "generate_text_presets"
   add_foreign_key "generate_text_presets_users", "users"
