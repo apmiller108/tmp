@@ -2,9 +2,9 @@
 :CATEGORY: tmp
 :END:
 * TODO look into using https://runware.ai/
-* TODO Move the aws invoke model response [1/2]
-  - [X] Move it
-  - [ ] Write a shared example the enforce the interface
+* DONE Move the aws invoke model response [0/1]
+CLOSED: [2025-02-02 Sun 10:14]
+  - [ ] Move it
   https://morningcoffee.io/interfaces-in-ruby.html
 * TODO add audio transcription to conversations
 * TODO add audio generation to conversations
@@ -21,6 +21,7 @@
 * TODO Add support for PDFs
   (only sonnet 3-5)
   https://docs.anthropic.com/en/docs/build-with-claude/pdf-support
+* TODO refactor and normalize the adapter pattern for text generation
 * TODO add image generation to conversations [7/17]
   - [X] Look into doing this via tool use
   https://docs.anthropic.com/en/docs/build-with-claude/tool-use#single-tool-example
@@ -32,6 +33,7 @@
     prompts.
   - [X] Kick off a generate image job
   - [X] Associate generate image requests to a conversation.
+  - [ ] Link the generate image request to the conversation.
   - [ ] Wrap a database view in a model associate to a conversation (ConversationTurn)
   - [ ] Support generate image requests in the conversation turn component
   - [ ] Broadcast the created generate image request when it is created above

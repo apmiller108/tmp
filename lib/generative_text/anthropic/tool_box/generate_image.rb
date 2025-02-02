@@ -19,7 +19,6 @@ class GenerativeText
           optimal image. This tool should be used when the user is asking you to
           create an image.
         TXT
-        falsS bs
 
         def input_schema
           {

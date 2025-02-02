@@ -17,14 +17,14 @@ class GenerateTextToolInputJob
 
   def handle_imge_inputs(generate_text_request)
     generate_text_request.response.generate_image_inputs.each do |input|
-      user = generate_text_request.user
-      attrs = input['options'].merge(input['prompts']).merge(user:)
+      attrs = input['options'].merge(input['prompts'])
+                              .merge(generate_text_request.slice(:user, :conversation_id))
       form = GenerateImageRequestForm.new(attrs)
 
       if form.submit
         GenerateImageJob.perform_async(form.generate_image_request.id)
       else
-        log_and_broadcast_errors(user, form)
+        log_and_broadcast_errors(generate_text_request.user, form)
       end
     end
   end
