@@ -17,7 +17,7 @@ class GenerateTextRequest < ApplicationRecord
   delegate :system_message, to: :generate_text_preset, allow_nil: true, prefix: :preset
 
   # See also Turable concern for associations to converation
-  belongs_to :user
+  belongs_to :user, optional: false
   belongs_to :generate_text_preset, optional: true
 
   validates :text_id, presence: true, length: { maximum: 50 }

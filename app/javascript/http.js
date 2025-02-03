@@ -21,6 +21,27 @@ export const generateText = ({ prompt, text_id, temperature, generate_text_prese
   })
 }
 
+
+  // createConversation/updateConversation params
+  // # {
+  // #   contersation: {
+  // #     title: '',
+  // #     memo_id: '',
+  // #     turns_attributes: {
+  // #       '0': {
+  // #         turnable_type: 'GenerateTextRequest',
+  // #         turnable_attributes: {
+  // #           prompt:,
+  // #           text_id:,
+  // #           temperature:,
+  // #           generate_text_preset_id:,
+  // #         }
+  // #       }
+  // #     }
+  // #   }
+  // # }
+
+
 export const updateConversation = ({ conversation_id, memo_id, user_id  }) => {
   const headers = {
     'Content-Type': 'application/json',

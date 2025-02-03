@@ -3,7 +3,6 @@ class ConversationsController < ApplicationController
   layout 'application', only: :index
 
   before_action :set_conversation, only: %i[update destroy]
-  before_action :verify_user_id, only: %i[create update]
 
   def index
     relation = current_user.conversations
@@ -24,21 +23,18 @@ class ConversationsController < ApplicationController
   end
 
   def create
-    conversation = current_user.conversations.new(
-      conversation_params.merge(
-        title: Conversation.title_from_prompt(prompt)
-      )
-    )
+    @conversation = current_user.conversations.new(new_conversation_params)
+    set_user_id_on_turnable
     respond_to do |format|
-      if conversation.save
-        enqueue_generate_text_job(conversation.generate_text_requests.created.last)
+      if @conversation.save
+        enqueue_generate_text_job(@conversation.generate_text_requests.created.last)
         format.turbo_stream do
-          redirect_to edit_user_conversation_path(current_user, conversation), status: :see_other
+          redirect_to edit_user_conversation_path(current_user, @conversation), status: :see_other
         end
       else
         format.turbo_stream do
           flash.now.alert = t('unable_to_save', model_name: t('conversation.name'))
-          flash_component = FlashMessageComponent.new(flash:, record: conversation)
+          flash_component = FlashMessageComponent.new(flash:, record: @conversation)
 
           render turbo_stream: [
                    turbo_stream.update(flash_component.id, flash_component),
@@ -60,8 +56,10 @@ class ConversationsController < ApplicationController
   end
 
   def update
+    @conversation.assign_attributes(conversation_params)
+    set_user_id_on_turnable
     respond_to do |format|
-      if @conversation.update(conversation_params)
+      if @conversation.save
         generate_text_request = @conversation.generate_text_requests.created.last
         enqueue_generate_text_job(generate_text_request)
         format.turbo_stream do
@@ -110,22 +108,24 @@ class ConversationsController < ApplicationController
     @conversation = current_user.conversations.find(params[:id])
   end
 
-  def verify_user_id
-    return if generate_text_requests_attributes.nil?
-
-    raise 'Invalid user_id' if generate_text_requests_attributes[:user_id] != current_user.id.to_s
+  def set_user_id_on_turnable
+    @conversation.turns.each { |t| t.turnable.user = current_user }
   end
 
-  def prompt
-    generate_text_requests_attributes[:prompt]
+  def search_params
+    params.permit(q: %i[memo_id])
+  end
+
+  def new_conversation_params
+    conversation_params.merge(title: Conversation.title_from_prompt(prompt))
   end
 
   def generate_text_requests_attributes
     conversation_params.dig(:turns_attributes, '0', :turnable_attributes)
   end
 
-  def search_params
-    params.permit(q: %i[memo_id])
+  def prompt
+    generate_text_requests_attributes[:prompt]
   end
 
   def conversation_params
@@ -135,7 +135,7 @@ class ConversationsController < ApplicationController
       turns_attributes: [
         :turnable_type,
         turnable_attributes: [
-          :prompt, :text_id, :temperature, :generate_text_preset_id, :conversation_id, :user_id, :model, :file
+          :prompt, :text_id, :temperature, :generate_text_preset_id, :model, :file
         ]
       ]
     )
