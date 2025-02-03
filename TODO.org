@@ -22,7 +22,7 @@ CLOSED: [2025-02-02 Sun 10:14]
   (only sonnet 3-5)
   https://docs.anthropic.com/en/docs/build-with-claude/pdf-support
 * TODO refactor and normalize the adapter pattern for text generation
-* TODO add image generation to conversations [8/18]
+* TODO add image generation to conversations [9/19]
   - [X] Look into doing this via tool use
   https://docs.anthropic.com/en/docs/build-with-claude/tool-use#single-tool-example
   - [X] build a tool for producing a JSON object that represents a generate
@@ -34,7 +34,9 @@ CLOSED: [2025-02-02 Sun 10:14]
   - [X] Kick off a generate image job
   - [X] Associate generate image requests to a conversation.
   - [X] Link the generate image request to the conversation.
-  - [ ] Wrap a database view in a model associate to a conversation (ConversationTurn)
+  - [X] Create a generic conversation turn polymorphic relation
+  - [ ] Fix memo generate requests creating conversations every time.
+        How does the gen text job broadcasts conversation_id?
   - [ ] Support generate image requests in the conversation turn component
   - [ ] Broadcast the created generate image request when it is created above
   - [ ] Broadcast the in progress generate image request when the job starts

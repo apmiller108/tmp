@@ -113,17 +113,15 @@ class ConversationsController < ApplicationController
   def verify_user_id
     return if generate_text_requests_attributes.nil?
 
-    generate_text_requests_attributes.each_value do |attributes|
-      raise 'Invalid user_id' if attributes[:user_id] != current_user.id.to_s
-    end
+    raise 'Invalid user_id' if generate_text_requests_attributes[:user_id] != current_user.id.to_s
   end
 
   def prompt
-    generate_text_requests_attributes['0'][:prompt]
+    generate_text_requests_attributes[:prompt]
   end
 
   def generate_text_requests_attributes
-    conversation_params[:generate_text_requests_attributes]
+    conversation_params.dig(:turns_attributes, '0', :turnable_attributes)
   end
 
   def search_params
@@ -132,8 +130,13 @@ class ConversationsController < ApplicationController
 
   def conversation_params
     params.require(:conversation).permit(
-      :title, :memo_id, generate_text_requests_attributes: [
-        :prompt, :text_id, :temperature, :generate_text_preset_id, :conversation_id, :user_id, :model, :file
+      :title,
+      :memo_id,
+      turns_attributes: [
+        :turnable_type,
+        turnable_attributes: [
+          :prompt, :text_id, :temperature, :generate_text_preset_id, :conversation_id, :user_id, :model, :file
+        ]
       ]
     )
   end

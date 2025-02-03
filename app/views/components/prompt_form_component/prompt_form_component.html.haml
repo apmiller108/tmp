@@ -1,51 +1,52 @@
 .c-prompt-form.mb-5{ id:, data: { controller: 'prompt-form', action: 'my-channel:generateText@window->prompt-form#onGenerateText' } }
   = form_with model: [current_user, conversation], data: { 'prompt-form-target' => 'form', action: 'direct-uploads:start->prompt-form#disableForm' } do |form|
-    = form.fields_for :generate_text_requests, generate_text_request do |gtr_fields|
-      = gtr_fields.hidden_field :conversation_id, data: { 'prompt-form-target' => 'conversationId' }
-      = gtr_fields.hidden_field :user_id, data: { 'prompt-form-target' => 'userId' }
-      = gtr_fields.hidden_field :text_id, data: { 'prompt-form-target' => 'textId' }
-      .grid{ style: '--bs-gap: 0.5rem;'}
-        .g-start-2.g-col-11.form-container
-          .options.d-flex.justify-content-start.align-items-center
-            .mb-2
-              %button.btn.fs-6.options-toggle-btn.p-0.mx-2{ 'data-bs-toggle' => 'collapse',
-                                                   'data-bs-target' => '#advanced-options',
-                                                   'data-prompt-form-target' => 'showOptionsButton',
-                                                   'data-action' => 'click->prompt-form#onClickShowOptions:prevent' }
-                %i.bi.bi-chevron-up{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => 'toggle options' }}
-            .collapse.mb-2#advanced-options{ data: { 'prompt-form-target' => 'options' } }
-              .grid
-                .g-col-3
-                  .form-floating
-                    = gtr_fields.select :model, model_options, {},
-                    { class: 'form-select', data: { 'prompt-form-target' => 'modelSelect',
-                                                    'model-data' => model_data, action: 'change->prompt-form#onChangeModel' } }
-                    = gtr_fields.label :model, 'Model'
-                .g-col-2.d-flex.align-items-center
-                  .form-floating
-                    = gtr_fields.select :generate_text_preset_id, preset_options, { include_blank: true },
-                      { class: 'form-select', data: { 'prompt-form-target' => 'presetSelect', 'preset-data' => preset_data,
-                                                      action: 'change->prompt-form#onChangePreset' } }
-                    = gtr_fields.label :generate_text_preset_id, 'Preset'
-                  = link_to new_generate_text_preset_path(redirect_after_create: after_create_preset_redirect_path),
-                  class: 'icon-btn', id: 'new_preset_link' do
-                    %i.bi.bi-plus{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => t('generate_text_preset.add') }}
-                .g-col-1
-                  .form-floating
-                    = gtr_fields.select :temperature, helpers.temp_select_options, {},
-                    { class: 'form-select', data: { 'prompt-form-target' => 'temperatureSelect' } }
-                    = gtr_fields.label :temperature, 'Temp'
-          .grid.prompt-input-container
-            .g-col-12.position-relative
-              = gtr_fields.text_area :prompt, class: 'form-control scroll-no-bar-container', data: { 'prompt-form-target' => 'promptInput' },
-                                     placeholder: 'Type a message', rows: 2
-              %button.btn.icon-btn{type: 'submit', name: 'commit', data: { 'prompt-form-target' => 'submitButton' },
-                                   disabled: disabled?}
-                %i.bi.bi-send-fill
-            .g-col-6.mt-1
-              = render FileInputComponent.new(form: gtr_fields, disabled: file_input_disabled?, file_types:, max_size: max_file_size)
+    = form.fields_for :turns, turn do |turn_fields|
+      = turn_fields.hidden_field :turnable_type
+      = turn_fields.fields_for :turnable, generate_text_request do |gtr_fields|
+        = gtr_fields.hidden_field :user_id, data: { 'prompt-form-target' => 'userId' }
+        = gtr_fields.hidden_field :text_id, data: { 'prompt-form-target' => 'textId' }
+        .grid{ style: '--bs-gap: 0.5rem;'}
+          .g-start-2.g-col-11.form-container
+            .options.d-flex.justify-content-start.align-items-center
+              .mb-2
+                %button.btn.fs-6.options-toggle-btn.p-0.mx-2{ 'data-bs-toggle' => 'collapse',
+                                                    'data-bs-target' => '#advanced-options',
+                                                    'data-prompt-form-target' => 'showOptionsButton',
+                                                    'data-action' => 'click->prompt-form#onClickShowOptions:prevent' }
+                  %i.bi.bi-chevron-up{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => 'toggle options' }}
+              .collapse.mb-2#advanced-options{ data: { 'prompt-form-target' => 'options' } }
+                .grid
+                  .g-col-3
+                    .form-floating
+                      = gtr_fields.select :model, model_options, {},
+                      { class: 'form-select', data: { 'prompt-form-target' => 'modelSelect',
+                                                      'model-data' => model_data, action: 'change->prompt-form#onChangeModel' } }
+                      = gtr_fields.label :model, 'Model'
+                  .g-col-2.d-flex.align-items-center
+                    .form-floating
+                      = gtr_fields.select :generate_text_preset_id, preset_options, { include_blank: true },
+                        { class: 'form-select', data: { 'prompt-form-target' => 'presetSelect', 'preset-data' => preset_data,
+                                                        action: 'change->prompt-form#onChangePreset' } }
+                      = gtr_fields.label :generate_text_preset_id, 'Preset'
+                    = link_to new_generate_text_preset_path(redirect_after_create: after_create_preset_redirect_path),
+                    class: 'icon-btn', id: 'new_preset_link' do
+                      %i.bi.bi-plus{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => t('generate_text_preset.add') }}
+                  .g-col-1
+                    .form-floating
+                      = gtr_fields.select :temperature, helpers.temp_select_options, {},
+                      { class: 'form-select', data: { 'prompt-form-target' => 'temperatureSelect' } }
+                      = gtr_fields.label :temperature, 'Temp'
+            .grid.prompt-input-container
+              .g-col-12.position-relative
+                = gtr_fields.text_area :prompt, class: 'form-control scroll-no-bar-container', data: { 'prompt-form-target' => 'promptInput' },
+                                      placeholder: 'Type a message', rows: 2
+                %button.btn.icon-btn{type: 'submit', name: 'commit', data: { 'prompt-form-target' => 'submitButton' },
+                                    disabled: disabled?}
+                  %i.bi.bi-send-fill
+              .g-col-6.mt-1
+                = render FileInputComponent.new(form: gtr_fields, disabled: file_input_disabled?, file_types:, max_size: max_file_size)
 
-            .g-col-6.details-fields.p-0
-              %div.d-flex.align-items-center.justify-content-end.mt-1
-                %span.label.me-2 Tokens:
-                %pre.value= conversation.token_count
+              .g-col-6.details-fields.p-0
+                %div.d-flex.align-items-center.justify-content-end.mt-1
+                  %span.label.me-2 Tokens:
+                  %pre.value= conversation.token_count

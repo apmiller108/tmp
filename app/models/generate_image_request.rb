@@ -1,10 +1,13 @@
 class GenerateImageRequest < ApplicationRecord
+  include Turnable
+
   store_accessor :options, :style, :aspect_ratio
 
   validates :image_name, presence: true, length: { maximum: 50 }
   validates :style, inclusion: { in: GenerativeImage::Stability::STYLE_PRESETS, allow_blank: true }
   validates :aspect_ratio, inclusion: { in: GenerativeImage::Stability::CORE_ASPECT_RATIOS }
 
+  # See also Turable concern for associations to converation
   belongs_to :user
   belongs_to :conversation, optional: true
   belongs_to :active_storage_blob, optional: true, class_name: 'ActiveStorage::Blob',

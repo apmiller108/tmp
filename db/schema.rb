@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_02_041331) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_03_012740) do
   create_schema "rollback"
 
   # These are extensions that must be enabled in order to support this database
@@ -62,6 +62,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_02_041331) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "conversation_turns", force: :cascade do |t|
+    t.bigint "conversation_id", null: false
+    t.string "turnable_type", null: false
+    t.bigint "turnable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conversation_id", "created_at"], name: "index_conversation_turns_on_conversation_id_and_created_at"
+    t.index ["conversation_id"], name: "index_conversation_turns_on_conversation_id"
+    t.index ["turnable_type", "turnable_id"], name: "index_conversation_turns_on_turnable"
   end
 
   create_table "conversations", force: :cascade do |t|
@@ -217,6 +228,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_02_041331) do
   add_foreign_key "active_storage_blobs_generate_image_requests", "active_storage_blobs"
   add_foreign_key "active_storage_blobs_generate_image_requests", "generate_image_requests"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "conversation_turns", "conversations"
   add_foreign_key "conversations", "memos"
   add_foreign_key "conversations", "users"
   add_foreign_key "generate_image_requests", "conversations"

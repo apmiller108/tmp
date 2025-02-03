@@ -2,6 +2,7 @@
 
 class GenerateTextRequest < ApplicationRecord
   include StatusEnumable
+  include Turnable
 
   TEMPERATURE_VALUES = 0.step(to: 1, by: 0.1).map { _1.round(1) }
 
@@ -15,9 +16,9 @@ class GenerateTextRequest < ApplicationRecord
   delegate :content, to: :response, allow_nil: true, prefix: true
   delegate :system_message, to: :generate_text_preset, allow_nil: true, prefix: :preset
 
+  # See also Turable concern for associations to converation
   belongs_to :user
   belongs_to :generate_text_preset, optional: true
-  belongs_to :conversation, optional: true
 
   validates :text_id, presence: true, length: { maximum: 50 }
   validates :prompt, presence: true, length: { maximum: 24_000 }

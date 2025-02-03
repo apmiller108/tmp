@@ -2,10 +2,13 @@ class Conversation < ApplicationRecord
   belongs_to :memo, optional: true
   belongs_to :user, optional: false
 
-  has_many :generate_text_requests, -> { order(:created_at) }, dependent: :destroy, inverse_of: :conversation
-  accepts_nested_attributes_for :generate_text_requests
+  # has_many :generate_text_requests, -> { order(:created_at) }, dependent: :destroy, inverse_of: :conversation
 
-  has_many :generate_image_requests, -> { order(:created_at) }, dependent: :destroy, inverse_of: :conversation
+  has_many :turns, -> { order created_at: :asc }, class_name: 'ConversationTurn', dependent: :destroy,
+                                                  inverse_of: :conversation
+  accepts_nested_attributes_for :turns
+  has_many :generate_image_requests, through: :turns, source: :turnable, source_type: 'GenerateImageRequest'
+  has_many :generate_text_requests, through: :turns, source: :turnable, source_type: 'GenerateTextRequest'
 
   validates :title, presence: true, length: { maximum: 100 }
 

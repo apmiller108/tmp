@@ -3,13 +3,14 @@
 class PromptFormComponent < ApplicationViewComponent
   ID = 'prompt-form'
 
-  attr_reader :conversation, :generate_text_request
+  attr_reader :conversation, :generate_text_request, :turn
 
   delegate :generate_text_requests, to: :conversation
 
   def initialize(conversation:, **opts)
     @opts = opts
     @conversation = conversation
+    @turn = conversation.turns.new(turnable_type: 'GenerateTextRequest')
     @generate_text_request = conversation.generate_text_requests.new(default_values)
   end
 
