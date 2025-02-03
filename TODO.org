@@ -37,6 +37,7 @@ CLOSED: [2025-02-02 Sun 10:14]
   - [X] Create a generic conversation turn polymorphic relation
   - [ ] Fix memo generate requests creating conversations every time.
         How does the gen text job broadcasts conversation_id?
+  - [ ] Drop conversation id from request tables
   - [ ] Support generate image requests in the conversation turn component
   - [ ] Broadcast the created generate image request when it is created above
   - [ ] Broadcast the in progress generate image request when the job starts
