@@ -22,7 +22,7 @@ CLOSED: [2025-02-02 Sun 10:14]
   (only sonnet 3-5)
   https://docs.anthropic.com/en/docs/build-with-claude/pdf-support
 * TODO refactor and normalize the adapter pattern for text generation
-* TODO add image generation to conversations [11/21]
+* TODO add image generation to conversations [12/23]
   - [X] Look into doing this via tool use
   https://docs.anthropic.com/en/docs/build-with-claude/tool-use#single-tool-example
   - [X] build a tool for producing a JSON object that represents a generate
@@ -38,6 +38,8 @@ CLOSED: [2025-02-02 Sun 10:14]
   - [X] Fix memo generate requests creating conversations every time.
         Use create and update conversation. Drop the generate text requests controller.
   - [X] Drop conversation id from request tables
+  - [ ] Update the generate image request form to support new schema.
+  - [ ] Add status to generate image requests
   - [ ] Support generate image requests in the conversation turn component
   - [ ] Broadcast the created generate image request when it is created above
   - [ ] Broadcast the in progress generate image request when the job starts
@@ -45,7 +47,7 @@ CLOSED: [2025-02-02 Sun 10:14]
   - [ ] What happens if a user asks for multiple images in a single request?
   - [ ] Create an InvokeModelResponse base class
   - [ ] Add the generated image to the next user request
-  - [ ] Test uploading an image and asking it to generate an image like it with
+  - [X] Test uploading an image and asking it to generate an image like it with
     some changes.
   - [ ] Convert generate text request file to webp with optimum size. Attach
     that variant to the request params.
