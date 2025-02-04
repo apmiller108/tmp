@@ -9,14 +9,14 @@ class GenerateImageRequestForm
   attribute :negative_prompt, :string
   attribute :user
   attribute :generate_image_request
-  attribute :conversation_id
+  attribute :conversation
 
   validates :prompt, presence: true
   validate :generate_image_request_valid
 
   def initialize(attrs)
     super(attrs)
-    self.generate_image_request = GenerateImageRequest.new(image_name:, style:, aspect_ratio:, user:, conversation_id:)
+    self.generate_image_request = GenerateImageRequest.new(image_name:, style:, aspect_ratio:, user:)
   end
 
   def submit
@@ -25,6 +25,9 @@ class GenerateImageRequestForm
     ActiveRecord::Base.transaction do
       generate_image_request.save!
       prompts.each { |attrs| generate_image_request.prompts.create!(attrs) }
+      if conversation.present?
+        conversation.turns.create!(turnable: generate_image_request)
+      end
     end
 
     self

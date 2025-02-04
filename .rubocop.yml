@@ -77,6 +77,8 @@ Style/FrozenStringLiteralComment:
   Enabled: false
 Style/HashAsLastArrayItem:
   Enabled: false
+Style/IfUnlessModifier:
+  Enabled: false
 Style/Lambda:
   Enabled: false
 Style/SymbolArray:

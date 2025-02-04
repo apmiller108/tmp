@@ -18,7 +18,7 @@ class GenerateTextToolInputJob
   def handle_imge_inputs(generate_text_request)
     generate_text_request.response.generate_image_inputs.each do |input|
       attrs = input['options'].merge(input['prompts'])
-                              .merge(generate_text_request.slice(:user, :conversation_id))
+                              .merge(generate_text_request.slice(:user, :conversation))
       form = GenerateImageRequestForm.new(attrs)
 
       if form.submit
