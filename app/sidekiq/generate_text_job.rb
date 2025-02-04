@@ -22,7 +22,7 @@ class GenerateTextJob
   private
 
   def broadcast_content(generate_text_request, user, content)
-    conversation_id = generate_text_request.conversation_turn.conversation_id
+    conversation_id = generate_text_request.conversation_id
     MyChannel.broadcast_to(user, {
       generate_text: { **generate_text_request.slice(:text_id, :user_id), conversation_id:, content:, error: nil }
     })

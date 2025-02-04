@@ -5,6 +5,7 @@
                    'gen-text-temperature-options' => gen_text_temperature_options_json,
                    'object-id' => object.id || 'new',
                    'conversation-id' => conversation&.id,
+                   'user-id' => current_user.id,
                    action: 'my-channel:generateText@window->wysiwyg-editor#onGenerateText '\
                            'my-channel:generateImage@window->wysiwyg-editor#onGenerateImage '\
                            'memo-form:conversationCreated@window->wysiwyg-editor#onConversationCreated' }}

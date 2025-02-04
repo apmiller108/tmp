@@ -23,8 +23,11 @@ class GenerateTextRequest < ApplicationRecord
   validates :text_id, presence: true, length: { maximum: 50 }
   validates :prompt, presence: true, length: { maximum: 24_000 }
   validates :temperature, inclusion: { in: TEMPERATURE_VALUES }, allow_nil: true
+  validates :model, presence: true
 
   validate :acceptable_file
+
+  before_validation :set_default_model, on: :create
 
   def conversation
     super || NullConversation.new
@@ -93,5 +96,9 @@ class GenerateTextRequest < ApplicationRecord
 
   def markdown_format_system_message
     GenerativeText::Helpers.markdown_sys_msg if markdown_format?
+  end
+
+  def set_default_model
+    self.model ||= user.setting.text_model
   end
 end

@@ -31,6 +31,9 @@ class ConversationsController < ApplicationController
         format.turbo_stream do
           redirect_to edit_user_conversation_path(current_user, @conversation), status: :see_other
         end
+        format.json do
+          render json: @conversation.as_json(only: %i[id memo_id created_at updated_at]), status: :created
+        end
       else
         format.turbo_stream do
           flash.now.alert = t('unable_to_save', model_name: t('conversation.name'))
@@ -43,6 +46,10 @@ class ConversationsController < ApplicationController
                      PromptFormComponent.new(conversation:).render_in(view_context)
                    )
                  ],
+                 status: :unprocessable_entity
+        end
+        format.json do
+          render json: { error: { message: @conversation.errors.full_messages.join(';') } },
                  status: :unprocessable_entity
         end
       end

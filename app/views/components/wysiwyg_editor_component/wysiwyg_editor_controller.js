@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus'
 import TrixSelectors from '@wysiwyg/TrixSelectors'
 import TrixConfiguration from '@wysiwyg/TrixConfiguration'
-import { generateText, generateImage } from '@javascript/http'
+import { generateImage, createConversation, updateConversation } from '@javascript/http'
 import TurboScrollPreservation from '@javascript/TurboScrollPreservation'
 import { initializeTooltipsFor } from '@javascript/mixins/ToolTippable'
 import { createGenTextId, createGenImageId} from '@javascript/helpers'
@@ -54,6 +54,10 @@ export default class WysiwygEditor extends Controller {
 
   set conversationId(id) {
     this.element.dataset.conversationId = id
+  }
+
+  get userId() {
+    return this.element.dataset.userId
   }
 
   connect () {
@@ -136,48 +140,57 @@ export default class WysiwygEditor extends Controller {
   }
 
   async submitGenerateText() {
-    const id = createGenTextId()
-
     if (!this.generateTextInputTarget.value.length) {
       return
     }
 
-    this.generateTextIdTarget.value = id
+    this.generateTextIdTarget.value = createGenTextId()
 
     let response;
+    let errorMsg;
+
     try {
       this.setNotification('Generating text...')
-      response = await generateText({
+      const params = {
         prompt: this.generateTextInputTarget.value,
         text_id: this.generateTextIdTarget.value,
         temperature: this.generateTextTemperatureTarget.value,
         generate_text_preset_id: this.generateTextPresetTarget.value,
-        conversation_id: this.conversationId
-      })
+        conversation_id: this.conversationId,
+        user_id: this.userId
+      }
+
+      if (this.conversationId) {
+        response = await updateConversation({ ...params, conversation_id: this.conversationId })
+      } else {
+        response = await createConversation(params)
+      }
 
       if (response.status === 401 || response.status === 403) {
-        window.location = '/'
+        return window.location = '/'
       }
 
       if (response.status === 422) {
         this.clearNotification()
+        this.generateTextInputTarget.value = ''
+        const errors = await response.json()
+        errorMsg = errors.error.message
       }
 
-      if (response.ok || response.status === 422) {
+      if (response.ok) {
+        const conversation = await response.json()
+        this.conversationId = conversation.id
+      }
+
+      if (response.ok) {
         this.generateTextInputTarget.value = ''
-        // Generated content is asynchronous. The use of renderStreamMessage is for
-        // any turbo streams in the response (ie, flash message)
-        const responseBody = await response.text()
-        if (responseBody.length) {
-          Turbo.renderStreamMessage(responseBody)
-        }
       } else {
         throw new Error('Request to generate text was not successful')
       }
     } catch (err) {
       console.log(err)
       this.clearNotification()
-      alert('Unable to generate text')
+      alert(`Unable to generate text ${errorMsg ? errorMsg : ''}`)
     }
   }
 
