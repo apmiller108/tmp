@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_03_012740) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_04_041310) do
   create_schema "rollback"
 
   # These are extensions that must be enabled in order to support this database
@@ -91,8 +91,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_03_012740) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "options", default: {}
-    t.bigint "conversation_id"
-    t.index ["conversation_id"], name: "index_generate_image_requests_on_conversation_id"
     t.index ["image_name"], name: "index_generate_image_requests_on_image_name"
     t.index ["user_id"], name: "index_generate_image_requests_on_user_id"
   end
@@ -125,12 +123,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_03_012740) do
     t.datetime "updated_at", null: false
     t.float "temperature"
     t.bigint "generate_text_preset_id"
-    t.bigint "conversation_id"
     t.string "model", null: false
     t.jsonb "response", default: {}
     t.text "status", null: false
     t.boolean "markdown_format", default: true, null: false
-    t.index ["conversation_id"], name: "index_generate_text_requests_on_conversation_id"
     t.index ["generate_text_preset_id"], name: "index_generate_text_requests_on_generate_text_preset_id"
     t.index ["user_id", "text_id"], name: "index_generate_text_requests_on_user_id_and_text_id", unique: true
     t.index ["user_id"], name: "index_generate_text_requests_on_user_id"
@@ -231,11 +227,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_03_012740) do
   add_foreign_key "conversation_turns", "conversations"
   add_foreign_key "conversations", "memos"
   add_foreign_key "conversations", "users"
-  add_foreign_key "generate_image_requests", "conversations"
   add_foreign_key "generate_image_requests", "users"
   add_foreign_key "generate_text_presets_users", "generate_text_presets"
   add_foreign_key "generate_text_presets_users", "users"
-  add_foreign_key "generate_text_requests", "conversations"
   add_foreign_key "generate_text_requests", "generate_text_presets"
   add_foreign_key "generate_text_requests", "users"
   add_foreign_key "memos", "users", on_delete: :cascade
