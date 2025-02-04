@@ -6,7 +6,7 @@ class GenerateTextToolInputJob
     generate_text_request = GenerateTextRequest.find(generate_text_request_id)
     return unless generate_text_request.response.tool_use?
 
-    handle_imge_inputs(generate_text_request)
+    handle_image_inputs(generate_text_request)
   rescue StandardError => e
     message = I18n.t('unable_to_generate_image')
     broadcast_flash_to_user(message:, user: generate_text_request.user)
@@ -15,7 +15,7 @@ class GenerateTextToolInputJob
 
   private
 
-  def handle_imge_inputs(generate_text_request)
+  def handle_image_inputs(generate_text_request)
     generate_text_request.response.generate_image_inputs.each do |input|
       attrs = input['options'].merge(input['prompts'])
                               .merge(generate_text_request.slice(:user, :conversation))
