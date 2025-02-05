@@ -44,7 +44,7 @@ class BlobComponent < ApplicationViewComponent
       if caption?
         caption
       else
-        tag.span(filename, class: 'attachment__name') +
+        tag.span(filename, class: 'attachment__name me-2') +
           tag.span(humanized_file_size, class: 'attachment__size')
       end
     end

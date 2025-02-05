@@ -1,0 +1,27 @@
+.c-generate-image-request{ id:, data: { } }
+  .turn.grid.mb-3
+    .g-col-1.d-flex.justify-content-center
+      %i.bi-robot.fs-1
+    .g-col-11
+      .card
+        .card-body
+          - if created? || in_progress?
+            .text-center
+              = render SpinnerComponent.new
+          - elsif failed?
+            = t('failed_to_generate_image')
+            = link_to '#',
+              class: 'float-end fs-5',
+              data: { turbo_method: 'delete', turbo_confirm: t('confirm'),
+                    'bs-toggle' => 'tooltip',
+                    'bs-title' => t('delete', name: t('response')) } do
+              %i.bi-trash3.text-black
+          - else
+            .generated-image
+              = render BlobComponent.new(blob: image, in_gallery: false)
+            = link_to '#',
+              class: 'float-end fs-5',
+              data: { turbo_method: 'delete', turbo_confirm: t('confirm'),
+                    'bs-toggle' => 'tooltip',
+                    'bs-title' => t('delete', name: t('response')) } do
+              %i.bi-trash3.text-black

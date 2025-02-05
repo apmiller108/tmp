@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 import { Popover } from 'bootstrap'
 
-export default class ConversationTurnController extends Controller {
+export default class GenerateTextRequestController extends Controller {
   static targets = ['moreInfo']
 
   connect() {

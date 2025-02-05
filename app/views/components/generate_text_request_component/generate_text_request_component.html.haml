@@ -1,0 +1,44 @@
+.c-generate-text-request{ id:, data: { controller: 'generate-text-request', **dataset } }
+  .turn.grid.mb-3
+    .g-col-1.d-flex.justify-content-center
+      %i.bi-person-fill.fs-1
+    .g-col-11
+      .card.segment{ class: "segment-user" }
+        .card-body
+          %p
+            - if image?
+              = link_to '#', class: 'float-start me-2', data: { controller: 'modal-opener', modal: ModalComponent.id,
+                                                                'modal-src' => file_generate_text_request_path(generate_text_request)  } do
+                = image_tag file.variant(**image_variant_options), data: { 'generate-text_request-target' => 'image' },
+                title: file.filename
+            = prompt
+  .turn.grid.mb-3
+    .g-col-1.d-flex.justify-content-center
+      %i.bi-robot.fs-1
+    .g-col-11
+      .card.segment.segment-assistant
+        .card-body
+          - if created? || in_progress?
+            .text-center
+              = render SpinnerComponent.new
+          - elsif failed?
+            = t('failed_to_generate_text')
+            = link_to generate_text_request_path(generate_text_request),
+              class: 'float-end fs-5',
+              data: { turbo_method: 'delete', turbo_confirm: t('confirm'),
+                    'bs-toggle' => 'tooltip',
+                    'bs-title' => t('delete', name: t('response')) } do
+              %i.bi-trash3.text-black
+          - else
+            = render ClipboardComponent.new(css_class: 'assistant-response', position: :bottom) do |clipboard|
+              = clipboard.with_copyable do
+                %div{ data: { 'clipboard-target' => 'source' } }= assistant_response.html_safe
+              = clipboard.with_additional_content do
+                %button.btn.icon-btn.icon-btn-sm.more-info{ data: { 'generate-text-request-target' => 'moreInfo' } }
+                  %i.bi-info-square{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => 'Info' } }
+                = link_to generate_text_request_path(generate_text_request),
+                  class: 'float-end fs-5',
+                  data: { turbo_method: 'delete', turbo_confirm: t('confirm'),
+                        'bs-toggle' => 'tooltip',
+                        'bs-title' => t('delete', name: t('response')) } do
+                  %i.bi-trash3.text-black

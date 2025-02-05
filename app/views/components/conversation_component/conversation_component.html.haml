@@ -1,6 +1,5 @@
 .c-conversation.conversation-container.scroll-no-bar-container.container-sm.pb-1#conversation{ data: { controller: :conversation, action: 'prompt-form:promptOptionsShow@window->conversation#onPromptOptionsShow' } }
   = render ModalComponent.new(size: :lg)
   #conversation-turns.conversation-turns.mb-2{ data: { 'conversation-target': 'turns' } }
-    - conversation.generate_text_requests.each do |gtr|
-      = render ConversationTurnComponent.new(generate_text_request: gtr)
+    = render ConversationTurnComponent.with_collection(conversation.turns)
   = render PromptFormComponent.new(conversation:)
