@@ -12,4 +12,8 @@ class ConversationTurnComponent < ApplicationViewComponent
   def request_component
     "#{turnable_type}Component".constantize
   end
+
+  def id
+    dom_id(conversation_turn)
+  end
 end

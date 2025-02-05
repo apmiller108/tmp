@@ -29,15 +29,19 @@ class GenerateTextJob
   end
 
   def broadcast_component(generate_text_request, user)
+    conversation = generate_text_request.conversation.reload
+    conversation_turn = generate_text_request.conversation_turn
+
     ViewComponentBroadcaster.call(
       [user, TurboStreams::STREAMS[:main]],
-      component: ConversationTurnComponent.new(generate_text_request:),
+      component: ConversationTurnComponent.new(conversation_turn:),
       action: :replace
     )
+
     with_current_user(user) do
       ViewComponentBroadcaster.call(
         [user, TurboStreams::STREAMS[:main]],
-        component: PromptFormComponent.new(conversation: generate_text_request.conversation.reload),
+        component: PromptFormComponent.new(conversation:),
         action: :replace
       )
     end
