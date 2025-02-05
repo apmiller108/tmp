@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_04_041310) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_05_014733) do
   create_schema "rollback"
 
   # These are extensions that must be enabled in order to support this database
@@ -91,8 +91,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_04_041310) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "options", default: {}
+    t.text "status", null: false
     t.index ["image_name"], name: "index_generate_image_requests_on_image_name"
     t.index ["user_id"], name: "index_generate_image_requests_on_user_id"
+    t.check_constraint "status = ANY (ARRAY['created'::text, 'queued'::text, 'in_progress'::text, 'failed'::text, 'completed'::text])", name: "status_check"
   end
 
   create_table "generate_text_presets", force: :cascade do |t|

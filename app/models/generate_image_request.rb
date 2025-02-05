@@ -1,4 +1,5 @@
 class GenerateImageRequest < ApplicationRecord
+  include StatusEnumable
   include Turnable
 
   store_accessor :options, :style, :aspect_ratio
