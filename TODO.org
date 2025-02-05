@@ -22,7 +22,7 @@ CLOSED: [2025-02-02 Sun 10:14]
   (only sonnet 3-5)
   https://docs.anthropic.com/en/docs/build-with-claude/pdf-support
 * TODO refactor and normalize the adapter pattern for text generation
-* TODO add image generation to conversations [15/24]
+* TODO add image generation to conversations [18/27]
   - [X] Look into doing this via tool use
   https://docs.anthropic.com/en/docs/build-with-claude/tool-use#single-tool-example
   - [X] build a tool for producing a JSON object that represents a generate
@@ -41,21 +41,23 @@ CLOSED: [2025-02-02 Sun 10:14]
   - [X] Update the generate image request form to support new schema.
   - [X] Add status to generate image requests
   - [X] Support generate image requests in the conversation turn component
-  - [ ] Broadcast the created generate image request when it is created above
-  - [ ] Broadcast the in progress generate image request when the job starts
-  - [ ] Broadcast the completed or failed generate image request
-  - [ ] Support delete generate image request
-  - [ ] Image request component match style
+  - [X] Broadcast the created generate image request when it is created above
+  - [X] Broadcast the in progress generate image request when the job starts
+  - [X] Broadcast the completed or failed generate image request
+  - [ ] Show spinner while image is loading. See also attachment preview component
+  - [ ] Image request component matches styles (more info, download icon, ..etc)
   - [ ] What happens if a user asks for multiple images in a single request?
-  - [ ] Create an InvokeModelResponse base class
-  - [ ] Add the generated image to the next user request
+  - [ ] Support delete generate image request
   - [X] Test uploading an image and asking it to generate an image like it with
     some changes.
   - [ ] Convert generate text request file to webp with optimum size. Attach
     that variant to the request params.
+  - [ ] Add the generated image to the next user request
   - [ ] Have wysiwyg editor submit turbo stream request.Ignore redirect and
     render flash message if 422
-  - [ ] re introduce conversation form
+  - [ ] Refactor: re-introduce the conversation form object
+  - [ ] Refactor: Create an InvokeModelResponse base class
+  - [ ] Refactor: Extract an image generating job for converstaions
 * DONE support adding files to the prompt [17/17]
 CLOSED: [2025-01-27 Mon 20:52]
   - [X] Add file input and attachment to generate text requests

@@ -6,7 +6,7 @@ module ViewComponentBroadcaster
   def call(streamables, component:, **options)
     Turbo::StreamsChannel.broadcast_action_to(
       streamables,
-      target: component.id,
+      target: options.fetch(:target, component.id),
       content: ApplicationController.render(component, layout: false),
       **options
     )

@@ -10,16 +10,16 @@ class GenerateImageRequest < ApplicationRecord
 
   # See also Turable concern for associations to converation
   belongs_to :user
-  belongs_to :active_storage_blob, optional: true, class_name: 'ActiveStorage::Blob',
-                                   inverse_of: :generate_image_request
   has_many :prompts, dependent: :destroy
 
   # Associates the generated images whose blobs are created async via ActionText
   # See also AssociateBlobToGenerateImageRequestJob
-  has_many :active_storage_blobs_generate_image_requests, dependent: nil
+  has_many :active_storage_blobs_generate_image_requests, dependent: :destroy
   has_many :active_storage_blobs, through: :active_storage_blobs_generate_image_requests
 
   has_one_attached :image
+
+  before_validation :filter_unknown_style
 
   OPTION_FIELDS = %w[style aspect_ratio].freeze
   LEGACY_OPTION_FIELDS = %w[dimensions].freeze
@@ -39,5 +39,12 @@ class GenerateImageRequest < ApplicationRecord
 
   def flat_attributes
     attributes.except('options').merge(options)
+  end
+
+  private
+
+  # Removes unknown styles if the LLM gets too creative and adds styles that are not supported by the service
+  def filter_unknown_style
+    options.delete('style') unless style.in?(GenerativeImage::Stability::STYLE_PRESETS)
   end
 end
