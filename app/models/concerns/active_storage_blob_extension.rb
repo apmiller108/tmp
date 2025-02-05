@@ -71,7 +71,7 @@ module ActiveStorageBlobExtension
     def original_lossless_generated_image_blob
       return unless generated_image?
 
-      generate_image_request.image_blob
+      generate_image_request&.image_blob
     end
   end
 end
