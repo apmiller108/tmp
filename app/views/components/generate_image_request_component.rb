@@ -12,4 +12,11 @@ class GenerateImageRequestComponent < ApplicationViewComponent
   def id
     dom_id(generate_image_request)
   end
+
+  def variant_options
+    {
+      resize_to_limit: [1024, 768], 
+      **ActiveStorage::Blob::WEBP_VARIANT_OPTS
+    }
+  end
 end

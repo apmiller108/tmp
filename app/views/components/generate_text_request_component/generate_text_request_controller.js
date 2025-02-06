@@ -28,19 +28,19 @@ export default class GenerateTextRequestController extends Controller {
 
   moreInfoTemplate() {
     return `
-<div class="details-fields p-0">
-  ${Object.entries(this.moreInfoData()).map(([k, v]) => this.moreInfoField(k, v)).join("\n")}
-</diev>
-`
+      <div class="details-fields p-0">
+        ${Object.entries(this.moreInfoData()).map(([k, v]) => this.moreInfoField(k, v)).join("\n")}
+      </diev>
+    `
   }
 
   moreInfoField(key, value) {
     const label = String(key).charAt(0).toUpperCase() + String(key).slice(1)
     return `
-<div class="d-flex align-items-center justify-content-between">
-  <span class="label me-1">${label}: </span>
-  <pre class="value mb-0 p-1">${value}</pre>
-</div>
-`
+      <div class="d-flex align-items-center justify-content-between">
+        <span class="label me-1">${label}: </span>
+        <pre class="value mb-0 p-1">${value}</pre>
+      </div>
+    `
   }
 }

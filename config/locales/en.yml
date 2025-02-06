@@ -47,6 +47,7 @@ en:
   edit: 'Edit'
   generate_text_preset:
     add: 'Add text preset'
+  image: 'image'
   memo:
     content: 'Content'
     create: 'Create Memo'

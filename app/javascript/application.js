@@ -6,6 +6,10 @@ import "trix"
 import "./controllers"
 import WysiwygEditor from "../views/components/wysiwyg_editor_component/wysiwyg_editor_controller.js"
 import TurboScrollPreservation from './TurboScrollPreservation'
+import { Tooltip } from 'bootstrap'
+
+// import * as ActionCable from '@rails/actioncable'
+// ActionCable.logger.enabled = true;
 
 ActiveStorage.start()
 
@@ -14,5 +18,6 @@ WysiwygEditor.applyTrixCustomConfiguration()
 const turboScrollPreservation = new TurboScrollPreservation()
 turboScrollPreservation.initialize()
 
-// import * as ActionCable from '@rails/actioncable'
-// ActionCable.logger.enabled = true;
+// Allow turbo frame elements in popovers to lazy load content
+const customTooltipAndPopoverAllowList = Tooltip.Default.allowList
+customTooltipAndPopoverAllowList['turbo-frame'] = ['src', 'loading']
