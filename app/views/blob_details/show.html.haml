@@ -4,25 +4,22 @@
       .generate-image-details
         - gen_img_params = @blob.generate_image_request.parameterize
         .prompts
-          %p Prompts
           - gen_img_params[:prompts].each do |prompt|
-            = render ClipboardComponent.new(css_class: 'prompt') do |component|
+            %p.fw-medium= prompt['weight'] == 1 ? 'Prompt:' :  'Negative prompt:'
+            = render ClipboardComponent.new(css_class: 'prompt', x: :start) do |component|
               = component.with_copyable do
                 %pre{ data: { 'clipboard-target' => 'source' } }= prompt['text']
-                .prompt-weight.d-flex.align-items-center.justify-content-end.mt-3
-                  %span.label.me-1 Weight
-                  %pre.value= prompt['weight']
         .settings.d-flex.justify-content-between.flex-wrap
           - gen_img_params.slice(:style, :dimensions, :aspect_ratio).each do |k,v|
             %div.d-flex.align-items-center.justify-content-between.mt-3
-              %span.label.me-2= k.to_s.titleize
+              %span.label.me-2.fw-medium= "#{k.to_s.titleize}:"
               %pre.value= v
     .file-details
       %div.d-flex.align-items-center.justify-content-between.mt-3
-        %span.label.me-2 Name
+        %span.label.me-2.fw-medium Name:
         %pre.value= @blob.filename
       %div.d-flex.align-items-center.justify-content-between.mt-3
-        %span.label.me-2 Size
+        %span.label.me-2.fw-medium Size:
         %pre.value= number_to_human_size(@blob.byte_size)
     .download
       = link_to blob_path(@blob), data: { turbo: false, 'bs-toggle' => 'tooltip', 'bs-title' => t('download_image') } do

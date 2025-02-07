@@ -1,13 +1,8 @@
 .details-fields {
   padding: 1rem;
-  background-color: $more-info-background-color;
   text-align: left;
-  .copy-btn {
-    float: right;
-  }
   pre {
     border-radius: 0.25rem;
-    background-color: $more-info-pre-background-color;
     padding: 0.5rem;
     margin: 0px;
     overflow: auto;

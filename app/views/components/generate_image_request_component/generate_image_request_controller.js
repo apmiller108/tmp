@@ -12,8 +12,8 @@ export default class GenerateImageRequestController extends Controller {
         container: this.element,
         html: true,
         boundary: conversationElem,
-        placement: 'right',
-        fallbackPlacements: ['bottom', 'top']
+        placement: 'top',
+        fallbackPlacements: ['right', 'bottom']
       })
     }
   }

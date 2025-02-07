@@ -30,7 +30,7 @@
                     'bs-title' => t('delete', name: t('response')) } do
               %i.bi-trash3.text-black
           - else
-            = render ClipboardComponent.new(css_class: 'assistant-response', position: :bottom) do |clipboard|
+            = render ClipboardComponent.new(css_class: 'assistant-response', y: :bottom, x: :start) do |clipboard|
               = clipboard.with_copyable do
                 %div{ data: { 'clipboard-target' => 'source' } }= assistant_response.html_safe
               = clipboard.with_additional_content do

@@ -4,11 +4,12 @@ class ClipboardComponent < ApplicationViewComponent
   renders_one :copyable
   renders_one :additional_content
 
-  attr_reader :css_class, :position
+  attr_reader :css_class, :x, :y
 
-  def initialize(css_class: 'clipboard', position: :top)
+  def initialize(css_class: 'clipboard', y: :top, x: :end)
     @css_class = css_class
-    @position = position
+    @y = y
+    @x = x
   end
 
   def tip
@@ -16,10 +17,18 @@ class ClipboardComponent < ApplicationViewComponent
   end
 
   def top?
-    position == :top
+    y == :top
   end
 
   def bottom?
-    position == :bottom
+    y == :bottom
+  end
+
+  def end?
+    x == :end
+  end
+
+  def start?
+    x == :start
   end
 end

@@ -1,0 +1,8 @@
+.c-generate-image-request {
+  .popover {
+    max-width: calc(var(--bs-popover-max-width) + 230px);
+    .download {
+      display: none;
+    }
+  }
+}
