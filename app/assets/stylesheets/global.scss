@@ -67,6 +67,14 @@
     height: 2rem;
     width: 2rem;
     font-size: 1.33rem;
+    &:hover {
+      color: $secondary;
+    }
+    &.danger {
+      &:hover {
+        color: $danger;
+      }
+    }
   }
   &:hover {
     filter: brightness(0.7);
