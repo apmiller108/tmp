@@ -9,6 +9,7 @@ class GenerateImageRequestForm
   attribute :negative_prompt, :string
   attribute :user
   attribute :generate_image_request
+  attribute :generate_text_request
   attribute :conversation
 
   validates :prompt, presence: true
@@ -16,7 +17,7 @@ class GenerateImageRequestForm
 
   def initialize(attrs)
     super(attrs)
-    self.generate_image_request = GenerateImageRequest.new(image_name:, style:, aspect_ratio:, user:)
+    self.generate_image_request = GenerateImageRequest.new(new_request_attributes)
   end
 
   def submit
@@ -34,6 +35,16 @@ class GenerateImageRequestForm
   end
 
   private
+
+  def new_request_attributes
+    {
+      image_name:,
+      style:,
+      aspect_ratio:,
+      user:,
+      generate_text_request:
+    }
+  end
 
   def prompts
     [

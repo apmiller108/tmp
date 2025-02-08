@@ -15,7 +15,7 @@ class GenerateImageRequestComponent < ApplicationViewComponent
 
   def variant_options
     {
-      resize_to_limit: [1024, 768], 
+      resize_to_limit: [1024, 768],
       **ActiveStorage::Blob::WEBP_VARIANT_OPTS
     }
   end

@@ -17,8 +17,7 @@ class GenerateTextToolInputJob
 
   def handle_image_inputs(generate_text_request)
     generate_text_request.response.generate_image_inputs.each do |input|
-      attrs = input['options'].merge(input['prompts'])
-                              .merge(generate_text_request.slice(:user, :conversation))
+      attrs = image_request_attrs(input, generate_text_request)
       form = GenerateImageRequestForm.new(attrs)
 
       if form.submit
@@ -27,6 +26,12 @@ class GenerateTextToolInputJob
         log_and_broadcast_errors(generate_text_request.user, form)
       end
     end
+  end
+
+  def image_request_attrs(input, generate_text_request)
+    input['options'].merge(input['prompts'])
+                    .merge(generate_text_request.slice(:user, :conversation))
+                    .merge(generate_text_request:)
   end
 
   def log_and_broadcast_errors(user, form)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_05_014733) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_08_204639) do
   create_schema "rollback"
 
   # These are extensions that must be enabled in order to support this database
@@ -92,6 +92,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_05_014733) do
     t.datetime "updated_at", null: false
     t.jsonb "options", default: {}
     t.text "status", null: false
+    t.bigint "generate_text_request_id"
+    t.index ["generate_text_request_id"], name: "index_generate_image_requests_on_generate_text_request_id"
     t.index ["image_name"], name: "index_generate_image_requests_on_image_name"
     t.index ["user_id"], name: "index_generate_image_requests_on_user_id"
     t.check_constraint "status = ANY (ARRAY['created'::text, 'queued'::text, 'in_progress'::text, 'failed'::text, 'completed'::text])", name: "status_check"
@@ -229,6 +231,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_05_014733) do
   add_foreign_key "conversation_turns", "conversations"
   add_foreign_key "conversations", "memos"
   add_foreign_key "conversations", "users"
+  add_foreign_key "generate_image_requests", "generate_text_requests"
   add_foreign_key "generate_image_requests", "users"
   add_foreign_key "generate_text_presets_users", "generate_text_presets"
   add_foreign_key "generate_text_presets_users", "users"

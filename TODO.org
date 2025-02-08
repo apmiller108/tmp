@@ -22,7 +22,7 @@ CLOSED: [2025-02-02 Sun 10:14]
   (only sonnet 3-5)
   https://docs.anthropic.com/en/docs/build-with-claude/pdf-support
 * TODO refactor and normalize the adapter pattern for text generation
-* TODO add image generation to conversations [22/30]
+* TODO add image generation to conversations [23/31]
   - [X] Look into doing this via tool use
   https://docs.anthropic.com/en/docs/build-with-claude/tool-use#single-tool-example
   - [X] build a tool for producing a JSON object that represents a generate
@@ -49,13 +49,14 @@ CLOSED: [2025-02-02 Sun 10:14]
   - [X] Show spinner while image is loading. See also attachment preview
     component
   - [X] Fix unable to scroll container when mouse if over popover
-  - [ ] Support delete generate image request
+  - [X] Associate a generate image request to a generate text request.
+  - [ ] If an text request has an image request, add it to the request object.
+  - [ ] Convert generate text request file to webp with optimum size. Attach
+    that variant to the request params.
+  - [ ] Support delete generate image request (generic conversation turns controller?)
   - [ ] What happens if a user asks for multiple images in a single request?
   - [X] Test uploading an image and asking it to generate an image like it with
     some changes.
-  - [ ] Convert generate text request file to webp with optimum size. Attach
-    that variant to the request params.
-  - [ ] Add the generated image to the next user request
   - [ ] Have wysiwyg editor submit turbo stream request.Ignore redirect and
     render flash message if 422
   - [ ] Refactor: re-introduce the conversation form object

@@ -10,6 +10,7 @@ class GenerateImageRequest < ApplicationRecord
 
   # See also Turable concern for associations to converation
   belongs_to :user
+  belongs_to :generate_text_request, optional: true
   has_many :prompts, dependent: :destroy
 
   # Associates the generated images whose blobs are created async via ActionText
