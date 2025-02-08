@@ -1,8 +1,8 @@
 import { Controller } from "@hotwired/stimulus"
-import { Popover, Tooltip } from 'bootstrap'
+import { Popover } from 'bootstrap'
 
 export default class GenerateImageRequestController extends Controller {
-  static targets = ['moreInfo']
+  static targets = ['moreInfo', 'image', 'spinner']
 
   connect() {
     const conversationElem = document.getElementById('conversation')
@@ -16,6 +16,27 @@ export default class GenerateImageRequestController extends Controller {
         fallbackPlacements: ['right', 'bottom']
       })
     }
+  }
+
+  initialize() {
+    if (this.hasImageTarget) {
+      if (this.imageIsLoaded()) {
+        this.removeSpinner()
+      } else {
+        this.imageTarget.onload = this.removeSpinner.bind(this)
+      }
+    }
+  }
+
+  imageIsLoaded() {
+    return this.imageTarget.complete || this.imageTarget.naturalWidth !== 0
+  }
+
+  removeSpinner() {
+    if (this.hasSpinnerTarget) {
+      this.spinnerTarget.remove()
+    }
+    this.imageTarget.classList.remove('d-none')
   }
 
   get moreInfoSrc() {

@@ -22,7 +22,7 @@ CLOSED: [2025-02-02 Sun 10:14]
   (only sonnet 3-5)
   https://docs.anthropic.com/en/docs/build-with-claude/pdf-support
 * TODO refactor and normalize the adapter pattern for text generation
-* TODO add image generation to conversations [20/29]
+* TODO add image generation to conversations [22/30]
   - [X] Look into doing this via tool use
   https://docs.anthropic.com/en/docs/build-with-claude/tool-use#single-tool-example
   - [X] build a tool for producing a JSON object that represents a generate
@@ -46,9 +46,9 @@ CLOSED: [2025-02-02 Sun 10:14]
   - [X] Broadcast the completed or failed generate image request
   - [X] Image request component matches styles (more info, download icon, ..etc)
   - [X] Re-style blob details to match style
-  - [ ] Show spinner while image is loading. See also attachment preview
+  - [X] Show spinner while image is loading. See also attachment preview
     component
-  - [ ] Fix unable to scroll container when mouse if over popover
+  - [X] Fix unable to scroll container when mouse if over popover
   - [ ] Support delete generate image request
   - [ ] What happens if a user asks for multiple images in a single request?
   - [X] Test uploading an image and asking it to generate an image like it with
