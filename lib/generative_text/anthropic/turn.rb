@@ -31,10 +31,10 @@ class GenerativeText
             { 'text' => generate_text_request.prompt, 'type' => 'text' }
           ].tap do |content|
             if generate_text_request.image_attached?
-              add_user_image_content(content:, image: generate_text_request.file)
+              add_user_image_content(content:, image: generate_text_request.file.variant(:webp))
             end
-            if previous_turn.generated_image?
-              add_user_image_content(content:, image: previous_turn.turnable.image)
+            if previous_turn.present? && previous_turn.generated_image?
+              add_user_image_content(content:, image: previous_turn.turnable.image.variant(:webp))
             end
           end
         }
@@ -47,7 +47,7 @@ class GenerativeText
             'source' => {
               'type' => 'base64',
               'media_type' => image.content_type,
-              'data' => BlobEncoder.encode64(image)
+              'data' => BlobEncoder.encode64(image.blob)
             },
             'cache_control' => { 'type' => 'ephemeral' }
           }

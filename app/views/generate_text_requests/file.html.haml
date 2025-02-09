@@ -2,4 +2,5 @@
   .position-relative
     %button.btn.icon-btn.position-absolute.top-0.end-0{data: { controller: 'modal-closer' } }
       %i.bi.bi-x-lg
-    = render BlobPreviewComponent.new(blob: @blob, resize_to_limit: [1000, 1000], contain: true)
+    = render BlobPreviewComponent.new(blob: @blob, resize_to_limit: GenerateImageRequest.variant_options.fetch(:resize_to_limit),
+                                      contain: true)

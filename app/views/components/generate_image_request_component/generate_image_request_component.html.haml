@@ -18,7 +18,7 @@
               %i.bi-trash3.text-black
           - else
             .generated-image.mb-3.d-flex.justify-content-center
-              = image_tag image.variant(**variant_options), class: 'd-none', data: { 'generate-image-request-target' => 'image' }
+              = image_tag image.variant(:webp), class: 'd-none', data: { 'generate-image-request-target' => 'image' }
               = render SpinnerComponent.new(css_class: 'text-center', 'data-generate-image-request-target': 'spinner')
             .tool-tray.d-flex.justify-content-between.align-items-center
               .buttons.d-flex.align-items-center

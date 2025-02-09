@@ -18,7 +18,9 @@ class GenerateImageRequest < ApplicationRecord
   has_many :active_storage_blobs_generate_image_requests, dependent: :destroy
   has_many :active_storage_blobs, through: :active_storage_blobs_generate_image_requests
 
-  has_one_attached :image
+  has_one_attached :image do |attachable|
+    attachable.variant :webp, resize_to_limit: [1024, 768], **ActiveStorage::Blob::WEBP_VARIANT_OPTS
+  end
 
   before_validation :filter_unknown_style
 
@@ -29,6 +31,13 @@ class GenerateImageRequest < ApplicationRecord
     timestamp = Time.now.to_i
     random = rand(10_000)
     "genimage_#{timestamp}_#{random}"
+  end
+
+  def self.variant_options
+    {
+      resize_to_limit: [1024, 768],
+      **ActiveStorage::Blob::WEBP_VARIANT_OPTS
+    }
   end
 
   def parameterize

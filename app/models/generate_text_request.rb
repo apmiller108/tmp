@@ -8,7 +8,9 @@ class GenerateTextRequest < ApplicationRecord
 
   SUPPORTED_MIME_TYPES = %w[image/jpeg image/gif image/png image/webp].freeze
   MAX_FILE_SIZE = 4.megabytes
-  has_one_attached :file
+  has_one_attached :file do |attachable|
+    attachable.variant :webp, resize_to_limit: [1024, 768], **ActiveStorage::Blob::WEBP_VARIANT_OPTS, preprocessed: true
+  end
 
   # Stores the raw JSON response from the HTTP request to the LLM
   store_accessor :response
