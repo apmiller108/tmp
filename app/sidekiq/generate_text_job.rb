@@ -60,7 +60,7 @@ class GenerateTextJob
 
       ViewComponentBroadcaster.call(
         [user, TurboStreams::STREAMS[:main]],
-        component: ConversationTurnComponent.new(generate_text_request:),
+        component: ConversationTurnComponent.new(conversation_turn: generate_text_request.conversation_turn),
         action: :replace
       )
 

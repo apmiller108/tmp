@@ -19,6 +19,7 @@ class GenerateTextRequest < ApplicationRecord
   # See also Turable concern for associations to converation
   belongs_to :user, optional: false
   belongs_to :generate_text_preset, optional: true
+  has_one :generate_image_request, dependent: :nullify
 
   validates :text_id, presence: true, length: { maximum: 50 }
   validates :prompt, presence: true, length: { maximum: 24_000 }
@@ -49,11 +50,12 @@ class GenerateTextRequest < ApplicationRecord
     end
   end
 
+  # @param [Array<ConversationTurn>] the list of turns to which this belongs
   # @returns [Array<Hash>] A tuple of a user message and assistant response
-  def to_turn
+  def to_turn(turns)
     case model.vendor
     when :anthropic
-      GenerativeText::Anthropic::Turn.for(self)
+      GenerativeText::Anthropic::Turn.for(self, turns:)
     when :aws
       GenerativeText::AWS::Turn.for(self)
     end
@@ -61,6 +63,14 @@ class GenerateTextRequest < ApplicationRecord
 
   def model
     GenerativeText::MODELS.find { |m| m.api_name == super }
+  end
+
+  def image_capable?
+    model.capabilities.image?
+  end
+
+  def image_attached?
+    file.attached? && file.image?
   end
 
   private

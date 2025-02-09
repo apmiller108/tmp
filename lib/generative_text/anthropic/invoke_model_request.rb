@@ -26,7 +26,8 @@ class GenerativeText
       private
 
       def messages
-        conversation.exchange.push(Turn.user_turn(generate_text_request))
+        turns = generate_text_request.conversation.turns.to_a
+        conversation.exchange.push(Turn.user_turn(generate_text_request, turns:))
       end
 
       def tools

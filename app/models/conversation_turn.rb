@@ -18,6 +18,10 @@ class ConversationTurn < ApplicationRecord
     turnable_type == 'GenerateImageRequest'
   end
 
+  def generated_image?
+    image? && turnable.image.attached?
+  end
+
   def turnable_attributes=(attrs)
     return unless turnable_type.in? TURNABLE_TYPES
 
