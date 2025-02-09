@@ -29,7 +29,7 @@ class ConversationsController < ApplicationController
       if @conversation.save
         enqueue_generate_text_job(@conversation.generate_text_requests.created.last)
         format.turbo_stream do
-          redirect_to edit_user_conversation_path(current_user, @conversation), status: :see_other
+          redirect_to edit_conversation_path(@conversation), status: :see_other
         end
         format.json do
           render json: @conversation.as_json(only: %i[id memo_id created_at updated_at]), status: :created
@@ -99,7 +99,7 @@ class ConversationsController < ApplicationController
       format.turbo_stream do
         render turbo_stream: turbo_stream.remove(@conversation)
       end
-      format.html { redirect_to user_conversations_path(current_user), notice: 'Conversation deleted' }
+      format.html { redirect_to conversations_path, notice: 'Conversation deleted' }
     end
   end
 

@@ -32,14 +32,17 @@ Rails.application.routes.draw do
     resources :transcription_downloads, param: :transcription_id, only: %i[show]
     resources :transcription_summaries, only: %i[create]
     resources :settings, only: %i[create update]
-    resources :conversations, except: %i[show]
   end
 
   namespace :memos do
     resources :autosaves, only: %i[create update], param: :memo_id
   end
 
-  resources :generate_text_requests, only: %i[create destroy] do
+  resources :conversations, except: %i[show]
+  resources :blobs, only: %i[show], param: :active_storage_blob_id
+  resources :blob_details, only: %i[show], param: :active_storage_blob_id
+  resources :blob_previews, only: %i[show], param: :active_storage_blob_id
+  resources :generate_text_requests, only: %i[destroy] do
     member do
       get 'file'
     end
@@ -47,7 +50,4 @@ Rails.application.routes.draw do
   resources :generate_text_presets, except: %i[show]
   resources :generate_image_requests, only: %i[create]
 
-  resources :blobs, only: %i[show], param: :active_storage_blob_id
-  resources :blob_details, only: %i[show], param: :active_storage_blob_id
-  resources :blob_previews, only: %i[show], param: :active_storage_blob_id
 end

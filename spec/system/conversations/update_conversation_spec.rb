@@ -58,7 +58,7 @@ RSpec.describe 'update conversation', type: :system do
 
   specify 'update conversation' do
     login(user:)
-    visit edit_user_conversation_path(user, conversation)
+    visit edit_conversation_path(conversation)
 
     expect(page).to have_css('.c-conversation-turn', count: 3)
 
@@ -75,7 +75,7 @@ RSpec.describe 'update conversation', type: :system do
     fill_in 'conversation_generate_text_requests_attributes_0_prompt', with: prompt
 
     find('.options-toggle-btn').click
-    expect(page).to have_current_path edit_user_conversation_path(user, conversation)
+    expect(page).to have_current_path edit_conversation_path(conversation)
 
     within('#advanced-options') do
       find("option[value='#{model.api_name}']").select_option
@@ -99,7 +99,7 @@ RSpec.describe 'update conversation', type: :system do
     # background job that generates the text broadcasts the conversation turn
     # component. When running the sidekiq inline, the render action overwrites
     # the broadcasted component. Reloading the page as a workaround.
-    visit edit_user_conversation_path(user, conversation)
+    visit edit_conversation_path(conversation)
 
     generate_text_request = conversation.generate_text_requests.completed.last
     within("#generate_text_request_#{generate_text_request.id}") do
@@ -132,7 +132,7 @@ RSpec.describe 'update conversation', type: :system do
 
     it 'sets the default options to the options used in the last request' do
       login(user:)
-      visit edit_user_conversation_path(user, conversation)
+      visit edit_conversation_path(conversation)
 
       fill_in 'conversation_generate_text_requests_attributes_0_prompt', with: prompt
 

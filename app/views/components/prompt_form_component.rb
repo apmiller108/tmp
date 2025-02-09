@@ -54,9 +54,9 @@ class PromptFormComponent < ApplicationViewComponent
 
   def after_create_preset_redirect_path
     if conversation.persisted?
-      edit_user_conversation_path(current_user, conversation)
+      edit_conversation_path(conversation)
     else
-      new_user_conversation_path(current_user)
+      new_conversation_path
     end
   end
 

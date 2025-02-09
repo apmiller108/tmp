@@ -6,7 +6,7 @@ RSpec.describe 'create generate text preset', type: :system do
 
   specify 'create preset from conversation' do
     login(user:)
-    visit edit_user_conversation_path(user, conversation)
+    visit edit_conversation_path(conversation)
 
     find('.options-toggle-btn').click
     within('#advanced-options') do
@@ -15,7 +15,7 @@ RSpec.describe 'create generate text preset', type: :system do
 
     # Path has the redirect param set
     expect(page).to have_current_path(
-      new_generate_text_preset_path(redirect_after_create: edit_user_conversation_path(user, conversation))
+      new_generate_text_preset_path(redirect_after_create: edit_conversation_path(conversation))
     )
 
     # Create new preset
@@ -32,7 +32,7 @@ RSpec.describe 'create generate text preset', type: :system do
                                          'temperature' => 0.5
 
     # Redirected back to the conversation
-    expect(page).to have_current_path edit_user_conversation_path(user, conversation, text_preset_id: preset.id)
+    expect(page).to have_current_path edit_conversation_path(conversation, text_preset_id: preset.id)
 
     # After being redirected the options are still open
     within('#advanced-options') do

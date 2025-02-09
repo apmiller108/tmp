@@ -11,7 +11,7 @@ function jsonFormatHeaders() {
 }
 
 export const createConversation = (params) => {
-  const { user_id, prompt, text_id, temperature, generate_text_preset_id } = params
+  const { prompt, text_id, temperature, generate_text_preset_id } = params
   const headers = jsonFormatHeaders()
   const body = JSON.stringify({
     conversation: {
@@ -29,13 +29,13 @@ export const createConversation = (params) => {
     }
   })
 
-  const url = `/users/${user_id}/conversations/`
+  const url = `/conversations`
 
   return fetch(url, { method: 'POST', headers, body })
 }
 
 export const updateConversation = (params) => {
-  const { conversation_id, memo_id, user_id, prompt, text_id, temperature, generate_text_preset_id } = params
+  const { conversation_id, memo_id, prompt, text_id, temperature, generate_text_preset_id } = params
   const headers = jsonFormatHeaders()
   const body = { conversation: {} }
   if (memo_id) {
@@ -55,7 +55,7 @@ export const updateConversation = (params) => {
       }
     }
   }
-  const url = `/users/${user_id}/conversations/${conversation_id}`
+  const url = `/conversations/${conversation_id}`
 
   return fetch(url, { method: 'PUT', headers, body: JSON.stringify(body) })
 }
@@ -66,7 +66,7 @@ export const getConversations = async (user_id, searchParams) => {
     `q[${k}]=${encodeURIComponent(v)}`
   }).join('&')
 
-  const response = await fetch(`/users/${user_id}/conversations?${q}`, {
+  const response = await fetch(`/conversations?${q}`, {
     method: 'GET',
     headers
   })

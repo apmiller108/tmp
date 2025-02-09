@@ -96,7 +96,7 @@ RSpec.describe 'Conversations', type: :request do
 
     it 'redirects to the conversation edit' do
       request
-      expect(response).to redirect_to(edit_user_conversation_path(user, user.conversations.last))
+      expect(response).to redirect_to(edit_conversation_path(user.conversations.last))
     end
 
     it 'creates a conversation' do
