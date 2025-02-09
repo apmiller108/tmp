@@ -7,17 +7,20 @@ class GenerativeText
         NAME = 'generate_image'
         DESCRIPTION = <<~TXT
           Creates a request to generate an image using a Stable Diffusion
-          generative image AI model. A prompt and aspect ratio are required.
-          Optimize the prompt to produce the best image possible. Use adjectives
-          and detailed descriptive phrases. Be clear about the subject or main
-          focal point of the image. To control the weight of a given word use
-          the format (word:weight), where word is the word you'd like to control
-          the weight of and weight is a value between 0 and 1. For example: The
-          sky was a crisp (blue:0.3) and (green:0.8) would convey a sky that was
-          blue and green, but more green than blue. A negative prompt and style
-          are optional, but should be used where needed to produce the most
-          optimal image. This tool should be used when the user is asking you to
-          create an image.
+          generative image AI model. Your job is to build the best image
+          generating prompt. Turn the user's request into an optimize the prompt
+          to produce the best image possible. Use adjectives and detailed
+          descriptive phrases. Be clear about the subject or main focal point of
+          the image. To control the weight of a given word use the format
+          (word:weight), where word is the word you'd like to control the weight
+          of and weight is a value between 0 and 1. For example: The sky was a
+          crisp (blue:0.3) and (green:0.8) would convey a sky that was blue and
+          green, but more green than blue. A negative prompt and style are
+          optional, but should be used where needed to produce the most optimal
+          image. This tool should be used when the user is asking you to create
+          a new image or update an image. This tool allows you to update images
+          for the user. It's very important that you use the input schema
+          precisely.
         TXT
 
         def input_schema
