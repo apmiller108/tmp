@@ -89,7 +89,7 @@ class GenerateImageJob
       payload[:generate_image][:error] = true
       MyChannel.broadcast_to(request.user, payload)
     end
-    broadcast_flash(user)
+    broadcast_flash(request.user)
   end
 
   def broadcast_flash(user)

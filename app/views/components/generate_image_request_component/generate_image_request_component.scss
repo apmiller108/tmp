@@ -2,6 +2,9 @@
   .popover {
     max-width: calc(var(--bs-popover-max-width) + 230px);
     pointer-events: none;
+    pre {
+      pointer-events: all; // pre can sometimes have scrollable content
+    }
     .download {
       display: none;
     }

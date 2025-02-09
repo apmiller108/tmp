@@ -73,7 +73,7 @@ services:
     volumes:
       - ".:/rails"
       - "/rails/tmp" # don't mount tmp
-    mem_limit: 500m
+    mem_limit: 750m
   anycable:
     <<: *base
     command: bundle exec anycable
