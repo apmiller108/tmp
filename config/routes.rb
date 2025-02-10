@@ -44,7 +44,7 @@ Rails.application.routes.draw do
   resources :blobs, only: %i[show], param: :active_storage_blob_id
   resources :blob_details, only: %i[show], param: :active_storage_blob_id
   resources :blob_previews, only: %i[show], param: :active_storage_blob_id
-  resources :generate_text_requests, only: %i[destroy] do
+  resources :generate_text_requests, only: [] do
     member do
       get 'file'
     end
