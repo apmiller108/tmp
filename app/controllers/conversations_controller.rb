@@ -58,7 +58,7 @@ class ConversationsController < ApplicationController
 
   def edit
     @conversation = current_user.conversations
-                                .includes(generate_text_requests: :generate_text_preset)
+                                .includes(turns: { turnable: [:file_attachment, :file_blob, :image_attachment, :image_blob] })
                                 .find(params[:id])
   end
 

@@ -1,15 +1,18 @@
 # frozen_string_literal: true
 
 class GenerateTextRequestComponent < ApplicationViewComponent
-  attr_reader :generate_text_request
+  attr_reader :generate_text_request, :conversation_turn
 
   delegate :prompt, :response, :created?, :in_progress?, :failed?, :completed?,
            :model, :temperature, :generate_text_preset, :response_token_count,
            :file, to: :generate_text_request
 
+  delegate :conversation, to: :conversation_turn
+
   # @param [GenerateTextRequest] generate_text_request
-  def initialize(generate_text_request)
+  def initialize(generate_text_request, conversation_turn:)
     @generate_text_request = generate_text_request
+    @conversation_turn = conversation_turn
   end
 
   def assistant_response

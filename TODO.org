@@ -22,7 +22,7 @@ CLOSED: [2025-02-02 Sun 10:14]
   (only sonnet 3-5)
   https://docs.anthropic.com/en/docs/build-with-claude/pdf-support
 * TODO refactor and normalize the adapter pattern for text generation
-* TODO add image generation to conversations [25/31]
+* TODO add image generation to conversations [26/31]
   - [X] Look into doing this via tool use
   https://docs.anthropic.com/en/docs/build-with-claude/tool-use#single-tool-example
   - [X] build a tool for producing a JSON object that represents a generate
@@ -53,7 +53,7 @@ CLOSED: [2025-02-02 Sun 10:14]
   - [X] If an text request has an image request, add it to the request object.
   - [X] Convert generate text request file to webp with optimum size. Attach
     that variant to the request params.
-  - [ ] Support delete generate image request (generic conversation turns controller?)
+  - [X] Support delete generate image request (generic conversation turns controller?)
   - [ ] What happens if a user asks for multiple images in a single request?
   - [X] Test uploading an image and asking it to generate an image like it with
     some changes.
