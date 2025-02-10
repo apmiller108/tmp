@@ -38,7 +38,9 @@ Rails.application.routes.draw do
     resources :autosaves, only: %i[create update], param: :memo_id
   end
 
-  resources :conversations, except: %i[show]
+  resources :conversations, except: %i[show] do
+    resources :conversation_turns, only: %i[destroy]
+  end
   resources :blobs, only: %i[show], param: :active_storage_blob_id
   resources :blob_details, only: %i[show], param: :active_storage_blob_id
   resources :blob_previews, only: %i[show], param: :active_storage_blob_id

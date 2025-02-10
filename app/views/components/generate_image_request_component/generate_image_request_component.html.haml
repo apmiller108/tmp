@@ -30,7 +30,7 @@
                                                                  src: blob_detail_path(image.blob)  } }
                   %i.bi-info-square{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => 'Info' } }
               .delete.justify-content-end.align-items-center
-                = link_to '#',
+                = link_to conversation_conversation_turn_path(conversation, conversation_turn),
                   class: 'float-end fs-5 btn icon-btn icon-btn-sm danger',
                   data: { turbo_method: 'delete', turbo_confirm: t('confirm'),
                         'bs-toggle' => 'tooltip',

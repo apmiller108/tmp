@@ -36,7 +36,7 @@
               = clipboard.with_additional_content do
                 %button.btn.icon-btn.icon-btn-sm.more-info{ data: { 'generate-text-request-target' => 'moreInfo' } }
                   %i.bi-info-square{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => 'Info' } }
-                = link_to generate_text_request_path(generate_text_request),
+                = link_to conversation_conversation_turn_path(conversation, conversation_turn),
                   class: 'float-end fs-5 icon-btn icon-btn-sm danger',
                   data: { turbo_method: 'delete', turbo_confirm: t('confirm'),
                         'bs-toggle' => 'tooltip',
