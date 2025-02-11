@@ -5,13 +5,12 @@ export default class GenerateImageRequestController extends Controller {
   static targets = ['moreInfo', 'image', 'spinner']
 
   connect() {
-    const conversationElem = document.getElementById('conversation')
     if (this.hasMoreInfoTarget) {
       new Popover(this.moreInfoTarget, {
         content: this.moreInfoTemplate(),
         container: this.element,
         html: true,
-        boundary: conversationElem,
+        boundary: this.element,
         placement: 'top',
         fallbackPlacements: ['right', 'bottom']
       })

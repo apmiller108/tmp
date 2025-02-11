@@ -1,6 +1,7 @@
 class ConversationForm
   include ActiveModel::Model
   include ActiveModel::Attributes
+  extend ActiveModel::Callbacks
 
   attribute :conversation, default: -> { Conversation.new }
   attribute :user
@@ -18,20 +19,29 @@ class ConversationForm
   validate :valid_turnable, if: -> { turnable.present? }
   validate :valid_conversation
 
+  define_model_callbacks :initialize, only: :after
+
+  after_initialize :assign_default_values
+
+  delegate :id, :persisted?, to: :conversation
+
   def initialize(attrs = {})
-    super
-    conversation.assign_attributes(conversation_attributes)
+    run_callbacks :initialize do
+      super
+    end
   end
 
   # rubocop:disable Metrics/MethodLength
   def save
+    conversation.assign_attributes(conversation_attributes)
+
     return false unless valid?
 
     ActiveRecord::Base.transaction do
       conversation.save!
       if turnable.present?
         turnable.save!
-        conversation.turns << turnable
+        turn.save!
       end
     end
     enqueue_generate_job
@@ -52,14 +62,29 @@ class ConversationForm
                 end
   end
 
+  def turn
+    @turn ||= conversation.turns.new(turnable:)
+  end
+
   private
+
+  def assign_default_values
+    assign_default_title
+
+    self.model                   ||= last_gen_text_opts.fetch(:model, user.setting.text_model)
+    self.temperature             ||= last_gen_text_opts[:temperature]
+    self.generate_text_preset_id ||= last_gen_text_opts[:generate_text_preset_id]
+  end
+
+  def assign_default_title
+    self.title ||= Conversation.title_from_prompt(prompt) if conversation.new_record?
+  end
 
   def conversation_attributes
     {
       user:,
       memo_id:
     }.tap do |attrs|
-      attrs[:title] = default_title if conversation.new_record?
       attrs[:title] = title if title.present?
     end
   end
@@ -80,18 +105,14 @@ class ConversationForm
     {}
   end
 
-  def default_title
-    if prompt
-      Conversation.title_from_prompt(prompt)
-    else
-      Time.current.strftime('%a, %d %b %Y %H:%M:%S')
-    end
-  end
+  def last_gen_text_opts
+    request = conversation.generate_text_requests.last
+    return {} if request.nil?
 
-  def default_values
     {
-      model: user.setting.text_model
-    }
+      model: request.model.api_name,
+      **request.slice(:temperature, :generate_text_preset_id)
+    }.symbolize_keys
   end
 
   def enqueue_generate_job

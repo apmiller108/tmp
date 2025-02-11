@@ -22,7 +22,7 @@ CLOSED: [2025-02-02 Sun 10:14]
   (only sonnet 3-5)
   https://docs.anthropic.com/en/docs/build-with-claude/pdf-support
 * TODO refactor and normalize the adapter pattern for text generation
-* TODO add image generation to conversations [27/31]
+* TODO add image generation to conversations [28/32]
   - [X] Look into doing this via tool use
   https://docs.anthropic.com/en/docs/build-with-claude/tool-use#single-tool-example
   - [X] build a tool for producing a JSON object that represents a generate
@@ -58,12 +58,9 @@ CLOSED: [2025-02-02 Sun 10:14]
         *It will only use the tool once*
   - [X] Test uploading an image and asking it to generate an image like it with
     some changes.
-  - [ ] Refactor: re-introduce the conversation form object
-  - [ ] Have wysiwyg editor submit turbo stream request.Ignore redirect and
-    render flash message if 422
-  - [ ] Refactor: Create an InvokeModelResponse base class
+  - [X] Refactor: re-introduce the conversation form object
   - [ ] Refactor: Extract an image generating job for converstaions
-  - [ ] Add bigassify button that adds a bunch of rows to the text area
+  - [ ] Add bigassify state in local storage
 * DONE support adding files to the prompt [17/17]
 CLOSED: [2025-01-27 Mon 20:52]
   - [X] Add file input and attachment to generate text requests

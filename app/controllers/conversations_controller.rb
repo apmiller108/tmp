@@ -19,11 +19,11 @@ class ConversationsController < ApplicationController
   end
 
   def new
-    @conversation_form = ConversationForm.new(user: current_user, model: current_user.setting.text_model)
+    @conversation_form = ConversationForm.new(user: current_user)
   end
 
   def create
-    @conversation_form = ConversatioForm.new(conversation_params)
+    @conversation_form = ConversationForm.new(conversation_params)
     respond_to do |format|
       if @conversation_form.save
         format.turbo_stream do
@@ -36,7 +36,7 @@ class ConversationsController < ApplicationController
       else
         format.turbo_stream do
           flash.now.alert = t('unable_to_save', model_name: t('conversation.name'))
-          flash_component = FlashMessageComponent.new(flash:, record: @conversation)
+          flash_component = FlashMessageComponent.new(flash:, record: @conversation_form)
 
           render turbo_stream: [
                    turbo_stream.update(flash_component.id, flash_component),
@@ -48,7 +48,7 @@ class ConversationsController < ApplicationController
                  status: :unprocessable_entity
         end
         format.json do
-          render json: { error: { message: @conversation.errors.full_messages.join(';') } },
+          render json: { error: { message: @conversation_form.errors.full_messages.join(';') } },
                  status: :unprocessable_entity
         end
       end
@@ -60,11 +60,11 @@ class ConversationsController < ApplicationController
                                 .includes(
                                   turns: { turnable: [:file_attachment, :file_blob, :image_attachment, :image_blob] }
                                 ).find(params[:id])
-    @conversation_form = ConversationForm.new(conversation: @conversation)
+    @conversation_form = ConversationForm.new(user: current_user, conversation: @conversation)
   end
 
   def update
-    @conversation_form = ConversatioForm.new(conversation_params.merge(conversatin: @conversation))
+    @conversation_form = ConversationForm.new(conversation_params.merge(conversation: @conversation))
     respond_to do |format|
       if @conversation_form.save
         format.turbo_stream do

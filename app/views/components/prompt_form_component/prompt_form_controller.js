@@ -6,7 +6,7 @@ import { Collapse } from 'bootstrap'
 
 export default class PromptFormController extends Controller {
   static targets = ['promptInput', 'form', 'submitButton', 'showOptionsButton', 'options',
-                    'temperatureSelect', 'modelSelect', 'presetSelect', 'textId']
+    'temperatureSelect', 'modelSelect', 'presetSelect', 'textId', 'toggleTextAreaButton']
 
   connect() {
     ToolTippable.connect.bind(this)()
@@ -124,5 +124,15 @@ export default class PromptFormController extends Controller {
   onGenerateText() {
     this.enableForm()
     this.focusOnPromptInput()
+  }
+
+  onToggleTextAreaSize() {
+    if (this.promptInputTarget.rows === 10) {
+      this.promptInputTarget.rows = 2
+      this.toggleTextAreaButtonTarget.querySelector('i').classList.remove('up')
+    } else {
+      this.promptInputTarget.rows = 10
+      this.toggleTextAreaButtonTarget.querySelector('i').classList.add('up')
+    }
   }
 }

@@ -11,7 +11,6 @@ class PromptFormComponent < ApplicationViewComponent
   def initialize(conversation_form:, **opts)
     @conversation_form = conversation_form
     @opts = opts
-    conversation_form.assign_attributes(last_used_options)
   end
 
   def id
@@ -23,7 +22,7 @@ class PromptFormComponent < ApplicationViewComponent
   end
 
   def file_input_disabled?
-    GenerativeText::MODELS.find { _1.api_name == model }.capabilities.image?
+    !GenerativeText::MODELS.find { _1.api_name == model }.capabilities.image?
   end
 
   def max_file_size
@@ -61,19 +60,6 @@ class PromptFormComponent < ApplicationViewComponent
   end
 
   private
-
-  def last_used_options
-    request = generate_text_requests.last
-
-    if request
-      {
-        model: request.model.api_name,
-        **request.slice(:temperature, :generate_text_preset_id)
-      }
-    else
-      {}
-    end
-  end
 
   def presets
     @presets ||= GenerateTextPreset.for_user_options(current_user.id)

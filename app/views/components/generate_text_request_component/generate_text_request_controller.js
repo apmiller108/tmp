@@ -5,13 +5,13 @@ export default class GenerateTextRequestController extends Controller {
   static targets = ['moreInfo']
 
   connect() {
-    const conversationElem = document.getElementById('conversation')
+    console.log(this.moreInfoTarget)
     if (this.hasMoreInfoTarget) {
       new Popover(this.moreInfoTarget, {
         content: this.moreInfoTemplate(),
         container: this.element,
         html: true,
-        boundary: conversationElem,
+        boundary: this.element,
         placement: 'right',
         fallbackPlacements: ['bottom', 'top']
       })

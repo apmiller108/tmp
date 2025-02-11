@@ -41,7 +41,7 @@ class GenerateTextJob
     with_current_user(user) do
       ViewComponentBroadcaster.call(
         [user, TurboStreams::STREAMS[:main]],
-        component: PromptFormComponent.new(conversation:),
+        component: PromptFormComponent.new(conversation_form: ConversationForm.new(user:, conversation:)),
         action: :replace
       )
     end

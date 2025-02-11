@@ -4,11 +4,11 @@
     border-radius: 1rem;
     padding: 1rem 1rem 1rem;
   }
-  .options-toggle-btn {
+  .btn {
     i {
       transition: transform 0.3s ease;
       display: block;
-      &.down {
+      &.down, &.up {
         transform: rotate(180deg);
       }
     }
@@ -17,7 +17,7 @@
     textarea {
       padding-right: 4rem;
     }
-    button {
+    button[type="submit"] {
       border: none;
       position: absolute;
       right: 0.5rem;
