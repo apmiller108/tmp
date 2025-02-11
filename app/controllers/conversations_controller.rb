@@ -19,20 +19,19 @@ class ConversationsController < ApplicationController
   end
 
   def new
-    @conversation = current_user.conversations.new
+    @conversation_form = ConversationForm.new(user: current_user, model: current_user.setting.text_model)
   end
 
   def create
-    @conversation = current_user.conversations.new(new_conversation_params)
-    set_user_id_on_turnable
+    @conversation_form = ConversatioForm.new(conversation_params)
     respond_to do |format|
-      if @conversation.save
-        enqueue_generate_text_job(@conversation.generate_text_requests.created.last)
+      if @conversation_form.save
         format.turbo_stream do
-          redirect_to edit_conversation_path(@conversation), status: :see_other
+          redirect_to edit_conversation_path(@conversation_form.conversation), status: :see_other
         end
         format.json do
-          render json: @conversation.as_json(only: %i[id memo_id created_at updated_at]), status: :created
+          render json: @conversation_form.conversation.as_json(only: %i[id memo_id created_at updated_at]),
+                 status: :created
         end
       else
         format.turbo_stream do
@@ -58,35 +57,34 @@ class ConversationsController < ApplicationController
 
   def edit
     @conversation = current_user.conversations
-                                .includes(turns: { turnable: [:file_attachment, :file_blob, :image_attachment, :image_blob] })
-                                .find(params[:id])
+                                .includes(
+                                  turns: { turnable: [:file_attachment, :file_blob, :image_attachment, :image_blob] }
+                                ).find(params[:id])
+    @conversation_form = ConversationForm.new(conversation: @conversation)
   end
 
   def update
-    @conversation.assign_attributes(conversation_params)
-    set_user_id_on_turnable
+    @conversation_form = ConversatioForm.new(conversation_params.merge(conversatin: @conversation))
     respond_to do |format|
-      if @conversation.save
-        generate_text_request = @conversation.generate_text_requests.created.last
-        enqueue_generate_text_job(generate_text_request)
+      if @conversation_form.save
         format.turbo_stream do
           render 'conversations/update',
-                 locals: { conversation: @conversation, generate_text_request: },
+                 locals: { conversation_form: @conversation_form },
                  status: :ok
         end
         format.json do
-          render json: @conversation.as_json(only: %i[id memo_id created_at updated_at]), status: :ok
+          render json: @conversation_form.conversation.as_json(only: %i[id memo_id created_at updated_at]), status: :ok
         end
       else
         format.turbo_stream do
           flash.now.alert = t('unable_to_save', model_name: t('conversation.name'))
-          flash_component = FlashMessageComponent.new(flash:, record: @conversation)
+          flash_component = FlashMessageComponent.new(flash:, record: @conversation_form)
 
           render turbo_stream: [turbo_stream.update(flash_component.id, flash_component)],
                  status: :unprocessable_entity
         end
         format.json do
-          render json: { error: { message: @conversation.errors.full_messages.join(';') } },
+          render json: { error: { message: @conversation_form.errors.full_messages.join(';') } },
                  status: :unprocessable_entity
         end
       end
@@ -105,46 +103,25 @@ class ConversationsController < ApplicationController
 
   private
 
-  def enqueue_generate_text_job(generate_text_request)
-    return unless generate_text_request
-
-    GenerateTextJob.perform_async(generate_text_request.id)
-  end
-
   def set_conversation
     @conversation = current_user.conversations.find(params[:id])
-  end
-
-  def set_user_id_on_turnable
-    @conversation.turns.each { |t| t.turnable.user = current_user }
   end
 
   def search_params
     params.permit(q: %i[memo_id])
   end
 
-  def new_conversation_params
-    conversation_params.merge(title: Conversation.title_from_prompt(prompt))
-  end
-
-  def generate_text_requests_attributes
-    conversation_params.dig(:turns_attributes, '0', :turnable_attributes)
-  end
-
-  def prompt
-    generate_text_requests_attributes[:prompt]
-  end
-
   def conversation_params
     params.require(:conversation).permit(
       :title,
       :memo_id,
-      turns_attributes: [
-        :turnable_type,
-        turnable_attributes: [
-          :prompt, :text_id, :temperature, :generate_text_preset_id, :model, :file
-        ]
-      ]
-    )
+      :turnable_type,
+      :prompt,
+      :text_id,
+      :temperature,
+      :generate_text_preset_id,
+      :model,
+      :file
+    ).merge(user: current_user)
   end
 end

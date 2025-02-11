@@ -5,9 +5,8 @@ import LocalStorage from '@javascript/LocalStorage'
 import { Collapse } from 'bootstrap'
 
 export default class PromptFormController extends Controller {
-  static targets = ['promptInput', 'userId', 'conversationId', 'form', 'submitButton',
-                    'showOptionsButton', 'options', 'temperatureSelect', 'modelSelect',
-                    'presetSelect', 'textId']
+  static targets = ['promptInput', 'form', 'submitButton', 'showOptionsButton', 'options',
+                    'temperatureSelect', 'modelSelect', 'presetSelect', 'textId']
 
   connect() {
     ToolTippable.connect.bind(this)()

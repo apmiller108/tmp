@@ -63,6 +63,7 @@ CLOSED: [2025-02-02 Sun 10:14]
     render flash message if 422
   - [ ] Refactor: Create an InvokeModelResponse base class
   - [ ] Refactor: Extract an image generating job for converstaions
+  - [ ] Add bigassify button that adds a bunch of rows to the text area
 * DONE support adding files to the prompt [17/17]
 CLOSED: [2025-01-27 Mon 20:52]
   - [X] Add file input and attachment to generate text requests

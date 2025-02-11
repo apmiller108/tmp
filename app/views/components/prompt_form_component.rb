@@ -3,15 +3,15 @@
 class PromptFormComponent < ApplicationViewComponent
   ID = 'prompt-form'
 
-  attr_reader :conversation, :generate_text_request, :turn
+  attr_reader :conversation_form, :generate_text_request, :turn
 
+  delegate :conversation, :model, to: :conversation_form
   delegate :generate_text_requests, to: :conversation
 
-  def initialize(conversation:, **opts)
+  def initialize(conversation_form:, **opts)
+    @conversation_form = conversation_form
     @opts = opts
-    @conversation = conversation
-    @turn = conversation.turns.new(turnable_type: 'GenerateTextRequest')
-    @generate_text_request = conversation.generate_text_requests.new(default_values)
+    conversation_form.assign_attributes(last_used_options)
   end
 
   def id
@@ -23,15 +23,15 @@ class PromptFormComponent < ApplicationViewComponent
   end
 
   def file_input_disabled?
-    !generate_text_request.model.capabilities.image?
+    GenerativeText::MODELS.find { _1.api_name == model }.capabilities.image?
   end
 
   def max_file_size
-    generate_text_request.class::MAX_FILE_SIZE
+    GenerateTextRequest::MAX_FILE_SIZE
   end
 
   def file_types
-    generate_text_request.class::SUPPORTED_MIME_TYPES
+    GenerateTextRequest::SUPPORTED_MIME_TYPES
   end
 
   def preset_options
@@ -63,7 +63,7 @@ class PromptFormComponent < ApplicationViewComponent
   private
 
   def last_used_options
-    request = @opts.fetch(:last_request, generate_text_requests.last)
+    request = generate_text_requests.last
 
     if request
       {
@@ -73,10 +73,6 @@ class PromptFormComponent < ApplicationViewComponent
     else
       {}
     end
-  end
-
-  def default_values
-    { model: current_user.setting.text_model, user: current_user }.merge(last_used_options)
   end
 
   def presets
