@@ -21,7 +21,7 @@ class GenerateTextToolInputJob
       form = GenerateImageRequestForm.new(attrs)
 
       if form.submit
-        GenerateImageJob.perform_async(form.generate_image_request.id)
+        Conversations::GenerateImageJob.perform_async(form.generate_image_request.id)
       else
         log_and_broadcast_errors(generate_text_request.user, form)
       end

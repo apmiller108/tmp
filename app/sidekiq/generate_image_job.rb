@@ -11,15 +11,13 @@ class GenerateImageJob
     request = GenerateImageRequest.find(generate_image_request_id)
     request.in_progress!
 
-    broadcast_component(request.conversation_turn, request.user, action: :append, target: 'conversation-turns')
-
     response = generate_image(request)
     payload = { generate_image: { image_name: request.image_name, image: nil, content_type: nil, error: nil } }
 
     if response&.image_present?
       attach_to_request(request, response.image)
       request.completed!
-      broadcast_response(request, payload, response)
+      broadcast_image(request.user, payload, response.image)
     else
       request.failed!
       broadcast_error(request, payload)
@@ -49,16 +47,6 @@ class GenerateImageJob
     )
   end
 
-  def broadcast_response(request, payload, response)
-    conversation_turn = request.conversation_turn
-
-    if conversation_turn
-      broadcast_component(conversation_turn, request.user)
-    else
-      broadcast_image(request.user, payload, response.image)
-    end
-  end
-
   # @param [User] user
   # @param [Hash] payload
   # @param [String] png the raw image bytes
@@ -69,26 +57,9 @@ class GenerateImageJob
     MyChannel.broadcast_to(user, payload)
   end
 
-  def broadcast_component(conversation_turn, user, **options)
-    return if conversation_turn.nil?
-
-    ViewComponentBroadcaster.call(
-      [user, TurboStreams::STREAMS[:main]],
-      component: ConversationTurnComponent.new(conversation_turn:),
-      action: options.fetch(:action, :replace),
-      **options
-    )
-  end
-
   def broadcast_error(request, payload)
-    conversation_turn = request.conversation_turn
-
-    if conversation_turn
-      broadcast_component(conversation_turn, request.user)
-    else
-      payload[:generate_image][:error] = true
-      MyChannel.broadcast_to(request.user, payload)
-    end
+    payload[:generate_image][:error] = true
+    MyChannel.broadcast_to(request.user, payload)
     broadcast_flash(request.user)
   end
 
