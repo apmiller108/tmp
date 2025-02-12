@@ -1,4 +1,4 @@
-.c-conversation.conversation-container.scroll-no-bar-container.container-sm.pb-1{id:, data: { controller: :conversation, action: 'prompt-form:promptOptionsShow@window->conversation#onPromptOptionsShow' } }
+.c-conversation.conversation-container.scroll-no-bar-container.container-sm.pb-1{id:, class: opts[:class], data: { controller: :conversation, action: 'prompt-form:promptOptionsShow@window->conversation#onPromptOptionsShow' } }
   = render ModalComponent.new(size: :lg)
   #conversation-turns.conversation-turns.mb-2{ data: { 'conversation-target': 'turns' } }
     = render ConversationTurnComponent.with_collection(conversation.turns)
