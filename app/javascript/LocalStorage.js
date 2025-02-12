@@ -7,6 +7,14 @@ export default class LocalStorage {
     return this.get('conversations.showOptions')
   }
 
+  setConvoExpandTextArea(value) {
+    this.set('conversations.expandTextArea', value.toString())
+  }
+
+  getConvoExpandTextArea() {
+    return this.get('conversations.expandTextArea')
+  }
+
   set(key, value) {
     if (this.isLocalStorageAvailabel()) {
       localStorage.setItem(key, value)

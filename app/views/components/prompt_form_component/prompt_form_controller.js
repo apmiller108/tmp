@@ -5,8 +5,10 @@ import LocalStorage from '@javascript/LocalStorage'
 import { Collapse } from 'bootstrap'
 
 export default class PromptFormController extends Controller {
-  static targets = ['promptInput', 'form', 'submitButton', 'showOptionsButton', 'options',
-    'temperatureSelect', 'modelSelect', 'presetSelect', 'textId', 'toggleTextAreaButton']
+  static targets = [
+    'promptInput', 'form', 'submitButton', 'showOptionsButton', 'options',
+    'temperatureSelect', 'modelSelect', 'presetSelect', 'textId', 'toggleTextAreaButton'
+  ]
 
   connect() {
     ToolTippable.connect.bind(this)()
@@ -14,10 +16,7 @@ export default class PromptFormController extends Controller {
     this.promptInputTarget.addEventListener('keypress', this.submitOnEnter.bind(this))
     this.formTarget.addEventListener('submit', this.disableForm.bind(this))
     this.textIdTarget.value = createGenTextId();
-    this.showOptions()
-    this.setPreset()
-    this.setTemperature()
-    this.initializeFileInput()
+    this.initForm()
   }
 
   disconnect() {
@@ -38,7 +37,15 @@ export default class PromptFormController extends Controller {
     this.promptInputTarget.focus()
   }
 
-  showOptions() {
+  initForm() {
+    this.initializeOptions()
+    this.setPreset()
+    this.setTemperature()
+    this.initializeFileInput()
+    this.initializeTextArea()
+  }
+
+  initializeOptions() {
     const localStore = new LocalStorage()
     const options = new Collapse(this.optionsTarget, {
       toggle: false
@@ -46,6 +53,7 @@ export default class PromptFormController extends Controller {
 
     if (localStore.getConvoShowOptions() === 'true') {
       options.show()
+      this.showOptions()
     }
   }
 
@@ -60,6 +68,19 @@ export default class PromptFormController extends Controller {
   setTemperature() {
     const presetId = this.presetSelectTarget.value
     this.setTemperatureFromSelectedPreset(presetId)
+  }
+
+  initializeFileInput() {
+    const selectedModel = this.modelData.find(m => m.api_name === this.modelSelectTarget.value)
+    this.dispatch('toggleFileInput', { detail: { disabled: selectedModel.capabilities['image?'] } })
+  }
+
+  initializeTextArea() {
+    const localStorage = new LocalStorage()
+
+    if (localStorage.getConvoExpandTextArea() === 'true') {
+      this.expandTextArea()
+    }
   }
 
   submitOnEnter(e) {
@@ -89,10 +110,14 @@ export default class PromptFormController extends Controller {
       localStore.setConvoShowOptions(false)
       this.showOptionsButtonTarget.querySelector('i').classList.remove('down')
     } else {
+      this.showOptions()
       localStore.setConvoShowOptions(true)
-      this.showOptionsButtonTarget.querySelector('i').classList.add('down')
-      this.dispatch('promptOptionsShow', { detail: {} })
     }
+  }
+
+  showOptions() {
+    this.showOptionsButtonTarget.querySelector('i').classList.add('down')
+    this.dispatch('promptOptionsShow', { detail: {} })
   }
 
   onChangePreset(e) {
@@ -115,11 +140,6 @@ export default class PromptFormController extends Controller {
     this.initializeFileInput()
   }
 
-  initializeFileInput() {
-    const selectedModel = this.modelData.find(m => m.api_name === this.modelSelectTarget.value)
-    this.dispatch('toggleFileInput', { detail: { disabled: selectedModel.capabilities['image?'] } })
-  }
-
   // If there is an error in the background job, enabled the form
   onGenerateText() {
     this.enableForm()
@@ -127,12 +147,20 @@ export default class PromptFormController extends Controller {
   }
 
   onToggleTextAreaSize() {
+    const localStore = new LocalStorage()
+
     if (this.promptInputTarget.rows === 10) {
       this.promptInputTarget.rows = 2
       this.toggleTextAreaButtonTarget.querySelector('i').classList.remove('up')
+      localStore.setConvoExpandTextArea(false)
     } else {
-      this.promptInputTarget.rows = 10
-      this.toggleTextAreaButtonTarget.querySelector('i').classList.add('up')
+      this.expandTextArea()
+      localStore.setConvoExpandTextArea(true)
     }
+  }
+
+  expandTextArea() {
+    this.promptInputTarget.rows = 10
+    this.toggleTextAreaButtonTarget.querySelector('i').classList.add('up')
   }
 }
