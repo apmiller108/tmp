@@ -54,7 +54,7 @@ class GenerateTextRequest < ApplicationRecord
 
   # @param [Array<ConversationTurn>] the list of turns to which this belongs
   # @returns [Array<Hash>] A tuple of a user message and assistant response
-  def to_turn(turns)
+  def to_turn(turns: [])
     case model.vendor
     when :anthropic
       GenerativeText::Anthropic::Turn.for(self, turns:)

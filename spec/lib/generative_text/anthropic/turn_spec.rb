@@ -2,10 +2,15 @@ require 'rails_helper'
 
 RSpec.describe GenerativeText::Anthropic::Turn do
   describe '.for' do
-    subject(:turn) { described_class.for(generate_text_request) }
+    subject(:turn) { described_class.for(generate_text_request, turns:) }
+
+    let(:conversation_turn) do
+      build_stubbed :conversation_turn, turnable: generate_text_request
+    end
+    let(:turns) { [conversation_turn] }
 
     let(:generate_text_request) do
-      build(:generate_text_request, :with_response, prompt: 'Test prompt')
+      build_stubbed(:generate_text_request, :with_response, prompt: 'Test prompt')
     end
 
     it 'returns an array with two elements' do
@@ -34,9 +39,16 @@ RSpec.describe GenerativeText::Anthropic::Turn do
       end
       let(:io) { File.open Rails.root.join('spec/fixtures/files/image.png') }
       let(:blob) { ActiveStorage::Blob.create_and_upload!(io:, filename: 'image.png') }
+      let(:variant) { instance_double ActiveStorage::VariantWithRecord, image: }
+      let(:image) { instance_double ActiveStorage::Blob, content_type: 'image/webp' }
 
       before do
-        allow(BlobEncoder).to receive(:encode64).with(generate_text_request.file).and_return('base64 string')
+        allow(blob).to(
+          receive(:variant).with(
+            { resize_to_limit: [1024, 768] }.merge(ActiveStorage::Blob::WEBP_VARIANT_OPTS)
+          )
+        ).and_return(variant)
+        allow(BlobEncoder).to receive(:encode64).with(image).and_return('base64 string')
       end
 
       after do
@@ -51,7 +63,7 @@ RSpec.describe GenerativeText::Anthropic::Turn do
               'type' => 'image',
               'source' => {
                 'type' => 'base64',
-                'media_type' => 'image/png',
+                'media_type' => 'image/webp',
                 'data' => 'base64 string'
               },
               'cache_control' => { 'type' => 'ephemeral' }
@@ -60,6 +72,10 @@ RSpec.describe GenerativeText::Anthropic::Turn do
           ]
         })
       end
+    end
+
+    context 'when the previous turn is an image request' do
+      pending "add specs #{__FILE__}"
     end
 
     context 'when response is nil' do

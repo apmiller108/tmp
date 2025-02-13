@@ -96,7 +96,7 @@ RSpec.describe GenerateTextRequest, type: :model do
       let(:anthropic_turn_data) { double }
 
       before do
-        allow(GenerativeText::Anthropic::Turn).to receive(:for).with(request).and_return(anthropic_turn_data)
+        allow(GenerativeText::Anthropic::Turn).to receive(:for).with(request, turns: []).and_return(anthropic_turn_data)
       end
 
       it 'calls Turn.for on Anthropic::Turn' do

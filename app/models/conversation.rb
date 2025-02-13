@@ -20,7 +20,7 @@ class Conversation < ApplicationRecord
   end
 
   def exchange
-    generate_text_requests.completed.flat_map { _1.to_turn(turns.to_a) }
+    generate_text_requests.completed.flat_map { _1.to_turn(turns: turns.to_a) }
   end
 
   def token_count
