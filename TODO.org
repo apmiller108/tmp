@@ -56,7 +56,6 @@
   - [X] Test uploading an image and asking it to generate an image like it with
     some changes.
   - [X] Refactor: re-introduce the conversation form object
-  - [ ] Rename prompt form to conversation form
   - [X] Refactor: Extract an image generating job for converstaions
   - [X] Add bigassify state in local storage
 * DONE support adding files to the prompt [17/17]
