@@ -10,13 +10,14 @@ RSpec.describe GenerateTextJob, type: :job do
   describe '#perform' do
     subject(:perform) { described_class.new.perform(generate_text_request.id) }
 
-    let(:generate_text_request) { build_stubbed :generate_text_request, :with_preset, conversation: }
-    let(:user) { generate_text_request.user }
-    let(:conversation) { build_stubbed :conversation }
+    let(:conversation_turn) { build_stubbed :conversation_turn, conversation: }
+    let(:generate_text_request) { build_stubbed :generate_text_request, :with_preset, conversation_turn:, user: }
+    let(:user) { build_stubbed :user, setting: build(:setting) }
+    let(:conversation) { build :conversation }
     let(:response_data) { { 'content' => 'response data' } }
     let(:response) do
       instance_double(GenerativeText::Anthropic::InvokeModelResponse,
-                      content: Faker::Lorem.paragraph, data: response_data)
+                      content: Faker::Lorem.paragraph, data: response_data, tool_use?: false)
     end
     let(:prompt_form_component) { instance_double PromptFormComponent }
     let(:conversation_turn_component) { instance_double ConversationTurnComponent }
@@ -27,12 +28,14 @@ RSpec.describe GenerateTextJob, type: :job do
       allow(MyChannel).to receive(:broadcast_to)
       allow(ViewComponentBroadcaster).to receive(:call)
       allow(GenerativeText).to receive(:new).and_return(generative_text)
-      allow(PromptFormComponent).to receive(:new).with(conversation:).and_return(prompt_form_component)
-      allow(ConversationTurnComponent).to receive(:new).with(generate_text_request:)
+      allow(PromptFormComponent).to receive(:new).with(conversation_form: kind_of(ConversationForm))
+                                                 .and_return(prompt_form_component)
+      allow(ConversationTurnComponent).to receive(:new).with(conversation_turn:)
                                                        .and_return(conversation_turn_component)
       allow(generate_text_request).to receive(:update!)
       allow(generate_text_request).to receive(:in_progress!)
       allow(generate_text_request).to receive(:failed!)
+      allow(generate_text_request).to receive(:conversation).and_return(conversation)
       allow(conversation).to receive(:reload).and_return(conversation)
     end
 
@@ -48,8 +51,8 @@ RSpec.describe GenerateTextJob, type: :job do
           have_received(:broadcast_to).with(
             user,
             generate_text: { 'text_id' => generate_text_request.text_id,
-                             'conversation_id' => conversation.id,
                              'user_id' => user.id,
+                             conversation_id: conversation.id,
                              content: response.content,
                              error: nil }
           )

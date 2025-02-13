@@ -19,6 +19,9 @@ RSpec.describe GenerateImageJob, type: :job do
     let(:response) { instance_double GenerativeImage::Stability::TextToImageResponse, image:, image_present?: true }
 
     before do
+      allow(request).to receive(:completed!)
+      allow(request).to receive(:in_progress!)
+      allow(request).to receive(:failed!)
       allow(GenerateImageRequest).to receive(:find).with(request.id).and_return(request)
       allow(GenerativeImage).to receive(:new).and_return(generative_image)
       allow(MyChannel).to receive(:broadcast_to)
@@ -29,10 +32,14 @@ RSpec.describe GenerateImageJob, type: :job do
     context 'when the image was succesfully generated' do
       before do
         allow(generative_image).to receive(:text_to_image).with(params).and_return(response)
+        perform
+      end
+
+      it 'marks the request as in progress' do
+        expect(request).to have_received(:in_progress!)
       end
 
       it 'attaches the original image to the request' do
-        perform
         expect(request.image).to(
           have_received(:attach).with(io: kind_of(Tempfile),
                                       filename: "#{request.image_name}.png",
@@ -40,8 +47,11 @@ RSpec.describe GenerateImageJob, type: :job do
         )
       end
 
+      it 'marks the request as completed' do
+        expect(request).to have_received(:completed!)
+      end
+
       it 'broadcasts the webp converted image' do
-        perform
         expect(MyChannel).to(
           have_received(:broadcast_to).with(request.user,
                                             { generate_image: { image_name: request.image_name,
@@ -56,15 +66,18 @@ RSpec.describe GenerateImageJob, type: :job do
       before do
         allow(generative_image).to receive(:text_to_image).with(params).and_raise(GenerativeImage::InvalidRequestError)
         allow(Rails.logger).to receive(:warn)
+        perform
+      end
+
+      it 'marks the request as failed' do
+        expect(request).to have_received(:failed!)
       end
 
       it 'logs the error' do
-        perform
         expect(Rails.logger).to have_received(:warn).with('GenerateImageJob: GenerativeImage::InvalidRequestError : ')
       end
 
       it 'broadcasts the error payload' do
-        perform
         expect(MyChannel).to have_received(:broadcast_to)
           .with(request.user,
                 { generate_image: { image_name: request.image_name, image: nil,
@@ -72,10 +85,9 @@ RSpec.describe GenerateImageJob, type: :job do
       end
 
       it 'broadcasts the flash message' do
-        perform
         expect(ViewComponentBroadcaster).to have_received(:call)
-          .with([request.user, TurboStreams::STREAMS[:memos]],
-                component: kind_of(FlashMessageComponent), action: :replace)
+          .with([request.user, TurboStreams::STREAMS[:main]],
+                component: kind_of(FlashMessageComponent), action: :update)
       end
     end
 
@@ -83,17 +95,20 @@ RSpec.describe GenerateImageJob, type: :job do
       before do
         allow(generative_image).to receive(:text_to_image).with(params).and_raise(StandardError)
         allow(Rails.logger).to receive(:warn)
+        perform
+      end
+
+      it 'marks the request as failed' do
+        expect(request).to have_received(:failed!)
       end
 
       it 'broadcasts the flash message' do
-        perform
         expect(ViewComponentBroadcaster).to have_received(:call)
-          .with([request.user, TurboStreams::STREAMS[:memos]],
-                component: kind_of(FlashMessageComponent), action: :replace)
+          .with([request.user, TurboStreams::STREAMS[:main]],
+                component: kind_of(FlashMessageComponent), action: :update)
       end
 
       it 'logs the error' do
-        perform
         expect(Rails.logger).to have_received(:warn).with('GenerateImageJob: StandardError : ')
       end
     end
