@@ -26,6 +26,7 @@ Lint/MissingSuper:
 Metrics/AbcSize:
   Exclude:
     - 'app/controllers/**/*'
+    - 'spec/support/**/*'
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'

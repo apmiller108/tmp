@@ -3,11 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe PromptFormComponent, type: :component do
-  subject(:component) { described_class.new(conversation:, **opts) }
+  subject(:component) { described_class.new(conversation_form:, **opts) }
 
   let(:user) { build_stubbed(:user, setting:) }
   let(:setting) { build_stubbed(:setting) }
   let(:conversation) { build_stubbed(:conversation, user:) }
+  let(:conversation_form) { ConversationForm.new conversation:, user: }
   let(:token_count) { 99 }
   let(:opts) { {} }
 
@@ -57,8 +58,7 @@ RSpec.describe PromptFormComponent, type: :component do
 
       it 'sets the model to the users setting model' do
         model_name = GenerativeText::MODELS.find { _1.api_name == setting.text_model }.name
-        expect(page).to have_select 'conversation_generate_text_requests_attributes_0_model',
-                                    selected: model_name
+        expect(page).to have_select 'conversation_model', selected: model_name
       end
     end
 
@@ -83,18 +83,15 @@ RSpec.describe PromptFormComponent, type: :component do
       end
 
       it 'sets the selected model to the previously completed request\'s model' do
-        expect(page).to have_select 'conversation_generate_text_requests_attributes_0_model',
-                                    selected: model.name
+        expect(page).to have_select 'conversation_model', selected: model.name
       end
 
       it 'sets the preset to the previously completed request\'s prest' do
-        expect(page).to have_select 'conversation_generate_text_requests_attributes_0_generate_text_preset_id',
-                                    selected: preset.name
+        expect(page).to have_select 'conversation_generate_text_preset_id', selected: preset.name
       end
 
       it 'sets the temp to the previously completed request\'s temp' do
-        expect(page).to have_select 'conversation_generate_text_requests_attributes_0_temperature',
-                                    selected: temperature
+        expect(page).to have_select 'conversation_temperature', selected: temperature
       end
     end
   end

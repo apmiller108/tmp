@@ -37,10 +37,10 @@ RSpec.describe 'create generate text preset', type: :system do
     # After being redirected the options are still open
     within('#advanced-options') do
       # The new preset is selected by default after redirect
-      expect(page).to have_select 'conversation_generate_text_requests_attributes_0_generate_text_preset_id',
+      expect(page).to have_select 'conversation_generate_text_preset_id',
                                   selected: preset.name
       # The presets temperature is automatically selected
-      expect(page).to have_select 'conversation_generate_text_requests_attributes_0_temperature',
+      expect(page).to have_select 'conversation_temperature',
                                   selected: preset.temperature.to_s
     end
   end

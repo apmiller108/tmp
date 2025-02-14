@@ -5,49 +5,20 @@ RSpec.describe 'create conversation', type: :system do
   let!(:user) { create :user }
   let(:setting) { create :setting, :with_anthropic_text_model, user: }
 
-  let(:style_preset) { 'comic-book' }
   let(:prompt) { 'This is my prompt' }
   let!(:generate_text_preset) { create :generate_text_preset }
   let(:assistant_response) { 'This is the assistant response.' }
   let(:model) { GenerativeText::MODELS.find { _1.api_name == setting.text_model } }
   let(:temperature) { 0.5 }
-  let(:generative_text_response) do
-    <<~JSON
-      {
-        "id": "msg_01DMcCdRr6gaWDuZs7Y63rhe",
-        "type": "message",
-        "role": "assistant",
-        "content": [{
-            "type": "text",
-            "text": "#{assistant_response}"
-        }],
-        "model": "claude-3-haiku-20240307",
-        "stop_reason": "end_turn",
-        "stop_sequence": null,
-        "usage": {
-            "input_tokens": 79,
-            "output_tokens": 942,
-            "cache_creation_input_tokens": 0,
-            "cache_read_input_tokens": 0
-        }
-      }
-    JSON
-  end
 
   before(:context) do
     Sidekiq::Testing.inline!
   end
 
   before do
-    stub_request(:post, 'https://api.anthropic.com/v1/messages')
-      .with(
-        body: {
-          model: model.api_name, max_tokens: model.max_tokens,
-          temperature:,
-          messages: [{ 'role' => 'user', 'content' => [{ 'text' => prompt, 'type' => 'text' }] }],
-          system: GenerateTextRequest.new(generate_text_preset:).system_message
-        }.to_json
-      ).to_return(status: 200, body: generative_text_response)
+    stub_anthropic_request(
+      model:, assistant_response:, temperature:, generate_text_preset:, prompt:
+    )
   end
 
   after(:context) do
@@ -61,7 +32,7 @@ RSpec.describe 'create conversation', type: :system do
     click_link 'New Conversation'
     expect(page).to have_current_path new_conversation_path
 
-    fill_in 'conversation_generate_text_requests_attributes_0_prompt', with: prompt
+    fill_in 'conversation_prompt', with: prompt
 
     find('.options-toggle-btn').click
 
@@ -101,7 +72,9 @@ RSpec.describe 'create conversation', type: :system do
     # Delete conversation turn
     generate_text_request = conversation.generate_text_requests.completed.last
     within('.assistant-response') do
-      find('a[data-turbo-method="delete"]').click
+      accept_prompt do
+        find('a[data-turbo-method="delete"]').click
+      end
     end
     expect(page).not_to have_css "#generate_text_request_#{generate_text_request.id}"
   end

@@ -1,11 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe ConversationTurnComponent, type: :component do
+RSpec.describe GenerateTextRequestComponent, type: :component do
   let(:generate_text_request) do
     build_stubbed :generate_text_request, :with_preset, :with_response, model: model.api_name
   end
+  let(:conversation_turn) { build_stubbed :conversation_turn, turnable: generate_text_request }
   let(:model) { GenerativeText::DEFAULT_MODEL }
-  let(:component) { described_class.new(generate_text_request:) }
+  let(:component) { described_class.new(conversation_turn:) }
   let(:token_count) { 1008 }
 
   before do
@@ -45,7 +46,7 @@ RSpec.describe ConversationTurnComponent, type: :component do
 
     before { render_inline(component) }
 
-    it { is_expected.to have_css '.c-conversation-turn' }
+    it { is_expected.to have_css '.c-generate-text-request' }
     it { is_expected.to have_css '.segment-user', text: generate_text_request.prompt }
     it { is_expected.to have_css '.segment-assistant' }
   end

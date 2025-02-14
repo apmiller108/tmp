@@ -11,9 +11,10 @@
                 %pre{ data: { 'clipboard-target' => 'source' } }= prompt['text']
         .settings.d-flex.justify-content-between.flex-wrap
           - gen_img_params.slice(:style, :dimensions, :aspect_ratio).each do |k,v|
-            %div.d-flex.align-items-center.justify-content-between.mt-3
-              %span.label.me-2.fw-medium= "#{k.to_s.titleize}:"
-              %pre.value= v
+            - if v.present?
+              %div.d-flex.align-items-center.justify-content-between.mt-3
+                %span.label.me-2.fw-medium= "#{k.to_s.titleize}:"
+                %pre.value= v
     .file-details
       %div.d-flex.align-items-center.justify-content-between.mt-3
         %span.label.me-2.fw-medium Name:

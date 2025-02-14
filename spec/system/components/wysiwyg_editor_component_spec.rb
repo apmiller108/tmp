@@ -22,28 +22,6 @@ RSpec.describe 'WysiwygEditorComponent', type: :system do
   end
 
   let(:model) { GenerativeText::MODELS.find { _1.api_name == setting.text_model } }
-  let(:claude_generative_text_response) do
-    <<~JSON
-      {
-        "id": "msg_01DMcCdRr6gaWDuZs7Y63rhe",
-        "type": "message",
-        "role": "assistant",
-        "content": [{
-            "type": "text",
-            "text": "#{generative_text}"
-        }],
-        "model": "claude-3-haiku-20240307",
-        "stop_reason": "end_turn",
-        "stop_sequence": null,
-        "usage": {
-            "input_tokens": 79,
-            "output_tokens": 942,
-            "cache_creation_input_tokens": 0,
-            "cache_read_input_tokens": 0
-        }
-      }
-    JSON
-  end
 
   let(:png) { file_fixture 'image.png' }
   let(:generate_image_response) do
@@ -69,14 +47,9 @@ RSpec.describe 'WysiwygEditorComponent', type: :system do
       }.to_json)
       .to_return(status: 200, body: titan_generative_text_response)
 
-    stub_request(:post, 'https://api.anthropic.com/v1/messages')
-      .with(
-        body: {
-          model: model.api_name, max_tokens: model.max_tokens, temperature: 0.0,
-          messages: [{ 'role' => 'user', 'content' => [{ 'text' => 'This is my prompt', 'type' => 'text' }] }],
-          system: GenerativeText::Helpers::MARKDOWN_FORMAT_SYSTEM_MESSAGE
-        }.to_json
-      ).to_return(status: 200, body: claude_generative_text_response)
+    stub_anthropic_request(
+      model:, assistant_response: generative_text, temperature: 0.0, prompt: 'This is my prompt'
+    )
 
     stub_request(:post, 'https://api.stability.ai/v2beta/stable-image/generate/core')
       .with(headers: {

@@ -14,28 +14,6 @@ RSpec.describe 'Create and view memo', type: :system do
   let!(:generate_text_preset) { create :generate_text_preset }
   let(:generative_text) { 'This is AI slop' }
   let(:model) { GenerativeText::MODELS.find { _1.api_name == setting.text_model } }
-  let(:generative_text_response) do
-    <<~JSON
-      {
-        "id": "msg_01DMcCdRr6gaWDuZs7Y63rhe",
-        "type": "message",
-        "role": "assistant",
-        "content": [{
-            "type": "text",
-            "text": "#{generative_text}"
-        }],
-        "model": "claude-3-haiku-20240307",
-        "stop_reason": "end_turn",
-        "stop_sequence": null,
-        "usage": {
-            "input_tokens": 79,
-            "output_tokens": 942,
-            "cache_creation_input_tokens": 0,
-            "cache_read_input_tokens": 0
-        }
-      }
-    JSON
-  end
 
   before(:context) do
     Sidekiq::Testing.inline!
@@ -48,15 +26,13 @@ RSpec.describe 'Create and view memo', type: :system do
         'Accept': 'image/*'
       }).to_return(status: 200, body: png.read, headers: { 'seed' => 1234, 'finish-reason' => 'SUCCESS' })
 
-    stub_request(:post, 'https://api.anthropic.com/v1/messages')
-      .with(
-        body: {
-          model: model.api_name, max_tokens: model.max_tokens,
-          temperature: generate_text_preset.temperature,
-          messages: [{ 'role' => 'user', 'content' => [{ 'text' => generate_text_prompt, 'type' => 'text' }] }],
-          system: GenerateTextRequest.new(generate_text_preset:).system_message
-        }.to_json
-      ).to_return(status: 200, body: generative_text_response)
+    stub_anthropic_request(
+      model:,
+      assistant_response: generative_text,
+      temperature: generate_text_preset.temperature,
+      generate_text_preset:,
+      prompt: generate_text_prompt
+    )
   end
 
   after(:context) do
@@ -108,11 +84,10 @@ RSpec.describe 'Create and view memo', type: :system do
 
         details[:prompts].each do |prompt|
           expect(page).to have_content prompt.fetch('text')
-          expect(page).to have_content "Weight #{prompt.fetch('weight')}"
         end
-        expect(page).to have_content "Style #{details.fetch(:style)}"
-        expect(page).to have_content "Aspect Ratio #{details.fetch(:aspect_ratio)}"
-        expect(page).to have_content "Name #{blob.filename}"
+        expect(page).to have_content "Style: #{details.fetch(:style)}"
+        expect(page).to have_content "Aspect Ratio: #{details.fetch(:aspect_ratio)}"
+        expect(page).to have_content "Name: #{blob.filename}"
 
         # Download link
         expect(page).to have_css "a[href='/blobs/#{blob.id}']"

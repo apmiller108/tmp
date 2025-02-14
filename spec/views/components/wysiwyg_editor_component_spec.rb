@@ -9,6 +9,7 @@ RSpec.describe WysiwygEditorComponent, type: :component do
   value = 'obj value'
 
   let(:obj_name) { 'obj_name' }
+  let(:user) { build_stubbed :user }
   let(:component) { described_class.new(object:, method:) }
   let(:object) do
     name = instance_double(ActiveModel::Name, element: obj_name)
@@ -28,7 +29,9 @@ RSpec.describe WysiwygEditorComponent, type: :component do
   end
 
   before do
-    render_inline component
+    with_current_user(user) do
+      render_inline component
+    end
   end
 
   it { is_expected.to have_css '.c-wysiwyg-editor' }

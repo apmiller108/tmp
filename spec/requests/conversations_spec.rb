@@ -4,7 +4,7 @@ RSpec.describe 'Conversations', type: :request do
   describe 'GET #index' do
     let(:user) { create :user }
     let!(:conversations) { create_list :conversation, 2, user: }
-    let(:request) { get "/users/#{user.id}/conversations", headers: }
+    let(:request) { get conversations_path, headers: }
 
     before do
       sign_in user
@@ -23,7 +23,7 @@ RSpec.describe 'Conversations', type: :request do
 
     context 'with JSON format' do
       let(:headers) { { 'ACCEPT' => 'application/json', 'Content-Type' => 'application/json' } }
-      let(:request) { get "/users/#{user.id}/conversations", headers: }
+      let(:request) { get conversations_path, headers: }
 
       it_behaves_like 'an API authenticated route'
 
@@ -52,7 +52,7 @@ RSpec.describe 'Conversations', type: :request do
 
   describe 'GET #new' do
     let(:user) { create :user, :with_setting }
-    let(:request) { get "/users/#{user.id}/conversations/new", headers: }
+    let(:request) { get new_conversation_path, headers: }
     let(:headers) { { 'ACCEPT' => 'text/html' } }
 
     before do
@@ -72,16 +72,20 @@ RSpec.describe 'Conversations', type: :request do
 
     let(:user) { create :user, :with_setting }
     let(:headers) { { 'Accept' => 'text/vnd.turbo-stream.html' } }
-    let(:request_attrs) { attributes_for :generate_text_request }
     let(:params) do
       {
         conversation: {
-          generate_text_requests_attributes: { '0' => request_attrs.merge(user_id: user.id) }
+          temperature: 1,
+          prompt: 'foo',
+          text_id: 'gentext_1234',
+          generate_text_preset_id: '',
+          model: user.setting.text_model,
+          turnable_type: 'GenerateTextRequest'
         }
       }
     end
 
-    let(:request) { post "/users/#{user.id}/conversations", headers:, params: }
+    let(:request) { post conversations_path, headers:, params: }
 
     before do
       sign_in user
@@ -110,7 +114,18 @@ RSpec.describe 'Conversations', type: :request do
     end
 
     context 'with invalid params' do
-      let(:request_attrs) { attributes_for(:generate_text_request).merge(prompt: '') }
+      let(:params) do
+        {
+          conversation: {
+            temperature: 1,
+            prompt: nil,
+            text_id: 'gentext_1234',
+            generate_text_preset_id: '',
+            model: user.setting.text_model,
+            turnable_type: 'GenerateTextRequest'
+          }
+        }
+      end
 
       before { request }
 
@@ -127,7 +142,7 @@ RSpec.describe 'Conversations', type: :request do
   describe 'GET #edit' do
     let(:user) { create :user, :with_setting }
     let(:conversation) { create :conversation, user: }
-    let(:request) { get "/users/#{user.id}/conversations/#{conversation.id}/edit", headers: }
+    let(:request) { get edit_conversation_path(conversation), headers: }
     let(:headers) { { 'ACCEPT' => 'text/html' } }
 
     before do
@@ -148,18 +163,22 @@ RSpec.describe 'Conversations', type: :request do
     let(:user) { create :user, :with_setting }
     let(:conversation) { create :conversation, user: }
     let(:headers) { { 'Accept' => 'text/vnd.turbo-stream.html' } }
-    let(:request_attrs) { attributes_for :generate_text_request }
     let(:title) { Faker::Lorem.sentence }
     let(:params) do
       {
         conversation: {
           title:,
-          generate_text_requests_attributes: { '0' => request_attrs.merge(user_id: user.id.to_s) }
+          temperature: 1,
+          prompt: 'foo',
+          text_id: 'gentext_1234',
+          generate_text_preset_id: '',
+          model: user.setting.text_model,
+          turnable_type: 'GenerateTextRequest'
         }
       }
     end
 
-    let(:request) { put "/users/#{user.id}/conversations/#{conversation.id}", headers:, params: }
+    let(:request) { put conversation_path(conversation), headers:, params: }
 
     before do
       sign_in user
@@ -195,7 +214,7 @@ RSpec.describe 'Conversations', type: :request do
     end
 
     context 'with JSON format' do
-      let(:request) { put "/users/#{user.id}/conversations/#{conversation.id}", headers:, params:, as: :json }
+      let(:request) { put conversation_path(conversation), headers:, params:, as: :json }
       let(:headers) { { 'ACCEPT' => 'application/json', 'Content-Type' => 'application/json' } }
 
       before { request }
@@ -210,7 +229,18 @@ RSpec.describe 'Conversations', type: :request do
     end
 
     context 'with invalid params' do
-      let(:request_attrs) { attributes_for(:generate_text_request).merge(prompt: '') }
+      let(:params) do
+        {
+          conversation: {
+            temperature: 1,
+            prompt: nil,
+            text_id: 'gentext_1234',
+            generate_text_preset_id: '',
+            model: user.setting.text_model,
+            turnable_type: 'GenerateTextRequest'
+          }
+        }
+      end
 
       before { request }
 
@@ -223,14 +253,14 @@ RSpec.describe 'Conversations', type: :request do
       end
 
       context 'with JSON format' do
-        let(:request) { put "/users/#{user.id}/conversations/#{conversation.id}", headers:, params:, as: :json }
+        let(:request) { put conversation_path(conversation), headers:, params:, as: :json }
         let(:headers) { { 'ACCEPT' => 'application/json', 'Content-Type' => 'application/json' } }
 
         it { is_expected.to have_http_status :unprocessable_entity }
 
         it 'returns the conversation JSON' do
           request
-          expect(JSON.parse(response.body)['error']).to eq 'message' => 'Generate text requests prompt can\'t be blank'
+          expect(JSON.parse(response.body)['error']).to eq 'message' => 'Prompt can\'t be blank'
         end
       end
     end
@@ -242,7 +272,7 @@ RSpec.describe 'Conversations', type: :request do
     let(:user) { create :user }
     let!(:conversation) { create :conversation, user: }
     let(:headers) { { 'Accept' => 'text/vnd.turbo-stream.html' } }
-    let(:request) { delete "/users/#{user.id}/conversations/#{conversation.id}" }
+    let(:request) { delete conversation_path(conversation) }
 
     before do
       sign_in user
@@ -257,7 +287,7 @@ RSpec.describe 'Conversations', type: :request do
 
     it 'redirects to conversations index' do
       request
-      expect(response).to redirect_to "/users/#{user.id}/conversations"
+      expect(response).to redirect_to conversations_path 
     end
 
     it 'deletes the conversation' do

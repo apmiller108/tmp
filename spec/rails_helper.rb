@@ -8,6 +8,7 @@ require 'rspec/rails'
 require 'sidekiq_unique_jobs/testing'
 require 'view_component/test_helpers'
 require 'view_component/system_test_helpers'
+require_relative 'support/request_stubs'
 require 'capybara/rspec'
 require 'webmock/rspec'
 
@@ -56,6 +57,8 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  config.include RequestStubs
 
   config.include AuthHeader, type: :request
   config.include Devise::Test::IntegrationHelpers, type: :request

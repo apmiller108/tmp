@@ -2,37 +2,14 @@ require 'system_helper'
 require 'sidekiq/testing'
 
 RSpec.describe 'update conversation', type: :system do
-  let!(:user) { create :user }
-  let(:setting) { create :setting, :with_anthropic_text_model, user: }
+  let(:user) { create :user }
+  let!(:setting) { create :setting, :with_anthropic_text_model, user: }
 
-  let(:style_preset) { 'comic-book' }
   let(:prompt) { 'This is my prompt' }
   let!(:generate_text_preset) { create :generate_text_preset }
   let(:assistant_response) { 'This is the assistant response.' }
   let(:model) { GenerativeText::MODELS.find { _1.api_name == setting.text_model } }
   let(:temperature) { 0.5 }
-  let(:generative_text_response) do
-    <<~JSON
-      {
-        "id": "msg_01DMcCdRr6gaWDuZs7Y63rhe",
-        "type": "message",
-        "role": "assistant",
-        "content": [{
-            "type": "text",
-            "text": "#{assistant_response}"
-        }],
-        "model": "claude-3-haiku-20240307",
-        "stop_reason": "end_turn",
-        "stop_sequence": null,
-        "usage": {
-            "input_tokens": 79,
-            "output_tokens": 942,
-            "cache_creation_input_tokens": 0,
-            "cache_read_input_tokens": 0
-        }
-      }
-    JSON
-  end
   let(:conversation) { create :conversation, :with_requests, user:, request_count: 3 }
 
   before(:context) do
@@ -40,16 +17,9 @@ RSpec.describe 'update conversation', type: :system do
   end
 
   before do
-    stub_request(:post, 'https://api.anthropic.com/v1/messages')
-      .with(
-        body: {
-          model: model.api_name, max_tokens: model.max_tokens,
-          temperature:,
-          messages: conversation.exchange
-                                .push({ 'role' => 'user', 'content' => [{ 'text' => prompt, 'type' => 'text' }] }),
-          system: GenerateTextRequest.new(generate_text_preset:).system_message
-        }.to_json
-      ).to_return(status: 200, body: generative_text_response)
+    stub_anthropic_request(
+      prompt:, temperature:, generate_text_preset:, model:, messages: conversation.exchange, assistant_response:
+    )
   end
 
   after(:context) do
@@ -72,7 +42,7 @@ RSpec.describe 'update conversation', type: :system do
       end
     end
 
-    fill_in 'conversation_generate_text_requests_attributes_0_prompt', with: prompt
+    fill_in 'conversation_prompt', with: prompt
 
     find('.options-toggle-btn').click
     expect(page).to have_current_path edit_conversation_path(conversation)
@@ -113,28 +83,21 @@ RSpec.describe 'update conversation', type: :system do
 
   context 'with the default options' do
     let(:last_request) { conversation.generate_text_requests.last }
+    let(:temperature) { last_request.temperature }
+    let(:model) { last_request.model }
+    let(:generate_text_preset) { last_request.generate_text_preset }
 
     before do
-      stub_request(:post, 'https://api.anthropic.com/v1/messages')
-        .with(
-          body: {
-            model: last_request.model.api_name, max_tokens: last_request.model.max_tokens,
-            temperature: last_request.temperature,
-            messages: conversation.exchange
-                                  .push({ 'role' => 'user',
-                                          'content' => [
-                                            { 'text' => prompt, 'type' => 'text' }
-                                          ] }),
-            system: GenerativeText::Helpers.markdown_sys_msg
-          }.to_json
-        ).to_return(status: 200, body: generative_text_response)
+      stub_anthropic_request(
+        prompt:, temperature:, generate_text_preset:, model:, messages: conversation.exchange, assistant_response:
+      )
     end
 
     it 'sets the default options to the options used in the last request' do
       login(user:)
       visit edit_conversation_path(conversation)
 
-      fill_in 'conversation_generate_text_requests_attributes_0_prompt', with: prompt
+      fill_in 'conversation_prompt', with: prompt
 
       within('.c-prompt-form') do
         find('button[type=submit]').click
