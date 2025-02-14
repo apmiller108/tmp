@@ -35,10 +35,11 @@ RSpec.describe GenerativeText::Anthropic::Turn do
 
     context 'with a file' do
       let(:generate_text_request) do
-        build(:generate_text_request, :with_response, prompt: 'Test prompt', file: blob)
+        build(:generate_text_request, :with_response, prompt: 'Test prompt', file: blob, model:)
       end
+      let(:model) { GenerativeText::Anthropic::MODELS.find { |m| m.capabilities.image? }.api_name }
       let(:io) { File.open Rails.root.join('spec/fixtures/files/image.png') }
-      let(:blob) { ActiveStorage::Blob.create_and_upload!(io:, filename: 'image.png') }
+      let!(:blob) { ActiveStorage::Blob.create_and_upload!(io:, filename: 'image.png') }
       let(:variant) { instance_double ActiveStorage::VariantWithRecord, image: }
       let(:image) { instance_double ActiveStorage::Blob, content_type: 'image/webp' }
 

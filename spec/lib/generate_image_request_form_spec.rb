@@ -16,6 +16,12 @@ RSpec.describe GenerateImageRequestForm do
     }
   end
 
+  describe 'image_name' do
+    subject(:form) { described_class.new({}).image_name }
+
+    it { is_expected.not_to be_blank }
+  end
+
   describe 'validation' do
     context 'with valid params' do
       let(:params) { valid_params }
@@ -32,8 +38,7 @@ RSpec.describe GenerateImageRequestForm do
         form.valid?
         expect(form.errors.full_messages).to(
           contain_exactly(
-            "Prompt can't be blank", "Image name can't be blank", 'Aspect ratio is not included in the list',
-            'User must exist'
+            "Prompt can't be blank", 'Aspect ratio is not included in the list', 'User must exist'
           )
         )
       end
