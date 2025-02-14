@@ -3,7 +3,7 @@
 class ConversationTurnComponent < ApplicationViewComponent
   attr_reader :conversation_turn
 
-  delegate :turnable_type, :turnable, :conversation, to: :conversation_turn
+  delegate :turnable_type, to: :conversation_turn
 
   def initialize(conversation_turn:)
     @conversation_turn = conversation_turn

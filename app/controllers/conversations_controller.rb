@@ -42,7 +42,7 @@ class ConversationsController < ApplicationController
                    turbo_stream.update(flash_component.id, flash_component),
                    turbo_stream.replace(
                      'prompt-form',
-                     PromptFormComponent.new(conversation:).render_in(view_context)
+                     PromptFormComponent.new(conversation_form: @conversation_form).render_in(view_context)
                    )
                  ],
                  status: :unprocessable_entity

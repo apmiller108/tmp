@@ -15,17 +15,11 @@ export const createConversation = (params) => {
   const headers = jsonFormatHeaders()
   const body = JSON.stringify({
     conversation: {
-      turns_attributes: {
-        '0': {
-          turnable_type: 'GenerateTextRequest',
-          turnable_attributes: {
-            prompt,
-            text_id,
-            temperature,
-            generate_text_preset_id
-          }
-        }
-      }
+      turnable_type: 'GenerateTextRequest',
+      prompt,
+      text_id,
+      temperature,
+      generate_text_preset_id
     }
   })
 
@@ -37,23 +31,13 @@ export const createConversation = (params) => {
 export const updateConversation = (params) => {
   const { conversation_id, memo_id, prompt, text_id, temperature, generate_text_preset_id } = params
   const headers = jsonFormatHeaders()
-  const body = { conversation: {} }
+  let body = { conversation: {} }
   if (memo_id) {
     body.conversation.memo_id = memo_id
   }
 
   if (prompt) {
-    body.conversation.turns_attributes = {
-      '0': {
-        turnable_type: 'GenerateTextRequest',
-        turnable_attributes: {
-          prompt,
-          text_id,
-          temperature,
-          generate_text_preset_id
-        }
-      }
-    }
+    body.conversation = { ...body.conversation, prompt, text_id, temperature, generate_text_preset_id, turnable_type: 'GenerateTextRequest' }
   }
   const url = `/conversations/${conversation_id}`
 
@@ -61,10 +45,13 @@ export const updateConversation = (params) => {
 }
 
 export const getConversations = async (user_id, searchParams) => {
+  console.log(searchParams)
   const headers = jsonFormatHeaders()
   const q = Object.entries(searchParams).map(([k, v]) => {
-    `q[${k}]=${encodeURIComponent(v)}`
+    return `q[${k}]=${encodeURIComponent(v)}`
   }).join('&')
+
+  console.log(q)
 
   const response = await fetch(`/conversations?${q}`, {
     method: 'GET',

@@ -7,9 +7,9 @@ class GenerateImageRequestComponent < ApplicationViewComponent
 
   delegate :conversation, to: :conversation_turn
 
-  def initialize(generate_image_request, conversation_turn:)
-    @generate_image_request = generate_image_request
+  def initialize(conversation_turn:)
     @conversation_turn = conversation_turn
+    @generate_image_request = conversation_turn.turnable
   end
 
   def id

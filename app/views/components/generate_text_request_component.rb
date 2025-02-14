@@ -9,10 +9,10 @@ class GenerateTextRequestComponent < ApplicationViewComponent
 
   delegate :conversation, to: :conversation_turn
 
-  # @param [GenerateTextRequest] generate_text_request
-  def initialize(generate_text_request, conversation_turn:)
-    @generate_text_request = generate_text_request
+  # @param [ConversationTurn] generate_text_request
+  def initialize(conversation_turn:)
     @conversation_turn = conversation_turn
+    @generate_text_request = conversation_turn.turnable
   end
 
   def assistant_response

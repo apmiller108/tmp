@@ -82,10 +82,10 @@ class ConversationForm
 
   def conversation_attributes
     {
-      user:,
-      memo_id:
+      user:
     }.tap do |attrs|
       attrs[:title] = title if title.present?
+      attrs[:memo_id] = memo_id if memo_id.present?
     end
   end
 
