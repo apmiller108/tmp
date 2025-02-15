@@ -45,13 +45,10 @@ export const updateConversation = (params) => {
 }
 
 export const getConversations = async (user_id, searchParams) => {
-  console.log(searchParams)
   const headers = jsonFormatHeaders()
   const q = Object.entries(searchParams).map(([k, v]) => {
     return `q[${k}]=${encodeURIComponent(v)}`
   }).join('&')
-
-  console.log(q)
 
   const response = await fetch(`/conversations?${q}`, {
     method: 'GET',

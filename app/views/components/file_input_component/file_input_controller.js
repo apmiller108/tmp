@@ -42,7 +42,7 @@ export default class FileInputController extends Controller {
     this.uploadProgressTarget.classList.add('.error')
   }
 
-  onToggleInput(e) {
+  onToggleInput() {
     const { disabled } = event.detail
     if (disabled) {
       this.inputTarget.removeAttribute('disabled')
