@@ -2,7 +2,7 @@
   %div{ data: { 'inline-edit-target' => 'field' }}
     .title-field.fw-bold{ data: { action: 'click->inline-edit#onClickField', 'bs-toggle' => 'tooltip', 'bs-title' => conversation.title } }
       = truncate(conversation.title, length: 50, separator: ' ')
-  = form_with model: conversation_form, url: polymorphic_path(conversation), class: 'd-none',
+  = form_with model: conversation_form, scope: :conversation, url: polymorphic_path(conversation), class: 'd-none',
     data: { 'inline-edit-target' => 'form' } do |form|
     .d-flex.justify-content-center.align-items-center
       = form.text_field :title, class: 'form-control me-1 title-input',

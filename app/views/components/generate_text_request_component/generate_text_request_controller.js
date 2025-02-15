@@ -5,7 +5,6 @@ export default class GenerateTextRequestController extends Controller {
   static targets = ['moreInfo']
 
   connect() {
-    console.log(this.moreInfoTarget)
     if (this.hasMoreInfoTarget) {
       new Popover(this.moreInfoTarget, {
         content: this.moreInfoTemplate(),
