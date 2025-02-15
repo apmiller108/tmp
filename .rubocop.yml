@@ -43,9 +43,17 @@ Metrics/MethodLength:
     - 'app/controllers/**/*'
     - 'app/sidekiq/**/*'
 Metrics/ClassLength:
+  CountAsOne:
+    - 'array'
+    - 'hash'
+    - 'heredoc'
+    - 'method_call'
   Exclude:
     - 'app/controllers/**/*'
+    - 'lib/**/*_form.rb'
 
+Naming/MethodParameterName:
+  Enabled: false
 Naming/VariableNumber:
   Enabled: false
 

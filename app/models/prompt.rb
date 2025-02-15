@@ -1,5 +1,5 @@
 class Prompt < ApplicationRecord
-  MAX_LENGTH = 10000
+  MAX_LENGTH = 10_000
 
   belongs_to :generate_image_request
 

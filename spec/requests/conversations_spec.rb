@@ -287,7 +287,7 @@ RSpec.describe 'Conversations', type: :request do
 
     it 'redirects to conversations index' do
       request
-      expect(response).to redirect_to conversations_path 
+      expect(response).to redirect_to conversations_path
     end
 
     it 'deletes the conversation' do
