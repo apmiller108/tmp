@@ -19,6 +19,8 @@
 * TODO Add a scrollspy to conversations
   - [ ] Center the conversation turns
   - [ ] each heading can be the first few words of the user message
+* TODO upgrade to rails 8
+* TODO upgrade turbo
 * TODO add image generation to conversations [30/30]
   - [X] Look into doing this via tool use
   https://docs.anthropic.com/en/docs/build-with-claude/tool-use#single-tool-example
