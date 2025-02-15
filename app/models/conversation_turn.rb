@@ -3,7 +3,6 @@ class ConversationTurn < ApplicationRecord
 
   belongs_to :conversation
   belongs_to :turnable, polymorphic: true, dependent: :destroy
-  accepts_nested_attributes_for :turnable
 
   scope :text_requests, -> { where(turnable_type: 'GenerateTextRequest') }
   scope :image_requests, -> { where(turnable_type: 'GenerateImageRequest') }
@@ -20,12 +19,5 @@ class ConversationTurn < ApplicationRecord
 
   def generated_image?
     image? && turnable.image.attached?
-  end
-
-  def turnable_attributes=(attrs)
-    return unless turnable_type.in? TURNABLE_TYPES
-
-    self.turnable ||= turnable_type.constantize.new
-    self.turnable.assign_attributes(attrs)
   end
 end
