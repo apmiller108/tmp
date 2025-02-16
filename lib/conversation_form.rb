@@ -71,7 +71,7 @@ class ConversationForm
   def assign_default_values
     assign_default_title
 
-    self.model                   ||= last_gen_text_opts.fetch(:model, user.setting.text_model)
+    self.model                   ||= last_gen_text_opts.fetch(:model, user&.setting&.text_model)
     self.temperature             ||= last_gen_text_opts[:temperature]
     self.generate_text_preset_id ||= last_gen_text_opts[:generate_text_preset_id]
   end
