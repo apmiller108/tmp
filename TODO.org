@@ -19,6 +19,9 @@
 * TODO Add a scrollspy to conversations
   - [ ] Center the conversation turns
   - [ ] each heading can be the first few words of the user message
+  - [ ] scroll to top of last response on generate text/image
+* TODO validate schema for tool use responses
+    https://github.com/voxpupuli/json-schema
 * TODO upgrade to rails 8
 * TODO upgrade turbo
 * TODO add image generation to conversations [30/30]
