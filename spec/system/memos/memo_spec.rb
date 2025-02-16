@@ -20,11 +20,7 @@ RSpec.describe 'Create and view memo', type: :system do
   end
 
   before do
-    stub_request(:post, 'https://api.stability.ai/v2beta/stable-image/generate/core')
-      .with(headers: {
-        'Authorization': "Bearer #{Rails.application.credentials.fetch(:stability_key)}",
-        'Accept': 'image/*'
-      }).to_return(status: 200, body: png.read, headers: { 'seed' => 1234, 'finish-reason' => 'SUCCESS' })
+    stub_stability_core_request
 
     stub_anthropic_request(
       model:,

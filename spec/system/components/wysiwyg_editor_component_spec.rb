@@ -23,19 +23,6 @@ RSpec.describe 'WysiwygEditorComponent', type: :system do
 
   let(:model) { GenerativeText::MODELS.find { _1.api_name == setting.text_model } }
 
-  let(:png) { file_fixture 'image.png' }
-  let(:generate_image_response) do
-    <<~JSON
-      {
-        "artifacts": [{
-          "base64": "#{Base64.strict_encode64(png.read)}",
-          "seed": 3939457358,
-          "finishReason": "SUCCESS"
-        }]
-      }
-    JSON
-  end
-
   before do
     Sidekiq::Testing.inline!
 
@@ -50,12 +37,7 @@ RSpec.describe 'WysiwygEditorComponent', type: :system do
     stub_anthropic_request(
       model:, assistant_response: generative_text, temperature: 0.0, prompt: 'This is my prompt'
     )
-
-    stub_request(:post, 'https://api.stability.ai/v2beta/stable-image/generate/core')
-      .with(headers: {
-        'Authorization': "Bearer #{Rails.application.credentials.fetch(:stability_key)}",
-        'Accept': 'image/*'
-      }).to_return(status: 200, body: png.read, headers: { 'seed' => 1234, 'finish-reason' => 'SUCCESS' })
+    stub_stability_core_request
   end
 
   after do
