@@ -50,5 +50,41 @@ FactoryBot.define do
         }
       end
     end
+
+    trait :with_tool_use_response do
+      with_response
+      response do
+        {
+          'id' => 'msg_01DMcCdRr6gaWDuZs7Y63rhe',
+          'type' => 'message',
+          'role' => 'assistant',
+          'content' => [
+            {
+              'type' => 'text',
+              'text' => 'test response'
+            },
+            {
+              'id' => 'toolu_0196KvCx6JumrjS1g6qvN14H',
+              'name' => 'generate_image',
+              'type' => 'tool_use',
+              'input' =>
+            { 'options' => { 'style' => 'fantasy-art', 'aspect_ratio' => '16:9' },
+              'prompts' =>
+              { 'prompt' => 'image prompt',
+                'negative_prompt' => 'negative prompt' } }
+            }
+          ],
+          'model' => 'claude-3-haiku-20240307',
+          'stop_reason' => 'tool_use',
+          'stop_sequence' => nil,
+          'usage' => {
+            'input_tokens' => 79,
+            'output_tokens' => 942,
+            'cache_creation_input_tokens' => 0,
+            'cache_read_input_tokens' => 0
+          }
+        }
+      end
+    end
   end
 end

@@ -75,6 +75,16 @@ RSpec.describe GenerateImageRequestForm do
       end
     end
 
+    context 'with a conversation' do
+      let(:user) { create :user }
+      let(:conversation) { create :conversation, user: }
+      let(:params) { valid_params.merge conversation: }
+
+      it 'creates a conversation turn' do
+        expect { form.submit }.to change(conversation.turns, :count).by(1)
+      end
+    end
+
     context 'with invalid params' do
       subject { described_class.new(params).submit }
 
