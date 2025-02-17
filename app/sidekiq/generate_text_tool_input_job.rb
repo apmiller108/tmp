@@ -9,8 +9,8 @@ class GenerateTextToolInputJob
     handle_image_inputs(generate_text_request)
   rescue StandardError => e
     message = I18n.t('unable_to_generate_image')
-    broadcast_flash_to_user(message:, user: generate_text_request.user)
-    Rails.logger.warn "#{self.class}: #{e} : generate_text_request_id: #{generate_text_request.id}"
+    broadcast_flash_to_user(message:, user: generate_text_request.user) if generate_text_request
+    Rails.logger.warn "#{self.class}: #{e} : generate_text_request_id: #{generate_text_request_id}"
   end
 
   private
