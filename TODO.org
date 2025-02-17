@@ -8,7 +8,6 @@
 * TODO search conversations
 * TODO Edit the last prompt. Trigger regenerate the last assistant response.
 * TODO link to memo/conversation
-* TODO confirm delete of conversation
 * TODO cache token count on the conversation
   Or soft delete requests
 * TODO flatten the routes
@@ -16,13 +15,15 @@
   (only sonnet 3-5)
   https://docs.anthropic.com/en/docs/build-with-claude/pdf-support
 * TODO refactor and normalize the adapter pattern for text generation
+* TODO validate schema for tool use responses
+    https://github.com/voxpupuli/json-schema
 * TODO Conversation UI enahcements [/]
   - [ ] scroll spy: each heading can be the first few words of the user message
   - [ ] Center the conversation turns
   - [ ] scroll to top of last response on generate text/image
   - [ ] Full screen view of generated images
-* TODO validate schema for tool use responses
-    https://github.com/voxpupuli/json-schema
+  - [ ] Confirm delete of conversation
+  - [ ] max width on generated images to 100%
 * DONE upgrade to rails 8
 CLOSED: [2025-02-16 Sun 19:45]
 * TODO upgrade turbo
