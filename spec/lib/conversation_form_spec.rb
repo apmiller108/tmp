@@ -207,4 +207,3 @@ RSpec.describe ConversationForm do
     end
   end
 end
-

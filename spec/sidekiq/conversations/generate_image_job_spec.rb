@@ -76,17 +76,7 @@ RSpec.describe Conversations::GenerateImageJob, type: :job do
 
       it 'logs the error' do
         expect(Rails.logger).to have_received(:warn)
-                                  .with('Conversations::GenerateImageJob: GenerativeImage::InvalidRequestError : ')
-      end
-
-      it 'broadcasts the flash message' do
-        expect(ViewComponentBroadcaster).to(
-          have_received(:call).with(
-            [user, TurboStreams::STREAMS[:main]],
-            component: kind_of(FlashMessageComponent),
-            action: :update
-          )
-        )
+          .with('Conversations::GenerateImageJob: GenerativeImage::InvalidRequestError : ')
       end
 
       it 'broadcasts the flash message' do

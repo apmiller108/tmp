@@ -42,7 +42,7 @@ module RequestStubs
       ).to_return(status: args.fetch(:response_status, 200), body: args.fetch(:response_body, body.to_json))
   end
 
-  def stub_stability_core_request(**args)
+  def stub_stability_core_request(**_args)
     png = file_fixture 'image.png'
     stub_request(:post, 'https://api.stability.ai/v2beta/stable-image/generate/core')
       .with(headers: {
