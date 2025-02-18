@@ -32,7 +32,7 @@ gem 'sidekiq-cron', '~> 1.12'
 gem 'sidekiq-unique-jobs', '~> 8.0'
 gem 'sprockets-rails'
 gem 'stimulus-rails'
-gem 'turbo-rails'
+gem 'turbo-rails', '~> 2.0'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby] # For platforms without zoneinfo files
 gem 'view_component'
 
