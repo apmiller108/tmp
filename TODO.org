@@ -26,7 +26,8 @@
   - [ ] max width on generated images to 100%
 * DONE upgrade to rails 8
 CLOSED: [2025-02-16 Sun 19:45]
-* TODO upgrade turbo
+* DONE upgrade turbo
+CLOSED: [2025-02-17 Mon 21:13]
 * DONE add image generation to conversations [30/30]
 CLOSED: [2025-02-16 Sun 19:25]
   - [X] Look into doing this via tool use
