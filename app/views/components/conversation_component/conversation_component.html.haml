@@ -1,5 +1,11 @@
 .c-conversation.conversation-container.scroll-no-bar-container.container-sm.pb-1{id:, class: opts[:class], data: { controller: :conversation, action: 'prompt-form:promptOptionsShow@window->conversation#onPromptOptionsShow' } }
   = render ModalComponent.new(size: :lg)
-  #conversation-turns.conversation-turns.mb-2{ data: { 'conversation-target': 'turns' } }
-    = render ConversationTurnComponent.with_collection(conversation.turns)
-  = render PromptFormComponent.new(conversation_form:)
+  .grid
+    .g-col-2
+      CONVO LIST
+    .g-col-8
+      #conversation-turns.conversation-turns.mb-2{ data: { 'conversation-target': 'turns' } }
+        = render ConversationTurnComponent.with_collection(conversation.turns)
+      = render PromptFormComponent.new(conversation_form:)
+    .g-col-2
+      SCROLL SPY

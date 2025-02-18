@@ -18,8 +18,8 @@
 * TODO validate schema for tool use responses
     https://github.com/voxpupuli/json-schema
 * TODO Conversation UI enahcements [/]
-  - [ ] scroll spy: each heading can be the first few words of the user message
   - [ ] Center the conversation turns
+  - [ ] scroll spy: each heading can be the first few words of the user message
   - [ ] scroll to top of last response on generate text/image
   - [ ] Full screen view of generated images
   - [ ] Confirm delete of conversation

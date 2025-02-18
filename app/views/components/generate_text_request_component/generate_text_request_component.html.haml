@@ -1,9 +1,9 @@
 .c-generate-text-request{ id:, data: { controller: 'generate-text-request', **dataset } }
   .turn.grid.mb-3
-    .g-col-1.d-flex.justify-content-center
-      %i.bi-person-fill.fs-1
-    .g-col-11
-      .card.segment{ class: "segment-user" }
+    .g-col-12
+      .card.segment-user.d-flex.flex-row.justify-content-start
+        .turn-icon.ps-3.pt-1
+          %i.bi-person-fill.fs-1
         .card-body
           %p
             - if image?
@@ -13,10 +13,10 @@
                 title: file.filename
             = prompt
   .turn.grid.mb-3
-    .g-col-1.d-flex.justify-content-center
-      %i.bi-robot.fs-1
-    .g-col-11
-      .card.segment.segment-assistant
+    .g-col-12
+      .card.segment-assistant.d-flex.flex-row.justify-content-start
+        .turn-icon.ps-3.pt-1
+          %i.bi-robot.fs-1
         .card-body
           - if created? || in_progress?
             .text-center
