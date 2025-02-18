@@ -1,13 +1,20 @@
 ![main workflow](https://github.com/apmiller108/tmp/actions/workflows/main.yml/badge.svg)
 
 # TMP "The Memo Pad"
-AI infused note taking and AI chat application written in Ruby on Rails. This hacks the Trix editor to add AI features such as generating text, text to image and transcribing audio. It makes heavy use of asynchronous processing where changes (AI generated slop) are pushed to the client over WebSockets.
+Multi-modal AI chat application written in Ruby on Rails.
+- Chat with Anthropic LLMs
+- Generate images with Stability with assistance from LLM
+
+Documents
+- Hacks the Trix editor to add AI features such as generating text, text to image and transcribing audio. 
+
+It makes heavy use of asynchronous processing. Generated content is pushed to the client over WebSocket.
 
 This side project was started in order to learn the latest features of RoR, Hotwire and AI.
 
 ## Features
 - Rich text editor
-- Conversational LLM interface
+- Multi-modal conversational LLM interface
 - Text to image (stable diffusion)
 - Text to text (llm)
 - Speech to text (transcribe audio files)
