@@ -6,7 +6,8 @@
         = link_to edit_conversation_path(conversation), data: { turbo_frame: '_top' } do
           .mb-1= truncate(conversation.title, length: 50, separator: ' ')
         .meta-data.d-flex.justify-content-between.align-items-center
-          .text-muted.me-3= conversation.updated_at.strftime('%B %d, %Y')
+          %p.text-muted.me-3
+            %small= conversation.updated_at.strftime('%B %d, %Y')
           = link_to conversation_path(conversation),
             class: 'fs-5',
             disabled: conversation.memo_id.present?,

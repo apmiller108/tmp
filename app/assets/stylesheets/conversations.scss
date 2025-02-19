@@ -7,6 +7,7 @@
 .conversation-left-side-panel {
   padding-right: 0;
   .new-and-search {
+    padding: 0 0 0.5rem 0;
     flex-direction: column-reverse;
   }
   .new-convo-btn {
@@ -20,6 +21,7 @@
     }
   }
   .list-group-item-action {
+    padding: 0;
     flex-wrap: wrap;
   }
 }
