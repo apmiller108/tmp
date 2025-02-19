@@ -108,7 +108,7 @@ class ConversationsController < ApplicationController
   end
 
   def search_params
-    params.permit(q: %i[memo_id])
+    params.permit(:c, :format, q: %i[memo_id])
   end
 
   def conversation_params

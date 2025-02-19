@@ -56,9 +56,10 @@ class GenerativeText
         completion_reason == TOOL_USE
       end
 
+      # Cache token keys were added later. Older responses won't have that key.
       def token_count
         usage.fetch('input_tokens') + usage.fetch('output_tokens') +
-          usage.fetch('cache_creation_input_tokens') + usage.fetch('cache_read_input_tokens')
+          usage.fetch('cache_creation_input_tokens', 0) + usage.fetch('cache_read_input_tokens', 0)
       end
 
       def usage

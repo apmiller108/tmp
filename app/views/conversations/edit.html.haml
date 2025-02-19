@@ -8,4 +8,8 @@
                                                 'bs-toggle' => 'tooltip', 'bs-title' => t('conversation.delete') },
                                                 class: 'btn icon-btn icon-btn-sm' do
           %i.bi.bi-trash3.text-danger
+= content_for :left_side_panel do
+  %turbo-frame{ id: :conversations_index, src: conversations_path, loading: :lazy }
 = render ConversationComponent.new(conversation_form: @conversation_form)
+= content_for :right_side_panel do
+  RIGHT SIDE PANEL

@@ -4,6 +4,25 @@
   align-items: center;
 }
 
+.conversation-left-side-panel {
+  padding-right: 0;
+  .new-and-search {
+    flex-direction: column-reverse;
+  }
+  .new-convo-btn {
+    width: 100%;
+    margin-top: 1rem;
+  }
+  .list-group-item {
+    border: none;
+    .meta-data {
+      width: 100%;
+    }
+  }
+  .list-group-item-action {
+    flex-wrap: wrap;
+  }
+}
 .conversation-title {
   .title {
     height: 2.5rem;
