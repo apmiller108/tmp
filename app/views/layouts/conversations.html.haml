@@ -12,15 +12,12 @@
     = hotwire_livereload_tags if Rails.env.development?
   %body
     .main.vh-100.d-flex.flex-column.overflow-hidden.position-relative
-      -# = render partial: 'layouts/nav'
       = render partial: 'layouts/flash'
-      .grid
-        .g-col-12.h-auto
-          = yield :title
-      .grid.h-100{ style: '--bs-gap: 1rem;'}
-        .g-col-2.conversation-left-side-panel.pb-3.scroll-no-bar-container.container-sm
+      .d-flex.h-100{ style: '--bs-gap: 1rem;'}
+        .conversation-left-side-panel.scroll-no-bar-container.pb-3.ps-3.w-25
           = yield :left_side_panel
-        .g-col-8.conversation-content.scroll-no-bar-container.pb-3
+        .flex-grow-1.conversation-content.scroll-no-bar-container.pb-3
+          = yield :title
           = yield
-        .g-col-2.conversation-right-side-panel.pb-3
+        .conversation-right-side-panel.pb-3.pe-3.w-25
           = yield :right_side_panel
