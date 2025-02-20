@@ -38,6 +38,8 @@ en:
   conversation:
     name: 'Conversation'
     delete: 'Delete Conversation'
+    new: 'New Conversation'
+    search: 'Search Conversations'
   copy: 'copy'
   create: 'Create'
   delete: 'Delete %{name}'

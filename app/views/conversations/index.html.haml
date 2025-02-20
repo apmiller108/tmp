@@ -1,11 +1,12 @@
 %turbo-frame.container{ id: :conversations_index }
   .new-and-search.d-flex.justify-content-between.mb-3{ data: { controller: 'tooltip' } }
-    %button.btn.icon-btn.icon-btn.icon-btn-auto
+    %button.btn.icon-btn.icon-btn.icon-btn-auto{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => 'Hide Section' } }
       %i.bi.bi-arrows-collapse-vertical
     .d-flex.justify-content-between
-      %button.btn.icon-btn.icon-btn-auto.me-3
+      %button.btn.icon-btn.icon-btn-auto.me-3{ data: { controller: 'modal-opener', modal: ModalComponent.id, 'bs-toggle' => 'tooltip', 'bs-title' => t('conversation.search') } }
         %i.bi.bi-search
-      = link_to new_conversation_path, class: 'btn icon-btn icon-btn-auto', data: { turbo_frame: '_top' } do
+      = link_to new_conversation_path, class: 'btn icon-btn icon-btn-auto',
+      data: { turbo_frame: '_top', 'bs-toggle' => 'tooltip', 'bs-title' => t('conversation.new') } do
         %i.bi.bi-pencil-square
 
   = render PaginationComponent.new(path: [:conversations_path]) do |pagination|

@@ -20,7 +20,6 @@
 * TODO Wire up search
 * TODO Conversation UI enahcements [3/8]
   - [X] Center the conversation turns
-  - [ ] Index side panel with fixed controls at top and bottom
   - [ ] Collapse side panel
   - [ ] Turbo stream replace when clicking on conversation index item
   - [ ] Highlight currently viewed conversation
@@ -29,6 +28,7 @@
   - [ ] Full screen view of generated images
   - [X] Remove delete conversation button
   - [X] max width on generated images to 100%
+  - [ ] Index side panel with fixed controls at top and bottom
 * DONE upgrade to rails 8
 CLOSED: [2025-02-16 Sun 19:45]
 * DONE upgrade turbo
