@@ -18,9 +18,10 @@
 * TODO validate schema for tool use responses
     https://github.com/voxpupuli/json-schema
 * TODO Wire up search
-* TODO Conversation UI enahcements [3/8]
+* TODO Conversation UI enahcements [4/11]
   - [X] Center the conversation turns
-  - [ ] Collapse side panel
+  - [X] Collapse side panel
+  - [ ] Uncollapse side panel
   - [ ] Turbo stream replace when clicking on conversation index item
   - [ ] Highlight currently viewed conversation
   - [ ] scroll spy: each heading can be the first few words of the user message

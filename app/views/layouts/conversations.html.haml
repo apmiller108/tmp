@@ -11,13 +11,14 @@
     = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
     = hotwire_livereload_tags if Rails.env.development?
   %body
-    .main.vh-100.d-flex.flex-column.overflow-hidden.position-relative
+    .main.vh-100.d-flex.flex-column.overflow-hidden.position-relative.conversation-main
+      = turbo_stream_from current_user, TurboStreams::STREAMS[:main]
       = render partial: 'layouts/flash'
       .d-flex.h-100{ style: '--bs-gap: 1rem;'}
-        .conversation-left-side-panel.scroll-no-bar-container.pb-3.ps-3.w-25
+        #left-panel.left-panel.scroll-no-bar-container.collapse.show.collapse-horizontal.pb-3.ps-3
           = yield :left_side_panel
         .flex-grow-1.conversation-content.scroll-no-bar-container.pb-3
           = yield :title
           = yield
-        .conversation-right-side-panel.pb-3.pe-3.w-25
+        .right-panel.pb-3.pe-3.w-25
           = yield :right_side_panel

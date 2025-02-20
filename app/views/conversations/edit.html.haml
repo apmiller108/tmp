@@ -3,6 +3,19 @@
     %div
       = render partial: 'conversations/title_form', locals: { conversation_form: @conversation_form, conversation: @conversation }
 = content_for :left_side_panel do
+  .new-and-search.d-flex.justify-content-between.mb-3{ data: { controller: 'tooltip' } }
+    %button.btn.icon-btn.icon-btn.icon-btn-auto{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => 'Hide Section',
+                                                         'bs-toggle' => 'collapse', 'bs-target' => '#left-panel' } }
+      %i.bi.bi-arrows-collapse-vertical
+    .d-flex.justify-content-between
+      %button.btn.icon-btn.icon-btn-auto.me-3{ data: { controller: 'modal-opener',
+                                                       modal: ModalComponent.id,
+                                                       'bs-toggle' => 'tooltip', 'bs-title' => t('conversation.search') } }
+        %i.bi.bi-search
+      = link_to new_conversation_path, class: 'btn icon-btn icon-btn-auto',
+      data: { turbo_frame: '_top', 'bs-toggle' => 'tooltip', 'bs-title' => t('conversation.new') } do
+        %i.bi.bi-pencil-square
+
   %turbo-frame{ id: :conversations_index, src: conversations_path, loading: :lazy }
 = render ConversationComponent.new(conversation_form: @conversation_form)
 = content_for :right_side_panel do
