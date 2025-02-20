@@ -18,14 +18,14 @@
 * TODO validate schema for tool use responses
     https://github.com/voxpupuli/json-schema
 * TODO Wire up search
-* TODO Conversation UI enahcements [2/6]
+* TODO Conversation UI enahcements [3/8]
   - [X] Center the conversation turns
   - [ ] Turbo stream replace when clicking on conversation index item
   - [ ] Highlight currently viewed conversation
   - [ ] scroll spy: each heading can be the first few words of the user message
   - [ ] scroll to top of last response on generate text/image
   - [ ] Full screen view of generated images
-  - [ ] Remove delete conversation button
+  - [X] Remove delete conversation button
   - [X] max width on generated images to 100%
 * DONE upgrade to rails 8
 CLOSED: [2025-02-16 Sun 19:45]
