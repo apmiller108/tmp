@@ -3,16 +3,16 @@
   = pagination.with_list do
     - @conversations.each do |conversation|
       .list-group-item.list-group-item-action.d-flex.w-100.justify-content-between{ id: dom_id(conversation) }
-        .d-flex.justify-content-between
+        .d-flex.justify-content-between.w-100
           = link_to edit_conversation_path(conversation), data: { turbo_frame: '_top' }, class: 'me-3' do
             .mb-1= truncate(conversation.title, length: 50, separator: ' ')
           = link_to conversation_path(conversation),
-            class: 'fs-5',
+            class: 'fs-5 btn icon-btn icon-btn-sm danger',
             disabled: conversation.memo_id.present?,
             data: { turbo_method: 'delete', turbo_confirm: t('confirm'),
                   'bs-toggle' => 'tooltip',
                   'bs-title' => t('delete', name: t('conversation.name')) } do
-            %i.bi-trash3.text-black
+            %i.bi-trash3
         .meta-data
           %p.text-muted
             %small= conversation.updated_at.strftime('%B %d, %Y')

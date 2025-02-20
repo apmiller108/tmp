@@ -1,13 +1,12 @@
 %turbo-frame.container{ id: :conversations_index }
-  .new-and-search.d-flex.justify-content-between
-    %div
-      = link_to 'New Conversation', new_conversation_path, class: 'new-convo-btn btn btn-primary', data: { turbo_frame: '_top' }
-    %div
-      = form_with(url: conversations_path, method: :get, class: 'form-inline justify-content-end') do |f|
-        .input-group.input-group-sm
-          = f.text_field :query, placeholder: 'Search conversations', class: 'form-control'
-          %button.btn.btn-outline-secondary{ type: :submit, name: :commit }
-            %i.bi.bi-search
+  .new-and-search.d-flex.justify-content-between.mb-3{ data: { controller: 'tooltip' } }
+    %button.btn.icon-btn.icon-btn.icon-btn-auto
+      %i.bi.bi-arrows-collapse-vertical
+    .d-flex.justify-content-between
+      %button.btn.icon-btn.icon-btn-auto.me-3
+        %i.bi.bi-search
+      = link_to new_conversation_path, class: 'btn icon-btn icon-btn-auto', data: { turbo_frame: '_top' } do
+        %i.bi.bi-pencil-square
 
   = render PaginationComponent.new(path: [:conversations_path]) do |pagination|
     = pagination.with_container do

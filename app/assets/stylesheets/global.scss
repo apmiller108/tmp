@@ -63,21 +63,23 @@
   width: 3rem;
   padding: 0;
   font-size: 2rem;
+  color: black;
+  &.icon-btn-auto {
+    height: auto;
+    width: auto;
+  }
   &.icon-btn-sm {
     height: 2rem;
     width: 2rem;
     font-size: 1.33rem;
-    &:hover {
-      color: $secondary;
-    }
-    &.danger {
-      &:hover {
-        color: $danger;
-      }
-    }
   }
   &:hover {
-    filter: brightness(0.7);
+    color: $secondary;
+  }
+  &.danger {
+    &:hover {
+      color: $danger;
+    }
   }
 }
 

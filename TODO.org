@@ -20,6 +20,8 @@
 * TODO Wire up search
 * TODO Conversation UI enahcements [3/8]
   - [X] Center the conversation turns
+  - [ ] Index side panel with fixed controls at top and bottom
+  - [ ] Collapse side panel
   - [ ] Turbo stream replace when clicking on conversation index item
   - [ ] Highlight currently viewed conversation
   - [ ] scroll spy: each heading can be the first few words of the user message
