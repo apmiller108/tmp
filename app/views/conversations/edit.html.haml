@@ -4,10 +4,10 @@
       = render partial: 'conversations/title_form', locals: { conversation_form: @conversation_form, conversation: @conversation }
 = content_for :left_panel do
   .h-100.conversation-left-panel{ data: { controller: 'conversation-left-panel' } }
-    .controls.d-flex.justify-content-between.mb-3{ data: { controller: 'tooltip' } }
-      %button.btn.icon-btn.icon-btn.icon-btn-auto{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => 'Hide Section',
-                                                          'bs-toggle' => 'collapse', 'bs-target' => '#left-panel' } }
-        %i.bi.bi-arrows-collapse-vertical
+    .controls.d-flex.justify-content-between.mb-3{ data: { controller: 'tooltip', 'conversation-left-panel-target' => 'controls' } }
+      %button.btn.icon-btn.icon-btn.icon-btn-auto{ data: { 'bs-toggle' => 'collapse', 'bs-target' => '#conversation-list' } }
+        %i.bi.bi-arrows-collapse-vertical{ data: { 'conversation-left-panel-target' => 'collapseIcon',
+                                                   'bs-toggle' => 'tooltip', 'bs-title' => 'Toggle Section' }}
       .d-flex.justify-content-between
         %button.btn.icon-btn.icon-btn-auto.me-3{ data: { controller: 'modal-opener',
                                                         modal: ModalComponent.id,
@@ -16,8 +16,9 @@
         = link_to new_conversation_path, class: 'btn icon-btn icon-btn-auto',
         data: { turbo_frame: '_top', 'bs-toggle' => 'tooltip', 'bs-title' => t('conversation.new') } do
           %i.bi.bi-pencil-square
-
-    %turbo-frame{ id: :conversations_index, src: conversations_path, loading: :lazy }
+    #conversation-list.h-100.collapse.show.collapse-horizontal{data: { 'conversation-left-panel-target' => 'conversationsIndex',
+      action: 'hidden.bs.collapse->conversation-left-panel#onHidePanel show.bs.collapse->conversation-left-panel#onShowPanel' } }
+      %turbo-frame{ id: :conversations_index, src: conversations_path, loading: :lazy }
 = render ConversationComponent.new(conversation_form: @conversation_form)
 = content_for :right_side_panel do
   RIGHT SIDE PANEL

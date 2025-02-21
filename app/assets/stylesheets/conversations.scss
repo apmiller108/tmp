@@ -6,15 +6,22 @@
 
 .conversation-main {
   .left-panel {
+    max-width: $conversation-panel-width;
     padding-right: 0;
-    .list-group {
-      max-width: 15rem;
+    .controls {
+      top: 0;
+      left: 0;
+      height: $conversation-header-height;
+      &.panel-hide {
+        position: fixed;
+        padding-left: 1rem;
+        width: 10rem;
+        z-index: 1;
+        background: $white;
+      }
     }
     .list-group-item {
       border: none;
-      .meta-data {
-        width: 100%;
-      }
     }
     .list-group-item-action {
       padding: 0;
@@ -31,12 +38,14 @@
     }
     .c-pagination {
       height: 100%;
+      // width set in order for the bs collapse to animate the opening of the panel.
+      min-width: calc($conversation-panel-width - 1rem);
       overflow-y: scroll;
     }
   }
   .conversation-title {
     .title {
-      height: 2.5rem;
+      height: $conversation-header-height;
       .title-field {
         @include clickableThing;
       }

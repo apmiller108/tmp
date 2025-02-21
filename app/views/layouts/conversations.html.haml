@@ -15,9 +15,9 @@
       = turbo_stream_from current_user, TurboStreams::STREAMS[:main]
       = render partial: 'layouts/flash'
       .d-flex.h-100{ style: '--bs-gap: 1rem;'}
-        #left-panel.left-panel.collapse.show.collapse-horizontal.pb-3.ps-3
+        .left-panel.pb-3.ps-3
           = yield :left_panel
-        .flex-grow-1.conversation-content.scroll-no-bar-container.pb-3
+        .flex-grow-1.conversation-content.pb-3
           = yield :title
           = yield
         .right-panel.pb-3.pe-3.w-25
