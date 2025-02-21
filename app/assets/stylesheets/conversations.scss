@@ -29,9 +29,11 @@
     }
     .convo-edit-link {
       max-width: 80%;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      div {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
     .meta-data {
       margin-top: -0.5rem;
