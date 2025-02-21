@@ -18,7 +18,7 @@
 * TODO validate schema for tool use responses
     https://github.com/voxpupuli/json-schema
 * TODO Wire up search
-* TODO Conversation UI enahcements [6/12]
+* TODO Conversation UI enahcements [7/12]
   - [X] Center the conversation turns
   - [X] Collapse side panel
   - [X] Uncollapse side panel
@@ -30,7 +30,7 @@
   - [ ] Full screen view of generated images
   - [X] Remove delete conversation button
   - [X] max width on generated images to 100%
-  - [ ] Index side panel with fixed controls at top and bottom
+  - [X] Index side panel with fixed controls at top
 * DONE upgrade to rails 8
 CLOSED: [2025-02-16 Sun 19:45]
 * DONE upgrade turbo

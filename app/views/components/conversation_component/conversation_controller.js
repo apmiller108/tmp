@@ -1,4 +1,5 @@
 import { Controller } from '@hotwired/stimulus'
+import autoAnimate from '@formkit/auto-animate'
 
 export default class ConversationController extends Controller {
   static targets = ['turns']
@@ -6,6 +7,8 @@ export default class ConversationController extends Controller {
   observer;
 
   connect() {
+    autoAnimate(this.turnsTarget)
+
     this.scrollTurns()
 
     // Check for changes in child nodes might affect the conversation container's height
