@@ -1,5 +1,5 @@
 - if container && !list
-  #pagination-container{ data: { controller: :pagination }}
+  #pagination-container.c-pagination{ data: { controller: :pagination }}
     = container
     %turbo-frame#pagination.d-flex.justify-content-center{ src: collection_path, loading: :lazy }
       = render SpinnerComponent.new(css_class: 'my-3')

@@ -8,7 +8,7 @@
   .left-panel {
     padding-right: 0;
     .list-group {
-      max-width: 20rem;
+      max-width: 15rem;
     }
     .list-group-item {
       border: none;
@@ -19,6 +19,19 @@
     .list-group-item-action {
       padding: 0;
       flex-wrap: wrap;
+    }
+    .convo-edit-link {
+      max-width: 80%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .meta-data {
+      margin-top: -0.5rem;
+    }
+    .c-pagination {
+      height: 100%;
+      overflow-y: scroll;
     }
   }
   .conversation-title {
