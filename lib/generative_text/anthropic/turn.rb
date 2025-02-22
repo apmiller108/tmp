@@ -69,7 +69,7 @@ class GenerativeText
       def user_upload_image_content
         return unless generate_text_request.image_attached?
 
-        user_image_content(image: generate_text_request.file.variant(:webp).image)
+        user_image_content(image: generate_text_request.file.variant(:webp).processed.image)
       end
 
       def user_generate_image_content

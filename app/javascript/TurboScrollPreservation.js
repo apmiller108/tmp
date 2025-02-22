@@ -4,9 +4,11 @@ export default class TurboScrollPreservation {
   initialize() {
     this.initScrollPositionsStore()
 
+    // Cache scroll positions
     window.addEventListener("turbo:before-cache", this.cacheScrollPosition.bind(this))
     window.addEventListener("turbo:before-fetch-request", this.cacheScrollPosition.bind(this))
 
+    // Restore scroll positions
     window.addEventListener("turbo:before-render", this.restoreScrollPosition.bind(this))
     window.addEventListener("turbo:render", this.restoreScrollPosition.bind(this))
   }

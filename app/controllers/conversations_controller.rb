@@ -27,7 +27,7 @@ class ConversationsController < ApplicationController
     respond_to do |format|
       if @conversation_form.save
         format.turbo_stream do
-          redirect_to edit_conversation_path(@conversation_form.conversation), status: :see_other
+          # redirect_to edit_conversation_path(@conversation_form.conversation), status: :see_other
         end
         format.json do
           render json: @conversation_form.conversation.as_json(only: %i[id memo_id created_at updated_at]),
@@ -63,10 +63,6 @@ class ConversationsController < ApplicationController
     @conversation_form = ConversationForm.new(user: current_user, conversation: @conversation)
     respond_to do |format|
       format.html
-      format.turbo_stream do
-        component = ConversationComponent.new(conversation_form: @conversation_form)
-        render turbo_stream: turbo_stream.replace(component.id, component.render_in(view_context))
-      end
     end
   end
 
@@ -102,7 +98,7 @@ class ConversationsController < ApplicationController
     @conversation.destroy
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.remove(@conversation)
+        render turbo_stream: turbo_stream.remove(helpers.list_dom_id(@conversation))
       end
       format.html { redirect_to conversations_path, notice: 'Conversation deleted' }
     end

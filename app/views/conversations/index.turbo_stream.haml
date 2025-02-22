@@ -1,18 +1,4 @@
 = render PaginationComponent.new(cursor: @cursor, container_id: :conversations,
                                  path: [:conversations_path]) do |pagination|
   = pagination.with_list do
-    - @conversations.each do |conversation|
-      .list-group-item.list-group-item-action.d-flex.justify-content-between.align-items-center.mb-1{ id: list_dom_id(conversation) }
-        .d-flex.justify-content-between.w-100
-          = link_to edit_conversation_path(conversation), data: { turbo_stream: true, turbo_prefetch: false }, class: 'convo-edit-link' do
-            %div= truncate(conversation.title, length: 50, separator: ' ')
-          = link_to conversation_path(conversation),
-            class: 'fs-5 btn icon-btn icon-btn-sm danger',
-            disabled: conversation.memo_id.present?,
-            data: { turbo_method: 'delete', turbo_confirm: t('confirm'),
-                  'bs-toggle' => 'tooltip',
-                  'bs-title' => t('delete', name: t('conversation.name')) } do
-            %i.bi-trash3
-        .meta-data
-          %p.text-muted.mb-0
-            %small= conversation.updated_at.strftime('%B %d, %Y')
+    = render partial: 'list_item', collection: @conversations, as: :conversation

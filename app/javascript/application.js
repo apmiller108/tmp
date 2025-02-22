@@ -15,6 +15,7 @@ ActiveStorage.start()
 
 WysiwygEditor.applyTrixCustomConfiguration()
 
+// Cache and restore element scroll positions on Turbo events
 const turboScrollPreservation = new TurboScrollPreservation()
 turboScrollPreservation.initialize()
 

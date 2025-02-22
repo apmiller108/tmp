@@ -16,9 +16,24 @@
       = render partial: 'layouts/flash'
       .d-flex.h-100{ style: '--bs-gap: 1rem;'}
         .left-panel.pb-3.ps-3
-          = yield :left_panel
+          .h-100.conversation-left-panel{ data: { controller: 'conversation-left-panel' } }
+            .controls.d-flex.justify-content-between.mb-3{ data: { controller: 'tooltip', 'conversation-left-panel-target' => 'controls' } }
+              %button.btn.icon-btn.icon-btn.icon-btn-auto{ data: { 'bs-toggle' => 'collapse', 'bs-target' => '#conversation-list' } }
+                %i.bi.bi-arrows-collapse-vertical{ data: { 'conversation-left-panel-target' => 'collapseIcon',
+                                                          'bs-toggle' => 'tooltip', 'bs-title' => 'Toggle Section' }}
+              .d-flex.justify-content-between
+                %button.btn.icon-btn.icon-btn-auto.me-3{ data: { controller: 'modal-opener',
+                                                                modal: ModalComponent.id,
+                                                                'bs-toggle' => 'tooltip', 'bs-title' => t('conversation.search') } }
+                  %i.bi.bi-search
+                = link_to new_conversation_path, class: 'btn icon-btn icon-btn-auto',
+                data: { turbo_frame: :conversation_content, turbo_action: :advance,
+                        'bs-toggle' => 'tooltip', 'bs-title' => t('conversation.new') } do
+                  %i.bi.bi-pencil-square
+            #conversation-list.h-100.collapse.show.collapse-horizontal{data: { 'conversation-left-panel-target' => 'conversationsIndex',
+              action: 'hidden.bs.collapse->conversation-left-panel#onHidePanel show.bs.collapse->conversation-left-panel#onShowPanel' } }
+              %turbo-frame{ id: :conversations_index, src: conversations_path }
         .flex-grow-1.conversation-content.pb-3
-          = yield :title
           = yield
         .right-panel.pb-3.pe-3.w-25
-          = yield :right_side_panel
+          RIGHT SIDE PANEL

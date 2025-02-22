@@ -59,6 +59,20 @@ class PromptFormComponent < ApplicationViewComponent
     end
   end
 
+  # When the conversation is a new record, the request nagivates the content
+  # frame and is promoted to a page visit. Otherwise, for presisted records, it
+  # is a Turbo Stream request.
+  def turbo_attrs
+    if conversation.persisted?
+      {}
+    else
+      {
+        turbo_frame: :conversation_content,
+        turbo_action: :advance
+      }
+    end
+  end
+
   private
 
   def presets

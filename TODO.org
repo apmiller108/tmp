@@ -18,17 +18,23 @@
 * TODO validate schema for tool use responses
     https://github.com/voxpupuli/json-schema
 * TODO Wire up search
-* TODO Conversation UI enahcements [8/13]
+* TODO Conversation UI enahcements [10/20]
   - [X] Center the conversation turns
   - [X] Collapse side panel
   - [X] Uncollapse side panel
   - [X] Scroll message content under title
   - [X] Turbo stream replace when clicking on conversation index item
-  - [ ] Fix redirect from conversation new to edit as turbo stream.
+  - [X] Fix redirect from conversation new to edit as turbo stream.
+  - [X] Insert list item into index on new conversation created
   - [ ] Highlight currently viewed conversation
+  - [ ] If the conversation is being viewed when deleted, render new
   - [ ] scroll spy: each heading can be the first few words of the user message
   - [ ] scroll to top of last response on generate text/image
+  - [ ] Clear the form after the turn is created
+  - [ ] Make user content copyable
   - [ ] Full screen view of generated images
+  - [ ] Fix prompt form when controls are collapsed
+  - [ ] Find a better home for the conversation icons
   - [X] Remove delete conversation button
   - [X] max width on generated images to 100%
   - [X] Index side panel with fixed controls at top

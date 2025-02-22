@@ -26,11 +26,9 @@ export default class ConversationController extends Controller {
       childList: true
     });
 
-    // This attempts to implement some browser history state management so a
-    // back button results in a Turbo Stream request that updates only the
-    // messagen leaves the state of the left panel intact. It only works when
-    // nativating forward once and then back. If navigating forward more that
-    // once, two requests are made: an HTML and the Turbo Stream
+    // Updates the browser history after creating a new conversation
+    // Otherwise it stays /conversations/new. Was not able to make it work with
+    // turbo-action.
     try {
       const conversationId = this.element.dataset.conversationId;
 
@@ -44,14 +42,10 @@ export default class ConversationController extends Controller {
       if (window.location.pathname !== desiredPath) {
         const url = new URL(desiredPath, window.location.href)
         Turbo.navigator.history.push(url)
+        window.history.pushState(history.state, '', url)
       }
-
-      // Add popstate listener for handling back/forward navigation
-      this.boundHandlePopState = this.handlePopState.bind(this);
-      window.addEventListener('popstate', this.boundHandlePopState);
-
     } catch (error) {
-      console.error('Error updating URL:', error);
+      console.error('Error updating pushState:', error);
     }
   }
 
@@ -72,38 +66,5 @@ export default class ConversationController extends Controller {
 
   onPromptOptionsShow() {
     this.scrollTurns()
-  }
-
-  async handlePopState(event) {
-    event.preventDefault()
-    event.stopPropagation()
-    console.log('Starting popstate handling');
-
-    try {
-      console.log('Fetching content');
-      const response = await fetch(window.location.href, {
-        headers: {
-          'Accept': 'text/vnd.turbo-stream.html'
-        }
-      });
-
-      console.log('Content fetched');
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const html = await response.text();
-      console.log('preparing to render');
-
-      console.log('Starting Turbo render');
-      await Turbo.renderStreamMessage(html);
-
-    } catch (error) {
-      console.error('Error handling popstate:', error);
-      Turbo.visit(window.location.href, { action: 'replace' });
-    } finally {
-      console.log('Finishing popstate handling');
-    }
   }
 }
