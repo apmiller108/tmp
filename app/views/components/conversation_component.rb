@@ -11,6 +11,6 @@ class ConversationComponent < ApplicationViewComponent
   end
 
   def id
-    dom_id(conversation)
+    :conversation_component
   end
 end

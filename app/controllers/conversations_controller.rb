@@ -61,6 +61,13 @@ class ConversationsController < ApplicationController
                                   turns: { turnable: [:file_attachment, :file_blob, :image_attachment, :image_blob] }
                                 ).find(params[:id])
     @conversation_form = ConversationForm.new(user: current_user, conversation: @conversation)
+    respond_to do |format|
+      format.html
+      format.turbo_stream do
+        component = ConversationComponent.new(conversation_form: @conversation_form)
+        render turbo_stream: turbo_stream.replace(component.id, component.render_in(view_context))
+      end
+    end
   end
 
   def update

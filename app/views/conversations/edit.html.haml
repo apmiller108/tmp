@@ -18,7 +18,7 @@
           %i.bi.bi-pencil-square
     #conversation-list.h-100.collapse.show.collapse-horizontal{data: { 'conversation-left-panel-target' => 'conversationsIndex',
       action: 'hidden.bs.collapse->conversation-left-panel#onHidePanel show.bs.collapse->conversation-left-panel#onShowPanel' } }
-      %turbo-frame{ id: :conversations_index, src: conversations_path, loading: :lazy }
+      %turbo-frame{ id: :conversations_index, src: conversations_path }
 = render ConversationComponent.new(conversation_form: @conversation_form)
 = content_for :right_side_panel do
   RIGHT SIDE PANEL
