@@ -15,9 +15,11 @@
       = turbo_stream_from current_user, TurboStreams::STREAMS[:main]
       = render partial: 'layouts/flash'
       .d-flex.h-100{ style: '--bs-gap: 1rem;'}
-        .left-panel.pb-3.ps-3
-          .h-100.conversation-left-panel{ data: { controller: 'conversation-left-panel' } }
-            .controls.d-flex.justify-content-between.mb-3{ data: { controller: 'tooltip', 'conversation-left-panel-target' => 'controls' } }
+        .left-panel.pb-3
+          .h-100.conversation-left-panel{ data: { controller: 'conversation-left-panel',
+                                         action: 'conversation:conversationLoaded@window->conversation-left-panel#onConversationLoaded' } }
+            .controls.d-flex.justify-content-between.mb-3.ps-3{ data: { controller: 'tooltip',
+                                                                        'conversation-left-panel-target' => 'controls' } }
               %button.btn.icon-btn.icon-btn.icon-btn-auto{ data: { 'bs-toggle' => 'collapse', 'bs-target' => '#conversation-list' } }
                 %i.bi.bi-arrows-collapse-vertical{ data: { 'conversation-left-panel-target' => 'collapseIcon',
                                                           'bs-toggle' => 'tooltip', 'bs-title' => 'Toggle Section' }}
@@ -28,6 +30,7 @@
                   %i.bi.bi-search
                 = link_to new_conversation_path, class: 'btn icon-btn icon-btn-auto',
                 data: { turbo_frame: :conversation_content, turbo_action: :advance,
+                        action: 'click->conversation-left-panel#onNewConversation',
                         'bs-toggle' => 'tooltip', 'bs-title' => t('conversation.new') } do
                   %i.bi.bi-pencil-square
             #conversation-list.h-100.collapse.show.collapse-horizontal{data: { 'conversation-left-panel-target' => 'conversationsIndex',

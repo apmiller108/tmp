@@ -1,0 +1,6 @@
+= turbo_stream.remove(list_dom_id(@conversation))
+- if request.referer == edit_conversation_url(@conversation)
+  = turbo_stream.replace('conversation_content') do
+    = turbo_frame_tag :conversation_content do
+      = render ConversationComponent.new(conversation_form: ConversationForm.new(user: current_user), class: 'new-conversation')
+

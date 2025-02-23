@@ -6,6 +6,10 @@ export default class ConversationController extends Controller {
 
   observer;
 
+  get conversationId() {
+    return this.element.dataset.conversationId
+  }
+
   connect() {
     autoAnimate(this.turnsTarget)
 
@@ -30,14 +34,12 @@ export default class ConversationController extends Controller {
     // Otherwise it stays /conversations/new. Was not able to make it work with
     // turbo-action.
     try {
-      const conversationId = this.element.dataset.conversationId;
-
-      if (!conversationId) {
+      if (!this.conversationId) {
         console.warn('No conversation ID found');
         return;
       }
 
-      const desiredPath = `/conversations/${conversationId}/edit`;
+      const desiredPath = `/conversations/${this.conversationId}/edit`;
 
       if (window.location.pathname !== desiredPath) {
         const url = new URL(desiredPath, window.location.href)
@@ -47,6 +49,8 @@ export default class ConversationController extends Controller {
     } catch (error) {
       console.error('Error updating pushState:', error);
     }
+
+    this.dispatchConversationLoaded()
   }
 
   disconnect() {
@@ -54,6 +58,10 @@ export default class ConversationController extends Controller {
 
     window.removeEventListener('popstate', this.boundHandlePopState);
     this.boundHandlePopState = null;
+  }
+
+  dispatchConversationLoaded() {
+    this.dispatch('conversationLoaded', { detail: { conversationId: this.conversationId } })
   }
 
   // Scrolls the turns container as far down as possible so the most recent turn

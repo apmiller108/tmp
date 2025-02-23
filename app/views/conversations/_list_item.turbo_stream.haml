@@ -1,4 +1,6 @@
-.list-group-item.list-group-item-action.d-flex.justify-content-between.align-items-center.mb-1{ id: list_dom_id(conversation) }
+.list-group-item.list-group-item-action.d-flex.justify-content-between.align-items-center.mb-1.ps-3{ id: list_dom_id(conversation),
+                                                                    data: { 'conversation-left-panel-target' => 'listItem',
+                                                                            conversation_id: conversation.id } }
   .d-flex.justify-content-between.w-100
     = link_to edit_conversation_path(conversation), data: { turbo_frame: :conversation_content,
                                                             turbo_prefetch: false, turbo_action: :advance },

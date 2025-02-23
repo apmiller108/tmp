@@ -18,7 +18,7 @@
 * TODO validate schema for tool use responses
     https://github.com/voxpupuli/json-schema
 * TODO Wire up search
-* TODO Conversation UI enahcements [10/20]
+* TODO Conversation UI enahcements [13/20]
   - [X] Center the conversation turns
   - [X] Collapse side panel
   - [X] Uncollapse side panel
@@ -26,19 +26,19 @@
   - [X] Turbo stream replace when clicking on conversation index item
   - [X] Fix redirect from conversation new to edit as turbo stream.
   - [X] Insert list item into index on new conversation created
-  - [ ] Highlight currently viewed conversation
-  - [ ] If the conversation is being viewed when deleted, render new
-  - [ ] scroll spy: each heading can be the first few words of the user message
-  - [ ] scroll to top of last response on generate text/image
-  - [ ] Clear the form after the turn is created
-  - [ ] Make user content copyable
-  - [ ] Full screen view of generated images
-  - [ ] Fix prompt form when controls are collapsed
-  - [ ] Find a better home for the conversation icons
+  - [X] Highlight currently viewed conversation
+  - [X] If the conversation is being viewed when deleted, render new
   - [X] Remove delete conversation button
   - [X] max width on generated images to 100%
   - [X] Index side panel with fixed controls at top
-  - [ ] Figure out something for the browser back button stuff
+  - [X] Figure out something for the browser back button stuff
+  - [ ] scroll spy: each heading can be the first few words of the user message
+  - [ ] Fix prompt form when controls are collapsed
+  - [ ] Find a better home for the conversation icons
+  - [ ] scroll to top of last response on generate text/image
+  - [ ] Make user content copyable
+  - [ ] Clear the form after the turn is created
+  - [ ] Full screen view of generated images
 * DONE upgrade to rails 8
 CLOSED: [2025-02-16 Sun 19:45]
 * DONE upgrade turbo

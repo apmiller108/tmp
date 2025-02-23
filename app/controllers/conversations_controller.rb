@@ -4,6 +4,8 @@ class ConversationsController < ApplicationController
 
   before_action :set_conversation, only: %i[update destroy]
 
+  rescue_from ActiveRecord::RecordNotFound, with: -> { redirect_to root_path }
+
   def index
     relation = current_user.conversations
     relation = relation.where(memo_id: search_params[:q][:memo_id]) if search_params.dig(:q, :memo_id)
@@ -97,9 +99,7 @@ class ConversationsController < ApplicationController
   def destroy
     @conversation.destroy
     respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.remove(helpers.list_dom_id(@conversation))
-      end
+      format.turbo_stream
       format.html { redirect_to conversations_path, notice: 'Conversation deleted' }
     end
   end
