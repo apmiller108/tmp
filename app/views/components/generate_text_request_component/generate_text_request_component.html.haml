@@ -1,7 +1,7 @@
 .c-generate-text-request{ id:, data: { controller: 'generate-text-request', **dataset } }
   .turn.grid.mb-3
     .g-col-12
-      .card.segment-user
+      .card.segment-user{ id: user_message_id}
         .turn-icon.ps-3.pt-1
           %i.bi-person-fill.fs-1
         .card-body
@@ -14,7 +14,7 @@
             = prompt
   .turn.grid.mb-3
     .g-col-12
-      .card.segment-assistant
+      .card.segment-assistant{ id: assistant_response_id }
         .turn-icon.ps-3.pt-1
           %i.bi-robot.fs-1
         .card-body

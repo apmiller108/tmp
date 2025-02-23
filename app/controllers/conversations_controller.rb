@@ -63,9 +63,7 @@ class ConversationsController < ApplicationController
                                   turns: { turnable: [:file_attachment, :file_blob, :image_attachment, :image_blob] }
                                 ).find(params[:id])
     @conversation_form = ConversationForm.new(user: current_user, conversation: @conversation)
-    respond_to do |format|
-      format.html
-    end
+    render content_type: "text/html; turbo-stream"
   end
 
   def update

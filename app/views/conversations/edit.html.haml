@@ -3,3 +3,12 @@
     %div
       = render partial: 'conversations/title_form', locals: { conversation_form: @conversation_form, conversation: @conversation }
   = render ConversationComponent.new(conversation_form: @conversation_form)
+= turbo_stream.update :conversation_scroll_spy do
+  %nav#navbar-conversation.d-flex.flex-column.align-items-stretch{ data: { controller: :scrollspy }}
+    %nav.nav.nav-pills.d-flex.flex-column
+      - @conversation.turns.each_with_index do |turn, i|
+        - if turn.text?
+          %a.nav-link{href: "##{dom_id(turn)}"}= "Turn #{i + 1}"
+          %nav.nav.nav-pills.flex-column
+            %a.nav-link.ms-3.my-1{href: "##{dom_id(turn.turnable)}_user"} My message
+            %a.nav-link.ms-3.my-1{href: "##{dom_id(turn.turnable)}_assistant"} Assistant message

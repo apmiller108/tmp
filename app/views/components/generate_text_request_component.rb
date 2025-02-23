@@ -27,6 +27,14 @@ class GenerateTextRequestComponent < ApplicationViewComponent
     dom_id(generate_text_request)
   end
 
+  def user_message_id
+    "#{id}_user"
+  end
+
+  def assistant_response_id
+    "#{id}_assistant"
+  end
+
   def dataset
     {
       model: model.name,

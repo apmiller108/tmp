@@ -18,7 +18,7 @@
 * TODO validate schema for tool use responses
     https://github.com/voxpupuli/json-schema
 * TODO Wire up search
-* TODO Conversation UI enahcements [13/20]
+* TODO Conversation UI enahcements [14/26]
   - [X] Center the conversation turns
   - [X] Collapse side panel
   - [X] Uncollapse side panel
@@ -32,13 +32,22 @@
   - [X] max width on generated images to 100%
   - [X] Index side panel with fixed controls at top
   - [X] Figure out something for the browser back button stuff
-  - [ ] scroll spy: each heading can be the first few words of the user message
+  - [X] scroll spy: Render nav section. Item for each turn. Segments are sub
+    headings. Image request is it's own nav. Use icons. Image icon, hover
+    preview.
+  - [ ] Make scrollspy nav scrollable
+  - [ ] Extract scrollspy view component
+  - [ ] Insert and delete nav items
+  - [ ] Link to settings. Link to presets
   - [ ] Fix prompt form when controls are collapsed
+  - [ ] Change temp drop down to range
   - [ ] Find a better home for the conversation icons
   - [ ] scroll to top of last response on generate text/image
   - [ ] Make user content copyable
   - [ ] Clear the form after the turn is created
   - [ ] Full screen view of generated images
+  - [ ] Update list item on name / convo update. Move updated to top of list.
+  - [ ] Wrap each pre (code block) in a copy component
 * DONE upgrade to rails 8
 CLOSED: [2025-02-16 Sun 19:45]
 * DONE upgrade turbo

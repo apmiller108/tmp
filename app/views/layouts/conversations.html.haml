@@ -37,6 +37,7 @@
               action: 'hidden.bs.collapse->conversation-left-panel#onHidePanel show.bs.collapse->conversation-left-panel#onShowPanel' } }
               %turbo-frame{ id: :conversations_index, src: conversations_path }
         .flex-grow-1.conversation-content.pb-3
-          = yield
+          %turbo-frame{ id: :conversation_content }
+            = yield
         .right-panel.pb-3.pe-3.w-25
-          RIGHT SIDE PANEL
+          #conversation_scroll_spy
