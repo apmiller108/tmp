@@ -106,13 +106,15 @@ class ConversationForm
   end
 
   def last_gen_text_opts
-    request = conversation.generate_text_requests.last
-    return {} if request.nil?
+    @last_gen_text_opts ||= begin
+      request = conversation.generate_text_requests.last
+      return {} if request.nil?
 
-    {
-      model: request.model.api_name,
-      **request.slice(:temperature, :generate_text_preset_id)
-    }.symbolize_keys
+      {
+        model: request.model.api_name,
+        **request.slice(:temperature, :generate_text_preset_id)
+      }.symbolize_keys
+    end
   end
 
   def enqueue_generate_job
