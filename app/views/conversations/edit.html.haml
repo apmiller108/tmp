@@ -19,5 +19,5 @@
                                               'bs-toggle' => 'tooltip', 'bs-title' => turn.turnable.prompt.text } }
             %a.nav-link.d-flex.align-items-center.text-nowrap{href: "##{dom_id(turn)}"}
               .me-3
-                = render AttachmentIconComponent.new(blob_id: turn.turnable.image.blob.id, content_type: turn.turnable.image.content_type)
+                %i.bi.bi-file-earmark-image
               = truncate(turn.turnable.prompt.text, length: 20, separator: ' ')
