@@ -37,7 +37,8 @@
     preview.
   - [X] Make scrollspy nav scrollable
   - [X] Extract scrollspy view component
-  - [ ] Add user and robot icons into the nav item that trigger navigation
+  - [ ] Prevent click on the nav icon
+  - [ ] Hide tool tip on clicking nav
   - [ ] Auto scroll to active nav item
   - [ ] Fiddle with the visibility settings
   - [ ] Clear nav on new convo

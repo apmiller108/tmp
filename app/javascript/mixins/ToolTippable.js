@@ -1,14 +1,17 @@
 import { Tooltip } from 'bootstrap'
 
 export const initializeTooltipsFor = (elem, opts = {}) => {
-  return Array.from(elem.querySelectorAll('[data-bs-toggle="tooltip"]')).map(e => new Tooltip(e, opts))
+  const elems = Array.from(elem.querySelectorAll('[data-bs-toggle="tooltip"]'))
+  elems.push(elem)
+  return elems.map(e => new Tooltip(e, opts))
 }
 
 export default {
   connect() {
     try {
       this.toolTippable = initializeTooltipsFor(this.element, {
-        delay: { show: 750, hide: 0 }
+        delay: { show: 750, hide: 0 },
+        html: true
       })
     } catch (error) {
       if (error.stack.includes("_Tooltip._setListeners")) {

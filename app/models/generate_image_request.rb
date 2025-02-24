@@ -47,6 +47,10 @@ class GenerateImageRequest < ApplicationRecord
     }.symbolize_keys
   end
 
+  def prompt
+    prompts.to_a.find { |p| p.weight.positive? }
+  end
+
   def flat_attributes
     attributes.except('options').merge(options)
   end

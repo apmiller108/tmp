@@ -8,7 +8,16 @@
     - @conversation.turns.each_with_index do |turn, i|
       - if turn.text?
         - scrollspy.with_item do
-          %a.nav-link{href: "##{dom_id(turn)}"}= "Turn #{i + 1}"
-          %nav.nav.nav-pills.flex-column
-            %a.nav-link.ms-3.my-1{href: "##{dom_id(turn.turnable)}_user"} My message
-            %a.nav-link.ms-3.my-1{href: "##{dom_id(turn.turnable)}_assistant"} Assistant message
+          .d-flex.align-items-center{ data: { controller: :tooltip,
+                                              'bs-toggle' => 'tooltip', 'bs-title' => truncate(turn.turnable.prompt, length: 75) } }
+            %a.nav-link.d-flex.align-items-center.text-nowrap{href: "##{dom_id(turn)}"}
+              %i.bi.bi-body-text.me-3
+              = truncate(turn.turnable.prompt, length: 20, separator: ' ')
+      - elsif turn.image?
+        - scrollspy.with_item do
+          .d-flex.align-items-center{ data: { controller: :tooltip,
+                                              'bs-toggle' => 'tooltip', 'bs-title' => turn.turnable.prompt.text } }
+            %a.nav-link.d-flex.align-items-center.text-nowrap{href: "##{dom_id(turn)}"}
+              .me-3
+                = render AttachmentIconComponent.new(blob_id: turn.turnable.image.blob.id, content_type: turn.turnable.image.content_type)
+              = truncate(turn.turnable.prompt.text, length: 20, separator: ' ')
