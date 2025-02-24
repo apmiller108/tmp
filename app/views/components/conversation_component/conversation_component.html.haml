@@ -1,8 +1,7 @@
 .c-conversation.scroll-no-bar-container.container-sm.pb-1.h-100{id:, class: opts[:class],
                             data: { controller: :conversation,
                                     action: 'prompt-form:promptOptionsShow@window->conversation#onPromptOptionsShow',
-                                    conversation_id: conversation_form.conversation.id,
-                                    'bs-spy' => 'scroll', 'bs-target' => '#navbar-conversation', 'bs-smooth-scroll' => 'true' } }
+                                    conversation_id: conversation_form.conversation.id } }
   = render ModalComponent.new(size: :lg)
   #conversation-turns.conversation-turns.mb-2{ data: { 'conversation-target': 'turns' } }
     = render ConversationTurnComponent.with_collection(conversation.turns)

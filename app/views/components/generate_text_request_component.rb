@@ -18,7 +18,9 @@ class GenerateTextRequestComponent < ApplicationViewComponent
   def assistant_response
     Commonmarker.to_html(
       response.content,
-      options: { parse: { smart: true } },
+      options: {
+        parse: { smart: true }
+      },
       plugins: { syntax_highlighter: { theme: 'Solarized (dark)' } }
     )
   end

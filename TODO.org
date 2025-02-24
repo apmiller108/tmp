@@ -18,7 +18,7 @@
 * TODO validate schema for tool use responses
     https://github.com/voxpupuli/json-schema
 * TODO Wire up search
-* TODO Conversation UI enahcements [15/27]
+* TODO Conversation UI enahcements [16/28]
   - [X] Center the conversation turns
   - [X] Collapse side panel
   - [X] Uncollapse side panel
@@ -36,9 +36,13 @@
     headings. Image request is it's own nav. Use icons. Image icon, hover
     preview.
   - [X] Make scrollspy nav scrollable
-  - [ ] Extract scrollspy view component
+  - [X] Extract scrollspy view component
   - [ ] Add user and robot icons into the nav item that trigger navigation
+  - [ ] Auto scroll to active nav item
+  - [ ] Fiddle with the visibility settings
+  - [ ] Clear nav on new convo
   - [ ] Insert and delete nav items
+  - [ ] Remove header links from assistant response
   - [ ] Link to settings. Link to presets
   - [ ] Fix prompt form when controls are collapsed
   - [ ] Change temp drop down to range
