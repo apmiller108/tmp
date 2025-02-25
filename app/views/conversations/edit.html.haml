@@ -1,23 +1,20 @@
 = turbo_frame_tag :conversation_content do
   .conversation-title.container.mb-1{ data: { controller: 'tooltip' } }
     %div
-      = render partial: 'conversations/title_form', locals: { conversation_form: @conversation_form, conversation: @conversation }
+      = render partial: 'title_form', locals: { conversation_form: @conversation_form, conversation: @conversation }
   = render ConversationComponent.new(conversation_form: @conversation_form)
 = turbo_stream.update :conversation_scroll_spy do
   = render ScrollspyComponent.new(container_id: 'conversation_component', target_id: 'conversation-nav') do |scrollspy|
-    - @conversation.turns.each_with_index do |turn, i|
+    - @conversation.turns.each do |turn|
       - if turn.text?
         - scrollspy.with_item do
-          .d-flex.align-items-center{ data: { controller: :tooltip,
-                                              'bs-toggle' => 'tooltip', 'bs-title' => truncate(turn.turnable.prompt, length: 75) } }
-            %a.nav-link.d-flex.align-items-center.text-nowrap{href: "##{dom_id(turn)}"}
-              %i.bi.bi-body-text.me-3
-              = truncate(turn.turnable.prompt, length: 20, separator: ' ')
+          = render ScrollspyNavItemComponent.new(text: truncate(turn.turnable.prompt, length: 20, separator: ' '),
+                                                 tooltip: truncate(turn.turnable.prompt, length: 75),
+                                                 icon_class: 'bi-body-text',
+                                                 href: "##{dom_id(turn)}")
       - elsif turn.image?
         - scrollspy.with_item do
-          .d-flex.align-items-center{ data: { controller: :tooltip,
-                                              'bs-toggle' => 'tooltip', 'bs-title' => turn.turnable.prompt.text } }
-            %a.nav-link.d-flex.align-items-center.text-nowrap{href: "##{dom_id(turn)}"}
-              .me-3
-                %i.bi.bi-file-earmark-image
-              = truncate(turn.turnable.prompt.text, length: 20, separator: ' ')
+          = render ScrollspyNavItemComponent.new(text: truncate(turn.turnable.prompt.text, length: 20, separator: ' '),
+                                                 tooltip: turn.turnable.prompt.text,
+                                                 icon_class: 'bi-file-earmark-image',
+                                                 href: "##{dom_id(turn)}")

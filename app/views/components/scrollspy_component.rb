@@ -5,7 +5,6 @@ class ScrollspyComponent < ApplicationViewComponent
 
   attr_reader :container_id, :target_id
 
-  # conversation_component, navbar-conversation
   def initialize(container_id:, target_id:)
     @container_id = container_id
     @target_id = target_id

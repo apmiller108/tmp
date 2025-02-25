@@ -18,7 +18,7 @@
 * TODO validate schema for tool use responses
     https://github.com/voxpupuli/json-schema
 * TODO Wire up search
-* TODO Conversation UI enahcements [16/28]
+* TODO Conversation UI enahcements [18/33]
   - [X] Center the conversation turns
   - [X] Collapse side panel
   - [X] Uncollapse side panel
@@ -37,8 +37,8 @@
     preview.
   - [X] Make scrollspy nav scrollable
   - [X] Extract scrollspy view component
-  - [ ] Prevent click on the nav icon
-  - [ ] Hide tool tip on clicking nav
+  - [X] Prevent click on the nav icon
+  - [X] Hide tool tip on clicking nav
   - [ ] Auto scroll to active nav item
   - [ ] Fiddle with the visibility settings
   - [ ] Clear nav on new convo
