@@ -18,7 +18,7 @@
 * TODO validate schema for tool use responses
     https://github.com/voxpupuli/json-schema
 * TODO Wire up search
-* TODO Conversation UI enahcements [18/33]
+* TODO Conversation UI enahcements [19/35]
   - [X] Center the conversation turns
   - [X] Collapse side panel
   - [X] Uncollapse side panel
@@ -39,10 +39,14 @@
   - [X] Extract scrollspy view component
   - [X] Prevent click on the nav icon
   - [X] Hide tool tip on clicking nav
+  - [X] Insert text nav item
+  - [ ] Insert gen image nav item
+  - [ ] delete text nav item
+  - [ ] delete gem image nav item
+  - [ ] Reinitialize scrollspy when new item added or deleted
   - [ ] Auto scroll to active nav item
   - [ ] Fiddle with the visibility settings
   - [ ] Clear nav on new convo
-  - [ ] Insert and delete nav items
   - [ ] Remove header links from assistant response
   - [ ] Link to settings. Link to presets
   - [ ] Fix prompt form when controls are collapsed

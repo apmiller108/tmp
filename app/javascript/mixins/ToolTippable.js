@@ -11,7 +11,8 @@ export default {
     try {
       this.toolTippable = initializeTooltipsFor(this.element, {
         delay: { show: 750, hide: 0 },
-        html: true
+        html: true,
+        placement: this.element.dataset.tooltipPlacement || 'top'
       })
     } catch (error) {
       if (error.stack.includes("_Tooltip._setListeners")) {

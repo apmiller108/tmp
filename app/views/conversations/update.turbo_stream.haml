@@ -5,3 +5,7 @@
     = render ConversationTurnComponent.new(conversation_turn: conversation_form.turn)
   = turbo_stream.replace PromptFormComponent::ID do
     = render PromptFormComponent.new(conversation_form:)
+  = turbo_stream.append ScrollspyComponent::ITEMS_CONTAINER_ID do
+    = render ScrollspyNavItemComponent.new(text: conversation_form.turn.turnable.prompt,
+                                           icon_class: 'bi-body-text',
+                                           href: "##{dom_id(conversation_form.turn)}")

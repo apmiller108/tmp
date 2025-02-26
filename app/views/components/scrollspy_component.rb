@@ -5,6 +5,8 @@ class ScrollspyComponent < ApplicationViewComponent
 
   attr_reader :container_id, :target_id
 
+  ITEMS_CONTAINER_ID = 'scrollspy-items'
+
   def initialize(container_id:, target_id:)
     @container_id = container_id
     @target_id = target_id

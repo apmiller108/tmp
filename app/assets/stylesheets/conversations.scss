@@ -61,6 +61,6 @@
     height: $conversation-header-height;
   }
   .right-panel {
-    max-width: 20rem;
+    max-width: $conversation-panel-width;
   }
 }

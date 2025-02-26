@@ -28,9 +28,7 @@ class ConversationsController < ApplicationController
     @conversation_form = ConversationForm.new(conversation_params)
     respond_to do |format|
       if @conversation_form.save
-        format.turbo_stream do
-          # redirect_to edit_conversation_path(@conversation_form.conversation), status: :see_other
-        end
+        format.turbo_stream
         format.json do
           render json: @conversation_form.conversation.as_json(only: %i[id memo_id created_at updated_at]),
                  status: :created

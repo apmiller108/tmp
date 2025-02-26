@@ -8,13 +8,9 @@
     - @conversation.turns.each do |turn|
       - if turn.text?
         - scrollspy.with_item do
-          = render ScrollspyNavItemComponent.new(text: truncate(turn.turnable.prompt, length: 20, separator: ' '),
-                                                 tooltip: truncate(turn.turnable.prompt, length: 75),
-                                                 icon_class: 'bi-body-text',
-                                                 href: "##{dom_id(turn)}")
+          %div{ id: dom_id(turn, 'nav_item_') }
+            = render ScrollspyNavItemComponent.new(text: turn.turnable.prompt, icon_class: 'bi-body-text', href: "##{dom_id(turn)}")
       - elsif turn.image?
         - scrollspy.with_item do
-          = render ScrollspyNavItemComponent.new(text: truncate(turn.turnable.prompt.text, length: 20, separator: ' '),
-                                                 tooltip: turn.turnable.prompt.text,
-                                                 icon_class: 'bi-file-earmark-image',
-                                                 href: "##{dom_id(turn)}")
+          %div{ id: dom_id(turn, 'nav_item_') }
+            = render ScrollspyNavItemComponent.new(text: turn.turnable.prompt.text, icon_class: 'bi-file-earmark-image', href: "##{dom_id(turn)}")
