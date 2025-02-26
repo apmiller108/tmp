@@ -65,7 +65,8 @@ module Conversations
         [user, TurboStreams::STREAMS[:main]],
         component: ScrollspyNavItemComponent.new(text: request.prompt,
                                                  icon_class: 'bi-file-earmark-image',
-                                                 href: "##{dom_id(request.conversation_turn)}"),
+                                                 href: "##{dom_id(request.conversation_turn)}",
+                                                 id: dom_id(request.conversation_turn, 'nav_item')),
         action: :append,
         target: ScrollspyComponent::ITEMS_CONTAINER_ID
       )

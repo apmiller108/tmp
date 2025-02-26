@@ -7,7 +7,10 @@ class ConversationTurnsController < ApplicationController
     respond_to do |format|
       if conversation_turn.destroy
         format.turbo_stream do
-          render turbo_stream: [turbo_stream.remove(conversation_turn)]
+          render turbo_stream: [
+                   turbo_stream.remove(conversation_turn),
+                   turbo_stream.remove(helpers.dom_id(conversation_turn, 'nav_item_'))
+                 ]
         end
       else
         format.turbo_stream do

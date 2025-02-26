@@ -8,6 +8,23 @@ export default class ScrollspyController extends Controller {
       target: this.targetId,
       smoothScroll: true
     })
+
+    this.observer = new MutationObserver((mutations) => {
+      const navAdded = mutations.some(mutation => mutation.type === 'childList')
+
+      if (navAdded) {
+        this.refresh()
+      }
+    });
+
+    this.observer.observe(this.element, {
+      childList: true,
+      subtree: true,
+    });
+  }
+
+  disconnect() {
+    this.observer.disconnect();
   }
 
   get containerId() {
@@ -16,5 +33,9 @@ export default class ScrollspyController extends Controller {
 
   get targetId() {
     return this.element.dataset.targetId
+  }
+
+  refresh() {
+    this.scrollSpy.refresh()
   }
 }

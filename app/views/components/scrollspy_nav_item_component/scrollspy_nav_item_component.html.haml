@@ -1,5 +1,5 @@
-.d-flex.align-items-center{ data: { controller: 'tooltip scrollspy-nav-item',
-                                    'bs-toggle' => 'tooltip', 'bs-title' => tooltip_text, 'tooltip-placement' => 'left' } }
+.d-flex.align-items-center{ id:, data: { controller: 'tooltip scrollspy-nav-item',
+                                         'bs-toggle' => 'tooltip', 'bs-title' => tooltip_text, 'tooltip-placement' => 'left' } }
   %a.nav-link.d-flex.align-items-center.text-nowrap{href: , data: { 'scrollspy-nav-item-target' => 'link',
                                                                     action: 'click->scrollspy-nav-item#onClickLink' } }
     %i.me-3.bi{ class: icon_class, data: { action: 'click->scrollspy-nav-item#onClickIcon' } }

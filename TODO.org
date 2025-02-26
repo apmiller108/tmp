@@ -12,13 +12,13 @@
   Or soft delete requests
 * TODO flatten the routes
 * TODO Add support for PDFs
-  (only sonnet 3-5)
   https://docs.anthropic.com/en/docs/build-with-claude/pdf-support
 * TODO refactor and normalize the adapter pattern for text generation
 * TODO validate schema for tool use responses
     https://github.com/voxpupuli/json-schema
 * TODO Wire up search
-* TODO Conversation UI enahcements [20/37]
+* TODO Disable old models
+* TODO Conversation UI enahcements [23/37]
   - [X] Center the conversation turns
   - [X] Collapse side panel
   - [X] Uncollapse side panel
@@ -41,11 +41,11 @@
   - [X] Hide tool tip on clicking nav
   - [X] Insert text nav item
   - [X] Insert gen image nav item
-  - [ ] delete text nav item
-  - [ ] delete gem image nav item
-  - [ ] Reinitialize scrollspy when new item added or deleted
-  - [ ] Auto scroll to active nav item
+  - [X] delete text nav item
+  - [X] delete gem image nav item
+  - [X] Reinitialize scrollspy when new item added or deleted
   - [ ] Fiddle with the visibility settings
+  - [ ] Auto scroll to active nav item
   - [ ] Clear nav on new convo
   - [ ] Remove header links from assistant response
   - [ ] Link to settings. Link to presets
