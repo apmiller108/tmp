@@ -48,7 +48,7 @@ class GenerateImageRequest < ApplicationRecord
   end
 
   def prompt
-    prompts.to_a.find { |p| p.weight.positive? }
+    prompts.to_a.find { |p| p.weight.positive? }&.text
   end
 
   def flat_attributes

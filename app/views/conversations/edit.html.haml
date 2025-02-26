@@ -6,11 +6,7 @@
 = turbo_stream.update :conversation_scroll_spy do
   = render ScrollspyComponent.new(container_id: 'conversation_component', target_id: 'conversation-nav') do |scrollspy|
     - @conversation.turns.each do |turn|
-      - if turn.text?
-        - scrollspy.with_item do
-          %div{ id: dom_id(turn, 'nav_item_') }
-            = render ScrollspyNavItemComponent.new(text: turn.turnable.prompt, icon_class: 'bi-body-text', href: "##{dom_id(turn)}")
-      - elsif turn.image?
-        - scrollspy.with_item do
-          %div{ id: dom_id(turn, 'nav_item_') }
-            = render ScrollspyNavItemComponent.new(text: turn.turnable.prompt.text, icon_class: 'bi-file-earmark-image', href: "##{dom_id(turn)}")
+      - icon_class = turn.text? ? 'bi-body-text' : 'bi-file-earmark-image'
+      - scrollspy.with_item do
+        %div{ id: dom_id(turn, 'nav_item_') }
+          = render ScrollspyNavItemComponent.new(text: turn.turnable.prompt, icon_class:, href: "##{dom_id(turn)}")

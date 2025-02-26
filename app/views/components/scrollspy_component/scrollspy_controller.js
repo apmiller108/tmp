@@ -3,8 +3,8 @@ import { ScrollSpy } from 'bootstrap'
 
 export default class ScrollspyController extends Controller {
   connect() {
-    const conversation = document.getElementById(this.containerId)
-    const scrollSpy = new ScrollSpy(conversation, {
+    const scrollableContainer = document.getElementById(this.containerId)
+    this.scrollSpy = new ScrollSpy(scrollableContainer, {
       target: this.targetId,
       smoothScroll: true
     })

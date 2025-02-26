@@ -4,6 +4,7 @@ module Conversations
   class GenerateImageJob
     include Sidekiq::Job
     include Flashable
+    include ActionView::RecordIdentifier
 
     sidekiq_options retry: false
 
@@ -13,6 +14,7 @@ module Conversations
       request.in_progress!
 
       broadcast_component(request.conversation_turn, request.user, action: :append, target: 'conversation-turns')
+      broadcast_nav(request, request.user)
 
       response = generate_image(request)
 
@@ -55,6 +57,17 @@ module Conversations
         component: ConversationTurnComponent.new(conversation_turn:),
         action: options.fetch(:action, :replace),
         **options
+      )
+    end
+
+    def broadcast_nav(request, user)
+      ViewComponentBroadcaster.call(
+        [user, TurboStreams::STREAMS[:main]],
+        component: ScrollspyNavItemComponent.new(text: request.prompt,
+                                                 icon_class: 'bi-file-earmark-image',
+                                                 href: "##{dom_id(request.conversation_turn)}"),
+        action: :append,
+        target: ScrollspyComponent::ITEMS_CONTAINER_ID
       )
     end
 
