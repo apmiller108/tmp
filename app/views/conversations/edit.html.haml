@@ -5,7 +5,7 @@
   = render ConversationComponent.new(conversation_form: @conversation_form)
 = turbo_stream.update :conversation_scroll_spy do
   = render ScrollspyComponent.new(container_id: 'conversation_component', target_id: 'conversation-nav',
-                                  action: 'conversation:turnAdded@window->scrollspy#refresh') do |scrollspy|
+                                  action: 'conversation:turnsChanged@window->scrollspy#refresh') do |scrollspy|
     - @conversation.turns.each do |turn|
       - icon_class = turn.text? ? 'bi-body-text' : 'bi-file-earmark-image'
       - scrollspy.with_item do

@@ -19,11 +19,11 @@ export default class ConversationController extends Controller {
     // When a conversation turn is added, scroll the container down so the new
     // turn is visiable without requiring manual scrolling
     this.observer = new MutationObserver((mutations) => {
-      const turnAdded = mutations.some(mutation => mutation.type === 'childList')
+      const turnsChanged = mutations.some(mutation => mutation.type === 'childList')
 
-      if (turnAdded) {
+      if (turnsChanged) {
         this.scrollTurns()
-        this.dispatch('turnAdded')
+        this.dispatch('turnsChanged')
       }
     });
 
