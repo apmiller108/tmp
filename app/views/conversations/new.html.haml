@@ -1,2 +1,5 @@
 = turbo_frame_tag :conversation_content do
   = render ConversationComponent.new(conversation_form: @conversation_form, class: 'new-conversation')
+= turbo_stream.update :conversation_scroll_spy do
+  = render ScrollspyComponent.new(container_id: 'conversation_component', target_id: 'conversation-nav',
+                                  action: 'conversation:turnsChanged@window->scrollspy#refresh')
