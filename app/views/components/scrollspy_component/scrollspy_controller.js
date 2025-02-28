@@ -2,31 +2,7 @@ import { Controller } from '@hotwired/stimulus'
 import { ScrollSpy } from 'bootstrap'
 
 export default class ScrollspyController extends Controller {
-  connect() {
-    const scrollableContainer = document.getElementById(this.containerId)
-    this.scrollSpy = new ScrollSpy(scrollableContainer, {
-      target: this.targetId,
-      smoothScroll: true,
-      threshold: [0, 0.25, 0.5, 0.75, 1]
-    })
-
-    this.observer = new MutationObserver((mutations) => {
-      const navAdded = mutations.some(mutation => mutation.type === 'childList')
-
-      if (navAdded) {
-        this.refresh()
-      }
-    });
-
-    this.observer.observe(this.element, {
-      childList: true,
-      subtree: true,
-    });
-  }
-
-  disconnect() {
-    this.observer.disconnect();
-  }
+  static targets = ['navItem']
 
   get containerId() {
     return this.element.dataset.containerId
@@ -36,7 +12,25 @@ export default class ScrollspyController extends Controller {
     return this.element.dataset.targetId
   }
 
+  connect() {
+    const scrollableContainer = document.getElementById(this.containerId)
+    this.scrollSpy = new ScrollSpy(scrollableContainer, {
+      target: this.targetId,
+      smoothScroll: true,
+      threshold: [0, 0.25, 0.5, 0.75, 1]
+    })
+  }
+
+  navItemTargetConnected(element) {
+    this.refresh();
+    this.dispatch('navItemsChanged')
+  }
+
+  navItemTargetDisconnected(element) {
+    this.refresh();
+  }
+
   refresh() {
-    this.scrollSpy.refresh()
+    setTimeout(() => this.scrollSpy?.refresh(), 0)
   }
 }

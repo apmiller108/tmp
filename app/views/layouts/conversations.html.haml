@@ -40,7 +40,7 @@
           %turbo-frame{ id: :conversation_content }
             = yield
         .right-panel.pb-3.pe-3.w-25{ data: { controller: 'conversation-right-panel',
-                                             action: 'conversation:turnsChanged@window->conversation-right-panel#onTurnsChanged' } }
+                                             action: 'scrollspy:navItemsChanged@window->conversation-right-panel#onNavItemsChanged' } }
           %div.tmp-home.text-end
             LOGO HOME USER
           #conversation_scroll_spy.h-50.overflow-auto{ data: { 'conversation-right-panel-target' => 'scrollspy' } }

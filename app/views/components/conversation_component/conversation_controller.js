@@ -22,7 +22,6 @@ export default class ConversationController extends Controller {
       const turnsChanged = mutations.some(mutation => mutation.type === 'childList')
 
       if (turnsChanged) {
-        this.scrollTurns()
         this.dispatch('turnsChanged')
       }
     });
@@ -56,9 +55,6 @@ export default class ConversationController extends Controller {
 
   disconnect() {
     this.observer.disconnect();
-
-    window.removeEventListener('popstate', this.boundHandlePopState);
-    this.boundHandlePopState = null;
   }
 
   dispatchConversationLoaded() {

@@ -16,7 +16,7 @@ export default class ConversationRightPanel extends Controller {
     }, 0)
   }
 
-  onTurnsChanged() {
+  onNavItemsChanged() {
     this.scrollScrollspyDown()
   }
 }
