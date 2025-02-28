@@ -6,7 +6,8 @@ export default class ScrollspyController extends Controller {
     const scrollableContainer = document.getElementById(this.containerId)
     this.scrollSpy = new ScrollSpy(scrollableContainer, {
       target: this.targetId,
-      smoothScroll: true
+      smoothScroll: true,
+      threshold: [0, 0.25, 0.5, 0.75, 1]
     })
 
     this.observer = new MutationObserver((mutations) => {

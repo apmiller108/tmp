@@ -24,6 +24,10 @@ export default class ConversationLeftPanel extends Controller {
     });
   }
 
+  disconnect() {
+    this.observer.disconnect()
+  }
+
   onHidePanel() {
     this.controlsTarget.classList.add('panel-hide')
     this.collapseIconTarget.classList.remove('bi-arrows-collapse-vertical')

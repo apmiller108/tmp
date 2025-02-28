@@ -18,7 +18,7 @@
     https://github.com/voxpupuli/json-schema
 * TODO Wire up search
 * TODO Disable old models
-* TODO Conversation UI enahcements [23/37]
+* TODO Conversation UI enahcements [25/38]
   - [X] Center the conversation turns
   - [X] Collapse side panel
   - [X] Uncollapse side panel
@@ -44,8 +44,9 @@
   - [X] delete text nav item
   - [X] delete gem image nav item
   - [X] Reinitialize scrollspy when new item added or deleted
-  - [ ] Fiddle with the visibility settings
-  - [ ] Auto scroll to active nav item
+  - [X] Fiddle with the visibility settings
+  - [X] Auto scroll to active nav item
+  - [ ] Auto scroll on turn added using the nav
   - [ ] Clear nav on new convo
   - [ ] Remove header links from assistant response
   - [ ] Link to settings. Link to presets
