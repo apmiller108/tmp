@@ -15,6 +15,7 @@ class GenerateTextRequestComponent < ApplicationViewComponent
     @generate_text_request = conversation_turn.turnable
   end
 
+  # Heading anchor tags are removed as they will interfere with the Scrollspy
   def assistant_response
     Commonmarker.to_html(
       response.content,
@@ -22,7 +23,7 @@ class GenerateTextRequestComponent < ApplicationViewComponent
         parse: { smart: true }
       },
       plugins: { syntax_highlighter: { theme: 'Solarized (dark)' } }
-    )
+    ).gsub!(%r{<a href="#[^"]*" aria-hidden="true" class="anchor" id="[^"]*"></a>}, '')
   end
 
   def id

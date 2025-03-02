@@ -73,7 +73,7 @@ class ConversationForm
     assign_default_title
 
     self.model                   ||= last_gen_text_opts.fetch(:model, user&.setting&.text_model)
-    self.temperature             ||= last_gen_text_opts[:temperature]
+    self.temperature             ||= last_gen_text_opts.fetch(:temperature, 0)
     self.generate_text_preset_id ||= last_gen_text_opts[:generate_text_preset_id]
   end
 
