@@ -3,8 +3,8 @@
     .g-col-12
       .card
         .turn-icon.ps-3.pt-1
-          %i.bi-robot.fs-1
-        .card-body
+          %i.bi-robot
+        .card-body.pt-1
           - if created? || in_progress?
             .text-center
               = render SpinnerComponent.new
@@ -33,6 +33,6 @@
                 = link_to conversation_conversation_turn_path(conversation, conversation_turn),
                   class: 'float-end fs-5 btn icon-btn icon-btn-sm danger',
                   data: { turbo_method: 'delete', turbo_confirm: t('confirm'),
-                        'bs-toggle' => 'tooltip',
-                        'bs-title' => t('delete', name: t('image')) } do
+                         'bs-toggle' => 'tooltip',
+                         'bs-title' => t('delete', name: t('image')) } do
                   %i.bi-trash3

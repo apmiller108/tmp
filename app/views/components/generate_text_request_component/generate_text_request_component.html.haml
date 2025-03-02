@@ -3,8 +3,8 @@
     .g-col-12
       .card.segment-user{ id: user_message_id}
         .turn-icon.ps-3.pt-1
-          %i.bi-person-fill.fs-1
-        .card-body
+          %i.bi-person-fill
+        .card-body.pt-1
           %p
             - if image?
               = link_to '#', class: 'float-start me-2', data: { controller: 'modal-opener', modal: ModalComponent.id,
@@ -16,8 +16,8 @@
     .g-col-12
       .card.segment-assistant{ id: assistant_response_id }
         .turn-icon.ps-3.pt-1
-          %i.bi-robot.fs-1
-        .card-body
+          %i.bi-robot
+        .card-body.pt-1
           - if created? || in_progress?
             .text-center
               = render SpinnerComponent.new

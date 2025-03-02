@@ -7,7 +7,8 @@ import { Collapse } from 'bootstrap'
 export default class PromptFormController extends Controller {
   static targets = [
     'promptInput', 'form', 'submitButton', 'showOptionsButton', 'options',
-    'temperatureSelect', 'modelSelect', 'presetSelect', 'textId', 'toggleTextAreaButton'
+    'temperatureSlider', 'temperatureValue', 'temperatureSelect', 'modelSelect',
+    'presetSelect', 'textId', 'toggleTextAreaButton'
   ]
 
   connect() {
@@ -40,7 +41,7 @@ export default class PromptFormController extends Controller {
   initForm() {
     this.initializeOptions()
     this.setPreset()
-    this.setTemperature()
+    this.initTemperature()
     this.initializeFileInput()
     this.initializeTextArea()
   }
@@ -65,10 +66,28 @@ export default class PromptFormController extends Controller {
     }
   }
 
-  setTemperature() {
+  initTemperature() {
     const presetId = this.presetSelectTarget.value
+    this.updateTemperatureDisplay(this.temperatureSliderTarget.value)
     this.setTemperatureFromSelectedPreset(presetId)
   }
+
+  updateTemperatureDisplay(value) {
+    this.temperatureValueTarget.textContent = value
+
+    const temp = parseFloat(value);
+
+    this.temperatureValueTarget.classList.remove('cool', 'medium', 'hot');
+
+    if (temp <= 0.3) {
+      this.temperatureValueTarget.classList.add('cool');
+    } else if (temp <= 0.7) {
+      this.temperatureValueTarget.classList.add('medium');
+    } else {
+      this.temperatureValueTarget.classList.add('hot');
+    }
+  }
+
 
   initializeFileInput() {
     const selectedModel = this.modelData.find(m => m.api_name === this.modelSelectTarget.value)
@@ -128,12 +147,16 @@ export default class PromptFormController extends Controller {
   setTemperatureFromSelectedPreset(presetId) {
     if (presetId) {
       const presetData = this.generateTextPresetData.find(d => d.id === Number(presetId))
-      const temperatureValues = Array.from(this.temperatureSelectTarget.querySelectorAll('option')).map(o => o.value)
 
-      if (presetData && temperatureValues.includes(presetData.temperature)) {
-        this.temperatureSelectTarget.value = presetData.temperature
+      if (presetData) {
+        this.temperatureSliderTarget.value = presetData.temperature
+        this.updateTemperatureDisplay(this.temperatureSliderTarget.value)
       }
     }
+  }
+
+  onTempInput(e) {
+    this.updateTemperatureDisplay(e.target.value)
   }
 
   onChangeModel() {

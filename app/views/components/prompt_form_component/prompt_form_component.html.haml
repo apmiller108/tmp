@@ -1,4 +1,4 @@
-.c-prompt-form.mb-5{ id:, data: { controller: 'prompt-form', action: 'my-channel:generateText@window->prompt-form#onGenerateText' } }
+.c-prompt-form.mb-5.w-100{ id:, data: { controller: 'prompt-form', action: 'my-channel:generateText@window->prompt-form#onGenerateText' } }
   = form_with model: conversation_form, scope: :conversation, url: polymorphic_path(conversation),
     data: { 'prompt-form-target' => 'form', action: 'direct-uploads:start->prompt-form#disableForm', **turbo_attrs } do |form|
     = form.hidden_field :turnable_type, value: 'GenerateTextRequest'
@@ -20,7 +20,7 @@
                   { class: 'form-select', data: { 'prompt-form-target' => 'modelSelect',
                                                   'model-data' => model_data, action: 'change->prompt-form#onChangeModel' } }
                   = form.label :model, 'Model'
-              .g-col-2.d-flex.align-items-center
+              .g-col-3.d-flex.align-items-center
                 .form-floating
                   = form.select :generate_text_preset_id, preset_options, { include_blank: true },
                     { class: 'form-select', data: { 'prompt-form-target' => 'presetSelect', 'preset-data' => preset_data,
@@ -29,17 +29,28 @@
                 = link_to new_generate_text_preset_path(redirect_after_create: after_create_preset_redirect_path),
                 class: 'icon-btn', id: 'new_preset_link' do
                   %i.bi.bi-plus{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => t('generate_text_preset.add') }}
-              .g-col-1
-                .form-floating
-                  = form.select :temperature, helpers.temp_select_options, {},
-                  { class: 'form-select', data: { 'prompt-form-target' => 'temperatureSelect' } }
-                  = form.label :temperature, 'Temp'
+              .g-start-10.g-col-3
+                .form-group
+                  .d-flex.justify-content-between.align-items-center
+                    .d-flex.justify-content-start.align-items-center
+                      = form.label :temperature, 'Temperature', class: 'form-label mb-0'
+                      %i.bi.bi-info-circle.ms-1.text-muted{ data: { 'bs-toggle' => 'tooltip',
+                                                                    'bs-title' => 'Lower values produce more predictable outputs. Higher values produce more creative results' } }
+                    %span.badge.ms-2{ data: { 'prompt-form-target' => 'temperatureValue' } }
+                  .d-flex.align-items-center.gap-2
+                    = form.range_field :temperature,
+                                       min: 0,
+                                       max: 1,
+                                       step: 0.1,
+                                       class: 'form-range',
+                                       data: { 'prompt-form-target' => 'temperatureSlider',
+                                               'action' => 'input->prompt-form#onTempInput' }
         .grid.prompt-input-container
           .g-col-12.position-relative
             = form.text_area :prompt, class: 'form-control scroll-no-bar-container', data: { 'prompt-form-target' => 'promptInput' },
                               placeholder: 'Type a message', rows: 2
-            %button.btn.icon-btn{type: 'submit', name: 'commit', data: { 'prompt-form-target' => 'submitButton' },
-                                disabled: disabled?}
+            %button.btn.icon-btn{ type: 'submit', name: 'commit', data: { 'prompt-form-target' => 'submitButton' },
+                                  disabled: disabled?}
               %i.bi.bi-send-fill
             .text-area-tray.d-flex.justify-content-center.align-items-center
               %button.btn.fs-6.p-0{ 'data-prompt-form-target' => 'toggleTextAreaButton',

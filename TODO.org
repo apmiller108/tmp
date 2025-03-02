@@ -18,7 +18,7 @@
     https://github.com/voxpupuli/json-schema
 * TODO Wire up search
 * TODO Disable old models
-* TODO Conversation UI enahcements [27/38]
+* TODO Conversation UI enahcements [30/38]
   - [X] Center the conversation turns
   - [X] Collapse side panel
   - [X] Uncollapse side panel
@@ -48,17 +48,17 @@
   - [X] Auto scroll to active nav item
   - [X] Auto scroll on turn added using the nav
   - [X] Clear nav on new convo
+  - [X] Find a better home for the conversation icons
+  - [X] Change temp drop down to range
+  - [X] Fix prompt form when controls are collapsed
+  - [ ] Clear the form after the turn is created
+  - [ ] Update list item on name / convo update. Move updated to top of list.
   - [ ] Remove header links from assistant response
+  - [ ] Wrap each pre (code block) in a copy component
   - [ ] Link to settings. Link to presets
-  - [ ] Fix prompt form when controls are collapsed
-  - [ ] Change temp drop down to range
-  - [ ] Find a better home for the conversation icons
   - [ ] scroll to top of last response on generate text/image
   - [ ] Make user content copyable
-  - [ ] Clear the form after the turn is created
   - [ ] Full screen view of generated images
-  - [ ] Update list item on name / convo update. Move updated to top of list.
-  - [ ] Wrap each pre (code block) in a copy component
 * DONE upgrade to rails 8
 CLOSED: [2025-02-16 Sun 19:45]
 * DONE upgrade turbo

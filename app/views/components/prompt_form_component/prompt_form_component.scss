@@ -25,8 +25,56 @@
       color: var(--bs-primary);
     }
   }
-  // .collapsing {
-  //   transition: none;
-  //   display: none;
-  // }
+  .form-range {
+    width: 100%;
+  }
+
+  .temperature-value {
+    min-width: 2.5rem;
+    text-align: center;
+  }
+
+  $cool: #0d47a1;
+  $warm: #42a5f5;
+  $red:  #f43f5e;
+
+  .cool {
+    background: $cool;
+  }
+
+  .medium {
+    background: $warm;
+  }
+
+  .hot {
+    background: $red;
+  }
+
+  .form-range::-webkit-slider-runnable-track {
+    background: linear-gradient(to right, $cool, $warm,  $red);
+    height: 0.5rem;
+    border-radius: 3px;
+  }
+
+  .form-range::-moz-range-track {
+    background: linear-gradient(to right, $cool, $warm,  $red);
+    height: 0.5rem;
+    border-radius: 3px;
+  }
+
+  /* Active/filled part of the track */
+  .form-range::-webkit-slider-thumb {
+    margin-top: -6px;
+    width: 18px;
+    height: 18px;
+    background: white;
+    border: 2px solid $cool;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .form-range::-moz-range-thumb {
+    box-shadow: 0 0 0 3px $cool;
+  }
 }
