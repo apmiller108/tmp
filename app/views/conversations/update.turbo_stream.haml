@@ -1,5 +1,8 @@
 = turbo_stream.replace 'conversation-title' do
   = render partial: 'conversations/title_form', locals: { conversation_form:, conversation: conversation_form.conversation }, formats: [:html]
+= turbo_stream.remove(list_dom_id(@conversation))
+= turbo_stream.prepend 'conversations' do
+  = render partial: 'list_item', locals: { conversation: @conversation_form.conversation }
 - if conversation_form.turn.persisted?
   = turbo_stream.append 'conversation-turns' do
     = render ConversationTurnComponent.new(conversation_turn: conversation_form.turn)
@@ -7,6 +10,6 @@
     = render PromptFormComponent.new(conversation_form:)
   = turbo_stream.append ScrollspyComponent::ITEMS_CONTAINER_ID do
     = render ScrollspyNavItemComponent.new(text: conversation_form.turn.turnable.prompt,
-                                           icon_class: 'bi-body-text',
-                                           href: "##{dom_id(conversation_form.turn)}",
-                                           id: dom_id(conversation_form.turn, 'nav_item'))
+                                          icon_class: 'bi-body-text',
+                                          href: "##{dom_id(conversation_form.turn)}",
+                                          id: dom_id(conversation_form.turn, 'nav_item'))

@@ -18,7 +18,7 @@
     https://github.com/voxpupuli/json-schema
 * TODO Wire up search
 * TODO Disable old models
-* TODO Conversation UI enahcements [30/38]
+* TODO Conversation UI enahcements [31/37]
   - [X] Center the conversation turns
   - [X] Collapse side panel
   - [X] Uncollapse side panel
@@ -51,8 +51,7 @@
   - [X] Find a better home for the conversation icons
   - [X] Change temp drop down to range
   - [X] Fix prompt form when controls are collapsed
-  - [ ] Clear the form after the turn is created
-  - [ ] Update list item on name / convo update. Move updated to top of list.
+  - [X] Update list item on name / convo update. Move updated to top of list.
   - [ ] Remove header links from assistant response
   - [ ] Wrap each pre (code block) in a copy component
   - [ ] Link to settings. Link to presets

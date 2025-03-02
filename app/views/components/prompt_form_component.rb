@@ -8,6 +8,7 @@ class PromptFormComponent < ApplicationViewComponent
   delegate :conversation, :model, to: :conversation_form
   delegate :generate_text_requests, to: :conversation
 
+  # @param conversation_form [ConversationForm]
   def initialize(conversation_form:, **opts)
     @conversation_form = conversation_form
     @opts = opts

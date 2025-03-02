@@ -37,9 +37,10 @@ class ConversationForm
 
     return false unless valid?
 
-    ActiveRecord::Base.transaction do
-      conversation.save!
-      if turnable.present?
+    conversation.save!
+
+    if turnable.present?
+      ActiveRecord::Base.transaction do
         turnable.save!
         turn.save!
       end
@@ -82,7 +83,8 @@ class ConversationForm
 
   def conversation_attributes
     {
-      user:
+      user:,
+      updated_at: Time.current
     }.tap do |attrs|
       attrs[:title] = title if title.present?
       attrs[:memo_id] = memo_id if memo_id.present?
