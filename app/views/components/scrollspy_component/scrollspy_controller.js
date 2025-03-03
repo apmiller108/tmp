@@ -33,7 +33,7 @@ export default class ScrollspyController extends Controller {
   async refresh(navigate = true) {
     await setTimeout(() => this.scrollSpy?.refresh(), 0)
     if (navigate) {
-      this.navTarget.lastElementChild.querySelector('a').click()
+      this.navTarget.click()
     }
   }
 }
