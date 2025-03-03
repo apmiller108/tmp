@@ -5,7 +5,6 @@
 * TODO add audio transcription to conversations
 * TODO add audio generation to conversations
 * TODO add video generation to conversations
-* TODO search conversations
 * TODO Edit the last prompt. Trigger regenerate the last assistant response.
 * TODO link to memo/conversation
 * TODO cache token count on the conversation
@@ -13,11 +12,12 @@
 * TODO flatten the routes
 * TODO Add support for PDFs
   https://docs.anthropic.com/en/docs/build-with-claude/pdf-support
-* TODO refactor and normalize the adapter pattern for text generation
 * TODO validate schema for tool use responses
     https://github.com/voxpupuli/json-schema
 * TODO Wire up search
 * TODO Disable old models
+* TODO List view of generated images
+* TODO Stream responses
 * TODO Conversation UI enahcements [33/37]
   - [X] Center the conversation turns
   - [X] Collapse side panel
