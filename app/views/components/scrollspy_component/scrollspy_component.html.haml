@@ -1,4 +1,4 @@
 %nav.c-scrollspy.d-flex.flex-column.align-items-stretch{ id: target_id, data: { controller: :scrollspy, container_id:, target_id:, action: } }
-  %nav.nav.nav-pills.d-flex.flex-column{ id: self.class::ITEMS_CONTAINER_ID }
+  %nav.nav.nav-pills.d-flex.flex-column{ id: self.class::ITEMS_CONTAINER_ID, data: { 'scrollspy-target' => 'nav'} }
     - items.each do |item|
       = item

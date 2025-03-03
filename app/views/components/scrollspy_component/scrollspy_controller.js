@@ -2,7 +2,7 @@ import { Controller } from '@hotwired/stimulus'
 import { ScrollSpy } from 'bootstrap'
 
 export default class ScrollspyController extends Controller {
-  static targets = ['navItem']
+  static targets = ['nav', 'navItem']
 
   get containerId() {
     return this.element.dataset.containerId
@@ -21,16 +21,19 @@ export default class ScrollspyController extends Controller {
     })
   }
 
-  navItemTargetConnected(element) {
-    this.refresh();
+  navItemTargetConnected() {
+    this.refresh(false)
     this.dispatch('navItemsChanged')
   }
 
-  navItemTargetDisconnected(element) {
-    this.refresh();
+  navItemTargetDisconnected() {
+    this.refresh()
   }
 
-  refresh() {
-    setTimeout(() => this.scrollSpy?.refresh(), 0)
+  async refresh(navigate = true) {
+    await setTimeout(() => this.scrollSpy?.refresh(), 0)
+    if (navigate) {
+      this.navTarget.lastElementChild.querySelector('a').click()
+    }
   }
 }

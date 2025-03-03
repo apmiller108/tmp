@@ -13,7 +13,6 @@ export default class PromptFormController extends Controller {
 
   connect() {
     ToolTippable.connect.bind(this)()
-    this.focusOnPromptInput()
     this.promptInputTarget.addEventListener('keypress', this.submitOnEnter.bind(this))
     this.formTarget.addEventListener('submit', this.disableForm.bind(this))
     this.textIdTarget.value = createGenTextId();
@@ -32,10 +31,6 @@ export default class PromptFormController extends Controller {
 
   get modelData() {
     return JSON.parse(this.modelSelectTarget.dataset.modelData)
-  }
-
-  focusOnPromptInput() {
-    this.promptInputTarget.focus()
   }
 
   initForm() {
@@ -166,7 +161,6 @@ export default class PromptFormController extends Controller {
   // If there is an error in the background job, enabled the form
   onGenerateText() {
     this.enableForm()
-    this.focusOnPromptInput()
   }
 
   onToggleTextAreaSize() {
