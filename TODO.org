@@ -54,9 +54,11 @@
   - [X] Update list item on name / convo update. Move updated to top of list.
   - [X] Remove header links from assistant response
   - [X] Wrap each pre (code block) in a copy component
-  - [ ] Link to settings. Link to presets
   - [X] scroll to top of last response on generate text/image
   - [X] Make user content copyable
+  - [ ] Link to settings. Link to presets
+  - [ ] auto scroll the scrollspy nav container as the active item goes into the
+    over flow space.
   - [ ] Full screen view of generated images
 * DONE upgrade to rails 8
 CLOSED: [2025-02-16 Sun 19:45]
