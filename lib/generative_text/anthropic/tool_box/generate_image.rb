@@ -17,10 +17,10 @@ class GenerativeText
           crisp (blue:0.3) and (green:0.8) would convey a sky that was blue and
           green, but more green than blue. A negative prompt and style are
           optional, but should be used where needed to produce the most optimal
-          image. This tool should be used when the user is asking you to create
-          a new image or update an image. This tool allows you to update images
-          for the user. It's very important that you use the input schema
-          precisely.
+          image. This tool should only be used when the user is explicitly
+          asking you to create a new image or update an image. This tool allows
+          you to update images for the user. It's very important that you use
+          the input schema precisely.
         TXT
 
         def input_schema
