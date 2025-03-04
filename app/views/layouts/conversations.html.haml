@@ -13,14 +13,14 @@
   %body
     .main.vh-100.d-flex.flex-column.overflow-hidden.position-relative.conversation-main
       = turbo_stream_from current_user, TurboStreams::STREAMS[:main]
-      = render partial: 'layouts/flash'
+      #alert-stream
       .d-flex.h-100{ style: '--bs-gap: 1rem;'}
         .left-panel.pb-3
           .h-100.conversation-left-panel{ data: { controller: 'conversation-left-panel',
                                          action: 'conversation:conversationLoaded@window->conversation-left-panel#onConversationLoaded' } }
             .controls.d-flex.justify-content-between.mb-3.ps-3{ data: { controller: 'tooltip',
                                                                         'conversation-left-panel-target' => 'controls' } }
-              %button.btn.icon-btn.icon-btn.icon-btn-auto{ data: { 'bs-toggle' => 'collapse', 'bs-target' => '#conversation-list' } }
+              %button.btn.icon-btn.icon-btn-auto{ data: { 'bs-toggle' => 'collapse', 'bs-target' => '#conversation-list' } }
                 %i.bi.bi-arrows-collapse-vertical{ data: { 'conversation-left-panel-target' => 'collapseIcon',
                                                           'bs-toggle' => 'tooltip', 'bs-title' => 'Toggle Section' }}
               .d-flex.justify-content-between
@@ -41,6 +41,36 @@
             = yield
         .right-panel.pb-3.pe-3.w-25{ data: { controller: 'conversation-right-panel',
                                              action: 'scrollspy:navItemsChanged@window->conversation-right-panel#onNavItemsChanged' } }
-          %div.tmp-home.text-end
-            LOGO HOME USER
+          %nav.navbar.d-flex.justify-content-end
+            %button.btn.icon-btn.icon-btn-auto{"data-bs-toggle" => "offcanvas", "data-bs-target" => "#offcanvasNavbar",
+                                    "aria-controls" => "offcanvasNavbar", "aria-label" => "Toggle navigation"}
+              %i.bi.bi-list.text-black
+            .offcanvas.offcanvas-end#offcanvasNavbar{"tabindex" => "-1", "aria-labelledby" => "offcanvasNavbarLabel", "data-controller" => "navbar"}
+              .offcanvas-header
+                = link_to root_path, class: "navbar-brand" do
+                  = render inline: Rails.application.assets.find_asset('tmp.svg').source
+                %button.btn-close{"type" => "button", "data-bs-dismiss" => "offcanvas", "aria-label" => "Close"}
+              .offcanvas-body
+                %ul.navbar-nav.flex-column.mb-auto
+                  %li.nav-item
+                    = link_to new_conversation_path, class: "nav-link #{'active' if controller_name == 'conversations'}" do
+                      %i.bi.bi-chat-dots.me-2
+                      Conversations
+
+                  %li.nav-item
+                    = link_to user_memos_path(current_user), class: "nav-link #{'active' if controller_name == 'documents'}" do
+                      %i.bi.bi-file-text.me-2
+                      Documents
+
+                  %li.nav-item
+                    = link_to user_path(current_user), class: "nav-link #{'active' if controller_name == 'settings'}" do
+                      %i.bi.bi-gear.me-2
+                      Settings
+
+                .mt-auto
+                  %hr
+                  = button_to destroy_user_session_path, class: "btn btn-outline-danger w-100", method: :delete, data: { turbo_method: :delete } do
+                    %i.bi.bi-box-arrow-right.me-2
+                    Sign Out
+
           #conversation_scroll_spy.h-50.overflow-auto{ data: { 'conversation-right-panel-target' => 'scrollspy' } }
