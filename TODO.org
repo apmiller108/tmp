@@ -18,7 +18,7 @@
 * TODO Disable old models
 * TODO List view of generated images
 * TODO Stream responses
-* TODO Conversation UI enahcements [33/37]
+* TODO Conversation UI enahcements [35/37]
   - [X] Center the conversation turns
   - [X] Collapse side panel
   - [X] Uncollapse side panel
@@ -55,8 +55,8 @@
   - [X] Remove header links from assistant response
   - [X] Wrap each pre (code block) in a copy component
   - [ ] Link to settings. Link to presets
-  - [ ] scroll to top of last response on generate text/image
-  - [ ] Make user content copyable
+  - [X] scroll to top of last response on generate text/image
+  - [X] Make user content copyable
   - [ ] Full screen view of generated images
 * DONE upgrade to rails 8
 CLOSED: [2025-02-16 Sun 19:45]
