@@ -5,13 +5,15 @@
         .turn-icon.ps-3.pt-1
           %i.bi-person-fill
         .card-body.pt-1
-          %p
-            - if image?
-              = link_to '#', class: 'float-start me-2', data: { controller: 'modal-opener', modal: ModalComponent.id,
-                                                                'modal-src' => file_generate_text_request_path(generate_text_request)  } do
-                = image_tag file.variant(**image_variant_options), data: { 'generate-text_request-target' => 'image' },
-                title: file.filename
-            = prompt
+          = render ClipboardComponent.new(y: :bottom, x: :start) do |clipboard|
+            = clipboard.with_copyable do
+              %p{ data: { 'clipboard-target' => 'source '} }
+                - if image?
+                  = link_to '#', class: 'float-start me-2', data: { controller: 'modal-opener', modal: ModalComponent.id,
+                                                                    'modal-src' => file_generate_text_request_path(generate_text_request)  } do
+                    = image_tag file.variant(**image_variant_options), data: { 'generate-text_request-target' => 'image' },
+                    title: file.filename
+                = prompt
   .turn.grid.mb-3
     .g-col-12
       .card.segment-assistant{ id: assistant_response_id }
