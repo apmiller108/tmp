@@ -3,4 +3,5 @@
   = turbo_stream.replace('conversation_content') do
     = turbo_frame_tag :conversation_content do
       = render ConversationComponent.new(conversation_form: ConversationForm.new(user: current_user), class: 'new-conversation')
-
+= turbo_stream.update :conversation_scroll_spy do
+  %div

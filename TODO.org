@@ -61,9 +61,8 @@
   - [X] Link to presets
   - [X] Make right panel collapsible
   - [X] Move presets link to top
-  - [ ] Make scrollspy height 100%
   - [ ] auto scroll the scrollspy nav container as the active item goes into the
-    over flow space.
+    over flow space. Could use the scrollspy event
   - [ ] Full screen view of generated images
 * DONE upgrade to rails 8
 CLOSED: [2025-02-16 Sun 19:45]
