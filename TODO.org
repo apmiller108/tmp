@@ -19,7 +19,7 @@
 * TODO Disable old models
 * TODO List view of generated images
 * TODO Stream responses
-* TODO Conversation UI enahcements [37/39]
+* TODO Conversation UI enahcements [39/42]
   - [X] Center the conversation turns
   - [X] Collapse side panel
   - [X] Uncollapse side panel
@@ -59,8 +59,8 @@
   - [X] Make user content copyable
   - [X] Link to settings.
   - [X] Link to presets
-  - [ ] Make right panel collapsible
-  - [ ] Move presets link to top
+  - [X] Make right panel collapsible
+  - [X] Move presets link to top
   - [ ] Make scrollspy height 100%
   - [ ] auto scroll the scrollspy nav container as the active item goes into the
     over flow space.

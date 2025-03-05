@@ -20,6 +20,8 @@
         background: $white;
       }
     }
+  }
+  .left-panel {
     .list-group-item {
       border: none;
     }
@@ -62,5 +64,24 @@
   }
   .right-panel {
     max-width: $conversation-panel-width;
+    padding-left: 0;
+    .controls {
+      top: 0;
+      right: 0;
+      height: $conversation-header-height;
+      &.panel-hide {
+        position: fixed;
+        padding-right: 1rem;
+        width: 10rem;
+        z-index: 1;
+        background: $white;
+      }
+    }
+    .c-conversation-scrollspy {
+      min-width: calc($conversation-panel-width - 1rem);
+    }
+    .c-scrollspy-nav-item {
+      padding-right: 1rem;
+    }
   }
 }

@@ -11,7 +11,7 @@ class ScrollspyNavItemComponent < ApplicationViewComponent
   end
 
   def nav_text
-    truncate(text, length: 20, separator: ' ')
+    truncate(text, length: 25, separator: ' ')
   end
 
   def tooltip_text
