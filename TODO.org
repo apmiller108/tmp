@@ -5,6 +5,7 @@
 * TODO add audio transcription to conversations
 * TODO add audio generation to conversations
 * TODO add video generation to conversations
+* TODO support for image to image
 * TODO Edit the last prompt. Trigger regenerate the last assistant response.
 * TODO link to memo/conversation
 * TODO cache token count on the conversation
@@ -18,7 +19,7 @@
 * TODO Disable old models
 * TODO List view of generated images
 * TODO Stream responses
-* TODO Conversation UI enahcements [35/37]
+* TODO Conversation UI enahcements [37/39]
   - [X] Center the conversation turns
   - [X] Collapse side panel
   - [X] Uncollapse side panel
@@ -56,7 +57,11 @@
   - [X] Wrap each pre (code block) in a copy component
   - [X] scroll to top of last response on generate text/image
   - [X] Make user content copyable
-  - [ ] Link to settings. Link to presets
+  - [X] Link to settings.
+  - [X] Link to presets
+  - [ ] Make right panel collapsible
+  - [ ] Move presets link to top
+  - [ ] Make scrollspy height 100%
   - [ ] auto scroll the scrollspy nav container as the active item goes into the
     over flow space.
   - [ ] Full screen view of generated images

@@ -1,14 +1,14 @@
 %nav.navbar.navbar-expand-lg.bg-dark.p-0
   .container
     = link_to root_path, class: 'logo navbar-brand' do
-      = render inline: Rails.application.assets.find_asset('tmp.svg').source
+      = render inline: Rails.application.assets.find_asset('tmp-white.svg').source
   - if current_user
     .container.collapse.navbar-collapse.justify-content-center{ data: { controller: 'my-channel' } }
       %ul.navbar-nav
         %li.nav-item
           = link_to "Memos", user_memos_path(current_user), class: 'nav-link text-light'
         %li.nav-item
-          = link_to "Conversations", conversations_path, class: 'nav-link text-light'
+          = link_to "Conversations", new_conversation_path, class: 'nav-link text-light'
         %li.nav-item
           = link_to "Settings", user_path(current_user), class: 'nav-link text-light'
   .container-fluid.justify-content-end
