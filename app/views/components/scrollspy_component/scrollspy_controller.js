@@ -29,9 +29,12 @@ export default class ScrollspyController extends Controller {
 
   scrollToActiveNav() {
     const activeNav = this.navItemTargets.find(i => i.querySelector('a').classList.contains('active'))
-    activeNav.scrollIntoView({
-      behavior: 'smooth'
-    })
+    if (activeNav) {
+      document.getElementById('conversation_scroll_spy').scrollTo({
+        top: activeNav.offsetTop,
+        behavior: 'smooth'
+      })
+    }
   }
 
   navItemTargetConnected() {

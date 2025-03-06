@@ -68,6 +68,7 @@
     over flow space. Could use the scrollspy event
   - [X] Fix new conversation right panel icon spacing
   - [X] Close more info popover on click away
+  - [ ] Pass scrollable container ID to scrollspy component
 * DONE upgrade to rails 8
 CLOSED: [2025-02-16 Sun 19:45]
 * DONE upgrade turbo
