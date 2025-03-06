@@ -2,7 +2,12 @@
   .generated-image {
     img {
       max-width: 100%;
+      cursor: pointer;
+      transition: transform 0.2s ease;
     }
+  }
+  .generated-image img:hover {
+    transform: scale(1.02);
   }
   .popover {
     max-width: calc(var(--bs-popover-max-width) + 230px);

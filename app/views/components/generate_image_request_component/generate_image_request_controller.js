@@ -1,8 +1,8 @@
 import { Controller } from "@hotwired/stimulus"
-import { Popover } from 'bootstrap'
+import { Popover, Modal } from 'bootstrap'
 
 export default class GenerateImageRequestController extends Controller {
-  static targets = ['moreInfo', 'image', 'spinner']
+  static targets = ['moreInfo', 'image', 'spinner', 'modal', 'fullImage']
 
   connect() {
     if (this.hasMoreInfoTarget) {
@@ -51,5 +51,12 @@ export default class GenerateImageRequestController extends Controller {
         Loading...
       </turbo-frame>
     `
+  }
+
+  expandImage() {
+    const fullSizeUrl = this.imageTarget.dataset.originalUrl
+    this.fullImageTarget.src = fullSizeUrl
+    const modal = new Modal(this.modalTarget)
+    modal.show()
   }
 }
