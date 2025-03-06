@@ -83,4 +83,8 @@
             %button.btn.icon-btn.icon-btn-auto{ data: { 'bs-toggle' => 'collapse', 'bs-target' => '#conversation_scroll_spy' } }
               %i.bi.bi-arrows-collapse-vertical{ data: { 'conversation-right-panel-target' => 'collapseIcon',
                                                         'bs-toggle' => 'tooltip', 'bs-title' => 'Toggle Section' }}
+
+          .scrollspy-heading{ data: { 'conversation-right-panel-target' => 'scrollspyHeading' } }
+            %strong.ms-3 In this chat
+            %hr.my-2.ms-3
           #conversation_scroll_spy.conversation-scrollspy.h-50.overflow-y-auto.overflow-x-hidden.collapse.show.collapse-horizontal{ data: { 'conversation-right-panel-target' => 'scrollspy', action: 'hidden.bs.collapse->conversation-right-panel#onHidePanel show.bs.collapse->conversation-right-panel#onShowPanel' } }

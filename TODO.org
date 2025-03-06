@@ -21,7 +21,7 @@
 * TODO Stream responses
 * TODO Conversation Stats
   Images, other media, tokens...
-* TODO Conversation UI enahcements [40/41]
+* TODO Conversation UI enahcements [42/43]
   - [X] Center the conversation turns
   - [X] Collapse side panel
   - [X] Uncollapse side panel
@@ -66,8 +66,8 @@
   - [X] Full screen view of generated images
   - [ ] auto scroll the scrollspy nav container as the active item goes into the
     over flow space. Could use the scrollspy event
-  - [ ] Fix new conversation right panel icon spacing
-  - [ ] Close more info popover on click away
+  - [X] Fix new conversation right panel icon spacing
+  - [X] Close more info popover on click away
 * DONE upgrade to rails 8
 CLOSED: [2025-02-16 Sun 19:45]
 * DONE upgrade turbo
