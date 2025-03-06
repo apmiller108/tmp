@@ -12,7 +12,8 @@ export default class GenerateImageRequestController extends Controller {
         html: true,
         boundary: this.element,
         placement: 'top',
-        fallbackPlacements: ['right', 'bottom']
+        fallbackPlacements: ['right', 'bottom'],
+        trigger: 'focus' // Dismiss on next click. Cross-browser support requires elem be `a` tag with tabindex.
       })
     }
   }

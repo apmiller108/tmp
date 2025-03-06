@@ -28,8 +28,8 @@
                                                          'bs-title' => t('download_image') },
                                                  class: 'btn icon-btn icon-btn-sm' do
                   %i.bi.bi-download.fs-5
-                %button.btn.icon-btn.icon-btn-sm.more-info.me-2{ data: { 'generate-image-request-target' => 'moreInfo',
-                                                                 src: blob_detail_path(image.blob)  } }
+                %a.btn.icon-btn.icon-btn-sm.more-info.me-2{ tabindex: 0, data: { 'generate-image-request-target' => 'moreInfo',
+                                                                                 src: blob_detail_path(image.blob)  } }
                   %i.bi-info-square{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => 'Info' } }
               .delete.justify-content-end.align-items-center
                 = link_to conversation_conversation_turn_path(conversation, conversation_turn),

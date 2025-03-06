@@ -12,7 +12,8 @@ export default class GenerateTextRequestController extends Controller {
         html: true,
         boundary: this.element,
         placement: 'right',
-        fallbackPlacements: ['bottom', 'top']
+        fallbackPlacements: ['bottom', 'top'],
+        trigger: 'focus' // Dismiss on next click. Cross-browser support requires elem be `a` tag with tabindex.
       })
     }
   }

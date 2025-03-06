@@ -36,7 +36,7 @@
               = clipboard.with_copyable do
                 %div{ data: { 'clipboard-target' => 'source' } }= assistant_response.html_safe
               = clipboard.with_additional_content do
-                %button.btn.icon-btn.icon-btn-sm.more-info{ data: { 'generate-text-request-target' => 'moreInfo' } }
+                %a.btn.icon-btn.icon-btn-sm.more-info{ tabindex: 0, data: { 'generate-text-request-target' => 'moreInfo' } }
                   %i.bi-info-square{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => 'Info' } }
                 = link_to conversation_conversation_turn_path(conversation, conversation_turn),
                   class: 'float-end fs-5 icon-btn icon-btn-sm danger',
