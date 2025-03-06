@@ -21,7 +21,7 @@
 * TODO Stream responses
 * TODO Conversation Stats
   Images, other media, tokens...
-* TODO Conversation UI enahcements [42/43]
+* TODO Conversation UI enahcements [43/43]
   - [X] Center the conversation turns
   - [X] Collapse side panel
   - [X] Uncollapse side panel
@@ -64,7 +64,7 @@
   - [X] Make right panel collapsible
   - [X] Move presets link to top
   - [X] Full screen view of generated images
-  - [ ] auto scroll the scrollspy nav container as the active item goes into the
+  - [X] auto scroll the scrollspy nav container as the active item goes into the
     over flow space. Could use the scrollspy event
   - [X] Fix new conversation right panel icon spacing
   - [X] Close more info popover on click away

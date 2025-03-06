@@ -19,6 +19,19 @@ export default class ScrollspyController extends Controller {
       smoothScroll: true,
       threshold: [0, 0.25, 0.5, 0.75, 1]
     })
+
+    scrollableContainer.addEventListener('activate.bs.scrollspy', this.scrollToActiveNav.bind(this))
+  }
+
+  disconnect() {
+    scrollableContainer.removeEventListener('activate.bs.scrollspy', this.scrollToActiveNav.bind(this))
+  }
+
+  scrollToActiveNav() {
+    const activeNav = this.navItemTargets.find(i => i.querySelector('a').classList.contains('active'))
+    activeNav.scrollIntoView({
+      behavior: 'smooth'
+    })
   }
 
   navItemTargetConnected() {
