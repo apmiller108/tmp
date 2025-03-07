@@ -19,6 +19,7 @@
 * TODO Disable old models
 * TODO List view of generated images
 * TODO Stream responses
+  https://github.com/dleavitt/faraday-typhoeus
 * TODO Conversation Stats
   Images, other media, tokens...
 * TODO Conversation UI enahcements [43/43]
