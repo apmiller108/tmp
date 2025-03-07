@@ -12,7 +12,8 @@ RSpec.describe Conversations::GenerateImageJob, type: :job do
   describe '#perform' do
     subject(:perform) { described_class.new.perform(request.id) }
 
-    let(:request) { build_stubbed :generate_image_request, user: }
+    let(:conversation_turn) { build_stubbed :conversation_turn }
+    let(:request) { build_stubbed :generate_image_request, user:, conversation_turn: }
     let(:user) { build_stubbed :user }
     let(:params) { request.parameterize }
     let(:generative_image) { instance_double GenerativeImage }
@@ -58,6 +59,17 @@ RSpec.describe Conversations::GenerateImageJob, type: :job do
             [user, TurboStreams::STREAMS[:main]],
             component: kind_of(ConversationTurnComponent),
             action: :replace
+          )
+        )
+      end
+
+      it 'broadcasts the scrollspy nav item' do
+        expect(ViewComponentBroadcaster).to(
+          have_received(:call).with(
+            [user, TurboStreams::STREAMS[:main]],
+            component: kind_of(ScrollspyNavItemComponent),
+            action: :append,
+            target: ScrollspyComponent::ITEMS_CONTAINER_ID
           )
         )
       end

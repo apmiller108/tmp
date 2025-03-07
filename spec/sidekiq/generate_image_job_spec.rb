@@ -12,7 +12,7 @@ RSpec.describe GenerateImageJob, type: :job do
   describe '#perform' do
     subject(:perform) { described_class.new.perform(request.id) }
 
-    let(:request) { build_stubbed :generate_image_request }
+    let(:request) { build_stubbed :generate_image_request, user: build_stubbed(:user) }
     let(:params) { request.parameterize }
     let(:generative_image) { instance_double GenerativeImage }
     let(:image) { file_fixture('image.png').read }

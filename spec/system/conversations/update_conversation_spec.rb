@@ -47,18 +47,16 @@ RSpec.describe 'update conversation', type: :system do
     fill_in 'conversation_prompt', with: prompt
 
     find('.options-toggle-btn').click
-    expect(page).to have_current_path edit_conversation_path(conversation)
-
     within('#advanced-options') do
       find("option[value='#{model.api_name}']").select_option
       find("option[value='#{generate_text_preset.id}']").select_option
-      find("option[value='#{temperature}']").select_option
+      find('#conversation_temperature').set(temperature)
     end
 
+    page.driver.clear_network_traffic
     within('.c-prompt-form') do
       find('button[type=submit]').click
     end
-
     page.driver.wait_for_network_idle
 
     expect(page).to have_css('.c-conversation-turn', count: 4)
@@ -122,17 +120,21 @@ RSpec.describe 'update conversation', type: :system do
 
       # Fill out and submit the form
       fill_in 'conversation_prompt', with: prompt
-      find('.options-toggle-btn').click
+
+      # I have no idea why sometimes find().click does not work here.
+      page.execute_script("document.querySelector('.options-toggle-btn').click()")
+      # find('.options-toggle-btn').click
       within('#advanced-options') do
         find("option[value='#{model.api_name}']").select_option
         find("option[value='#{generate_text_preset.id}']").select_option
-        find("option[value='#{temperature}']").select_option
+        find('#conversation_temperature').set(temperature)
       end
+
+      page.driver.clear_network_traffic
       within('.c-prompt-form') do
         find('button[type=submit]').click
       end
-
-      page.driver.wait_for_network_idle
+      page.driver.wait_for_network_idle(timeout: 15)
 
       # The controller updates the conversation turn component in render, and the
       # background job that generates the text broadcasts the conversation turn

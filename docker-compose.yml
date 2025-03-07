@@ -60,7 +60,7 @@ services:
     depends_on:
       database:
         condition: service_healthy
-    mem_limit: 750m
+    mem_limit: "${TMP_APP_MEM_LIMIT:-750m}"
   sidekiq:
     <<: *base
     depends_on:
@@ -73,7 +73,7 @@ services:
     volumes:
       - ".:/rails"
       - "/rails/tmp" # don't mount tmp
-    mem_limit: 250m
+    mem_limit: "${TMP_SIDEKIQ_MEM_LIMIT:-250m}"
   anycable:
     <<: *base
     command: bundle exec anycable
@@ -109,7 +109,7 @@ services:
     environment:
       PORT: 3333
       CONNECTION_TIMEOUT: -1 # No timeout
-    mem_limit: 300m
+    mem_limit: 500m
 
 volumes:
   redis:

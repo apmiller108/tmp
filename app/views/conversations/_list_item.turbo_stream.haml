@@ -7,6 +7,7 @@
     class: 'convo-edit-link' do
       %div= truncate(conversation.title, length: 50, separator: ' ')
     = link_to conversation_path(conversation),
+      id: dom_id(conversation, 'delete'),
       class: 'fs-5 btn icon-btn icon-btn-sm danger',
       disabled: conversation.memo_id.present?,
       data: { turbo_method: 'delete', turbo_confirm: t('confirm'),

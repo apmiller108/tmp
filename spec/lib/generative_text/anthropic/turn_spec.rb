@@ -40,7 +40,8 @@ RSpec.describe GenerativeText::Anthropic::Turn do
       let(:model) { GenerativeText::Anthropic::MODELS.find { |m| m.capabilities.image? }.api_name }
       let(:io) { File.open Rails.root.join('spec/fixtures/files/image.png') }
       let!(:blob) { ActiveStorage::Blob.create_and_upload!(io:, filename: 'image.png') }
-      let(:variant) { instance_double ActiveStorage::VariantWithRecord, image: }
+      let(:variant) { instance_double ActiveStorage::VariantWithRecord, processed: processed_image }
+      let(:processed_image) { double image: }
       let(:image) { instance_double ActiveStorage::Blob, content_type: 'image/webp' }
 
       before do

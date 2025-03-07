@@ -10,7 +10,9 @@ RSpec.describe 'Signing out', type: :system do
     fill_in 'Password', with: password
     click_button 'Log in'
 
-    click_link 'Sign Out'
+    find('button[aria-controls="offcanvasNavbar"]').click
+    click_button 'Sign Out'
     expect(page).to have_current_path '/'
+    expect(page).to have_content 'Log in'
   end
 end

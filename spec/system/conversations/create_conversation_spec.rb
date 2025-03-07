@@ -27,10 +27,7 @@ RSpec.describe 'create conversation', type: :system do
 
   specify 'create conversation' do
     login(user:)
-    visit conversations_path
-
-    click_link 'New Conversation'
-    expect(page).to have_current_path new_conversation_path
+    visit new_conversation_path
 
     fill_in 'conversation_prompt', with: prompt
 
@@ -39,7 +36,7 @@ RSpec.describe 'create conversation', type: :system do
     within('#advanced-options') do
       find("option[value='#{model.api_name}']").select_option
       find("option[value='#{generate_text_preset.id}']").select_option
-      find("option[value='#{temperature}']").select_option
+      find('#conversation_temperature').set(temperature)
     end
 
     find('button[type=submit]').click
@@ -54,12 +51,14 @@ RSpec.describe 'create conversation', type: :system do
     end
 
     # Copy assistant response to clipboard
-    find('.copy-btn').click
-    copied = page.driver.browser.evaluate_async(%(arguments[0](navigator.clipboard.readText())), 1)
-    expect(copied.strip).to eq assistant_response
+    within('.assistant-response') do
+      find('.copy-btn').click
+      copied = page.driver.browser.evaluate_async(%(arguments[0](navigator.clipboard.readText())), 1)
+      expect(copied.strip).to eq assistant_response
+    end
 
     # View generate text meta data
-    find('button.more-info').click
+    find('a.more-info').click
     expect(page).to have_css('.popover')
     within('.popover') do
       expect(page).to have_content "Model: #{model.name}"
@@ -67,7 +66,7 @@ RSpec.describe 'create conversation', type: :system do
       expect(page).to have_content "Temperature: #{temperature}"
       expect(page).to have_content "Tokens: #{79 + 942}"
     end
-    find('button.more-info').click
+    find('a.more-info').click
 
     # Delete conversation turn
     generate_text_request = conversation.generate_text_requests.completed.last
@@ -77,5 +76,7 @@ RSpec.describe 'create conversation', type: :system do
       end
     end
     expect(page).not_to have_css "#generate_text_request_#{generate_text_request.id}"
+
+    page.execute_script('localStorage.clear()')
   end
 end

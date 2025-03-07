@@ -91,7 +91,7 @@ RSpec.describe PromptFormComponent, type: :component do
       end
 
       it 'sets the temp to the previously completed request\'s temp' do
-        expect(page).to have_select 'conversation_temperature', selected: temperature
+        expect(page).to have_field 'conversation_temperature', with: temperature
       end
     end
   end

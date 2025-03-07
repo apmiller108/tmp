@@ -22,7 +22,8 @@
   https://github.com/dleavitt/faraday-typhoeus
 * TODO Conversation Stats
   Images, other media, tokens...
-* TODO Conversation UI enahcements [43/43]
+* DONE Conversation UI enahcements [43/43]
+CLOSED: [2025-03-07 Fri 15:54]
   - [X] Center the conversation turns
   - [X] Collapse side panel
   - [X] Uncollapse side panel
@@ -69,7 +70,6 @@
     over flow space. Could use the scrollspy event
   - [X] Fix new conversation right panel icon spacing
   - [X] Close more info popover on click away
-  - [ ] Pass scrollable container ID to scrollspy component
 * DONE upgrade to rails 8
 CLOSED: [2025-02-16 Sun 19:45]
 * DONE upgrade turbo

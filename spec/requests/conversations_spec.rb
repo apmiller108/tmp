@@ -93,14 +93,19 @@ RSpec.describe 'Conversations', type: :request do
 
     it_behaves_like 'an authenticated route'
 
-    it 'has 303 response' do
+    it 'has 200 response' do
       request
-      expect(response).to have_http_status :see_other
+      expect(response).to have_http_status :ok
     end
 
-    it 'redirects to the conversation edit' do
+    it 'replaces the conversation content' do
       request
-      expect(response).to redirect_to(edit_conversation_path(user.conversations.last))
+      expect(response).to have_turbo_stream(action: 'replace', target: 'conversation_content')
+    end
+
+    it 'prepends the new conversation index item to the list' do
+      request
+      expect(response).to have_turbo_stream(action: 'prepend', target: 'conversations')
     end
 
     it 'creates a conversation' do

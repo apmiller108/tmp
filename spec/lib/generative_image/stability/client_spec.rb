@@ -52,7 +52,8 @@ RSpec.describe GenerativeImage::Stability::Client do
       it 're-raises a client error' do
         expect do
           client.text_to_image(**args)
-        end.to raise_error(GenerativeImage::Stability::ClientError, "400: #{response_body}")
+        end.to raise_error(GenerativeImage::Stability::ClientError,
+                           "the server responded with status 400: 400: #{response_body}")
       end
     end
   end

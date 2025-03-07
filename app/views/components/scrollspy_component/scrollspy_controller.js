@@ -13,19 +13,18 @@ export default class ScrollspyController extends Controller {
   }
 
   connect() {
-    const scrollableContainer = document.getElementById(this.containerId)
-    this.scrollSpy = new ScrollSpy(scrollableContainer, {
+    this.scrollableContainer = document.getElementById(this.containerId)
+    this.scrollSpy = new ScrollSpy(this.scrollableContainer, {
       target: this.targetId,
       smoothScroll: true,
       threshold: [0, 0.25, 0.5, 0.75, 1]
     })
 
-    scrollableContainer.addEventListener('activate.bs.scrollspy', this.scrollToActiveNav.bind(this))
+    this.scrollableContainer.addEventListener('activate.bs.scrollspy', this.scrollToActiveNav.bind(this))
   }
 
   disconnect() {
-    const scrollableContainer = document.getElementById(this.containerId)
-    scrollableContainer.removeEventListener('activate.bs.scrollspy', this.scrollToActiveNav.bind(this))
+    this.scrollableContainer.removeEventListener('activate.bs.scrollspy', this.scrollToActiveNav.bind(this))
   }
 
   scrollToActiveNav() {

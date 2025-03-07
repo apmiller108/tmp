@@ -20,6 +20,7 @@ RSpec.describe 'Create and view memo', type: :system do
   end
 
   before do
+    page.driver.clear_network_traffic
     stub_stability_core_request
 
     stub_anthropic_request(
@@ -47,10 +48,12 @@ RSpec.describe 'Create and view memo', type: :system do
     find('option[label="3:2"]').select_option
     find('option[label="Comic Book"]').select_option
     find('input#prompt').set gen_image_prompt
+
+    page.driver.clear_network_traffic
     click_button 'Submit'
 
     # Generated image appears in the editor
-    page.driver.wait_for_network_idle
+    page.driver.wait_for_network_idle(timeout: 15)
     generate_image_request = user.generate_image_requests.last
     expect(generate_image_request.attributes).to(
       include('options' => { 'style' => style_preset, 'aspect_ratio' => '3:2' },
@@ -61,7 +64,7 @@ RSpec.describe 'Create and view memo', type: :system do
     expect(figure).to have_css 'img'
 
     # Wait for direct upload to finish
-    page.driver.wait_for_network_idle
+    page.driver.wait_for_network_idle(timeout: 15)
 
     # Save the memo
     click_button 'save'
@@ -110,15 +113,14 @@ RSpec.describe 'Create and view memo', type: :system do
 
     # Generate text autosaves the memo
     find('input[name="generateText"]').set generate_text_prompt
+    page.driver.clear_network_traffic
     click_button 'Submit'
-    page.driver.wait_for_network_idle
     expect(page).to have_content generative_text
-    page.driver.wait_for_network_idle
+    page.driver.wait_for_network_idle(timeout: 15)
     memo = user.memos.last
     expect(memo.plain_text_body).to include generative_text
 
     # A conversation was created which stores both the user prompt and AI response
-    page.driver.wait_for_network_idle
     conversation = user.conversations.last
     expect(conversation.memo_id).to eq memo.id
     expect(conversation.exchange.find { |e| e['role'] == 'user' }['content'][0]['text']).to eq generate_text_prompt

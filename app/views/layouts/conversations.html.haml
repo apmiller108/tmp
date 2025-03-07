@@ -28,7 +28,7 @@
                                                                 modal: ModalComponent.id,
                                                                 'bs-toggle' => 'tooltip', 'bs-title' => t('conversation.search') } }
                   %i.bi.bi-search
-                = link_to new_conversation_path, class: 'btn icon-btn icon-btn-auto',
+                = link_to new_conversation_path, class: 'btn icon-btn icon-btn-auto', id: 'new-conversation',
                 data: { turbo_frame: :conversation_content, turbo_action: :advance,
                         action: 'click->conversation-left-panel#onNewConversation',
                         'bs-toggle' => 'tooltip', 'bs-title' => t('conversation.new') } do

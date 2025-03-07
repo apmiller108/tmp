@@ -5,6 +5,6 @@ module ApplicationHelper
 
   # @param [ActiveRecord, #dom_id]
   def list_dom_id(record)
-    dom_id(record, 'list_')
+    dom_id(record, 'list')
   end
 end

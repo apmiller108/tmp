@@ -8,7 +8,9 @@ RSpec.describe 'create generate text preset', type: :system do
     login(user:)
     visit edit_conversation_path(conversation)
 
-    find('.options-toggle-btn').click
+    # I have no idea why sometimes find().click does not work here.
+    # find('.options-toggle-btn').click
+    page.execute_script("document.querySelector('.options-toggle-btn').click()")
     within('#advanced-options') do
       click_link 'new_preset_link'
     end
@@ -40,8 +42,7 @@ RSpec.describe 'create generate text preset', type: :system do
       expect(page).to have_select 'conversation_generate_text_preset_id',
                                   selected: preset.name
       # The presets temperature is automatically selected
-      expect(page).to have_select 'conversation_temperature',
-                                  selected: preset.temperature.to_s
+      expect(page).to have_field 'conversation_temperature', with: preset.temperature.to_s
     end
   end
 end

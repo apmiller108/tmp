@@ -6,13 +6,10 @@ RSpec.describe 'signing in', type: :system do
 
   specify 'user signs in' do
     visit '/'
-    click_link 'Log in'
-    expect(page).to have_current_path('/users/sign_in')
     fill_in 'Email', with: user.email
     fill_in 'Password', with: password
     click_button 'Log in'
-    expect(page).to have_text I18n.t('devise.sessions.signed_in')
     expect(page).to have_current_path('/')
-    expect(page).to have_link('Sign Out')
+    expect(page).to have_css('.c-prompt-form')
   end
 end

@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     end
 
     unauthenticated do
-      root 'users/registrations#new'
+      root 'users/sessions#new'
     end
   end
 
