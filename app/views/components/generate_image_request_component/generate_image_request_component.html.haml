@@ -37,16 +37,17 @@
                   data: { turbo_method: 'delete', turbo_confirm: t('confirm'),
                          'bs-toggle' => 'tooltip', 'bs-title' => t('delete', name: t('image')) } do
                   %i.bi-trash3
-  .modal.fade{ id: "imageModal-#{id}", tabindex: "-1", "aria-labelledby": "imageModalLabel-#{id}", "aria-hidden": "true",
-               data: { 'generate-image-request-target': 'modal' } }
-    .modal-dialog.modal-dialog-centered.modal-fullscreen
-      .modal-content
-        .modal-header
-          %h5.modal-title{ id: "imageModalLabel-#{id}" }= image.blob.filename
-          %button.btn-close{ type: "button", "data-bs-dismiss": "modal", "aria-label": "Close" }
-        .modal-body.text-center
-          %img.img-fluid{ data: { 'generate-image-request-target': 'fullImage' } }
-        .modal-footer.d-flex
-          = link_to blob_path(image.blob), data: { turbo: false, 'bs-toggle' => 'tooltip', 'bs-title' => t('download_image') },
-                                           class: 'btn icon-btn icon-btn-sm' do
-            %i.bi.bi-download.fs-5
+  - if completed?
+    .modal.fade{ id: "imageModal-#{id}", tabindex: "-1", "aria-labelledby": "imageModalLabel-#{id}", "aria-hidden": "true",
+                data: { 'generate-image-request-target': 'modal' } }
+      .modal-dialog.modal-dialog-centered.modal-fullscreen
+        .modal-content
+          .modal-header
+            %h5.modal-title{ id: "imageModalLabel-#{id}" }= image.blob.filename
+            %button.btn-close{ type: "button", "data-bs-dismiss": "modal", "aria-label": "Close" }
+          .modal-body.text-center
+            %img.img-fluid{ data: { 'generate-image-request-target': 'fullImage' } }
+          .modal-footer.d-flex
+            = link_to blob_path(image.blob), data: { turbo: false, 'bs-toggle' => 'tooltip', 'bs-title' => t('download_image') },
+                                            class: 'btn icon-btn icon-btn-sm' do
+              %i.bi.bi-download.fs-5

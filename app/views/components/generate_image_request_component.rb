@@ -3,7 +3,7 @@
 class GenerateImageRequestComponent < ApplicationViewComponent
   attr_reader :generate_image_request, :conversation_turn
 
-  delegate :created?, :in_progress?, :failed?, :image, to: :generate_image_request
+  delegate :created?, :in_progress?, :failed?, :completed?, :image, to: :generate_image_request
 
   delegate :conversation, to: :conversation_turn
 

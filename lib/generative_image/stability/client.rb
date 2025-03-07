@@ -21,7 +21,9 @@ class GenerativeImage
         end
         TextToImageResponse.new(response)
       rescue Faraday::Error => e
-        raise Stability::ClientError, "#{e.response_status}: #{e.response_body}"
+        message = "#{e}: #{e.response_status}: #{e.response_body}"
+        Rails.logger.warn "#{self.class} : #{message}"
+        raise Stability::ClientError, message
       end
 
       private
