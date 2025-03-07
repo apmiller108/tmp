@@ -24,13 +24,14 @@ export default class ScrollspyController extends Controller {
   }
 
   disconnect() {
+    const scrollableContainer = document.getElementById(this.containerId)
     scrollableContainer.removeEventListener('activate.bs.scrollspy', this.scrollToActiveNav.bind(this))
   }
 
   scrollToActiveNav() {
     const activeNav = this.navItemTargets.find(i => i.querySelector('a').classList.contains('active'))
     if (activeNav) {
-      document.getElementById('conversation_scroll_spy').scrollTo({
+      this.element.scrollTo({
         top: activeNav.offsetTop,
         behavior: 'smooth'
       })
