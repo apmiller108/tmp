@@ -80,6 +80,7 @@ class GenerateTextRequestComponent < ApplicationViewComponent
     doc.to_html
   end
 
+  # rubocop:disable Rails/OutputSafety
   def copyable_pre(pre_tag)
     original_content = pre_tag.inner_html
     attributes = pre_tag.attributes.transform_values(&:value)
@@ -93,4 +94,5 @@ class GenerateTextRequestComponent < ApplicationViewComponent
       end
     end
   end
+  # rubocop:enable Rails/OutputSafety
 end

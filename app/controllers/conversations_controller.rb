@@ -58,7 +58,9 @@ class ConversationsController < ApplicationController
   def edit
     @conversation = current_user.conversations
                                 .includes(
-                                  turns: { turnable: [:file_attachment, :file_blob, :image_attachment, :image_blob, :prompts] }
+                                  turns: {
+                                    turnable: [:file_attachment, :file_blob, :image_attachment, :image_blob, :prompts]
+                                  }
                                 ).find(params[:id])
     @conversation_form = ConversationForm.new(user: current_user, conversation: @conversation)
     render content_type: 'text/html; turbo-stream'

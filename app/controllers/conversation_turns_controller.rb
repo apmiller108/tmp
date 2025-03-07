@@ -8,9 +8,9 @@ class ConversationTurnsController < ApplicationController
       if conversation_turn.destroy
         format.turbo_stream do
           render turbo_stream: [
-                   turbo_stream.remove(conversation_turn),
-                   turbo_stream.remove(helpers.dom_id(conversation_turn, 'nav_item'))
-                 ]
+            turbo_stream.remove(conversation_turn),
+            turbo_stream.remove(helpers.dom_id(conversation_turn, 'nav_item'))
+          ]
         end
       else
         format.turbo_stream do
