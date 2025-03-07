@@ -32,7 +32,7 @@ RSpec.describe 'update conversation', type: :system do
     within("#list_conversation_#{conversation.id}") do
       find("#delete_conversation_#{conversation.id}").click
     end
-    expect(page).to_not have_content conversation.title
+    expect(page).not_to have_content conversation.title
     within('#conversations') do
       expect(page).to have_css('.list-group-item', count: conversations.size - 1)
     end
