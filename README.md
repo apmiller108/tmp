@@ -5,6 +5,8 @@ Multi-modal AI chat application written in Ruby on Rails.
 - Chat with Anthropic LLMs
 - Generate images with Stability with assistance from LLM
 
+<img width="1269" alt="Screenshot 2025-03-07 at 16 10 37" src="https://github.com/user-attachments/assets/20c7348b-eea9-4e45-8ee0-884c028f1d5c" />
+
 Documents
 - Hacks the Trix editor to add AI features such as generating text, text to image and transcribing audio. 
 
