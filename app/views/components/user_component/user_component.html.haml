@@ -23,11 +23,11 @@
               .g-col-4
                 = form.label 'Default model', class: 'form-label fw-bold'
                 = form.collection_select :text_model,
-                                      GenerativeText::MODELS.sort_by(&:vendor),
-                                      :api_name,
-                                      :name,
-                                      {},
-                                      class: 'form-select'
+                                          GenerativeText.active_models.sort_by(&:vendor),
+                                          :api_name,
+                                          :name,
+                                          {},
+                                          class: 'form-select'
               .g-start-9.g-col-4.d-flex.justify-content-center.align-items-center
                 = link_to "Manage presets", generate_text_presets_path, class: 'link-offset-1'
             .d-flex.justify-content-center.align-items-center

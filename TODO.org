@@ -16,7 +16,8 @@
 * TODO validate schema for tool use responses
     https://github.com/voxpupuli/json-schema
 * TODO Wire up search
-* TODO Disable old models
+* DONE Disable old models
+CLOSED: [2025-03-07 Fri 19:41]
 * TODO List view of generated images
 * TODO Stream responses
   https://github.com/dleavitt/faraday-typhoeus

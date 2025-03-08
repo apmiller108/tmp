@@ -1,7 +1,7 @@
 class GenerativeText
   InvalidRequestError = Class.new(StandardError)
 
-  Model = Struct.new('Model', :api_name, :name, :max_tokens, :vendor, :capabilities, keyword_init: true)
+  Model = Struct.new('Model', :api_name, :name, :max_tokens, :vendor, :capabilities, :active?, keyword_init: true)
   Model::Capabilities = Struct.new('ModelCapabilities', :image?)
 
   MODELS = [
@@ -10,6 +10,10 @@ class GenerativeText
   ].freeze
 
   DEFAULT_MODEL = MODELS.find { _1.api_name == 'claude-3-5-haiku-latest' }
+
+  def self.active_models
+    MODELS.select(&:active?)
+  end
 
   def self.summary_prompt_for(transcription:)
     Helpers.transcription_summary_prompt(transcription)

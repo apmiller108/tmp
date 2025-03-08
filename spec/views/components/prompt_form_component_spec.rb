@@ -63,7 +63,7 @@ RSpec.describe PromptFormComponent, type: :component do
     end
 
     context 'with previous completed request' do
-      let(:model) { GenerativeText::MODELS.sample }
+      let(:model) { GenerativeText.active_models.sample }
       let(:temperature) { '0.7' }
       let!(:preset) { create :generate_text_preset }
       let(:generate_text_requests) { GenerateTextRequest.none }

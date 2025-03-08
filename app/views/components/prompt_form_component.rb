@@ -45,11 +45,11 @@ class PromptFormComponent < ApplicationViewComponent
   end
 
   def model_options
-    GenerativeText::MODELS.sort_by(&:vendor).map { |m| [m.name, m.api_name] }
+    GenerativeText.active_models.sort_by(&:vendor).map { |m| [m.name, m.api_name] }
   end
 
   def model_data
-    GenerativeText::MODELS.to_json(only: [:api_name, :capabilities, :image?])
+    GenerativeText.active_models.to_json(only: [:api_name, :capabilities, :image?])
   end
 
   def after_create_preset_redirect_path
