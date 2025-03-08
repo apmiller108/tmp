@@ -48,7 +48,9 @@ class GenerateTextJob
   end
 
   def invoke_model(generate_text_request)
-    GenerativeText.new.invoke_model(generate_text_request)
+    GenerativeText.new.invoke_model_stream(generate_text_request) do |text|
+      puts "TEXT RECEIVED: #{text}"
+    end
   end
 
   class << self

@@ -10,17 +10,17 @@ class GenerativeText
       end
 
       # rubocop:disable Metrics/MethodLength
-      def update(event_type, data)
+      def update(event_type:, event_data:)
         case event_type
         when 'message_start'
-          @message = data.fetch('message')
+          @message = event_data.fetch('message')
         when 'content_block_start'
-          index = data.fetch('index')
-          @content_blocks[index] = data.fetch('content_block')
+          index = event_data.fetch('index')
+          @content_blocks[index] = event_data.fetch('content_block')
         when 'content_block_delta'
-          parse_content_delta(data)
+          parse_content_delta(event_data)
         when 'message_delta'
-          parse_message_delta(data)
+          parse_message_delta(event_data)
         when 'message_stop'
           @complete = true
         end
