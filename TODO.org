@@ -1,13 +1,7 @@
 :PROPERTIES:
 :CATEGORY: tmp
 :END:
-* TODO look into using https://runware.ai/
-* TODO add audio transcription to conversations
-* TODO add audio generation to conversations
-* TODO add video generation to conversations
-* TODO support for image to image
 * TODO Edit the last prompt. Trigger regenerate the last assistant response.
-* TODO link to memo/conversation
 * TODO cache token count on the conversation
   Or soft delete requests
 * TODO flatten the routes
@@ -15,14 +9,19 @@
   https://docs.anthropic.com/en/docs/build-with-claude/pdf-support
 * TODO validate schema for tool use responses
     https://github.com/voxpupuli/json-schema
-* TODO Wire up search
-* DONE Disable old models
-CLOSED: [2025-03-07 Fri 19:41]
-* TODO List view of generated images
-* TODO Stream responses
-  https://github.com/dleavitt/faraday-typhoeus
 * TODO Conversation Stats
   Images, other media, tokens...
+* TODO look into using https://runware.ai/
+* TODO add audio transcription to conversations
+* TODO add audio generation to conversations
+* TODO add video generation to conversations
+* TODO Wire up search
+* TODO List view of generated images
+  https://github.com/dleavitt/faraday-typhoeus
+* TODO support for image to image
+* TODO Stream responses
+* DONE Disable old models
+CLOSED: [2025-03-07 Fri 19:41]
 * DONE Conversation UI enahcements [43/43]
 CLOSED: [2025-03-07 Fri 15:54]
   - [X] Center the conversation turns
