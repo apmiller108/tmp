@@ -16,7 +16,7 @@ export default class ClipBoardController extends Controller {
   }
 
   copy() {
-    const text = this.sourceTarget.value || this.sourceTarget.textContent
+    const text = (this.sourceTarget.value || this.sourceTarget.textContent)?.trim()
     navigator.clipboard.writeText(text)
     this.copySuccess()
   }

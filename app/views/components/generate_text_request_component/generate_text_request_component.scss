@@ -11,4 +11,9 @@
   .popover {
     pointer-events: none;
   }
+  .segment-user {
+    .copy-btn {
+      clear: both;
+    }
+  }
 }

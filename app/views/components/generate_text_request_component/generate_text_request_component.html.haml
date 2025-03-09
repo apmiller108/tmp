@@ -7,7 +7,7 @@
         .card-body.pt-1{ id: user_message_id}
           = render ClipboardComponent.new(y: :bottom, x: :start) do |clipboard|
             = clipboard.with_copyable do
-              %p{ data: { 'clipboard-target' => 'source '} }
+              %div{ data: { 'clipboard-target' => 'source '} }
                 - if image?
                   = link_to '#', class: 'float-start me-2', data: { controller: 'modal-opener', modal: ModalComponent.id,
                                                                     'modal-src' => file_generate_text_request_path(generate_text_request)  } do
