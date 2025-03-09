@@ -1,6 +1,7 @@
 class GenerateTextJob
   include Sidekiq::Job
   include Dry::Effects::Handler.Reader(:current_user)
+  include ActionView::RecordIdentifier
   extend Flashable
 
   sidekiq_options retry: 1
@@ -48,8 +49,19 @@ class GenerateTextJob
   end
 
   def invoke_model(generate_text_request)
+    assistant_response = ''
+    message_count = 0
     GenerativeText.new.invoke_model_stream(generate_text_request) do |text|
-      puts "TEXT RECEIVED: #{text}"
+      message_count += 1
+      assistant_response += text
+      if (message_count % 5).zero?
+        ViewComponentBroadcaster.call(
+          [generate_text_request.user, TurboStreams::STREAMS[:main]],
+          component: MarkdownToHtmlComponent.new(markdown: assistant_response),
+          action: :update,
+          target: dom_id(generate_text_request, 'assistant_response')
+        )
+      end
     end
   end
 

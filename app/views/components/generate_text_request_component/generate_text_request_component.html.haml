@@ -1,10 +1,10 @@
 .c-generate-text-request{ id:, data: { controller: 'generate-text-request', **dataset } }
   .turn.grid.mb-3
     .g-col-12
-      .card.segment-user{ id: user_message_id}
+      .card.segment-user
         .turn-icon.ps-3.pt-1
           %i.bi-person-fill
-        .card-body.pt-1
+        .card-body.pt-1{ id: user_message_id}
           = render ClipboardComponent.new(y: :bottom, x: :start) do |clipboard|
             = clipboard.with_copyable do
               %p{ data: { 'clipboard-target' => 'source '} }
@@ -13,13 +13,13 @@
                                                                     'modal-src' => file_generate_text_request_path(generate_text_request)  } do
                     = image_tag file.variant(**image_variant_options), data: { 'generate-text_request-target' => 'image' },
                     title: file.filename
-                = prompt
+                = render MarkdownToHtmlComponent.new(markdown: prompt)
   .turn.grid.mb-3
     .g-col-12
-      .card.segment-assistant{ id: assistant_response_id }
+      .card.segment-assistant
         .turn-icon.ps-3.pt-1
           %i.bi-robot
-        .card-body.pt-1
+        .card-body.pt-1{ id: assistant_response_id }
           - if created? || in_progress?
             .text-center
               = render SpinnerComponent.new
@@ -34,7 +34,8 @@
           - else
             = render ClipboardComponent.new(css_class: 'assistant-response', y: :bottom, x: :start) do |clipboard|
               = clipboard.with_copyable do
-                %div{ data: { 'clipboard-target' => 'source' } }= assistant_response.html_safe
+                %div{ data: { 'clipboard-target' => 'source' } }
+                  = render MarkdownToHtmlComponent.new(markdown: assistant_response)
               = clipboard.with_additional_content do
                 %a.btn.icon-btn.icon-btn-sm.more-info{ tabindex: 0, data: { 'generate-text-request-target' => 'moreInfo' } }
                   %i.bi-info-square{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => 'Info' } }

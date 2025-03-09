@@ -23,11 +23,13 @@ export default class ConversationController extends Controller {
 
       if (turnsChanged) {
         this.dispatch('turnsChanged')
+        this.scrollTurns()
       }
     });
 
     this.observer.observe(this.turnsTarget, {
-      childList: true
+      childList: true,
+      subtree: true
     });
 
     // Updates the browser history after creating a new conversation
@@ -64,9 +66,7 @@ export default class ConversationController extends Controller {
   // Scrolls the turns container as far down as possible so the most recent turn
   // is in view
   scrollTurns() {
-    setTimeout(() => {
-      this.element.scrollTop = this.element.scrollHeight
-    }, 0)
+    this.element.scrollTop = this.element.scrollHeight
   }
 
   onPromptOptionsShow() {

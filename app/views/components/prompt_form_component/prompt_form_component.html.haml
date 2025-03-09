@@ -1,4 +1,4 @@
-.c-prompt-form.mb-5.w-100{ id:, data: { controller: 'prompt-form', action: 'my-channel:generateText@window->prompt-form#onGenerateText' } }
+.c-prompt-form.w-100{ id:, data: { controller: 'prompt-form', action: 'my-channel:generateText@window->prompt-form#onGenerateText' } }
   = form_with model: conversation_form, scope: :conversation, url: polymorphic_path(conversation),
     data: { 'prompt-form-target' => 'form', action: 'direct-uploads:start->prompt-form#disableForm', **turbo_attrs } do |form|
     = form.hidden_field :turnable_type, value: 'GenerateTextRequest'

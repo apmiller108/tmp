@@ -19,7 +19,16 @@
 * TODO List view of generated images
   https://github.com/dleavitt/faraday-typhoeus
 * TODO support for image to image
-* TODO Stream responses
+* TODO add preview chat button on index item
+  - [ ] Eye icon on click...
+  - [ ] Open modal with readonly version
+* TODO Stream responses [3/5]
+  - [X] Extract MarkdownToHtmlComponent
+  - [X] Look into rendering responses securely
+  - [X] Broadcast MarkdownToHtmlComponent on each text event. Replace the
+    assistant card body
+  - [ ] Extract InvokeModelStreamEvent class
+  - [ ] Add support for Tool Use respones
 * DONE Disable old models
 CLOSED: [2025-03-07 Fri 19:41]
 * DONE Conversation UI enahcements [43/43]
