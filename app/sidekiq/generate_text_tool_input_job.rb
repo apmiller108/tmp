@@ -17,6 +17,11 @@ class GenerateTextToolInputJob
 
   def handle_image_inputs(generate_text_request)
     generate_text_request.response.generate_image_inputs.each do |input|
+      if input.blank?
+        log_and_broadcast_errors(generate_text_request.user, nil)
+        next
+      end
+
       attrs = image_request_attrs(input, generate_text_request)
       form = GenerateImageRequestForm.new(attrs)
 

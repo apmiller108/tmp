@@ -10,17 +10,20 @@ class GenerativeText
       end
 
       # rubocop:disable Metrics/MethodLength
-      def update(event_type:, event_data:)
-        case event_type
+      # Update the response state based on an event
+      # @param event [StreamEvent] The event to process
+      def update(event)
+        case event.type
         when 'message_start'
-          @message = event_data.fetch('message')
+          @message = event.data.fetch('message')
         when 'content_block_start'
-          index = event_data.fetch('index')
-          @content_blocks[index] = event_data.fetch('content_block')
+          parse_content_start(event)
         when 'content_block_delta'
-          parse_content_delta(event_data)
+          parse_content_delta(event)
+        when 'content_block_stop'
+          parse_content_block_stop(event)
         when 'message_delta'
-          parse_message_delta(event_data)
+          parse_message_delta(event)
         when 'message_stop'
           @complete = true
         end
@@ -34,16 +37,45 @@ class GenerativeText
 
       private
 
-      def parse_content_delta(data)
-        index = data.fetch('index')
-        if data.dig('delta', 'type') == 'text_delta'
-          @content_blocks[index]['text'] += data.dig('delta', 'text')
+      def parse_content_start(event)
+        content_block = event.data.fetch('content_block')
+        case event.content_block_type
+        when 'text'
+          @content_blocks[event.index] = content_block
+        when 'tool_use'
+          # Input is an empty hash to at the start. Its easier to make it a
+          # string and append partial JSON strings to it, then parse the JSON at
+          # the end.
+          content_block['input'] = ''
+          @content_blocks[event.index] = content_block
         end
       end
 
-      def parse_message_delta(data)
-        @message.merge!(data.fetch('delta'))
-        @message['usage'] = @message['usage'].merge(data.fetch('usage', {}))
+      def parse_content_delta(event)
+        case event.delta_type
+        when 'text_delta'
+          @content_blocks[event.index]['text'] += event.delta_text
+        when 'input_json_delta'
+          @content_blocks[event.index]['input'] += event.delta_partial_json
+        end
+      end
+
+      def parse_content_block_stop(event)
+        content_block = @content_blocks[event.index]
+        case content_block['type']
+        when 'tool_use'
+          begin
+            content_block['input'] = JSON.parse(content_block['input'])
+          rescue JSON::ParserError
+            Rails.logger.warn("#{self.class} : invalid JSON tool use input")
+            content_block['input'] = {}
+          end
+        end
+      end
+
+      def parse_message_delta(event)
+        @message.merge!(event.data.fetch('delta'))
+        @message['usage'] = @message['usage'].merge(event.usage)
       end
     end
   end

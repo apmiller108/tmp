@@ -37,28 +37,13 @@ class GenerativeText
         conn.post(MESSAGES_PATH) do |req|
           req.body = InvokeModelRequest.new(generate_text_request, stream: true).to_json
           req.options.on_data = proc do |chunk, _|
-            chunk.split("\n\n").each do |event|
-              event_type = nil
-              event_data = nil
+            chunk.split("\n\n").each do |raw_event|
+              event = StreamEvent.parse(raw_event)
+              next unless event
 
-              event.split("\n").each do |line|
-                if line.start_with?('event: ')
-                  event_type = line.sub(/^event: /, '')
-                elsif line.start_with?('data: ')
-                  event_data = line.sub(/^data: /, '')
-                end
-              end
+              stream_response.update(event)
 
-              next if event_type.nil? || event_data.nil? || event_type == 'ping'
-
-              data = JSON.parse(event_data)
-              stream_response.update(event_type:, event_data: data)
-
-              if (event_type == 'content_block_start' && data.dig('content_block', 'type') == 'text') ||
-                 (event_type == 'content_block_delta' && data.dig('delta', 'type') == 'text_delta')
-                text = data.dig('content_block', 'text') || data.dig('delta', 'text')
-                block.call(text)
-              end
+              block.call(event.text_content) if event.text?
             end
           end
         end
