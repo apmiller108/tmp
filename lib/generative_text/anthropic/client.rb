@@ -29,22 +29,15 @@ class GenerativeText
 
       # Stream responses from the Anthropic API
       # @param generate_text_request [GenerateTextRequest]
-      # @yield [String] Yields chunks of the assistant response
+      # @yield [String] Yields chunks of the assistant response only (not the event or tool use responses)
       # @return [InvokeModelResponse] Returns the complete response when done
       def invoke_model_stream(generate_text_request, &block)
         stream_response = StreamResponse.new
 
         conn.post(MESSAGES_PATH) do |req|
           req.body = InvokeModelRequest.new(generate_text_request, stream: true).to_json
-          req.options.on_data = proc do |chunk, _|
-            chunk.split("\n\n").each do |raw_event|
-              event = StreamEvent.parse(raw_event)
-              next unless event
-
-              stream_response.update(event)
-
-              block.call(event.text_content) if event.text?
-            end
+          req.options.on_data = lambda do |chunk, _received_bytes|
+            process_stream_chunk(chunk, stream_response, &block)
           end
         end
 
@@ -56,6 +49,17 @@ class GenerativeText
       private
 
       attr_reader :conn
+
+      def process_stream_chunk(chunk, stream_response, &block)
+        chunk.split("\n\n").each do |raw_event|
+          event = StreamEvent.parse(raw_event)
+          next unless event
+
+          stream_response.update(event)
+
+          block.call(event.text_content) if event.text?
+        end
+      end
     end
   end
 end

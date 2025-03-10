@@ -8,10 +8,24 @@ class GenerativeText
       # @param raw_event [String] Raw SSE event string
       # @return [StreamEvent, nil] Parsed event or nil if invalid/ping
       def self.parse(raw_event)
+        event_type, event_data = parse_raw_event(raw_event)
+
+        return nil if event_type.nil? || event_data.nil? || event_type == 'ping'
+
+        parsed_data = JSON.parse(event_data)
+        new(type: event_type, data: parsed_data)
+      rescue JSON::ParserError
+        Rails.logger.warn "#{self.class} : invalid json"
+        nil
+      end
+
+      # @param raw_event [String] Raw SSE event string
+      # @return [String, String] Event type and event data.
+      def self.parse_raw_event(raw_event)
         event_type = nil
         event_data = nil
 
-        raw_event.split("\n").each do |line|
+        raw_event.split("\n").map do |line|
           if line.start_with?('event: ')
             event_type = line.sub(/^event: /, '')
           elsif line.start_with?('data: ')
@@ -19,15 +33,7 @@ class GenerativeText
           end
         end
 
-        return nil if event_type.nil? || event_data.nil? || event_type == 'ping'
-
-        begin
-          parsed_data = JSON.parse(event_data)
-          new(type: event_type, data: parsed_data)
-        rescue JSON::ParserError
-          Rails.logger.warn "#{self.class} : invalid json"
-          nil
-        end
+        [event_type, event_data]
       end
 
       def initialize(type:, data:)
