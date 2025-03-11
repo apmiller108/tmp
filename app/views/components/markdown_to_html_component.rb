@@ -10,9 +10,9 @@ class MarkdownToHtmlComponent < ApplicationViewComponent
   def extended_html
     doc = Nokogiri::HTML.fragment(html)
 
-    # Remove anchor tags. These can be malformed and cause issues with JS
-    # frameworks.
-    doc.css('a[aria-hidden="true"].anchor').each(&:remove)
+    # Remove anchor tags. These can be malformed and cause issues with the
+    # scrollspy intialization.
+    doc.css('a.anchor').each(&:remove)
 
     # Wrap pre tags in a ClipboardComponent
     doc.css('pre').each do |pre_tag|
@@ -52,4 +52,5 @@ class MarkdownToHtmlComponent < ApplicationViewComponent
       end
     end
   end
+  # rubocop:enable Rails/OutputSafety
 end

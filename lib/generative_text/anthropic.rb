@@ -3,7 +3,7 @@
 class GenerativeText
   module Anthropic
     VERSION = '2023-06-01'
-    HOST = 'https://api.anthropic.com/'
+    HOST = 'https://api.anthropic.com'
     MESSAGES_PATH = '/v1/messages'
 
     def self.vendor = :anthropic
