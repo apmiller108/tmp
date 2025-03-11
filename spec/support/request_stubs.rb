@@ -33,6 +33,7 @@ module RequestStubs
         body: {
           model: args.fetch(:model).api_name,
           max_tokens: args.fetch(:model).max_tokens,
+          stream: false,
           system: GenerateTextRequest.new(generate_text_preset: args.fetch(:generate_text_preset, nil)).system_message,
           tools: GenerativeText::Anthropic::ToolBox.all_tools.map(&:as_json),
           tool_choice: { type: 'auto' },
