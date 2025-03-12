@@ -7,7 +7,7 @@ RSpec.describe 'update conversation', type: :system do
 
   let(:prompt) { 'This is my prompt' }
   let!(:generate_text_preset) { create :generate_text_preset }
-  let(:assistant_response) { 'This is the assistant response.' }
+  let(:assistant_response) { 'test assistant response' }
   let(:model) { GenerativeText::MODELS.find { _1.api_name == setting.text_model } }
   let(:temperature) { 0.5 }
   let(:conversation) { create :conversation, :with_requests, user:, request_count: 3 }
@@ -18,7 +18,7 @@ RSpec.describe 'update conversation', type: :system do
   end
 
   before do
-    stub_anthropic_messages_request(
+    stub_anthropic_stream_request(
       prompt:, temperature:, generate_text_preset:, model:,
       messages: conversation.exchange, assistant_response:, tool_use?: tool_use?
     )

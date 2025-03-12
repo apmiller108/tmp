@@ -7,7 +7,7 @@ RSpec.describe 'create conversation', type: :system do
 
   let(:prompt) { 'This is my prompt' }
   let!(:generate_text_preset) { create :generate_text_preset }
-  let(:assistant_response) { 'This is the assistant response.' }
+  let(:assistant_response) { 'test assistant response' }
   let(:model) { GenerativeText::MODELS.find { _1.api_name == setting.text_model } }
   let(:temperature) { 0.5 }
 
@@ -16,7 +16,7 @@ RSpec.describe 'create conversation', type: :system do
   end
 
   before do
-    stub_anthropic_messages_request(
+    stub_anthropic_stream_request(
       model:, assistant_response:, temperature:, generate_text_preset:, prompt:
     )
   end
@@ -66,7 +66,7 @@ RSpec.describe 'create conversation', type: :system do
       expect(page).to have_content "Model: #{model.name}"
       expect(page).to have_content "Preset: #{generate_text_preset.name}"
       expect(page).to have_content "Temperature: #{temperature}"
-      expect(page).to have_content "Tokens: #{79 + 942}"
+      expect(page).to have_content "Tokens: #{25 + 15}" # see fixtures/anthropic/message_stream_response.txt
     end
     find('a.more-info').click
 
