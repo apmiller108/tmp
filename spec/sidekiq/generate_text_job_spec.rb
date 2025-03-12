@@ -8,8 +8,9 @@ RSpec.describe GenerateTextJob, type: :job do
   end
 
   describe '#perform' do
-    subject(:perform) { described_class.new.perform(generate_text_request.id) }
+    subject(:perform) { described_class.new.perform(generate_text_request.id, stream) }
 
+    let(:stream) { false }
     let(:conversation_turn) { build_stubbed :conversation_turn, conversation: }
     let(:generate_text_request) { build_stubbed :generate_text_request, :with_preset, conversation_turn:, user: }
     let(:user) { build_stubbed :user, setting: build(:setting) }
@@ -78,6 +79,55 @@ RSpec.describe GenerateTextJob, type: :job do
           have_received(:call).with([user, TurboStreams::STREAMS[:main]],
                                     component: prompt_form_component, action: :replace)
         )
+      end
+
+      context 'when streaming is true' do
+        let(:stream) { true }
+        let(:response_chunks) { %w[chunk1 chunk2 chunk3 chunk4 chunk5 chunk6] }
+        let(:markdown_to_html_component) { instance_double MarkdownToHtmlComponent }
+
+        before do
+          allow(generative_text).to receive(:invoke_model_stream).and_yield(response_chunks[0])
+                                                                 .and_yield(response_chunks[1])
+                                                                 .and_yield(response_chunks[2])
+                                                                 .and_yield(response_chunks[3])
+                                                                 .and_yield(response_chunks[4])
+                                                                 .and_yield(response_chunks[5])
+                                                                 .and_return(response)
+          allow(MarkdownToHtmlComponent).to receive(:new).with(markdown: response_chunks.take(5).join)
+                                                         .and_return(markdown_to_html_component)
+        end
+
+        it 'broadcasts the message on every 5th chunk' do
+          perform
+          expect(ViewComponentBroadcaster).to(
+            have_received(:call).with([user, TurboStreams::STREAMS[:main]],
+                                      component: markdown_to_html_component,
+                                      action: :update,
+                                      target: "assistant_response_generate_text_request_#{generate_text_request.id}")
+          )
+        end
+
+        it 'updates the request' do
+          perform
+          expect(generate_text_request).to have_received(:update!).with(response: response_data, status: 'completed')
+        end
+
+        it 'broadcasts the ConversationTurnComponent' do
+          perform
+          expect(ViewComponentBroadcaster).to(
+            have_received(:call).with([user, TurboStreams::STREAMS[:main]],
+                                      component: conversation_turn_component, action: :replace)
+          )
+        end
+
+        it 'broadcasts the PromptFormComponent' do
+          perform
+          expect(ViewComponentBroadcaster).to(
+            have_received(:call).with([user, TurboStreams::STREAMS[:main]],
+                                      component: prompt_form_component, action: :replace)
+          )
+        end
       end
     end
 

@@ -5,7 +5,7 @@ RSpec.describe 'WysiwygEditorComponent', type: :system do
   let!(:user) { create :user }
   let(:setting) { create :setting, :with_anthropic_text_model, user: }
   let(:prompt) { 'This is my prompt' }
-  let(:generative_text) { 'this is the generated text' }
+  let(:generative_text) { JSON.parse(file_fixture('anthropic/messages_response.json').read)['content'][0]['text'] }
   let(:titan_generative_text_response) do
     <<~JSON
       {
@@ -34,7 +34,7 @@ RSpec.describe 'WysiwygEditorComponent', type: :system do
       }.to_json)
       .to_return(status: 200, body: titan_generative_text_response)
 
-    stub_anthropic_request(
+    stub_anthropic_messages_request(
       model:, assistant_response: generative_text, temperature: 0.0, prompt: 'This is my prompt'
     )
     stub_stability_core_request

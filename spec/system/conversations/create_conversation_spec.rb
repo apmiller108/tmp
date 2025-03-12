@@ -16,7 +16,7 @@ RSpec.describe 'create conversation', type: :system do
   end
 
   before do
-    stub_anthropic_request(
+    stub_anthropic_messages_request(
       model:, assistant_response:, temperature:, generate_text_preset:, prompt:
     )
   end

@@ -1,29 +1,10 @@
 module RequestStubs
-  def stub_anthropic_request(**args)
-    body = { 'id' => 'msg_01DMcCdRr6gaWDuZs7Y63rhe',
-             'type' => 'message',
-             'role' => 'assistant',
-             'content' => [{ 'type' => 'text',
-                             'text' => args.fetch(:assistant_response, 'test assistant response') }],
-             'model' => 'claude-3-haiku-20240307',
-             'stop_reason' => 'end_turn',
-             'stop_sequence' => nil,
-             'usage' => { 'input_tokens' => 79, 'output_tokens' => 942, 'cache_creation_input_tokens' => 0,
-                          'cache_read_input_tokens' => 0 } }.tap do |b|
-      if args.fetch(:tool_use?, false)
-        b['stop_reason'] = 'tool_use'
-        b['content'] << {
-          'id' => 'toolu_0196KvCx6JumrjS1g6qvN14H',
-          'name' => 'generate_image',
-          'type' => 'tool_use',
-          'input' =>
-           { 'options' => { 'style' => 'fantasy-art', 'aspect_ratio' => '16:9' },
-             'prompts' =>
-            { 'prompt' => 'image prompt',
-              'negative_prompt' => 'negative prompt' } }
-        }
-      end
-    end
+  def stub_anthropic_messages_request(**args)
+    body = if args[:tool_use?]
+             file_fixture('anthropic/messages_tool_use_response.json').read
+           else
+             file_fixture('anthropic/messages_response.json').read
+           end
 
     messages = args.fetch(:messages, [])
                    .push({ 'role' => 'user', 'content' => [{ 'text' => args.fetch(:prompt), 'type' => 'text' }] })
@@ -40,7 +21,32 @@ module RequestStubs
           temperature: args.fetch(:temperature),
           messages:
         }.to_json
-      ).to_return(status: args.fetch(:response_status, 200), body: args.fetch(:response_body, body.to_json))
+      ).to_return(status: args.fetch(:response_status, 200), body: args.fetch(:response_body, body))
+  end
+
+  def stub_anthropic_stream_request(**args)
+    body = if args[:tool_use?]
+             file_fixture('anthropic/messages_stream_tool_use_response.txt').read
+           else
+             file_fixture('anthropic/messages_stream_response.txt').read
+           end
+
+    messages = args.fetch(:messages, [])
+                   .push({ 'role' => 'user', 'content' => [{ 'text' => args.fetch(:prompt), 'type' => 'text' }] })
+
+    stub_request(:post, 'https://api.anthropic.com/v1/messages')
+      .with(
+        body: {
+          model: args.fetch(:model).api_name,
+          max_tokens: args.fetch(:model).max_tokens,
+          stream: true,
+          system: GenerateTextRequest.new(generate_text_preset: args.fetch(:generate_text_preset, nil)).system_message,
+          tools: GenerativeText::Anthropic::ToolBox.all_tools.map(&:as_json),
+          tool_choice: { type: 'auto' },
+          temperature: args.fetch(:temperature),
+          messages:
+        }.to_json
+      ).to_return(status: args.fetch(:response_status, 200), body:, headers: { 'Content-Type' => 'text/event-stream' })
   end
 
   def stub_stability_core_request(**_args)

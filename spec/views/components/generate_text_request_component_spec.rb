@@ -13,17 +13,6 @@ RSpec.describe GenerateTextRequestComponent, type: :component do
     allow(generate_text_request).to receive(:response_token_count).and_return(token_count)
   end
 
-  describe '#assistant_response' do
-    it 'converts markdown to HTML' do
-      expect(Commonmarker).to receive(:to_html).with(
-        generate_text_request.response.content,
-        options: { parse: { smart: true } },
-        plugins: { syntax_highlighter: { theme: 'Solarized (dark)' } }
-      )
-      component.assistant_response
-    end
-  end
-
   describe '#id' do
     it 'returns dom_id for generate_text_request' do
       expect(component.id).to eq ActionView::RecordIdentifier.dom_id(generate_text_request)

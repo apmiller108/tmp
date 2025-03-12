@@ -11,7 +11,7 @@ RSpec.describe GenerativeText::Anthropic::Client do
   describe '#invoke_model' do
     before do
       create :conversation_turn, turnable: generate_text_request
-      stub_anthropic_request(model:, temperature:, prompt:)
+      stub_anthropic_messages_request(model:, temperature:, prompt:)
     end
 
     context 'with a valid request' do
@@ -23,7 +23,7 @@ RSpec.describe GenerativeText::Anthropic::Client do
 
     context 'with invalid parameters' do
       before do
-        stub_anthropic_request(model:, temperature:, prompt:, response_status: 500, response_body: 'Invalid request')
+        stub_anthropic_messages_request(model:, temperature:, prompt:, response_status: 500, response_body: 'Invalid request')
       end
 
       it 'raises a ClientError exception' do
@@ -65,31 +65,7 @@ RSpec.describe GenerativeText::Anthropic::Client do
         )
         .to_return(
           status: 200,
-          body: <<~BODY,
-            event: message_start
-            data: {"type": "message_start", "message": {"id": "msg_1nZdL29xx5MUA1yADyHTEsnR8uuvGzszyY", "type": "message", "role": "assistant", "content": [], "model": "claude-3-7-sonnet-20250219", "stop_reason": null, "stop_sequence": null, "usage": {"input_tokens": 25, "output_tokens": 1}}}
-
-            event: content_block_start
-            data: {"type": "content_block_start", "index": 0, "content_block": {"type": "text", "text": "chunk1"}}
-
-            event: ping
-            data: {"type": "ping"}
-
-            event: content_block_delta
-            data: {"type": "content_block_delta", "index": 0, "delta": {"type": "text_delta", "text": "chunk2"}}
-
-            event: content_block_delta
-            data: {"type": "content_block_delta", "index": 0, "delta": {"type": "text_delta", "text": "chunk3"}}
-
-            event: content_block_stop
-            data: {"type": "content_block_stop", "index": 0}
-
-            event: message_delta
-            data: {"type": "message_delta", "delta": {"stop_reason": "end_turn", "stop_sequence":null}, "usage": {"output_tokens": 15}}
-
-            event: message_stop
-            data: {"type": "message_stop"}
-          BODY
+          body: file_fixture('anthropic/messages_stream_response.txt'),
           headers: { 'Content-Type' => 'text/event-stream' }
         )
     end
@@ -98,7 +74,7 @@ RSpec.describe GenerativeText::Anthropic::Client do
       chunks = []
       client.invoke_model_stream(generate_text_request) { |chunk| chunks << chunk }
 
-      expect(chunks).to eq(%w[chunk1 chunk2 chunk3])
+      expect(chunks).to eq(['test', ' assistant', ' response'])
     end
 
     it 'returns the final, complete response' do

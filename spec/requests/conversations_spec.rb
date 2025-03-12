@@ -115,7 +115,7 @@ RSpec.describe 'Conversations', type: :request do
     it 'enqueus a GenerateTextJob' do
       allow(GenerateTextJob).to receive(:perform_async)
       request
-      expect(GenerateTextJob).to have_received(:perform_async).with(user.generate_text_requests.last.id)
+      expect(GenerateTextJob).to have_received(:perform_async).with(user.generate_text_requests.last.id, false)
     end
 
     context 'with invalid params' do
@@ -203,7 +203,7 @@ RSpec.describe 'Conversations', type: :request do
     it 'enqueus a GenerateTextJob' do
       allow(GenerateTextJob).to receive(:perform_async)
       request
-      expect(GenerateTextJob).to have_received(:perform_async).with(user.generate_text_requests.last.id)
+      expect(GenerateTextJob).to have_received(:perform_async).with(user.generate_text_requests.last.id, false)
     end
 
     it 'renders the conversation title' do

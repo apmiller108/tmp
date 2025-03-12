@@ -12,7 +12,7 @@ RSpec.describe 'Create and view memo', type: :system do
   let(:gen_image_prompt) { 'A doggy dog' }
   let(:generate_text_prompt) { 'This is my prompt' }
   let!(:generate_text_preset) { create :generate_text_preset }
-  let(:generative_text) { 'This is AI slop' }
+  let(:generative_text) { JSON.parse(file_fixture('anthropic/messages_response.json').read)['content'][0]['text'] }
   let(:model) { GenerativeText::MODELS.find { _1.api_name == setting.text_model } }
 
   before(:context) do
@@ -23,7 +23,7 @@ RSpec.describe 'Create and view memo', type: :system do
     page.driver.clear_network_traffic
     stub_stability_core_request
 
-    stub_anthropic_request(
+    stub_anthropic_messages_request(
       model:,
       assistant_response: generative_text,
       temperature: generate_text_preset.temperature,
