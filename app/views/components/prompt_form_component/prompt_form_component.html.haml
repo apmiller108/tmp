@@ -3,6 +3,7 @@
     data: { 'prompt-form-target' => 'form', action: 'direct-uploads:start->prompt-form#disableForm', **turbo_attrs } do |form|
     = form.hidden_field :turnable_type, value: 'GenerateTextRequest'
     = form.hidden_field :text_id, data: { 'prompt-form-target' => 'textId' }
+    = form.hidden_field :stream, value: 1
     .grid{ style: '--bs-gap: 0.5rem;'}
       .g-col-12.form-container
         .options.d-flex.justify-content-start.align-items-center

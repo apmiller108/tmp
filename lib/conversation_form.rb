@@ -14,6 +14,7 @@ class ConversationForm
   attribute :model
   attribute :file
   attribute :turnable_type
+  attribute :stream, :boolean, default: false
 
   validates :user, presence: true
   validate :valid_turnable, if: -> { turnable.present? }
@@ -124,7 +125,7 @@ class ConversationForm
 
     case turnable_type
     when 'GenerateTextRequest'
-      GenerateTextJob.perform_async(turnable.id)
+      GenerateTextJob.perform_async(turnable.id, stream)
     end
   end
 

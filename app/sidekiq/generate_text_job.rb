@@ -6,12 +6,16 @@ class GenerateTextJob
 
   sidekiq_options retry: 1
 
-  def perform(generate_text_request_id)
+  def perform(generate_text_request_id, stream)
     generate_text_request = GenerateTextRequest.find(generate_text_request_id)
     user = generate_text_request.user
 
     generate_text_request.in_progress!
-    response = invoke_model(generate_text_request)
+    response = if stream
+                 invoke_model_stream(generate_text_request)
+               else
+                 invoke_model(generate_text_request)
+               end
 
     generate_text_request.update!(response: response.data, status: GenerateTextRequest.statuses[:completed])
     broadcast_component(generate_text_request, user)
@@ -49,6 +53,10 @@ class GenerateTextJob
   end
 
   def invoke_model(generate_text_request)
+    GenerativeText.new.invoke_model(generate_text_request)
+  end
+
+  def invoke_model_stream(generate_text_request)
     assistant_response = ''
     message_count = 0
     GenerativeText.new.invoke_model_stream(generate_text_request) do |text|

@@ -122,7 +122,8 @@ class ConversationsController < ApplicationController
       :temperature,
       :generate_text_preset_id,
       :model,
-      :file
+      :file,
+      :stream
     ).merge(user: current_user)
   end
 end
