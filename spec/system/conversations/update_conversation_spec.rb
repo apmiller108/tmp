@@ -88,7 +88,7 @@ RSpec.describe 'update conversation', type: :system do
     let(:generate_text_preset) { last_request.generate_text_preset }
 
     before do
-      stub_anthropic_messages_request(
+      stub_anthropic_stream_request(
         prompt:, temperature:, generate_text_preset:, model:, messages: conversation.exchange, assistant_response:
       )
     end
