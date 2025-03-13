@@ -11,17 +11,22 @@
     https://github.com/voxpupuli/json-schema
 * TODO Conversation Stats
   Images, other media, tokens...
-* TODO look into using https://runware.ai/
 * TODO add audio transcription to conversations
 * TODO add audio generation to conversations
 * TODO add video generation to conversations
-* TODO Wire up search
 * TODO List view of generated images
-* TODO support for image to image
 * TODO add preview chat button on index item
   - [ ] Eye icon on click...
   - [ ] Open modal with readonly version
-* TODO Stream responses [6/7]
+* TODO Wire up search
+* TODO support for image to image
+* TODO look into using https://runware.ai/
+* TODO support mermaid diagram
+  - [ ] add mermaid js package
+  - [ ] instruct LLM to always use mermaid syntax when asked to make a diagram
+  - [ ] Add required css class to mermaid pre tags
+* DONE Stream responses [7/7]
+CLOSED: [2025-03-12 Wed 21:03]
   - [X] Extract MarkdownToHtmlComponent
   - [X] Look into rendering responses securely
   - [X] Broadcast MarkdownToHtmlComponent on each text event. Replace the
@@ -29,7 +34,7 @@
   - [X] Extract InvokeModelStreamEvent class
   - [X] Add support for Tool Use respones
   - [X] Add unit tests for new classes
-  - [ ] Update specs and webmocks
+  - [X] Update specs and webmocks
 * DONE Disable old models
 CLOSED: [2025-03-07 Fri 19:41]
 * DONE Conversation UI enahcements [43/43]

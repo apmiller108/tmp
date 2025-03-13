@@ -3,6 +3,7 @@
 class MarkdownToHtmlComponent < ApplicationViewComponent
   attr_reader :markdown
 
+  # @param markdown [String] markdown formatted string
   def initialize(markdown:)
     @markdown = markdown
   end
@@ -44,7 +45,7 @@ class MarkdownToHtmlComponent < ApplicationViewComponent
     attributes = pre_tag.attributes.transform_values(&:value)
 
     # Create a new fragment with the rendered component
-    render ClipboardComponent.new(css_class: 'prompt', y: :top, x: :end) do |c|
+    render ClipboardComponent.new(css_class: 'pre-content', y: :top, x: :end) do |c|
       c.with_copyable do
         content_tag(:pre, original_content.html_safe,
                     data: { 'clipboard-target' => 'source' },
