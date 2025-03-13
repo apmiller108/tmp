@@ -23,7 +23,9 @@ RSpec.describe GenerativeText::Anthropic::Client do
 
     context 'with invalid parameters' do
       before do
-        stub_anthropic_messages_request(model:, temperature:, prompt:, response_status: 500, response_body: 'Invalid request')
+        stub_anthropic_messages_request(
+          model:, temperature:, prompt:, response_status: 500, response_body: 'Invalid request'
+        )
       end
 
       it 'raises a ClientError exception' do
@@ -38,7 +40,7 @@ RSpec.describe GenerativeText::Anthropic::Client do
 
     let(:generate_text_request) { build_stubbed :generate_text_request }
     let(:invoke_model_request) do
-      instance_double(GenerativeText::Anthropic::InvokeModelRequest,to_json: '{"request":"data"}')
+      instance_double(GenerativeText::Anthropic::InvokeModelRequest, to_json: '{"request":"data"}')
     end
     let(:stream_response) do
       instance_double(GenerativeText::Anthropic::StreamResponse, update: nil, to_response_format: response_format)
@@ -89,7 +91,8 @@ RSpec.describe GenerativeText::Anthropic::Client do
 
     it 'updates the stream response with all event other than ping' do
       client.invoke_model_stream(generate_text_request) {}
-      expect(stream_response).to have_received(:update).with(kind_of(GenerativeText::Anthropic::StreamEvent)).exactly(7).times
+      expect(stream_response).to have_received(:update).with(kind_of(GenerativeText::Anthropic::StreamEvent))
+                                                       .exactly(7).times
     end
 
     context 'when an error occurs' do
