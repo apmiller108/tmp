@@ -6,6 +6,8 @@ class GenerateTextJob
 
   sidekiq_options retry: 1
 
+  # @param generate_text_request_id [Integer] the primary key of the request record
+  # @param stream [Boolean] switch to stream response vs one full response
   def perform(generate_text_request_id, stream)
     generate_text_request = GenerateTextRequest.find(generate_text_request_id)
     user = generate_text_request.user

@@ -31,6 +31,23 @@ RSpec.describe GenerateTextToolInputJob do
         create(:generate_text_request, :with_tool_use_response, user:, conversation:)
       end
 
+      it 'instantiates the form with the proper attributes' do
+        job.perform(generate_text_request.id)
+        expect(GenerateImageRequestForm).to(
+          have_received(:new).with(
+            {
+              'user' => user,
+              'conversation' => conversation,
+              'generate_text_request' => generate_text_request,
+              'aspect_ratio' => '16:9',
+              'prompt' => 'image prompt',
+              'negative_prompt' => 'negative prompt',
+              'style' => 'fantasy-art'
+            }
+          )
+        )
+      end
+
       context 'when form submission succeeds' do
         it 'creates a generate image request' do
           expect { job.perform(generate_text_request.id) }.to change(conversation.generate_image_requests, :count).by(1)

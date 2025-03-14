@@ -34,9 +34,12 @@ class GenerateTextToolInputJob
   end
 
   def image_request_attrs(input, generate_text_request)
-    input['options'].merge(input['prompts'])
-                    .merge(generate_text_request.slice(:user, :conversation))
-                    .merge(generate_text_request:)
+    {
+      **input['options'],
+      **input['prompts'],
+      **generate_text_request.slice(:user, :conversation),
+      'generate_text_request' => generate_text_request
+    }
   end
 
   def log_and_broadcast_errors(user, form)
