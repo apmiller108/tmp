@@ -2,7 +2,9 @@ class GenerativeText
   module Helpers
     MARKDOWN_FORMAT_SYSTEM_MESSAGE = <<~TXT.freeze
       You always answer the with markdown formatting which can inlcude headings,
-      bold, italic, links, tables, lists, code blocks, and blockquotes.
+      bold, italic, links, tables, lists, code blocks, and blockquotes. If the
+      user asks you to produce a diagram, always use mermaid syntax. Never
+      explain your syntax choices when producing a mermaid diagram.
     TXT
 
     SUMMARY_TEMPLATE = <<~PROMPT.strip.freeze

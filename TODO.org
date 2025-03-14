@@ -21,10 +21,11 @@
 * TODO Wire up search
 * TODO support for image to image
 * TODO look into using https://runware.ai/
-* TODO support mermaid diagram
-  - [ ] add mermaid js package
-  - [ ] instruct LLM to always use mermaid syntax when asked to make a diagram
-  - [ ] Add required css class to mermaid pre tags
+* TODO support mermaid diagram [2/3]
+  - [X] add mermaid js package
+  - [X] instruct LLM to always use mermaid syntax when asked to make a diagram
+  - [ ] Put the mermaid code in a data attribute. When copying the diagram, copy
+    the code to the clipboard
 * DONE Stream responses [7/7]
 CLOSED: [2025-03-12 Wed 21:03]
   - [X] Extract MarkdownToHtmlComponent

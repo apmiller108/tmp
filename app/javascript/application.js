@@ -7,6 +7,7 @@ import "./controllers"
 import WysiwygEditor from "../views/components/wysiwyg_editor_component/wysiwyg_editor_controller.js"
 import TurboScrollPreservation from './TurboScrollPreservation'
 import { Tooltip } from 'bootstrap'
+import mermaid from "mermaid"
 
 // import * as ActionCable from '@rails/actioncable'
 // ActionCable.logger.enabled = true;
@@ -22,3 +23,12 @@ turboScrollPreservation.initialize()
 // Allow turbo frame elements in popovers to lazy load content
 const customTooltipAndPopoverAllowList = Tooltip.Default.allowList
 customTooltipAndPopoverAllowList['turbo-frame'] = ['src', 'loading']
+
+// Initialize mermaid
+document.addEventListener('turbo:load', () => {
+  mermaid.initialize({
+    suppressErrors: true,
+    startOnLoad: false,
+    theme: 'default'
+  })
+})

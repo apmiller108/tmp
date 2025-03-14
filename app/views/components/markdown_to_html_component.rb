@@ -44,6 +44,13 @@ class MarkdownToHtmlComponent < ApplicationViewComponent
     original_content = pre_tag.inner_html
     attributes = pre_tag.attributes.transform_values(&:value)
 
+    # Special handling for mermaid diagrams
+    if attributes['lang'] == 'mermaid'
+      # Extract only the text content, stripping all HTML tags
+      attributes['style'] = nil
+      original_content = pre_tag.text.strip
+    end
+
     # Create a new fragment with the rendered component
     render ClipboardComponent.new(css_class: 'pre-content', y: :top, x: :end) do |c|
       c.with_copyable do
