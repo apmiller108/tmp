@@ -53,7 +53,7 @@ class GenerativeText
       # @return [String, nil] Text content or nil if not a text event
       def text_content
         @text_content ||= if content_block_start? && content_block_type == 'text'
-                            data.dig('content_block', 'text')
+                            content_block_text
                           elsif content_block_delta? && delta_type == 'text_delta'
                             delta_text
                           end
@@ -67,6 +67,16 @@ class GenerativeText
       # @return [Boolean] True if this event contains text content
       def text?
         text_content.present?
+      end
+
+      # Present for message_start event type
+      def message
+        data.fetch('message', nil)
+      end
+
+      # Present for content_block_start event type
+      def content_block
+        data.fetch('content_block')
       end
 
       def index
@@ -93,6 +103,10 @@ class GenerativeText
 
       def is?(event_type)
         @type == event_type
+      end
+
+      def content_block_text
+        data.dig('content_block', 'text')
       end
     end
   end

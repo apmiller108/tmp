@@ -16,6 +16,14 @@ RSpec.describe GenerativeText::Anthropic::StreamResponse do
           'model' => 'claude-3-haiku-20240307',
           'usage' => { 'input_tokens' => 10, 'output_tokens' => 0 }
         }
+      },
+      message: {
+        'id' => 'msg_123',
+        'type' => 'message',
+        'role' => 'assistant',
+        'content' => [],
+        'model' => 'claude-3-haiku-20240307',
+        'usage' => { 'input_tokens' => 10, 'output_tokens' => 0 }
       }
     )
   end
@@ -32,7 +40,8 @@ RSpec.describe GenerativeText::Anthropic::StreamResponse do
           'type' => 'text',
           'text' => ''
         }
-      }
+      },
+      content_block: { 'type' => 'text', 'text' => '' }
     )
   end
 
@@ -78,6 +87,12 @@ RSpec.describe GenerativeText::Anthropic::StreamResponse do
           'name' => 'get_weather',
           'input' => {}
         }
+      },
+      content_block: {
+        'type' => 'tool_use',
+        'id' => 'toolu_123',
+        'name' => 'get_weather',
+        'input' => {}
       }
     )
   end

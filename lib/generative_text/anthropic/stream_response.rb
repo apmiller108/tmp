@@ -15,7 +15,7 @@ class GenerativeText
       def update(event)
         case event.type
         when 'message_start'
-          @message = event.data.fetch('message')
+          @message = event.message
         when 'content_block_start'
           parse_content_start(event)
         when 'content_block_delta'
@@ -38,7 +38,7 @@ class GenerativeText
       private
 
       def parse_content_start(event)
-        content_block = event.data.fetch('content_block')
+        content_block = event.content_block
         case event.content_block_type
         when 'text'
           @content_blocks[event.index] = content_block
