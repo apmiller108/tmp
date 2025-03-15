@@ -18,6 +18,9 @@
 * TODO add preview chat button on index item
   - [ ] Eye icon on click...
   - [ ] Open modal with readonly version
+* TODO Persist HTML responses
+  Rending long conversations can be slow and compute heavy. Persist the user
+  prompt and assistant response converted by the MarkdownToHtml on the request object
 * TODO Wire up search
 * TODO support for image to image
 * TODO look into using https://runware.ai/

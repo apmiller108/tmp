@@ -16,7 +16,7 @@ export default class ClipBoardController extends Controller {
   }
 
   get copyableContent() {
-    return (this.sourceTarget.dataset.mermaid ||
+    return (this.sourceTarget.dataset.copyable ||
             this.sourceTarget.value ||
             this.sourceTarget.textContent)?.trim()
 

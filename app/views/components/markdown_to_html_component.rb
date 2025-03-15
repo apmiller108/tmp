@@ -4,18 +4,16 @@ class MarkdownToHtmlComponent < ApplicationViewComponent
   attr_reader :markdown
 
   # @param markdown [String] markdown formatted string
-  def initialize(markdown:)
+  # @option opts [Boolean] :simple (true) no rendering customizations
+  def initialize(markdown:, **opts)
     @markdown = markdown
+    @opts = opts
   end
 
   def extended_html
+    return html if simple?
+
     doc = Nokogiri::HTML.fragment(html)
-
-    # Remove anchor tags. These can be malformed and cause issues with the
-    # scrollspy intialization.
-    doc.css('a.anchor').each(&:remove)
-
-    # Wrap pre tags in a ClipboardComponent
     doc.css('pre').each do |pre_tag|
       pre_tag.replace(
         Nokogiri::HTML.fragment(customized_pre(pre_tag))
@@ -28,15 +26,11 @@ class MarkdownToHtmlComponent < ApplicationViewComponent
   private
 
   def html
-    sanitize(
-      Commonmarker.to_html(
-        markdown,
-        options: {
-          parse: { smart: true }
-        },
-        plugins: { syntax_highlighter: { theme: 'Solarized (dark)' } }
-      )
-    )
+    MarkdownToHtml.call(markdown:)
+  end
+
+  def simple?
+    @opts.fetch(:simple, false)
   end
 
   # rubocop:disable Rails/OutputSafety, Metrics/MethodLength
@@ -46,14 +40,14 @@ class MarkdownToHtmlComponent < ApplicationViewComponent
 
     # Special handling for mermaid diagrams
     # Extract only the text content, stripping all HTML tags produced by
-    # Commonmarker
+    # the conversation of markdown to HTML
     if attributes['lang'] == 'mermaid'
       original_content = pre_tag.text.strip
       attributes['style'] = nil
-      attributes['data-mermaid'] = original_content
+      attributes['data-copyable'] = original_content
     end
 
-    # Create a new fragment with the rendered component
+    # Wrap pre tags in a ClipboardComponent
     render ClipboardComponent.new(css_class: 'pre-content', y: :top, x: :end) do |c|
       c.with_copyable do
         content_tag(:pre, original_content.html_safe,

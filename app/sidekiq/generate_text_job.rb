@@ -67,7 +67,7 @@ class GenerateTextJob
       if (message_count % 5).zero?
         ViewComponentBroadcaster.call(
           [generate_text_request.user, TurboStreams::STREAMS[:main]],
-          component: MarkdownToHtmlComponent.new(markdown: assistant_response),
+          component: MarkdownToHtmlComponent.new(markdown: assistant_response, simple: true),
           action: :update,
           target: dom_id(generate_text_request, 'assistant_response')
         )
