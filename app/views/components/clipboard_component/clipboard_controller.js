@@ -15,9 +15,15 @@ export default class ClipBoardController extends Controller {
     ToolTippable.disconnect.bind(this)()
   }
 
+  get copyableContent() {
+    return (this.sourceTarget.dataset.mermaid ||
+            this.sourceTarget.value ||
+            this.sourceTarget.textContent)?.trim()
+
+  }
+
   copy() {
-    const text = (this.sourceTarget.value || this.sourceTarget.textContent)?.trim()
-    navigator.clipboard.writeText(text)
+    navigator.clipboard.writeText(this.copyableContent)
     this.copySuccess()
   }
 

@@ -18,7 +18,7 @@ class MarkdownToHtmlComponent < ApplicationViewComponent
     # Wrap pre tags in a ClipboardComponent
     doc.css('pre').each do |pre_tag|
       pre_tag.replace(
-        Nokogiri::HTML.fragment(copyable_pre(pre_tag))
+        Nokogiri::HTML.fragment(customized_pre(pre_tag))
       )
     end
 
@@ -39,16 +39,18 @@ class MarkdownToHtmlComponent < ApplicationViewComponent
     )
   end
 
-  # rubocop:disable Rails/OutputSafety
-  def copyable_pre(pre_tag)
+  # rubocop:disable Rails/OutputSafety, Metrics/MethodLength
+  def customized_pre(pre_tag)
     original_content = pre_tag.inner_html
     attributes = pre_tag.attributes.transform_values(&:value)
 
     # Special handling for mermaid diagrams
+    # Extract only the text content, stripping all HTML tags produced by
+    # Commonmarker
     if attributes['lang'] == 'mermaid'
-      # Extract only the text content, stripping all HTML tags
-      attributes['style'] = nil
       original_content = pre_tag.text.strip
+      attributes['style'] = nil
+      attributes['data-mermaid'] = original_content
     end
 
     # Create a new fragment with the rendered component
@@ -60,5 +62,5 @@ class MarkdownToHtmlComponent < ApplicationViewComponent
       end
     end
   end
-  # rubocop:enable Rails/OutputSafety
+  # rubocop:enable Rails/OutputSafety, Metrics/MethodLength
 end
