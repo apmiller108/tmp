@@ -36,7 +36,7 @@ RSpec.describe GenerateTextRequestComponent, type: :component do
     before { render_inline(component) }
 
     it { is_expected.to have_css '.c-generate-text-request' }
-    it { is_expected.to have_css '.segment-user', text: generate_text_request.prompt }
+    it { is_expected.to have_css '.segment-user', text: generate_text_request.prompt_html }
     it { is_expected.to have_css '.segment-assistant' }
   end
 end

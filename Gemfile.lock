@@ -269,6 +269,7 @@ GEM
       net-smtp
     marcel (1.0.4)
     matrix (0.4.2)
+    memory_profiler (1.1.0)
     method_source (1.0.0)
     mini_magick (4.12.0)
     mini_mime (1.1.5)
@@ -331,6 +332,8 @@ GEM
     rack (2.2.13)
     rack-cors (2.0.2)
       rack (>= 2.0.0)
+    rack-mini-profiler (3.3.1)
+      rack (>= 1.2.0)
     rack-protection (3.1.0)
       rack (~> 2.2, >= 2.2.4)
     rack-session (1.0.2)
@@ -461,6 +464,7 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
+    stackprof (0.2.27)
     stimulus-rails (1.2.1)
       railties (>= 6.0.0)
     stringio (3.1.2)
@@ -535,11 +539,13 @@ DEPENDENCIES
   jbuilder
   jsbundling-rails
   jwt
+  memory_profiler
   omniauth-github (~> 2.0.0)
   omniauth-rails_csrf_protection
   pg (~> 1.1)
   puma (~> 5.0)
   rack-cors
+  rack-mini-profiler
   rails (~> 8.0)
   redis (~> 5.0)
   rspec-rails (~> 6.0)
@@ -553,6 +559,7 @@ DEPENDENCIES
   spring
   spring-commands-rspec
   sprockets-rails
+  stackprof
   stimulus-rails
   turbo-rails (~> 2.0)
   tzinfo-data

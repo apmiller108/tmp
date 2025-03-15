@@ -84,7 +84,7 @@ RSpec.describe GenerateTextJob, type: :job do
       context 'when streaming is true' do
         let(:stream) { true }
         let(:response_chunks) { %w[chunk1 chunk2 chunk3 chunk4 chunk5 chunk6] }
-        let(:markdown_to_html_component) { instance_double MarkdownToHtmlComponent }
+        let(:markdown_to_html_component) { instance_double ContentCustomizerComponent }
 
         before do
           allow(generative_text).to receive(:invoke_model_stream).and_yield(response_chunks[0])
@@ -94,8 +94,10 @@ RSpec.describe GenerateTextJob, type: :job do
                                                                  .and_yield(response_chunks[4])
                                                                  .and_yield(response_chunks[5])
                                                                  .and_return(response)
-          allow(MarkdownToHtmlComponent).to receive(:new).with(markdown: response_chunks.take(5).join)
-                                                         .and_return(markdown_to_html_component)
+          allow(ContentCustomizerComponent).to receive(:new).with(markup: response_chunks.take(5).join,
+                                                                  markdown: true,
+                                                                  simple: true)
+                                                            .and_return(markdown_to_html_component)
         end
 
         it 'broadcasts the message on every 5th chunk' do

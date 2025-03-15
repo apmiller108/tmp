@@ -2,6 +2,7 @@ FactoryBot.define do
   factory :generate_text_request do
     text_id { Faker::Alphanumeric.alpha(number: 20) }
     prompt { Faker::Lorem.paragraph }
+    prompt_html { Faker::Lorem.paragraph }
     temperature { GenerateTextRequest::TEMPERATURE_VALUES.sample }
     model { GenerativeText.active_models.sample.api_name }
     user

@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_08_204639) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_15_212017) do
   create_schema "rollback"
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
-  enable_extension "plpgsql"
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -131,6 +131,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_08_204639) do
     t.jsonb "response", default: {}
     t.text "status", null: false
     t.boolean "markdown_format", default: true, null: false
+    t.text "prompt_html"
+    t.text "assistant_response_html"
     t.index ["generate_text_preset_id"], name: "index_generate_text_requests_on_generate_text_preset_id"
     t.index ["user_id", "text_id"], name: "index_generate_text_requests_on_user_id_and_text_id", unique: true
     t.index ["user_id"], name: "index_generate_text_requests_on_user_id"

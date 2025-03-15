@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-class MarkdownToHtmlComponent < ApplicationViewComponent
-  attr_reader :markdown
+class ContentCustomizerComponent < ApplicationViewComponent
+  attr_reader :markup
 
-  # @param markdown [String] markdown formatted string
+  # @param markup [String] markdown or html formatted string
   # @option opts [Boolean] :simple (true) no rendering customizations
-  def initialize(markdown:, **opts)
-    @markdown = markdown
+  def initialize(markup:, **opts)
+    @markup = markup
     @opts = opts
   end
 
@@ -26,11 +26,19 @@ class MarkdownToHtmlComponent < ApplicationViewComponent
   private
 
   def html
-    MarkdownToHtml.call(markdown:)
+    if markdown?
+      MarkdownToHtml.call(markdown: markup)
+    else
+      markup
+    end
   end
 
   def simple?
     @opts.fetch(:simple, false)
+  end
+
+  def markdown?
+    @opts.fetch(:markdown, false)
   end
 
   # rubocop:disable Rails/OutputSafety, Metrics/MethodLength

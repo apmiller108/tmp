@@ -54,10 +54,12 @@ class GenerateTextJob
     end
   end
 
+  # @return [InvokeModelResponse]
   def invoke_model(generate_text_request)
     GenerativeText.new.invoke_model(generate_text_request)
   end
 
+  # @return [InvokeModelResponse]
   def invoke_model_stream(generate_text_request)
     assistant_response = ''
     message_count = 0
@@ -67,7 +69,7 @@ class GenerateTextJob
       if (message_count % 5).zero?
         ViewComponentBroadcaster.call(
           [generate_text_request.user, TurboStreams::STREAMS[:main]],
-          component: MarkdownToHtmlComponent.new(markdown: assistant_response, simple: true),
+          component: ContentCustomizerComponent.new(markup: assistant_response, simple: true, markdown: true),
           action: :update,
           target: dom_id(generate_text_request, 'assistant_response')
         )

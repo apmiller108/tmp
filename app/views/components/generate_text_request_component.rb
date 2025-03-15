@@ -3,9 +3,9 @@
 class GenerateTextRequestComponent < ApplicationViewComponent
   attr_reader :generate_text_request, :conversation_turn
 
-  delegate :prompt, :response, :created?, :in_progress?, :failed?, :completed?,
+  delegate :prompt_html, :response, :created?, :in_progress?, :failed?, :completed?,
            :model, :temperature, :generate_text_preset, :response_token_count,
-           :file, to: :generate_text_request
+           :file, :assistant_response_html, to: :generate_text_request
 
   delegate :conversation, to: :conversation_turn
 

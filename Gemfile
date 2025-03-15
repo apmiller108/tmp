@@ -47,16 +47,17 @@ group :development, :test do
 end
 
 group :development do
-  # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
-  # gem "rack-mini-profiler"
   gem 'dockerfile-rails', '~> 1.2'
   gem 'hotwire-livereload'
+  gem 'memory_profiler'
+  gem 'rack-mini-profiler', require: false
   gem 'rubocop', '~> 1.44', require: false
   gem 'rubocop-performance', '~> 1.15', require: false
   gem 'rubocop-rails', '~> 2.17', require: false
   gem 'rubocop-rspec', '~> 2.18', require: false
   gem 'spring'
   gem 'spring-commands-rspec'
+  gem 'stackprof'
 end
 
 group :test do

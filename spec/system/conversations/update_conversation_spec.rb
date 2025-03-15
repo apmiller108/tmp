@@ -36,7 +36,7 @@ RSpec.describe 'update conversation', type: :system do
 
     conversation.generate_text_requests.each do |gtr|
       within("#generate_text_request_#{gtr.id}") do
-        expect(page).to have_css('.segment-user', text: gtr.prompt)
+        expect(page).to have_css('.segment-user', text: gtr.prompt_html)
 
         within('.segment-assistant') do
           expect(page).to have_content gtr.response.content

@@ -24,7 +24,8 @@
 * TODO Wire up search
 * TODO support for image to image
 * TODO look into using https://runware.ai/
-* TODO support mermaid diagram [3/3]
+* DONE support mermaid diagram [3/3]
+CLOSED: [2025-03-15 Sat 18:30]
   - [X] add mermaid js package
   - [X] instruct LLM to always use mermaid syntax when asked to make a diagram
   - [X] Put the mermaid code in a data attribute. When copying the diagram, copy

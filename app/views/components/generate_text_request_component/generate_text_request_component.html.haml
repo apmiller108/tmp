@@ -13,7 +13,7 @@
                                                                     'modal-src' => file_generate_text_request_path(generate_text_request)  } do
                     = image_tag file.variant(**image_variant_options), data: { 'generate-text_request-target' => 'image' },
                     title: file.filename
-                = render MarkdownToHtmlComponent.new(markdown: prompt)
+                = render ContentCustomizerComponent.new(markup: prompt_html)
   .turn.grid.mb-3
     .g-col-12
       .card.segment-assistant
@@ -35,7 +35,7 @@
             = render ClipboardComponent.new(css_class: 'assistant-response', y: :bottom, x: :start) do |clipboard|
               = clipboard.with_copyable do
                 %div{ data: { 'clipboard-target' => 'source' } }
-                  = render MarkdownToHtmlComponent.new(markdown: assistant_response)
+                  = render ContentCustomizerComponent.new(markup: assistant_response_html)
               = clipboard.with_additional_content do
                 %a.btn.icon-btn.icon-btn-sm.more-info{ tabindex: 0, data: { 'generate-text-request-target' => 'moreInfo' } }
                   %i.bi-info-square{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => 'Info' } }

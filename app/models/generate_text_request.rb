@@ -31,6 +31,7 @@ class GenerateTextRequest < ApplicationRecord
   validate :acceptable_file
 
   before_validation :set_default_model, on: :create
+  before_save :convert_to_html
 
   def conversation
     super || NullConversation.new
@@ -112,5 +113,13 @@ class GenerateTextRequest < ApplicationRecord
 
   def set_default_model
     self.model ||= user.setting.text_model
+  end
+
+  def convert_to_html
+    if assistant_response_html.nil? && response&.content.present?
+      self.assistant_response_html = MarkdownToHtml.call(markdown: response.content)
+    end
+
+    self.prompt_html = MarkdownToHtml.call(markdown: prompt) if prompt_html.nil?
   end
 end
