@@ -24,12 +24,9 @@ This side project was started in order to learn the latest features of RoR, Hotw
 
 ## Planned
 - Upscale images
-- Image to video
-- Video playback
-- PDF rendering
-- Export
-- Sharing
-- Streaming LLM responses
+- Image to image
+- Image to Video
+- Search
 
 # Start
 
