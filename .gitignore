@@ -45,3 +45,5 @@ yarn-error.log
 /config/credentials/test.key
 
 spec/examples.txt
+
+data_dump.sql
