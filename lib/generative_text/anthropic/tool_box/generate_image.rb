@@ -37,7 +37,7 @@ class GenerativeText
                   },
                   'aspect_ratio' => {
                     'type' => 'string',
-                    'enum' => GenerativeImage::Stability::CORE_ASPECT_RATIOS,
+                    'enum' => GenerativeImage::Stability::ASPECT_RATIOS,
                     'description' => 'Image dimensions.'
                   }
                 },

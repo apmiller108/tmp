@@ -16,7 +16,7 @@ RSpec.describe GenerateImageJob, type: :job do
     let(:params) { request.parameterize }
     let(:generative_image) { instance_double GenerativeImage }
     let(:image) { file_fixture('image.png').read }
-    let(:response) { instance_double GenerativeImage::Stability::TextToImageResponse, image:, image_present?: true }
+    let(:response) { instance_double GenerativeImage::Stability::ImageResponse, image:, image_present?: true }
 
     before do
       allow(request).to receive(:completed!)

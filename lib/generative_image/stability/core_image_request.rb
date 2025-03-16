@@ -1,6 +1,6 @@
 class GenerativeImage
   module Stability
-    class TextToImageRequest
+    class CoreImageRequest
       attr_reader :prompts, :opts
 
       # @param [Array<Hash>] prompts { 'text' => 'foo' 'weight' => 1 }
@@ -37,7 +37,7 @@ class GenerativeImage
       def default_opts
         {
           style: DEFAULT_STYLE,
-          aspect_ratio: CORE_ASPECT_RATIOS.first,
+          aspect_ratio: ASPECT_RATIOS.first,
           seed: 0
         }
       end

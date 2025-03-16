@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe GenerativeImage::Stability::TextToImageResponse do
+RSpec.describe GenerativeImage::Stability::ImageResponse do
   subject(:response) { described_class.new(client_response) }
 
   context 'with v2 responses' do

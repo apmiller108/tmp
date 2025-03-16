@@ -24,7 +24,7 @@ class WysiwygEditorComponent < ApplicationViewComponent
   end
 
   def gen_image_aspect_ratio_options_json
-    GenerativeImage::Stability::CORE_ASPECT_RATIOS.map do |ar|
+    GenerativeImage::Stability::ASPECT_RATIOS.map do |ar|
       { value: ar, label: ar, selected: ar == '1:1' }
     end.to_json
   end

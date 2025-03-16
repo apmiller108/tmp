@@ -18,12 +18,23 @@
 * TODO add preview chat button on index item
   - [ ] Eye icon on click...
   - [ ] Open modal with readonly version
-* TODO Persist HTML responses
-  Rending long conversations can be slow and compute heavy. Persist the user
-  prompt and assistant response converted by the MarkdownToHtml on the request object
 * TODO Wire up search
 * TODO support for image to image
-* TODO look into using https://runware.ai/
+  - [ ] Add ultra request object
+  - [ ] Add ultra params to image tool schema options
+  - [ ] Add generation_type option enum text_to_image, image_to_image LLM picks
+  - [ ] Add image_to_image type option enum search_and_replace,
+    search_and_recolor, remove_background, sketch, structure, style
+  - [ ] When image to image, use Ultra
+  - [ ] When image to image and sketch use sketch endpoint
+  - [ ] Look into adding a sketch tool
+* DONE Persist HTML responses
+CLOSED: [2025-03-15 Sat 22:01]
+  Rending long conversations can be slow and compute heavy. Persist the user
+  prompt and assistant response converted by the MarkdownToHtml on the request object
+* DONE look into using https://runware.ai/
+CLOSED: [2025-03-15 Sat 21:21]
+  Slow, playground UI/UX was sketchy, long gen times, low quality results.
 * DONE support mermaid diagram [3/3]
 CLOSED: [2025-03-15 Sat 18:30]
   - [X] add mermaid js package

@@ -6,7 +6,7 @@ class GenerateImageRequest < ApplicationRecord
 
   validates :image_name, presence: true, length: { maximum: 50 }
   validates :style, inclusion: { in: GenerativeImage::Stability::STYLE_PRESETS, allow_blank: true }
-  validates :aspect_ratio, inclusion: { in: GenerativeImage::Stability::CORE_ASPECT_RATIOS }
+  validates :aspect_ratio, inclusion: { in: GenerativeImage::Stability::ASPECT_RATIOS }
 
   # See also Turable concern for associations to converation
   belongs_to :user

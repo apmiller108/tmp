@@ -7,7 +7,7 @@ RSpec.describe 'Generate image requests', type: :request do
     let(:negative_prompt) { 'a hobbit' }
     let(:image_name) { 'genimage_123' }
     let(:style) { GenerativeImage::Stability::STYLE_PRESETS.sample }
-    let(:aspect_ratio) { GenerativeImage::Stability::CORE_ASPECT_RATIOS.sample }
+    let(:aspect_ratio) { GenerativeImage::Stability::ASPECT_RATIOS.sample }
     let(:params) { { generate_image_request: { prompt:, negative_prompt:, image_name:, style:, aspect_ratio: } } }
     let(:request) do
       post generate_image_requests_path, params:, as: :turbo_stream

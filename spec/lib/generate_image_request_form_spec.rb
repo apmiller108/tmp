@@ -9,7 +9,7 @@ RSpec.describe GenerateImageRequestForm do
     {
       image_name: '1234abcd',
       style: GenerativeImage::Stability::STYLE_PRESETS.sample,
-      aspect_ratio: GenerativeImage::Stability::CORE_ASPECT_RATIOS.sample,
+      aspect_ratio: GenerativeImage::Stability::ASPECT_RATIOS.sample,
       prompt: 'A golden retriever doggy sitting on a farm',
       negative_prompt: 'Clouds in the sky',
       user:

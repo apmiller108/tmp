@@ -1,6 +1,6 @@
 class GenerativeImage
   module Stability
-    class TextToImageResponse
+    class ImageResponse
       attr_reader :response
 
       delegate :headers, :body, to: :response

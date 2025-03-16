@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe GenerativeImage::Stability::TextToImageRequest do
+RSpec.describe GenerativeImage::Stability::CoreImageRequest do
   subject(:request) { described_class.new(prompts:, **opts) }
 
   let(:prompt) { { 'text' => 'prompt text', 'weight' => 1 } }
@@ -9,7 +9,7 @@ RSpec.describe GenerativeImage::Stability::TextToImageRequest do
   let(:opts) do
     {
       style: GenerativeImage::Stability::STYLE_PRESETS.sample,
-      aspect_ratio: GenerativeImage::Stability::CORE_ASPECT_RATIOS.sample,
+      aspect_ratio: GenerativeImage::Stability::ASPECT_RATIOS.sample,
       seed: 123
     }
   end

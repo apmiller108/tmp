@@ -10,7 +10,7 @@ RSpec.describe GenerateImageRequest, type: :model do
     let(:request) do
       described_class.new(
         style: GenerativeImage::Stability::STYLE_PRESETS.sample,
-        aspect_ratio: GenerativeImage::Stability::CORE_ASPECT_RATIOS.sample,
+        aspect_ratio: GenerativeImage::Stability::ASPECT_RATIOS.sample,
         prompts: [prompt1, prompt2]
       )
     end

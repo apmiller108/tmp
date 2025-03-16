@@ -11,15 +11,15 @@ class GenerativeImage
       end
 
       # @param prompts [Array<Hash>] list of prompts with `text` and `weight`
-      # @return [Stability::TextToImageResponse] wraps the response
+      # @return [Stability::ImageResponse] wraps the response
       def text_to_image(prompts:, **opts)
-        request = TextToImageRequest.new(prompts:, **opts)
+        request = CoreImageRequest.new(prompts:, **opts)
 
         response = conn.post(request.path) do |req|
           req.body = request.as_json
           req.headers['Accept'] = 'image/*'
         end
-        TextToImageResponse.new(response)
+        ImageResponse.new(response)
       rescue Faraday::Error => e
         message = "#{e}: #{e.response_status}: #{e.response_body}"
         Rails.logger.warn "#{self.class} : #{message}"
