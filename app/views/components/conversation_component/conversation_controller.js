@@ -23,7 +23,7 @@ export default class ConversationController extends Controller {
 
       if (turnsChanged) {
         this.dispatch('turnsChanged')
-        this.scrollTurns()
+        // this.scrollTurns()
       }
     });
 
