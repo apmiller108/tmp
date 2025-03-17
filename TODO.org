@@ -21,14 +21,11 @@
 * TODO Wire up search
 * TODO support for image to image
   - [X] Add ultra request object and update client
-  - [ ] Add ultra params to image tool schema options
-  - [ ] Add generation_type option enum text_to_image, image_to_image LLM picks
-  - [ ] Add image_to_image type option enum search_and_replace,
-    search_and_recolor, remove_background, sketch, structure, style
+  - [X] Add ultra params to image tool schema options
   - [ ] Add starting_image attachment gir. When image to image select gtr image
     then fallback to starting_image
   - [ ] When image to image, use Ultra
-  - [ ] When image to image and sketch use sketch endpoint
+  - [ ] Add support for search and replace
   - [ ] Look into adding a sketch tool
   - [ ] Fix mutation observer scrolling on more info clicks
 * DONE Persist HTML responses

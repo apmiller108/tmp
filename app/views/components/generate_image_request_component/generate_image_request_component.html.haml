@@ -7,6 +7,7 @@
         .card-body.pt-1
           - if created? || in_progress?
             .text-center
+              .text-muted.mb-3 Generating an image...
               = render SpinnerComponent.new
           - elsif failed?
             = t('failed_to_generate_image')

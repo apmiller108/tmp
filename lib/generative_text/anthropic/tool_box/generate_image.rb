@@ -30,6 +30,11 @@ class GenerativeText
               'options' => {
                 'type' => 'object',
                 'properties' => {
+                  'request_type' => {
+                    'type' => 'string',
+                    'enum' => GenerativeImage::Stability::REQUEST_TYPES,
+                    'description' => 'The type of image generation request'
+                  },
                   'style' => {
                     'type' => 'string',
                     'enum' => GenerativeImage::Stability::STYLE_PRESETS,
@@ -39,6 +44,12 @@ class GenerativeText
                     'type' => 'string',
                     'enum' => GenerativeImage::Stability::ASPECT_RATIOS,
                     'description' => 'Image dimensions.'
+                  },
+                  'strength' => {
+                    'type' => 'number',
+                    'minimum' => 0,
+                    'maximum' => 1,
+                    'description' => 'Sometimes referred to as denoising, this parameter controls how much influence the image parameter has on the generated image. A value of 0 would yield an image that is identical to the input. A value of 1 would be as if you passed in no image at all. Only used for image to image requests.'
                   }
                 },
                 'required' => ['aspect_ratio']

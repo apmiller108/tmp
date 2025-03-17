@@ -7,6 +7,8 @@ class GenerateImageRequestForm
   attribute :aspect_ratio, :string
   attribute :prompt, :string
   attribute :negative_prompt, :string
+  attribute :request_type, default: 'text_to_image'
+  attribute :strength
   attribute :user
   attribute :generate_image_request
   attribute :generate_text_request
@@ -41,6 +43,8 @@ class GenerateImageRequestForm
       image_name:,
       style:,
       aspect_ratio:,
+      request_type:,
+      strength:,
       user:,
       generate_text_request:
     }

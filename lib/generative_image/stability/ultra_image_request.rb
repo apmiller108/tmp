@@ -18,7 +18,7 @@ class GenerativeImage
           aspect_ratio: opts[:aspect_ratio],
           seed: opts[:seed],
           style_preset: opts[:style].presence,
-          output_format: opts[:output_format]
+          output_format: opts.fetch(:output_format, 'png')
         }.tap do |payload|
           if image_data.present?
             # Add image and strength for image-to-image requests

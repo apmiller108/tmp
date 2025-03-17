@@ -2,7 +2,7 @@ class GenerateImageRequest < ApplicationRecord
   include StatusEnumable
   include Turnable
 
-  store_accessor :options, :style, :aspect_ratio
+  store_accessor :options, :style, :aspect_ratio, :request_type, :strength
 
   validates :image_name, presence: true, length: { maximum: 50 }
   validates :style, inclusion: { in: GenerativeImage::Stability::STYLE_PRESETS, allow_blank: true }
@@ -24,7 +24,7 @@ class GenerateImageRequest < ApplicationRecord
 
   before_validation :filter_unknown_style
 
-  OPTION_FIELDS = %w[style aspect_ratio].freeze
+  OPTION_FIELDS = %w[style aspect_ratio request_type strength].freeze
   LEGACY_OPTION_FIELDS = %w[dimensions].freeze
 
   def self.generate_name

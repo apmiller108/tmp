@@ -15,6 +15,7 @@ class GenerativeImage
           negative_prompt:,
           style_preset: opts[:style].presence,
           aspect_ratio: opts[:aspect_ratio],
+          output_format: opts.fetch(:output_format, 'png'),
           seed: opts[:seed]
         }.compact
       end

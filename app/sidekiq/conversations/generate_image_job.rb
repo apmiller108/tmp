@@ -37,7 +37,7 @@ module Conversations
 
     def generate_image(request)
       params = request.parameterize
-      GenerativeImage.new.text_to_image(**params)
+      GenerativeImage.new.perform_request(**params)
     rescue StandardError => e
       Rails.logger.warn("#{self.class}: #{e} : #{e.cause}")
       nil

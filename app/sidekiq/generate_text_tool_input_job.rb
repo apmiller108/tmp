@@ -46,6 +46,6 @@ class GenerateTextToolInputJob
   def log_and_broadcast_errors(user, form)
     message = I18n.t('unable_to_generate_image')
     broadcast_flash_to_user(message:, user:, record: form)
-    Rails.logger.warn "#{self.class}: form_errors : #{form.errors.full_messages}"
+    Rails.logger.warn "#{self.class}: form_errors : #{form&.errors&.full_messages}"
   end
 end

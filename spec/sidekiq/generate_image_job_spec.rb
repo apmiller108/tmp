@@ -31,7 +31,7 @@ RSpec.describe GenerateImageJob, type: :job do
 
     context 'when the image was succesfully generated' do
       before do
-        allow(generative_image).to receive(:text_to_image).with(params).and_return(response)
+        allow(generative_image).to receive(:perform_request).with(params).and_return(response)
         perform
       end
 
@@ -64,7 +64,7 @@ RSpec.describe GenerateImageJob, type: :job do
 
     context 'when the image generation failed' do
       before do
-        allow(generative_image).to receive(:text_to_image).with(params).and_raise(GenerativeImage::InvalidRequestError)
+        allow(generative_image).to receive(:perform_request).with(params).and_raise(GenerativeImage::InvalidRequestError)
         allow(Rails.logger).to receive(:warn)
         perform
       end
@@ -93,7 +93,7 @@ RSpec.describe GenerateImageJob, type: :job do
 
     context 'with a standard error' do
       before do
-        allow(generative_image).to receive(:text_to_image).with(params).and_raise(StandardError)
+        allow(generative_image).to receive(:perform_request).with(params).and_raise(StandardError)
         allow(Rails.logger).to receive(:warn)
         perform
       end

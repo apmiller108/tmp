@@ -10,6 +10,15 @@ class GenerativeImage
         JSON.parse(response.body)
       end
 
+      def perform_request(prompts:, **opts)
+        case opts.fetch(:request_type, 'text_to_image')
+        when 'image_to_image'
+          image_to_image(prompts:, image_data: opts[:image], **opts)
+        else
+          text_to_image(prompts:, **opts)
+        end
+      end
+
       # @param prompts [Array<Hash>] list of prompts with `text` and `weight`
       # @param endpoint [Symbol] :core or :ultra
       # @return [Stability::ImageResponse] wraps the response
