@@ -22,7 +22,7 @@ class GenerativeImage
         }.tap do |payload|
           if base_image.present?
             # Add image and strength for image-to-image requests
-            payload[:image] = base_image.download
+            payload[:image] = image_upload_io
             payload[:strength] = opts.fetch(:strength, 0.7)
           end
         end.compact
@@ -32,7 +32,22 @@ class GenerativeImage
         ULTRA_GENERATION_ENDPOINT
       end
 
+      def close
+        return if @tempfile.nil?
+
+        @tempfile.close
+        @tempfile.unlink
+      end
+
       private
+
+      def image_upload_io
+        @tempfile = Tempfile.new("tmp-#{base_image.filename}")
+        @tempfile.binmode
+        @tempfile.write(base_image.download)
+        @tempfile.rewind
+        Faraday::UploadIO.new(@tempfile.path, base_image.content_type, base_image.filename.to_s)
+      end
 
       def prompt
         prompts.find { |p| p.fetch('weight').positive? }

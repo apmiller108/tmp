@@ -12,7 +12,7 @@ class GenerativeText
         ) do |f|
           f.adapter :typhoeus
           f.response :raise_error
-          # f.response :logger, nil, { bodies: { request: true, response: false } } # Log request and response to stdout
+          # f.response :logger, nil, { bodies: { request: true, response: true } } # Log request and response to stdout
         end
       end
 

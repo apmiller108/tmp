@@ -11,7 +11,7 @@ class GenerativeImage
       end
 
       def perform_request(generate_image_request)
-        if generate_image_request.image_to_image?
+        if generate_image_request.image_to_image? && generate_image_request.base_image.image?
           image_to_image(generate_image_request:)
         else
           text_to_image(generate_image_request:)
@@ -40,6 +40,8 @@ class GenerativeImage
         message = "#{e}: #{e.response_status}: #{e.response_body}"
         Rails.logger.warn "#{self.class} : #{message}"
         raise Stability::ClientError, message
+      ensure
+        request.close
       end
 
       private
@@ -74,6 +76,7 @@ class GenerativeImage
         ) do |f|
           f.request :multipart
           f.response :raise_error
+          # f.response :logger, nil, { bodies: { request: true, response: true } } # Log request and response to stdout
         end
       end
     end
