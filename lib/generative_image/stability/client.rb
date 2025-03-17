@@ -10,50 +10,32 @@ class GenerativeImage
         JSON.parse(response.body)
       end
 
-      def perform_request(prompts:, **opts)
-        case opts.fetch(:request_type, 'text_to_image')
-        when 'image_to_image'
-          image_to_image(prompts:, image_data: opts[:image], **opts)
+      def perform_request(generate_image_request)
+        if generate_image_request.image_to_image?
+          image_to_image(generate_image_request:)
         else
-          text_to_image(prompts:, **opts)
+          text_to_image(generate_image_request:)
         end
       end
 
-      # @param prompts [Array<Hash>] list of prompts with `text` and `weight`
       # @param endpoint [Symbol] :core or :ultra
       # @return [Stability::ImageResponse] wraps the response
-      def text_to_image(prompts:, endpoint: :core, **opts)
-        request = create_request(endpoint, prompts:, **opts)
+      def text_to_image(generate_image_request:, endpoint: :core)
+        request = create_request(endpoint, **generate_image_request.parameterize)
 
-        response = conn.post(request.path) do |req|
-          req.body = request.as_json
-          req.headers['Accept'] = 'image/*'
-        end
-        ImageResponse.new(response)
+        post_image_request(request)
       rescue Faraday::Error => e
         message = "#{e}: #{e.response_status}: #{e.response_body}"
         Rails.logger.warn "#{self.class} : #{message}"
         raise Stability::ClientError, message
       end
 
-      # @param prompts [Array<Hash>] list of prompts with `text` and `weight`
-      # @param image_data [String] binary image data
-      # @param strength [Float] between 0 and 1, controls influence of input image
       # @return [Stability::ImageResponse] wraps the response
-      def image_to_image(prompts:, image_data:, strength: 0.7, **opts)
+      def image_to_image(generate_image_request:)
         # Only Ultra endpoint supports image-to-image
-        request = UltraImageRequest.new(
-          prompts:,
-          image_data:,
-          strength:,
-          **opts
-        )
+        request = create_request(:ultra, **generate_image_request.parameterize)
 
-        response = conn.post(request.path) do |req|
-          req.body = request.as_json
-          req.headers['Accept'] = 'image/*'
-        end
-        ImageResponse.new(response)
+        post_image_request(request)
       rescue Faraday::Error => e
         message = "#{e}: #{e.response_status}: #{e.response_body}"
         Rails.logger.warn "#{self.class} : #{message}"
@@ -61,6 +43,15 @@ class GenerativeImage
       end
 
       private
+
+      def post_image_request(request)
+        response = conn.post(request.path) do |req|
+          req.body = request.as_json
+          req.headers['Accept'] = 'image/*'
+        end
+
+        ImageResponse.new(response)
+      end
 
       def create_request(endpoint, **args)
         case endpoint

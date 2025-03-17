@@ -10,7 +10,9 @@ class GenerativeImage
     ULTRA_GENERATION_ENDPOINT = '/v2beta/stable-image/generate/ultra'.freeze
     SD3_GENERATION_ENDPOINT = '/v2beta/stable-image/generate/sd3'.freeze
 
-    REQUEST_TYPES = %w[text_to_image image_to_image].freeze
+    TEXT_TO_IMAGE = 'text_to_image'.freeze
+    IMAGE_TO_IMAGE = 'image_to_image'.freeze
+    REQUEST_TYPES = [TEXT_TO_IMAGE, IMAGE_TO_IMAGE].freeze
 
     STYLE_PRESETS = %w[
       3d-model

@@ -22,6 +22,10 @@ class GenerateImageRequest < ApplicationRecord
     attachable.variant :webp, resize_to_limit: [1024, 768], **ActiveStorage::Blob::WEBP_VARIANT_OPTS
   end
 
+  has_one_attached :baseimage do |attachable|
+    attachable.variant :webp, resize_to_limit: [1024, 768], **ActiveStorage::Blob::WEBP_VARIANT_OPTS
+  end
+
   before_validation :filter_unknown_style
 
   OPTION_FIELDS = %w[style aspect_ratio request_type strength].freeze
@@ -43,7 +47,8 @@ class GenerateImageRequest < ApplicationRecord
   def parameterize
     {
       **flat_attributes.slice(*OPTION_FIELDS, *LEGACY_OPTION_FIELDS),
-      prompts: prompts.map(&:parameterize)
+      prompts: prompts.map(&:parameterize),
+      base_image:
     }.symbolize_keys
   end
 
@@ -53,6 +58,21 @@ class GenerateImageRequest < ApplicationRecord
 
   def flat_attributes
     attributes.except('options').merge(options)
+  end
+
+  # @return [ActiveStorage::Attached::One]
+  def base_image
+    return unless image_to_image?
+
+    if generate_text_request_id.present?
+      generate_text_request.file.variant(:webp).processed.image
+    else
+      baseimage.variant(:webp).processed.image
+    end
+  end
+
+  def image_to_image?
+    request_type == GenerativeImage::Stability::IMAGE_TO_IMAGE && base_image && base_image.image?
   end
 
   private

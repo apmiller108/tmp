@@ -22,9 +22,10 @@
 * TODO support for image to image
   - [X] Add ultra request object and update client
   - [X] Add ultra params to image tool schema options
-  - [ ] Add starting_image attachment gir. When image to image select gtr image
+  - [X] Add starting_image attachment gir. When image to image select gtr image
     then fallback to starting_image
-  - [ ] When image to image, use Ultra
+  - [X] When image to image, use Ultra
+  - [ ] Instruct LLM when to use image_to_image
   - [ ] Add support for search and replace
   - [ ] Look into adding a sketch tool
   - [ ] Fix mutation observer scrolling on more info clicks

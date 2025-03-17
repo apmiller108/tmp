@@ -1,13 +1,13 @@
 class GenerativeImage
   module Stability
     class UltraImageRequest
-      attr_reader :prompts, :image_data, :opts
+      attr_reader :prompts, :base_image, :opts
 
       # @param [Array<Hash>] prompts { 'text' => 'foo' 'weight' => 1 }
-      # @param [String, nil] image_data Binary image data for image-to-image requests
-      def initialize(prompts:, image_data: nil, **opts)
+      # @param [String, nil] base_image Binary image data for image-to-image requests
+      def initialize(prompts:, base_image: nil, **opts)
         @prompts = prompts
-        @image_data = image_data
+        @base_image = base_image
         @opts = default_opts.merge(opts.compact.symbolize_keys)
       end
 
@@ -20,10 +20,10 @@ class GenerativeImage
           style_preset: opts[:style].presence,
           output_format: opts.fetch(:output_format, 'png')
         }.tap do |payload|
-          if image_data.present?
+          if base_image.present?
             # Add image and strength for image-to-image requests
-            payload[:image] = image_data
-            payload[:strength] = opts[:strength]
+            payload[:image] = base_image.download
+            payload[:strength] = opts.fetch(:strength, 0.7)
           end
         end.compact
       end
