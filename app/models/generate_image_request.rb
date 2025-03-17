@@ -62,8 +62,6 @@ class GenerateImageRequest < ApplicationRecord
 
   # @return [ActiveStorage::Attached::One]
   def base_image
-    return unless image_to_image?
-
     if generate_text_request_id.present?
       generate_text_request.file.variant(:webp).processed.image
     else
@@ -72,7 +70,7 @@ class GenerateImageRequest < ApplicationRecord
   end
 
   def image_to_image?
-    request_type == GenerativeImage::Stability::IMAGE_TO_IMAGE && base_image && base_image.image?
+    request_type == GenerativeImage::Stability::IMAGE_TO_IMAGE && base_image&.image?
   end
 
   private
