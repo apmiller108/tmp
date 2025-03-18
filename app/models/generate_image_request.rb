@@ -75,6 +75,10 @@ class GenerateImageRequest < ApplicationRecord
     request_type == GenerativeImage::Stability::IMAGE_TO_IMAGE
   end
 
+  def valid_base_image?
+    base_image.present? && base_image.image?
+  end
+
   private
 
   # Removes unknown styles if the LLM gets too creative and adds styles that are not supported by the service

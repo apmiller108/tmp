@@ -6,9 +6,12 @@ class GenerativeImage
 
     HOST = 'https://api.stability.ai'.freeze
     ENGINES_ENDPOINT = '/v1/engines/list'.freeze
+
     CORE_GENERATION_ENDPOINT = '/v2beta/stable-image/generate/core'.freeze
     ULTRA_GENERATION_ENDPOINT = '/v2beta/stable-image/generate/ultra'.freeze
-    SD3_GENERATION_ENDPOINT = '/v2beta/stable-image/generate/sd3'.freeze
+
+    CORE = :core
+    ULTRA = :ultra
 
     TEXT_TO_IMAGE = 'text_to_image'.freeze
     IMAGE_TO_IMAGE = 'image_to_image'.freeze

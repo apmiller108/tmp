@@ -31,9 +31,10 @@ class GenerativeText
           - Medium values (0.5-0.7): Balance between original image and new elements
           - Higher values (0.8-0.95): More dramatic changes while keeping some influence from original
 
-          This tool should only be used when the user is explicitly asking you
-          to create a new image or update an image. It's very important that you use the input
-          schema precisely.
+          This tool should ONLY be used when the user is EXPLICITLY asking you
+          to create a new image or update an image. Do not create or update
+          images without being explicitly asked. It's very important that you
+          use the input schema precisely.
         TXT
 
         def input_schema

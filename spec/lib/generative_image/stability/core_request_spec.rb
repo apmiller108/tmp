@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe GenerativeImage::Stability::CoreImageRequest do
+RSpec.describe GenerativeImage::Stability::CoreRequest do
   subject(:request) { described_class.new(prompts:, **opts) }
 
   let(:prompt) { { 'text' => 'prompt text', 'weight' => 1 } }

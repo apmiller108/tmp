@@ -18,7 +18,7 @@ RSpec.describe GenerativeImage::Stability::Client do
     let(:args) { prompt.generate_image_request.parameterize }
     let(:request_json) { args.to_json }
     let(:path) { 'https://api.stability.ai/v2beta/stable-image/generate/core' }
-    let(:request) { instance_double(GenerativeImage::Stability::CoreImageRequest, to_json: request_json, path:) }
+    let(:request) { instance_double(GenerativeImage::Stability::CoreRequest, to_json: request_json, path:) }
     let(:headers) do
       {
         'Authorization': "Bearer #{Rails.application.credentials.fetch(:stability_key)}",
@@ -27,7 +27,7 @@ RSpec.describe GenerativeImage::Stability::Client do
     end
 
     before do
-      allow(GenerativeImage::Stability::CoreImageRequest).to receive(:new).with(args).and_return(request)
+      allow(GenerativeImage::Stability::CoreRequest).to receive(:new).with(args).and_return(request)
     end
 
     context 'with a success response' do
@@ -35,8 +35,8 @@ RSpec.describe GenerativeImage::Stability::Client do
         stub_request(:post, path).with(headers:).to_return(status: 200, body: 'raw image bytes')
       end
 
-      it 'returns the CoreImageRequest object' do
-        expect(client.text_to_image(**args)).to  be_a GenerativeImage::Stability::ImageResponse
+      it 'returns the ImageResponse object' do
+        expect(client.text_to_image(**args)).to be_a GenerativeImage::Stability::ImageResponse
       end
     end
 

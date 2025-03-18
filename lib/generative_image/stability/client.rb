@@ -10,30 +10,11 @@ class GenerativeImage
         JSON.parse(response.body)
       end
 
+      # @param generate_image_request [GenerateImageRequest]
+      # @return [Stability::ImageResponse] wraps the response
       def perform_request(generate_image_request)
-        if generate_image_request.image_to_image? && generate_image_request.base_image.image?
-          image_to_image(generate_image_request:)
-        else
-          text_to_image(generate_image_request:)
-        end
-      end
-
-      # @param endpoint [Symbol] :core or :ultra
-      # @return [Stability::ImageResponse] wraps the response
-      def text_to_image(generate_image_request:, endpoint: :core)
-        request = create_request(endpoint, **generate_image_request.parameterize)
-
-        post_image_request(request)
-      rescue Faraday::Error => e
-        message = "#{e}: #{e.response_status}: #{e.response_body}"
-        Rails.logger.warn "#{self.class} : #{message}"
-        raise Stability::ClientError, message
-      end
-
-      # @return [Stability::ImageResponse] wraps the response
-      def image_to_image(generate_image_request:)
-        # Only Ultra endpoint supports image-to-image
-        request = create_request(:ultra, **generate_image_request.parameterize)
+        service = service_for(generate_image_request)
+        request = RequestFactory.create(service, **generate_image_request.parameterize)
 
         post_image_request(request)
       rescue Faraday::Error => e
@@ -46,6 +27,15 @@ class GenerativeImage
 
       private
 
+      # Only Ultra endpoint supports image-to-image. Core does not.
+      def service_for(generate_image_request)
+        if generate_image_request.image_to_image? && generate_image_request.valid_base_image?
+          ULTRA
+        else
+          CORE
+        end
+      end
+
       def post_image_request(request)
         response = conn.post(request.path) do |req|
           req.body = request.as_json
@@ -53,17 +43,6 @@ class GenerativeImage
         end
 
         ImageResponse.new(response)
-      end
-
-      def create_request(endpoint, **args)
-        case endpoint
-        when :core
-          CoreImageRequest.new(**args)
-        when :ultra
-          UltraImageRequest.new(**args)
-        else
-          raise ArgumentError, "Unknown endpoint: #{endpoint}"
-        end
       end
 
       def conn
