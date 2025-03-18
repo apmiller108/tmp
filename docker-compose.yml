@@ -61,7 +61,7 @@ services:
     depends_on:
       database:
         condition: service_healthy
-    mem_limit: "${TMP_APP_MEM_LIMIT:-750m}"
+    mem_limit: "${TMP_APP_MEM_LIMIT:-1000m}"
   sidekiq:
     <<: *base
     depends_on:
@@ -74,7 +74,7 @@ services:
     volumes:
       - ".:/rails"
       - "/rails/tmp" # don't mount tmp
-    mem_limit: "${TMP_SIDEKIQ_MEM_LIMIT:-250m}"
+    mem_limit: "${TMP_SIDEKIQ_MEM_LIMIT:-500m}"
   anycable:
     <<: *base
     command: bundle exec anycable
