@@ -115,6 +115,7 @@ class ConversationsController < ApplicationController
   def conversation_params
     params.require(:conversation).permit(
       :title,
+      :image_quality,
       :memo_id,
       :turnable_type,
       :prompt,

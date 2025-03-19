@@ -15,6 +15,7 @@ class ConversationForm
   attribute :file
   attribute :turnable_type
   attribute :stream, :boolean, default: false
+  attribute :image_quality
 
   validates :user, presence: true
   validate :valid_turnable, if: -> { turnable.present? }
@@ -72,14 +73,18 @@ class ConversationForm
 
   def assign_default_values
     assign_default_title
-
-    self.model                   ||= last_gen_text_opts.fetch(:model, user&.setting&.text_model)
-    self.temperature             ||= last_gen_text_opts.fetch(:temperature, 0)
-    self.generate_text_preset_id ||= last_gen_text_opts[:generate_text_preset_id]
+    assign_defaults_from_last_request
+    self.image_quality = conversation.image_quality
   end
 
   def assign_default_title
     self.title ||= Conversation.title_from_prompt(prompt) if conversation.new_record?
+  end
+
+  def assign_defaults_from_last_request
+    self.model                   ||= last_gen_text_opts.fetch(:model, user&.setting&.text_model)
+    self.temperature             ||= last_gen_text_opts.fetch(:temperature, 0)
+    self.generate_text_preset_id ||= last_gen_text_opts[:generate_text_preset_id]
   end
 
   def conversation_attributes
@@ -89,6 +94,7 @@ class ConversationForm
     }.tap do |attrs|
       attrs[:title] = title if title.present?
       attrs[:memo_id] = memo_id if memo_id.present?
+      attrs[:image_quality] = image_quality if image_quality.present?
     end
   end
 

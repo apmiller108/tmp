@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_15_212017) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_19_205917) do
   create_schema "rollback"
 
   # These are extensions that must be enabled in order to support this database
@@ -81,8 +81,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_15_212017) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "title", limit: 100, null: false
+    t.text "image_quality", default: "standard"
     t.index ["memo_id"], name: "index_conversations_on_memo_id"
     t.index ["user_id"], name: "index_conversations_on_user_id"
+    t.check_constraint "image_quality = ANY (ARRAY['standard'::text, 'high'::text])"
   end
 
   create_table "generate_image_requests", force: :cascade do |t|

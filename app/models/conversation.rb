@@ -1,4 +1,9 @@
 class Conversation < ApplicationRecord
+  enum :image_quality, {
+    standard: 'standard',
+    high: 'high'
+  }, default: 'standard'
+
   belongs_to :memo, optional: true
   belongs_to :user, optional: false
 
@@ -9,6 +14,9 @@ class Conversation < ApplicationRecord
   has_many :generate_text_requests, through: :turns, source: :turnable, source_type: 'GenerateTextRequest'
 
   validates :title, presence: true, length: { maximum: 100 }
+  validates :status, inclusion: {
+    in: image_qualities.values, message: "%<value>s must be one of #{image_qualities.values}"
+  }
 
   validate :memo_user_matches_conversation_user, if: :memo_id_changed?
 
