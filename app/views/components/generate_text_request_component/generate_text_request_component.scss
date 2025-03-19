@@ -10,6 +10,9 @@
   }
   .popover {
     pointer-events: none;
+    a {
+      pointer-events: auto;
+    }
   }
   .segment-user {
     .copy-btn {

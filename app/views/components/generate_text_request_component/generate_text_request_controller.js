@@ -8,7 +8,7 @@ export default class GenerateTextRequestController extends Controller {
   connect() {
     if (this.hasMoreInfoTarget) {
       new Popover(this.moreInfoTarget, {
-        content: this.moreInfoTemplate(),
+        content: this.moreInfoTemplate,
         container: this.element,
         html: true,
         boundary: this.element,
@@ -35,29 +35,7 @@ export default class GenerateTextRequestController extends Controller {
     }
   }
 
-  moreInfoData() {
-    const { model, preset, temperature, tokenCount } = this.element.dataset
-    const entries = Object.entries({ model, preset, temperature, tokens: tokenCount }).filter(([, v]) => {
-      return !!v
-    })
-    return Object.fromEntries(entries)
-  }
-
-  moreInfoTemplate() {
-    return `
-      <div class="details-fields p-0">
-        ${Object.entries(this.moreInfoData()).map(([k, v]) => this.moreInfoField(k, v)).join("\n")}
-      </diev>
-    `
-  }
-
-  moreInfoField(key, value) {
-    const label = String(key).charAt(0).toUpperCase() + String(key).slice(1)
-    return `
-      <div class="d-flex align-items-center justify-content-between">
-        <span class="label me-1">${label}: </span>
-        <pre class="value mb-0 p-1">${value}</pre>
-      </div>
-    `
+  get moreInfoTemplate() {
+    return this.element.dataset.moreInfoTemplate
   }
 }

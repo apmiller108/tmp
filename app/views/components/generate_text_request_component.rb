@@ -32,13 +32,23 @@ class GenerateTextRequestComponent < ApplicationViewComponent
     dom_id(generate_text_request, 'assistant_response')
   end
 
-  def dataset
+  def more_info_data
     {
       model: model.name,
       temperature:,
       preset: generate_text_preset&.name,
       token_count: response_token_count
     }.compact
+  end
+
+  def more_info_template
+    tag.div(class: 'details-fields p-0') do
+      more_info_data.map do |k, v|
+        tag.div(class: 'd-flex align-items-center justify-content-between') do
+          tag.span(k, class: 'label me1') + tag.pre(v, class: 'value mb-0 p-1')
+        end
+      end.join("\n").html_safe
+    end
   end
 
   def image?
