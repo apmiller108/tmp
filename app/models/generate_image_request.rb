@@ -28,7 +28,7 @@ class GenerateImageRequest < ApplicationRecord
 
   before_validation :filter_unknown_style
 
-  OPTION_FIELDS = %w[style aspect_ratio request_type strength].freeze
+  OPTION_FIELDS = stored_attributes[:options].map(&:to_s)
   LEGACY_OPTION_FIELDS = %w[dimensions].freeze
 
   def self.generate_name
@@ -47,8 +47,7 @@ class GenerateImageRequest < ApplicationRecord
   def parameterize
     {
       **flat_attributes.slice(*OPTION_FIELDS, *LEGACY_OPTION_FIELDS),
-      prompts: prompts.map(&:parameterize),
-      base_image:
+      prompts: prompts.map(&:parameterize)
     }.symbolize_keys
   end
 
