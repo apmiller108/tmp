@@ -1,11 +1,13 @@
 class GenerativeImage
   module Stability
     class BaseRequest
-      attr_reader :prompts, :opts
+      attr_reader :generate_image_request
 
-      def initialize(prompts:, **opts)
-        @prompts = prompts
-        @opts = default_opts.merge(opts.compact.symbolize_keys)
+      delegate :prompts, to: :generate_image_request
+
+      # @param generate_image_request [GenerateImageRequest]
+      def initialize(generate_image_request)
+        @generate_image_request = generate_image_request
       end
 
       def as_json
@@ -27,15 +29,18 @@ class GenerativeImage
         # No-op by default, subclasses can override
       end
 
-      protected
+      private
 
       def prompt
-        prompts.find { |p| p.fetch('weight').positive? }
-               .fetch('text')
+        prompts.find { |p| p.weight.positive? }.text
       end
 
       def negative_prompt
-        (prompts.find { |p| p.fetch('weight').negative? } || {})['text']
+        (prompts.find { |p| p.weight.negative? })&.text
+      end
+
+      def opts
+        @opts ||= default_opts.merge(request_options)
       end
 
       def default_opts
@@ -45,6 +50,10 @@ class GenerativeImage
           seed: 0,
           output_format: 'png'
         }
+      end
+
+      def request_options
+        generate_image_request.parameterize.compact.symbolize_keys
       end
     end
   end

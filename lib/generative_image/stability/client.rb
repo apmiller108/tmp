@@ -14,7 +14,7 @@ class GenerativeImage
       # @return [Stability::ImageResponse] wraps the response
       def perform_request(generate_image_request)
         service = service_for(generate_image_request)
-        request = RequestFactory.create(service, **generate_image_request.parameterize)
+        request = RequestFactory.create(service, generate_image_request)
 
         post_image_request(request)
       rescue Faraday::Error => e
