@@ -74,10 +74,12 @@
       .modal-content
         .modal-header.bg-primary.text-white
           %h5.modal-title#conversationSettingsModalLabel Conversation Settings
-          %button.btn-close{ type: 'button', 'data-bs-dismiss': 'modal', 'aria-label': 'Close' }
+          %button.btn-close.btn-close-white{ type: 'button', 'data-bs-dismiss': 'modal', 'aria-label': 'Close' }
         .modal-body
           .mb-3
-            .form-floating
+            .form-floating.d-flex
               = select :conversation, :image_quality, Conversation.image_qualities, { include_blank: false, selected: conversation.image_quality },
                   { class: 'form-select', data: { 'action' => 'change->prompt-form#onImageQualityChange' } }
-              = label :converstion, :image_quality, 'Generative Image Quality', class: 'form-label'
+              = label :converstion, :image_quality, 'Text to Image Quality', class: 'form-label'
+              %i.bi.bi-info-circle.ms-1.text-muted{ data: { 'bs-toggle' => 'tooltip',
+                                                            'bs-title' => 'Image to image will always be high quality' } }
