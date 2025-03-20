@@ -67,7 +67,7 @@
               %div.d-flex.align-items-center
                 %span.label.me-2 Tokens:
                 %pre.value= conversation.token_count
-              %button.btn.icon-btn.icon-btn-sm.ms-2{ type: 'button', data: { 'bs-toggle': 'modal', 'bs-target': '#convoSettingsModal' }}
+              %button.settings-btn.btn.icon-btn.icon-btn-sm.ms-2{ type: 'button', data: { 'bs-toggle': 'modal', 'bs-target': '#convoSettingsModal' }}
                 %i.bi.bi-gear{ data: { 'bs-toggle': 'tooltip', 'bs-title': 'Conversation Settings' }}
   .modal.fade.settings-modal#convoSettingsModal{ tabindex: '-1', 'aria-labelledby': 'conversationSettingsModalLabel', 'aria-hidden': 'true' }
     .modal-dialog
@@ -82,4 +82,4 @@
                   { class: 'form-select', data: { 'action' => 'change->prompt-form#onImageQualityChange' } }
               = label :converstion, :image_quality, 'Text to Image Quality', class: 'form-label'
               %i.bi.bi-info-circle.ms-1.text-muted{ data: { 'bs-toggle' => 'tooltip',
-                                                            'bs-title' => 'Image to image will always be high quality' } }
+                                                            'bs-title' => 'Select standard for faster generation times. Select high for photorealistic and professional print quality. Image to image will always be high quality' } }
