@@ -29,15 +29,27 @@ export const createConversation = (params) => {
 }
 
 export const updateConversation = (params) => {
-  const { conversation_id, memo_id, prompt, text_id, temperature, generate_text_preset_id } = params
+  const { conversation_id, memo_id, prompt, text_id, temperature, generate_text_preset_id, image_quality } = params
   const headers = jsonFormatHeaders()
   let body = { conversation: {} }
   if (memo_id) {
     body.conversation.memo_id = memo_id
   }
 
+  console.log(params)
+  if (image_quality) {
+    body.conversation.image_quality = image_quality
+  }
+
   if (prompt) {
-    body.conversation = { ...body.conversation, prompt, text_id, temperature, generate_text_preset_id, turnable_type: 'GenerateTextRequest' }
+    body.conversation = {
+      ...body.conversation,
+      prompt,
+      text_id,
+      temperature,
+      generate_text_preset_id,
+      turnable_type: 'GenerateTextRequest'
+    }
   }
   const url = `/conversations/${conversation_id}`
 

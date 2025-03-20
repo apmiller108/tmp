@@ -3,7 +3,7 @@ class GenerativeImage
     class BaseRequest
       attr_reader :generate_image_request
 
-      delegate :prompts, to: :generate_image_request
+      delegate :prompt, :negative_prompt, to: :generate_image_request
 
       # @param generate_image_request [GenerateImageRequest]
       def initialize(generate_image_request)
@@ -30,14 +30,6 @@ class GenerativeImage
       end
 
       private
-
-      def prompt
-        prompts.find { |p| p.weight.positive? }.text
-      end
-
-      def negative_prompt
-        (prompts.find { |p| p.weight.negative? })&.text
-      end
 
       def opts
         @opts ||= default_opts.merge(request_options)

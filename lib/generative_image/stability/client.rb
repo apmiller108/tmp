@@ -29,11 +29,15 @@ class GenerativeImage
 
       # Only Ultra endpoint supports image-to-image. Core does not.
       def service_for(generate_image_request)
-        if generate_image_request.image_to_image? && generate_image_request.valid_base_image?
+        if image_to_image?(generate_image_request) || generate_image_request.high_quality_text_to_image?
           ULTRA
         else
           CORE
         end
+      end
+
+      def image_to_image?(generate_image_request)
+        generate_image_request.image_to_image? && generate_image_request.valid_base_image?
       end
 
       def post_image_request(request)

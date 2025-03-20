@@ -3,12 +3,13 @@ import { createGenTextId } from '@javascript/helpers'
 import ToolTippable from '@javascript/mixins/ToolTippable'
 import LocalStorage from '@javascript/LocalStorage'
 import { Collapse } from 'bootstrap'
+import { updateConversation } from '@javascript/http'
 
 export default class PromptFormController extends Controller {
   static targets = [
     'promptInput', 'form', 'submitButton', 'showOptionsButton', 'options',
     'temperatureSlider', 'temperatureValue', 'temperatureSelect', 'modelSelect',
-    'presetSelect', 'textId', 'toggleTextAreaButton'
+    'presetSelect', 'textId', 'toggleTextAreaButton', 'imageQuality'
   ]
 
   connect() {
@@ -31,6 +32,10 @@ export default class PromptFormController extends Controller {
 
   get modelData() {
     return JSON.parse(this.modelSelectTarget.dataset.modelData)
+  }
+
+  get conversationId() {
+    return this.element.dataset.conversationId
   }
 
   initForm() {
@@ -179,5 +184,17 @@ export default class PromptFormController extends Controller {
   expandTextArea() {
     this.promptInputTarget.rows = 10
     this.toggleTextAreaButtonTarget.querySelector('i').classList.add('up')
+  }
+
+  onImageQualityChange(e) {
+    const imageQuality = e.target.value
+    this.imageQualityTarget.value = imageQuality
+    if (this.conversationId) {
+      try {
+        updateConversation({ conversation_id: this.conversationId, image_quality: imageQuality })
+      } catch (err) {
+        console.error('error setting image quality', err)
+      }
+    }
   }
 }

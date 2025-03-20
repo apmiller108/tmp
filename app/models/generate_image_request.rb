@@ -2,11 +2,12 @@ class GenerateImageRequest < ApplicationRecord
   include StatusEnumable
   include Turnable
 
-  store_accessor :options, :style, :aspect_ratio, :request_type, :strength
+  store_accessor :options, :style, :aspect_ratio, :request_type, :strength, :quality
 
   validates :image_name, presence: true, length: { maximum: 50 }
   validates :style, inclusion: { in: GenerativeImage::Stability::STYLE_PRESETS, allow_blank: true }
   validates :aspect_ratio, inclusion: { in: GenerativeImage::Stability::ASPECT_RATIOS }
+  validates :quality, inclusion: { in: GenerativeImage::QUALITY_LEVELS }
 
   # See also Turable concern for associations to converation
   belongs_to :user
@@ -44,6 +45,35 @@ class GenerateImageRequest < ApplicationRecord
     }
   end
 
+  # Custom store accessor method.
+  def quality
+    super || GenerativeImage::DEFAULT_QUALITY_LEVEL
+  end
+
+  def image_to_image?
+    request_type == GenerativeImage::Stability::IMAGE_TO_IMAGE
+  end
+
+  def text_to_image?
+    request_type == GenerativeImage::Stability::TEXT_TO_IMAGE
+  end
+
+  def high_quality_text_to_image?
+    text_to_image? && quality == GenerativeImage::HIGH_QUALITY
+  end
+
+  def standard_quality_text_to_image?
+    text_to_image? && quality == GenerativeImage::STANDARD_QUALITY
+  end
+
+  def prompt
+    prompts.to_a.find { |p| p.weight.positive? }&.text
+  end
+
+  def negative_prompt
+    prompts.to_a.find { |p| p.weight.negative? }&.text
+  end
+
   def parameterize
     {
       **flat_attributes.slice(*OPTION_FIELDS, *LEGACY_OPTION_FIELDS),
@@ -51,14 +81,7 @@ class GenerateImageRequest < ApplicationRecord
     }.symbolize_keys
   end
 
-  def prompt
-    prompts.to_a.find { |p| p.weight.positive? }&.text
-  end
-
-  def flat_attributes
-    attributes.except('options').merge(options)
-  end
-
+  # The image used in image to image generation
   # @return [ActiveStorage::Attached::One]
   def base_image
     return unless image_to_image?
@@ -70,15 +93,15 @@ class GenerateImageRequest < ApplicationRecord
     end
   end
 
-  def image_to_image?
-    request_type == GenerativeImage::Stability::IMAGE_TO_IMAGE
-  end
-
   def valid_base_image?
     base_image.present? && base_image.image?
   end
 
   private
+
+  def flat_attributes
+    attributes.except('options').merge(options)
+  end
 
   # Removes unknown styles if the LLM gets too creative and adds styles that are not supported by the service
   def filter_unknown_style

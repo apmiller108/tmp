@@ -1,10 +1,11 @@
-.c-prompt-form.w-100{ id:, data: { controller: 'prompt-form', action: 'my-channel:generateText@window->prompt-form#onGenerateText' } }
+.c-prompt-form.w-100{ id:, data: { controller: 'prompt-form', action: 'my-channel:generateText@window->prompt-form#onGenerateText',
+                                   'conversation-id' => conversation.id } }
   = form_with model: conversation_form, scope: :conversation, url: polymorphic_path(conversation),
     data: { 'prompt-form-target' => 'form', action: 'direct-uploads:start->prompt-form#disableForm', **turbo_attrs } do |form|
     = form.hidden_field :turnable_type, value: 'GenerateTextRequest'
     = form.hidden_field :text_id, data: { 'prompt-form-target' => 'textId' }
     = form.hidden_field :stream, value: 1
-    = form.hidden_field :image_quality
+    = form.hidden_field :image_quality, { data: { 'prompt-form-target' => 'imageQuality' } }
     .grid{ style: '--bs-gap: 0.5rem;'}
       .g-col-12.form-container
         .options.d-flex.justify-content-start.align-items-center
@@ -66,17 +67,17 @@
               %div.d-flex.align-items-center
                 %span.label.me-2 Tokens:
                 %pre.value= conversation.token_count
-              %button.btn.icon-btn.icon-btn-sm.ms-2{ type: 'button', data: { 'bs-toggle': 'modal', 'bs-target': '#conversationSettingsModal' }}
+              %button.btn.icon-btn.icon-btn-sm.ms-2{ type: 'button', data: { 'bs-toggle': 'modal', 'bs-target': '#convoSettingsModal' }}
                 %i.bi.bi-gear{ data: { 'bs-toggle': 'tooltip', 'bs-title': 'Conversation Settings' }}
-  .modal.fade#conversationSettingsModal{ tabindex: '-1', 'aria-labelledby': 'conversationSettingsModalLabel', 'aria-hidden': 'true',
-                                         data: { controller: 'conversation-settings' }}
+  .modal.fade.settings-modal#convoSettingsModal{ tabindex: '-1', 'aria-labelledby': 'conversationSettingsModalLabel', 'aria-hidden': 'true' }
     .modal-dialog
       .modal-content
-        .modal-header
+        .modal-header.bg-primary.text-white
           %h5.modal-title#conversationSettingsModalLabel Conversation Settings
           %button.btn-close{ type: 'button', 'data-bs-dismiss': 'modal', 'aria-label': 'Close' }
         .modal-body
           .mb-3
-            = label :converstion, :image_quality, 'Generative Image Quality', class: 'form-label'
-            = select :conversation, :image_quality, Conversation.image_qualities, { include_blank: false, selected: conversation.image_quality },
-                { class: 'form-select', data: { 'conversation-settings-target': 'imageQuality' } }
+            .form-floating
+              = select :conversation, :image_quality, Conversation.image_qualities, { include_blank: false, selected: conversation.image_quality },
+                  { class: 'form-select', data: { 'action' => 'change->prompt-form#onImageQualityChange' } }
+              = label :converstion, :image_quality, 'Generative Image Quality', class: 'form-label'

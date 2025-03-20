@@ -45,9 +45,14 @@ class GenerateImageRequestForm
       aspect_ratio:,
       request_type:,
       strength:,
+      quality:,
       user:,
       generate_text_request:
     }
+  end
+
+  def quality
+    conversation&.image_quality || GenerativeImage::DEFAULT_QUALITY_LEVEL
   end
 
   def prompts
