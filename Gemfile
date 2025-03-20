@@ -41,7 +41,7 @@ gem 'view_component'
 # gem "kredis"
 
 group :development, :test do
-  gem 'debug', platforms: %i[mri mingw x64_mingw]
+  gem 'debug', platforms: %i[mri mingw x64_mingw], require: 'debug/prelude'
   gem 'factory_bot_rails', '~> 6.2'
   gem 'rspec-rails', '~> 6.0'
 end
@@ -55,6 +55,7 @@ group :development do
   gem 'rubocop-performance', '~> 1.15', require: false
   gem 'rubocop-rails', '~> 2.17', require: false
   gem 'rubocop-rspec', '~> 2.18', require: false
+  gem "ruby-lsp-rspec", require: false
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'stackprof'
