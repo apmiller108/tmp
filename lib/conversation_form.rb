@@ -74,7 +74,7 @@ class ConversationForm
   def assign_default_values
     assign_default_title
     assign_defaults_from_last_request
-    self.image_quality = conversation.image_quality
+    self.image_quality ||= conversation.image_quality
   end
 
   def assign_default_title

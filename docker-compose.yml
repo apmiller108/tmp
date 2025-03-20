@@ -58,6 +58,8 @@ services:
     links:
       - "database"
       - "redis"
+    environment:
+      RUBY_DEBUG_IRB_CONSOLE: 1
     depends_on:
       database:
         condition: service_healthy
