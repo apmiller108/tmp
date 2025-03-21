@@ -22,7 +22,7 @@ class GenerativeImage
         Rails.logger.warn "#{self.class} : #{message}"
         raise Stability::ClientError, message
       ensure
-        request.close
+        request&.close
       end
 
       private
