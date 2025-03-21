@@ -7,6 +7,11 @@ class GenerativeImage
   QUALITY_LEVELS = [STANDARD_QUALITY, HIGH_QUALITY].freeze
   DEFAULT_QUALITY_LEVEL = STANDARD_QUALITY
 
+  TEXT_TO_IMAGE = 'text_to_image'.freeze
+  IMAGE_TO_IMAGE = 'image_to_image'.freeze
+  UPSCALE = 'upscale'.freeze
+  REQUEST_TYPES = [TEXT_TO_IMAGE, IMAGE_TO_IMAGE, UPSCALE].freeze
+
   def initialize(client = Stability::Client.new)
     @client = client
   end

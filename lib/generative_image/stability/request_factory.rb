@@ -1,14 +1,16 @@
 class GenerativeImage
   module Stability
     class RequestFactory
-      def self.create(service, generate_image_request)
-        case service
-        when :core
+      def self.create(endpoint, generate_image_request)
+        case endpoint
+        when CORE_GENERATION_ENDPOINT
           CoreRequest.new(generate_image_request)
-        when :ultra
+        when ULTRA_GENERATION_ENDPOINT
           UltraRequest.new(generate_image_request)
+        when UPSCALE_FAST_ENDPOINT
+          UpscaleFastRequest.new(generate_image_request)
         else
-          raise ArgumentError, "Unknown service: #{service}"
+          raise ArgumentError, "Unknown endpoint: #{endpoint}"
         end
       end
     end

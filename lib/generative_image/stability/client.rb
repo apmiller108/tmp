@@ -13,8 +13,8 @@ class GenerativeImage
       # @param generate_image_request [GenerateImageRequest]
       # @return [Stability::ImageResponse] wraps the response
       def perform_request(generate_image_request)
-        service = service_for(generate_image_request)
-        request = RequestFactory.create(service, generate_image_request)
+        endpoint = endpoint_for(generate_image_request)
+        request = RequestFactory.create(endpoint, generate_image_request)
 
         post_image_request(request)
       rescue Faraday::Error => e
@@ -28,11 +28,13 @@ class GenerativeImage
       private
 
       # Only Ultra endpoint supports image-to-image. Core does not.
-      def service_for(generate_image_request)
+      def endpoint_for(generate_image_request)
         if image_to_image?(generate_image_request) || generate_image_request.high_quality_text_to_image?
-          ULTRA
-        else
-          CORE
+          ULTRA_GENERATION_ENDPOINT
+        elsif generate_image_request.standard_quality_text_to_image?
+          CORE_GENERATION_ENDPOINT
+        elsif generate_image_request.upscale?
+          UPSCALE_FAST_ENDPOINT
         end
       end
 

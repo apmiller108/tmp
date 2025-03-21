@@ -8,6 +8,7 @@ class GenerateImageRequest < ApplicationRecord
   validates :style, inclusion: { in: GenerativeImage::Stability::STYLE_PRESETS, allow_blank: true }
   validates :aspect_ratio, inclusion: { in: GenerativeImage::Stability::ASPECT_RATIOS }
   validates :quality, inclusion: { in: GenerativeImage::QUALITY_LEVELS }
+  validates :request_type, inclusion: { in: GenerativeImage::REQUEST_TYPES }
 
   # See also Turable concern for associations to converation
   belongs_to :user
@@ -51,11 +52,11 @@ class GenerateImageRequest < ApplicationRecord
   end
 
   def image_to_image?
-    request_type == GenerativeImage::Stability::IMAGE_TO_IMAGE
+    request_type == GenerativeImage::IMAGE_TO_IMAGE
   end
 
   def text_to_image?
-    request_type == GenerativeImage::Stability::TEXT_TO_IMAGE
+    request_type == GenerativeImage::TEXT_TO_IMAGE
   end
 
   def high_quality_text_to_image?

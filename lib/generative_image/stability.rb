@@ -9,13 +9,7 @@ class GenerativeImage
 
     CORE_GENERATION_ENDPOINT = '/v2beta/stable-image/generate/core'.freeze
     ULTRA_GENERATION_ENDPOINT = '/v2beta/stable-image/generate/ultra'.freeze
-
-    CORE = :core
-    ULTRA = :ultra
-
-    TEXT_TO_IMAGE = 'text_to_image'.freeze
-    IMAGE_TO_IMAGE = 'image_to_image'.freeze
-    REQUEST_TYPES = [TEXT_TO_IMAGE, IMAGE_TO_IMAGE].freeze
+    UPSCALE_FAST_ENDPOINT = '/v2beta/stable-image/upscale/fast'.freeze
 
     STYLE_PRESETS = %w[
       3d-model

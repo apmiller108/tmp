@@ -46,7 +46,7 @@ class GenerativeText
                 'properties' => {
                   'request_type' => {
                     'type' => 'string',
-                    'enum' => GenerativeImage::Stability::REQUEST_TYPES,
+                    'enum' => GenerativeImage::REQUEST_TYPES,
                     'description' => 'The type of image generation request. See tool description.'
                   },
                   'style' => {

@@ -1,6 +1,6 @@
 class GenerativeImage
   module Stability
-    class CoreRequest < Request
+    class CoreRequest < BaseRequest
       def path
         CORE_GENERATION_ENDPOINT
       end

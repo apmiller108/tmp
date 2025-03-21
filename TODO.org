@@ -19,14 +19,14 @@
   - [ ] Eye icon on click...
   - [ ] Open modal with readonly version
 * TODO Wire up search
-* TODO support for image to image
+* TODO support for image to image [6/9]
   - [X] Add ultra request object and update client
   - [X] Add ultra params to image tool schema options
   - [X] Add starting_image attachment gir. When image to image select gtr image
     then fallback to starting_image
   - [X] When image to image, use Ultra
   - [X] Instruct LLM when to use image_to_image
-  - [ ] Add some kind of support to switching between core and ultra...like a
+  - [X] Add some kind of support to switching between core and ultra...like a
     quality setting?
   - [ ] Add support for search and replace
   - [ ] Look into adding a sketch tool
