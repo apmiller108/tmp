@@ -39,7 +39,7 @@ class GenerativeText
           The user must use clear language indicating they want image generation or modification.
           Do NOT use this tool for:
           - General discussions about images
-          - Hypothetical scenarios about what an image might look like
+          - Hypothetical scenarios about what an image or application UI might look like
           - Analyzing or describing existing images without modification requests
           - Diagrams, tables, charts
           - Any request that doesn't explicitly ask for image creation or modification
