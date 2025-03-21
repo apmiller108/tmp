@@ -55,7 +55,6 @@ group :development do
   gem 'rubocop-performance', '~> 1.15', require: false
   gem 'rubocop-rails', '~> 2.17', require: false
   gem 'rubocop-rspec', '~> 2.18', require: false
-  gem "ruby-lsp-rspec", require: false
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'stackprof'
