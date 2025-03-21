@@ -30,6 +30,8 @@ class GenerateImageRequest < ApplicationRecord
 
   before_validation :filter_unknown_style
 
+  delegate :image_to_image?, :text_to_image?, :upscale?, to: :request_type
+
   OPTION_FIELDS = stored_attributes[:options].map(&:to_s)
   LEGACY_OPTION_FIELDS = %w[dimensions].freeze
 
@@ -46,17 +48,13 @@ class GenerateImageRequest < ApplicationRecord
     }
   end
 
-  # Custom store accessor method.
+  # Custom store accessor getter methods
   def quality
-    super || GenerativeImage::DEFAULT_QUALITY_LEVEL
+    ActiveSupport::StringInquirer.new(super || GenerativeImage::DEFAULT_QUALITY_LEVEL)
   end
 
-  def image_to_image?
-    request_type == GenerativeImage::IMAGE_TO_IMAGE
-  end
-
-  def text_to_image?
-    request_type == GenerativeImage::TEXT_TO_IMAGE
+  def request_type
+    ActiveSupport::StringInquirer.new(super)
   end
 
   def high_quality_text_to_image?
@@ -85,7 +83,7 @@ class GenerateImageRequest < ApplicationRecord
   # The image used in image to image generation
   # @return [ActiveStorage::Attached::One]
   def base_image
-    return unless image_to_image?
+    return unless image_modification_request?
 
     if generate_text_request_id.present?
       generate_text_request.file.variant(:webp).processed.image
@@ -99,6 +97,10 @@ class GenerateImageRequest < ApplicationRecord
   end
 
   private
+
+  def image_modification_request?
+    image_to_image? || upscale?
+  end
 
   def flat_attributes
     attributes.except('options').merge(options)

@@ -25,16 +25,27 @@ class GenerativeText
           - Use `image_to_image` whenever the user has uploaded, attached, or shared an image AND is asking to
             modify it, use it as a base, or generate something similar. Look for phrases like "based on this image",
             "edit this picture", "using this image", or when an image is clearly visible in the conversation.
+          - Use `upscale` when the user is specifically asking to upscale, enhance, improve quality, or increase resolution
+            of an existing image. Look for phrases like "enhance this image", "upscale this", "make this higher resolution",
+            or "improve the quality of this picture".
 
           When using `image_to_image`, you should also set an appropriate `strength` value (between 0-1):
           - Lower values (0.1-0.4): Maintain more of the original image's composition and details
           - Medium values (0.5-0.7): Balance between original image and new elements
           - Higher values (0.8-0.95): More dramatic changes while keeping some influence from original
 
-          This tool should ONLY be used when the user is EXPLICITLY asking you
-          to create a new image or update an image. Do not create or update
-          images without being explicitly asked. It's very important that you
-          use the input schema precisely.
+          CRITICAL: This tool should ONLY be used when the user is EXPLICITLY asking you
+          to create a new image, modify an existing image, or enhance/upscale an image.
+          The user must use clear language indicating they want image generation or modification.
+          Do NOT use this tool for:
+          - General discussions about images
+          - Hypothetical scenarios about what an image might look like
+          - Analyzing or describing existing images without modification requests
+          - Diagrams, tables, charts
+          - Any request that doesn't explicitly ask for image creation or modification
+
+          If uncertain whether the user is requesting image generation, ask for clarification
+          before using this tool. It's very important that you use the input schema precisely.
         TXT
 
         def input_schema
