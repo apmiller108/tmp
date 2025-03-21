@@ -3,6 +3,7 @@ class GenerativeImage
     # See https://platform.stability.ai/docs/api-reference
 
     ClientError = Class.new(StandardError)
+    ContentError = Class.new(StandardError)
 
     HOST = 'https://api.stability.ai'.freeze
     ENGINES_ENDPOINT = '/v1/engines/list'.freeze

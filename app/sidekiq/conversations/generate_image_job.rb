@@ -37,6 +37,8 @@ module Conversations
 
     def generate_image(request)
       GenerativeImage.new.perform_request(request)
+    rescue GenerativeImage::Stability::ContentError => e
+      @flash_message = 'Request did not pass the content moderation check'
     rescue StandardError => e
       Rails.logger.warn("#{self.class}: #{e} : #{e.cause}")
       nil
@@ -77,7 +79,7 @@ module Conversations
     end
 
     def broadcast_flash(user)
-      message = I18n.t('unable_to_generate_image')
+      message = @flash_message || I18n.t('unable_to_generate_image')
       broadcast_flash_to_user(user:, message:)
     end
   end

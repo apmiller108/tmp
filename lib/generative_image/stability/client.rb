@@ -20,7 +20,9 @@ class GenerativeImage
       rescue Faraday::Error => e
         message = "#{e}: #{e.response_status}: #{e.response_body}"
         Rails.logger.warn "#{self.class} : #{message}"
-        raise Stability::ClientError, message
+        raise ContentError, message if e.response_status == 403
+
+        raise ClientError, message
       ensure
         request&.close
       end
