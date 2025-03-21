@@ -17,15 +17,15 @@ This side project was started in order to learn the latest features of RoR, Hotw
 ## Features
 - Rich text editor
 - Multi-modal conversational LLM interface
-- Text to image (stable diffusion)
-- Text to text (llm)
+- Generative text (Claude)
+- Diagraming (Mermaid)
+- Generative image (text to image, image to image and upscaling)
 - Speech to text (transcribe audio files)
 - Transcription summaries
 
 ## Planned
-- Upscale images
-- Image to image
 - Image to Video
+- Image editing
 - Search
 
 # Start
