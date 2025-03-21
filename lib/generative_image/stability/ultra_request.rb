@@ -3,7 +3,7 @@ class GenerativeImage
     class UltraRequest < BaseRequest
       def as_json
         super.tap do |payload|
-          if base_image.present?
+          if base_image.present? && base_image.image?
             payload[:image] = image_upload_io
             payload[:strength] = opts.fetch(:strength)
           end
