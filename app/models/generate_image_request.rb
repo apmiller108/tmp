@@ -24,6 +24,8 @@ class GenerateImageRequest < ApplicationRecord
     attachable.variant :webp, resize_to_limit: [1024, 768], **ActiveStorage::Blob::WEBP_VARIANT_OPTS
   end
 
+  # This isn't used yet. Intented for image generation outside the context of a
+  # conversation where the base image is associated to the generate_text_request
   has_one_attached :baseimage do |attachable|
     attachable.variant :webp, resize_to_limit: [1024, 768], **ActiveStorage::Blob::WEBP_VARIANT_OPTS
   end
@@ -50,7 +52,7 @@ class GenerateImageRequest < ApplicationRecord
 
   # Custom store accessor getter methods
   def quality
-    ActiveSupport::StringInquirer.new(super || GenerativeImage::DEFAULT_QUALITY_LEVEL)
+    super || GenerativeImage::DEFAULT_QUALITY_LEVEL
   end
 
   def request_type
@@ -90,10 +92,6 @@ class GenerateImageRequest < ApplicationRecord
     else
       baseimage.variant(:webp).processed.image
     end
-  end
-
-  def valid_base_image?
-    base_image.present? && base_image.image?
   end
 
   private
