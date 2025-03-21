@@ -4,9 +4,12 @@ class FlashMessageComponent < ApplicationViewComponent
   attr_reader :flash, :record, :auto_dismiss
 
   CSS_CLASSES = {
-    info: { alert: 'alert-info', icon: 'bi-info-square' },
-    warning: { alert: 'alert-warning', icon: 'bi-exclamation-triangle' },
-    success: { alert: 'alert-success', icon: 'bi-check-circle' }
+    info: { alert: 'alert-info', icon: 'bi-info-circle-fill' },
+    warning: { alert: 'alert-warning', icon: 'bi-exclamation-triangle-fill' },
+    success: { alert: 'alert-success', icon: 'bi-check-circle-fill' },
+    danger: { alert: 'alert-danger', icon: 'bi-x-circle-fill' },
+    primary: { alert: 'alert-primary', icon: 'bi-bell-fill' },
+    secondary: { alert: 'alert-secondary', icon: 'bi-bell' }
   }.freeze
 
   delegate :alert, :notice, to: :flash

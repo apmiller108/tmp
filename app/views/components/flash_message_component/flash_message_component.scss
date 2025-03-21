@@ -1,9 +1,48 @@
 .c-flash-message {
   position: fixed;
-  width: 50%;
+  width: 90%;
   top: 9%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: $zindex-toast; // 1090
   max-width: 30rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  border-radius: 0.5rem;
+  opacity: 0.98;
+
+  // Responsive adjustments
+  @include media-breakpoint-up(md) {
+    width: 50%;
+  }
+  // Animation for entry
+  animation: slide-down 0.3s ease-out forwards;
+
+  // Styling for validation errors
+  .validation-errors {
+    text-align: left;
+    padding-left: 1rem;
+
+    p {
+      font-size: 0.9rem;
+      position: relative;
+      padding-left: 1rem;
+
+      &:before {
+        content: "•";
+        position: absolute;
+        left: 0;
+      }
+    }
+  }
+}
+
+@keyframes slide-down {
+  0% {
+    transform: translate(-50%, -150%);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%);
+    opacity: 0.98;
+  }
 }
