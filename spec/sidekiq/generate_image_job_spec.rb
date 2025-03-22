@@ -13,7 +13,6 @@ RSpec.describe GenerateImageJob, type: :job do
     subject(:perform) { described_class.new.perform(request.id) }
 
     let(:request) { build_stubbed :generate_image_request, user: build_stubbed(:user) }
-    let(:params) { request.parameterize }
     let(:generative_image) { instance_double GenerativeImage }
     let(:image) { file_fixture('image.png').read }
     let(:response) { instance_double GenerativeImage::Stability::ImageResponse, image:, image_present?: true }
@@ -31,7 +30,7 @@ RSpec.describe GenerateImageJob, type: :job do
 
     context 'when the image was succesfully generated' do
       before do
-        allow(generative_image).to receive(:perform_request).with(params).and_return(response)
+        allow(generative_image).to receive(:perform_request).with(request).and_return(response)
         perform
       end
 
@@ -64,7 +63,8 @@ RSpec.describe GenerateImageJob, type: :job do
 
     context 'when the image generation failed' do
       before do
-        allow(generative_image).to receive(:perform_request).with(params).and_raise(GenerativeImage::InvalidRequestError)
+        allow(generative_image).to receive(:perform_request).with(request)
+                                                            .and_raise(GenerativeImage::InvalidRequestError)
         allow(Rails.logger).to receive(:warn)
         perform
       end
@@ -93,7 +93,7 @@ RSpec.describe GenerateImageJob, type: :job do
 
     context 'with a standard error' do
       before do
-        allow(generative_image).to receive(:perform_request).with(params).and_raise(StandardError)
+        allow(generative_image).to receive(:perform_request).with(request).and_raise(StandardError)
         allow(Rails.logger).to receive(:warn)
         perform
       end

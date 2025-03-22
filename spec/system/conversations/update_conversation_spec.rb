@@ -156,7 +156,9 @@ RSpec.describe 'update conversation', type: :system do
           image_request.prompts.each do |p|
             expect(page).to have_content p.text
           end
-          expect(page).to have_content image_request.style
+          expect(page).to have_content image_request.style.sub(/-/, ' ').capitalize
+          expect(page).to have_content image_request.request_type.humanize.capitalize
+          expect(page).to have_content image_request.quality.capitalize
           expect(page).to have_content image_request.aspect_ratio
           expect(page).to have_content image_request.image.blob.filename
         end

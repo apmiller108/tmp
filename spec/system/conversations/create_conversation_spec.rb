@@ -31,7 +31,7 @@ RSpec.describe 'create conversation', type: :system do
 
     fill_in 'conversation_prompt', with: prompt
 
-    # I have no idea why sometimes on some systems, find().click does not work
+    # I have no idea why sometimes on some specs, find().click does not work
     # here. find('.options-toggle-btn').click
     page.execute_script("document.querySelector('.options-toggle-btn').click()")
 

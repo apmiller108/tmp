@@ -3,6 +3,7 @@ FactoryBot.define do
     image_name { "genimage_#{Faker::Alphanumeric.alpha(number: 20)}" }
     style { GenerativeImage::Stability::STYLE_PRESETS.sample }
     aspect_ratio { GenerativeImage::Stability::ASPECT_RATIOS.sample }
+    request_type { GenerativeImage::REQUEST_TYPES.sample }
     user
   end
 end

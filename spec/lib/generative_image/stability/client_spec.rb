@@ -13,47 +13,133 @@ RSpec.describe GenerativeImage::Stability::Client do
     end
   end
 
-  describe '#text_to_image' do
-    let(:prompt) { build_stubbed(:prompt, :with_generate_image_request) }
-    let(:args) { prompt.generate_image_request.parameterize }
-    let(:request_json) { args.to_json }
-    let(:path) { 'https://api.stability.ai/v2beta/stable-image/generate/core' }
-    let(:request) { instance_double(GenerativeImage::Stability::CoreRequest, to_json: request_json, path:) }
-    let(:headers) do
-      {
-        'Authorization': "Bearer #{Rails.application.credentials.fetch(:stability_key)}",
-        'Accept': 'image/*'
-      }
+  describe '#perform_request' do
+    let(:generate_image_request) { build_stubbed(:generate_image_request) }
+    let(:request) do
+      instance_double(GenerativeImage::Stability::BaseRequest, path: endpoint, as_json: request_json, close: nil)
     end
+    let(:request_json) { { prompt: 'test prompt' } }
+    let(:endpoint) { 'v2beta/stable-image/generate/core' }
+    let(:full_endpoint) { "https://api.stability.ai/#{endpoint}" }
 
     before do
-      allow(GenerativeImage::Stability::CoreRequest).to receive(:new).with(args).and_return(request)
+      allow(GenerativeImage::Stability::RequestFactory).to receive(:create).and_return(request)
     end
 
-    context 'with a success response' do
+    context 'with a text-to-image request' do
       before do
-        stub_request(:post, path).with(headers:).to_return(status: 200, body: 'raw image bytes')
+        allow(generate_image_request).to receive(:image_to_image?).and_return(false)
+        allow(generate_image_request).to receive(:high_quality_text_to_image?).and_return(false)
+        allow(generate_image_request).to receive(:standard_quality_text_to_image?).and_return(true)
+        allow(generate_image_request).to receive(:upscale?).and_return(false)
+
+        stub_request(:post, full_endpoint)
+          .to_return(status: 200, body: 'raw image bytes')
       end
 
-      it 'returns the ImageResponse object' do
-        expect(client.text_to_image(**args)).to be_a GenerativeImage::Stability::ImageResponse
+      it 'returns an ImageResponse object' do
+        response = client.perform_request(generate_image_request)
+        expect(response).to be_a GenerativeImage::Stability::ImageResponse
       end
     end
 
-    context 'with a 4** response' do
-      let(:response_body) do
-        "{\"id\":\"1234\",\"message\":\"error with request\",\"name\":\"bad_request\"}\n"
-      end
+    context 'with a high quality text-to-image request' do
+      let(:endpoint) { 'v2beta/stable-image/generate/ultra' }
+      let(:full_endpoint) { "https://api.stability.ai/#{endpoint}" }
 
       before do
-        stub_request(:post, path).with(headers:).to_return(status: 400, body: response_body)
+        allow(generate_image_request).to receive(:image_to_image?).and_return(false)
+        allow(generate_image_request).to receive(:high_quality_text_to_image?).and_return(true)
+        allow(generate_image_request).to receive(:standard_quality_text_to_image?).and_return(false)
+        allow(generate_image_request).to receive(:upscale?).and_return(false)
+
+        stub_request(:post, full_endpoint)
+          .to_return(status: 200, body: 'raw image bytes')
       end
 
-      it 're-raises a client error' do
+      it 'returns an ImageResponse object' do
+        response = client.perform_request(generate_image_request)
+        expect(response).to be_a GenerativeImage::Stability::ImageResponse
+      end
+    end
+
+    context 'with an image-to-image request' do
+      let(:endpoint) { 'v2beta/stable-image/generate/ultra' }
+      let(:full_endpoint) { "https://api.stability.ai/#{endpoint}" }
+
+      before do
+        allow(generate_image_request).to receive(:image_to_image?).and_return(true)
+        allow(generate_image_request).to receive(:high_quality_text_to_image?).and_return(false)
+        allow(generate_image_request).to receive(:standard_quality_text_to_image?).and_return(false)
+        allow(generate_image_request).to receive(:upscale?).and_return(false)
+
+        stub_request(:post, full_endpoint)
+          .to_return(status: 200, body: 'raw image bytes')
+      end
+
+      it 'returns an ImageResponse object' do
+        response = client.perform_request(generate_image_request)
+        expect(response).to be_a GenerativeImage::Stability::ImageResponse
+      end
+    end
+
+    context 'with an upscale request' do
+      let(:endpoint) { 'v2beta/stable-image/upscale/fast' }
+      let(:full_endpoint) { "https://api.stability.ai/#{endpoint}" }
+
+      before do
+        allow(generate_image_request).to receive(:image_to_image?).and_return(false)
+        allow(generate_image_request).to receive(:high_quality_text_to_image?).and_return(false)
+        allow(generate_image_request).to receive(:standard_quality_text_to_image?).and_return(false)
+        allow(generate_image_request).to receive(:upscale?).and_return(true)
+
+        stub_request(:post, full_endpoint)
+          .to_return(status: 200, body: 'raw image bytes')
+      end
+
+      it 'returns an ImageResponse object' do
+        response = client.perform_request(generate_image_request)
+        expect(response).to be_a GenerativeImage::Stability::ImageResponse
+      end
+    end
+
+    context 'with a 403 response' do
+      let(:response_body) { '{"id":"1234","message":"forbidden","name":"forbidden"}' }
+
+      before do
+        allow(generate_image_request).to receive(:image_to_image?).and_return(false)
+        allow(generate_image_request).to receive(:high_quality_text_to_image?).and_return(false)
+        allow(generate_image_request).to receive(:standard_quality_text_to_image?).and_return(true)
+        allow(generate_image_request).to receive(:upscale?).and_return(false)
+
+        stub_request(:post, full_endpoint)
+          .to_return(status: 403, body: response_body)
+      end
+
+      it 'raises a ContentError' do
         expect do
-          client.text_to_image(**args)
-        end.to raise_error(GenerativeImage::Stability::ClientError,
-                           "the server responded with status 400: 400: #{response_body}")
+          client.perform_request(generate_image_request)
+        end.to raise_error(GenerativeImage::Stability::ContentError)
+      end
+    end
+
+    context 'with a non-403 error response' do
+      let(:response_body) { '{"id":"1234","message":"error with request","name":"bad_request"}' }
+
+      before do
+        allow(generate_image_request).to receive(:image_to_image?).and_return(false)
+        allow(generate_image_request).to receive(:high_quality_text_to_image?).and_return(false)
+        allow(generate_image_request).to receive(:standard_quality_text_to_image?).and_return(true)
+        allow(generate_image_request).to receive(:upscale?).and_return(false)
+
+        stub_request(:post, full_endpoint)
+          .to_return(status: 400, body: response_body)
+      end
+
+      it 'raises a ClientError' do
+        expect do
+          client.perform_request(generate_image_request)
+        end.to raise_error(GenerativeImage::Stability::ClientError)
       end
     end
   end

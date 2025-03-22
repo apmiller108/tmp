@@ -83,7 +83,8 @@ RSpec.describe 'WysiwygEditorComponent', type: :system do
       expect(page).not_to have_css '.trix-dialog.trix-custom-generate-image'
       generate_image_request = user.generate_image_requests.last
       expect(generate_image_request.attributes).to include('options' => {
-                                                             'style' => 'comic-book', 'aspect_ratio' => '1:1'
+                                                             'style' => 'comic-book', 'aspect_ratio' => '1:1',
+                                                             'quality' => 'standard', 'request_type' => 'text_to_image'
                                                            },
                                                            'image_name' => a_string_matching(/\Agenimage/))
       figure = find("figure[data-trix-attachment*='#{generate_image_request.image_name}']")

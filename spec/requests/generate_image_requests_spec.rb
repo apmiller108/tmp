@@ -34,7 +34,9 @@ RSpec.describe 'Generate image requests', type: :request do
 
         it 'creates a generate_image_requests record' do
           expect { request }.to change(user.generate_image_requests
-                                           .where(image_name:, options: { style:, aspect_ratio: }),
+                                           .where(image_name:, options: { style:, aspect_ratio:,
+                                                                          quality: 'standard',
+                                                                          request_type: 'text_to_image' }),
                                        :count).by(1)
         end
 

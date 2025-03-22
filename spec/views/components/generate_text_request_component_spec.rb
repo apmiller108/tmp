@@ -7,10 +7,10 @@ RSpec.describe GenerateTextRequestComponent, type: :component do
   let(:conversation_turn) { build_stubbed :conversation_turn, turnable: generate_text_request }
   let(:model) { GenerativeText::DEFAULT_MODEL }
   let(:component) { described_class.new(conversation_turn:) }
-  let(:token_count) { 1008 }
+  let(:tokens) { 1008 }
 
   before do
-    allow(generate_text_request).to receive(:response_token_count).and_return(token_count)
+    allow(generate_text_request).to receive(:response_token_count).and_return(tokens)
   end
 
   describe '#id' do
@@ -19,13 +19,13 @@ RSpec.describe GenerateTextRequestComponent, type: :component do
     end
   end
 
-  describe '#dataset' do
+  describe '#more_info_data' do
     it 'returns a compact hash of request attributes' do
-      expect(component.dataset).to eq({
+      expect(component.more_info_data).to eq({
         model: model.name,
         temperature: generate_text_request.temperature,
         preset: generate_text_request.generate_text_preset.name,
-        token_count:
+        tokens:
       })
     end
   end

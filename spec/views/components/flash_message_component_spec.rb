@@ -20,7 +20,7 @@ RSpec.describe FlashMessageComponent, type: :component do
       expect(page).to have_css('.alert-info', text: 'This is a notice message.')
     end
 
-    it { is_expected.to have_css 'i.bi-info-square' }
+    it { is_expected.to have_css 'i.bi-info-circle-fill' }
   end
 
   context 'when flash has alert' do
@@ -39,7 +39,7 @@ RSpec.describe FlashMessageComponent, type: :component do
     it 'has the proper icon' do
       render_inline(described_class.new(flash:))
 
-      expect(page).to have_css 'i.bi-exclamation-triangle'
+      expect(page).to have_css 'i.bi-exclamation-triangle-fill'
     end
 
     context 'when record has validation errors' do
@@ -82,6 +82,6 @@ RSpec.describe FlashMessageComponent, type: :component do
     end
 
     it { is_expected.to have_content message }
-    it { is_expected.to have_css 'i.bi-check-circle' }
+    it { is_expected.to have_css 'i.bi-check-circle-fill' }
   end
 end

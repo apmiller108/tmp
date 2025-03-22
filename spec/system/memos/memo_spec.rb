@@ -56,7 +56,8 @@ RSpec.describe 'Create and view memo', type: :system do
     page.driver.wait_for_network_idle(timeout: 15)
     generate_image_request = user.generate_image_requests.last
     expect(generate_image_request.attributes).to(
-      include('options' => { 'style' => style_preset, 'aspect_ratio' => '3:2' },
+      include('options' => { 'style' => style_preset, 'aspect_ratio' => '3:2',
+                             'quality' => 'standard', 'request_type' => 'text_to_image' },
               'image_name' => a_string_matching(/\Agenimage/))
     )
     figure = find("figure[data-trix-attachment*='#{generate_image_request.image_name}']")
@@ -84,8 +85,9 @@ RSpec.describe 'Create and view memo', type: :system do
         details[:prompts].each do |prompt|
           expect(page).to have_content prompt.fetch('text')
         end
-        expect(page).to have_content "Style: #{details.fetch(:style)}"
+        expect(page).to have_content 'Style: Comic book'
         expect(page).to have_content "Aspect Ratio: #{details.fetch(:aspect_ratio)}"
+        expect(page).to have_content 'Request Type: Text to image'
         expect(page).to have_content "Name: #{blob.filename}"
 
         # Download link
