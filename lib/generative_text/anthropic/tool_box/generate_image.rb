@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Layout/LineLength
 class GenerativeText
   module Anthropic
     module ToolBox
@@ -112,3 +113,4 @@ class GenerativeText
     end
   end
 end
+# rubocop:enable Layout/LineLength

@@ -41,6 +41,7 @@ class GenerateTextRequestComponent < ApplicationViewComponent
     }.compact
   end
 
+  # rubocop:disable Rails/OutputSafety
   def more_info_template
     tag.div(class: 'details-fields p-0') do
       more_info_data.map do |k, v|
@@ -50,6 +51,7 @@ class GenerateTextRequestComponent < ApplicationViewComponent
       end.join("\n").html_safe
     end
   end
+  # rubocop:enable Rails/OutputSafety
 
   def image?
     file.attached? && file.image?

@@ -6,7 +6,7 @@ class GenerativeImage
           image: image_upload_io,
           output_format: opts[:output_format]
         }.compact
-        end
+      end
 
       def path
         UPSCALE_FAST_ENDPOINT

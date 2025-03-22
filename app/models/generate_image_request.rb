@@ -82,6 +82,7 @@ class GenerateImageRequest < ApplicationRecord
     }.symbolize_keys
   end
 
+  # rubocop:disable Metrics/AbcSize
   # The image used in image to image generation
   # Order of precedence:
   #   1. Associated text request image
@@ -99,9 +100,9 @@ class GenerateImageRequest < ApplicationRecord
       baseimage.variant(:webp).processed.image
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def previous_image_requests
-    puts @previous_image_requests.class
     return @previous_image_requests if defined? @previous_image_requests
 
     @previous_image_requests = if conversation
