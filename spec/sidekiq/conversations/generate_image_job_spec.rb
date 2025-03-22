@@ -76,7 +76,8 @@ RSpec.describe Conversations::GenerateImageJob, type: :job do
 
     context 'when the image generation failed' do
       before do
-        allow(generative_image).to receive(:perform_request).with(request).and_raise(GenerativeImage::InvalidRequestError)
+        allow(generative_image).to receive(:perform_request).with(request)
+                                                            .and_raise(GenerativeImage::InvalidRequestError)
         allow(Rails.logger).to receive(:warn)
         perform
       end
