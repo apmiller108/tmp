@@ -12,14 +12,14 @@
         .settings.d-flex.justify-content-between.flex-wrap
           - gen_img_params.slice(:style, :dimensions, :aspect_ratio, :request_type, :strength, :quality).each do |k,v|
             - if v.present?
-              %div.d-flex.align-items-center.justify-content-between.mt-3
+              %div.d-flex.align-items-center.justify-content-between
                 %span.label.me-2.fw-medium= "#{k.to_s.titleize}:"
-                %pre.value= v.to_s.humanize
+                %pre.value= v.to_s.humanize.sub(/-/, ' ')
     .file-details
-      %div.d-flex.align-items-center.justify-content-between.mt-3
+      %div.d-flex.align-items-center.justify-content-between
         %span.label.me-2.fw-medium Name:
         %pre.value= @blob.filename
-      %div.d-flex.align-items-center.justify-content-between.mt-3
+      %div.d-flex.align-items-center.justify-content-between
         %span.label.me-2.fw-medium Size:
         %pre.value= number_to_human_size(@blob.byte_size)
     .download
