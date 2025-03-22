@@ -41,7 +41,7 @@ class GenerativeText
 
       # This is the assistant response
       def content
-        results.find { |c| c['type'] == 'text' }.fetch('text')
+        results.find { |c| c['type'] == 'text' }&.fetch('text')
       end
 
       def results

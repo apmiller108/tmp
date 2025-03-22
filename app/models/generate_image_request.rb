@@ -83,15 +83,32 @@ class GenerateImageRequest < ApplicationRecord
   end
 
   # The image used in image to image generation
+  # Order of precedence:
+  #   1. Associated text request image
+  #   2. Previous image request if part of a conversation and request is to upscale
+  #   3. The baseimage
   # @return [ActiveStorage::Attached::One]
   def base_image
     return unless image_modification_request?
 
-    if generate_text_request_id.present?
+    if generate_text_request_id.present? && generate_text_request.file.present?
       generate_text_request.file.variant(:webp).processed.image
+    elsif previous_image_requests.present? && upscale?
+      previous_image_requests.last.image.variant(:webp).processed.image
     else
       baseimage.variant(:webp).processed.image
     end
+  end
+
+  def previous_image_requests
+    puts @previous_image_requests.class
+    return @previous_image_requests if defined? @previous_image_requests
+
+    @previous_image_requests = if conversation
+                                 conversation.generate_image_requests.where.not(id:).order(:id).load
+                               else
+                                 GenerateImageRequests.none
+                               end
   end
 
   private

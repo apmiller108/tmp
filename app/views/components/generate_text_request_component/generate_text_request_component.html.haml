@@ -35,7 +35,10 @@
             = render ClipboardComponent.new(css_class: 'assistant-response', y: :bottom, x: :start) do |clipboard|
               = clipboard.with_copyable do
                 %div{ data: { 'clipboard-target' => 'source' } }
-                  = render ContentCustomizerComponent.new(markup: assistant_response_html)
+                  - if assistant_response_html.present?
+                    = render ContentCustomizerComponent.new(markup: assistant_response_html)
+                  - else
+                    .text-center.fs-1 🤔
               = clipboard.with_additional_content do
                 %a.btn.icon-btn.icon-btn-sm.more-info{ tabindex: 0, data: { 'generate-text-request-target' => 'moreInfo' } }
                   %i.bi-info-square{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => 'Info' } }
