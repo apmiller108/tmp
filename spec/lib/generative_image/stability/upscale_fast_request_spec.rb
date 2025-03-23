@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe GenerativeImage::Stability::UpscaleFastRequest do
   subject(:request) { described_class.new(generate_image_request) }
 
-  let(:generate_image_request) { build_stubbed :generate_image_request, options:}
+  let(:generate_image_request) { build_stubbed :generate_image_request, options: }
   let(:request_type) { 'upscale' }
   let(:options) do
     {
