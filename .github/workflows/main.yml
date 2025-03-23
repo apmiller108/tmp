@@ -137,7 +137,7 @@ jobs:
         env:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           RAILS_ENV: test
-          CI: true
+          TMP_USE_LOCAL_DB: true
         run: |
           bin/rails db:setup
       - name: Build assets
@@ -148,7 +148,7 @@ jobs:
         env:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           RAILS_ENV: test
-          CI: true
+          TMP_USE_LOCAL_DB: true
           CHROME_URL: http://localhost:3333
         run: |
           bundle exec rspec --format documentation
