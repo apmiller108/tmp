@@ -5,11 +5,13 @@ RSpec.describe GenerateImageRequestForm do
 
   let(:user) { build_stubbed :user }
 
+  let(:aspect_ratio) { GenerativeImage::Stability::ASPECT_RATIOS.sample }
+  let(:style) { GenerativeImage::Stability::STYLE_PRESETS.sample }
   let(:valid_params) do
     {
       image_name: '1234abcd',
-      style: GenerativeImage::Stability::STYLE_PRESETS.sample,
-      aspect_ratio: GenerativeImage::Stability::ASPECT_RATIOS.sample,
+      style:,
+      aspect_ratio:,
       prompt: 'A golden retriever doggy sitting on a farm',
       negative_prompt: 'Clouds in the sky',
       user:
@@ -57,7 +59,15 @@ RSpec.describe GenerateImageRequestForm do
       end
 
       it 'creates the generate_image_request record' do
-        expect(form.generate_image_request).to be_persisted
+        expect(form.generate_image_request.attributes).to(
+          include(
+            'image_name' => '1234abcd',
+            'options' => { 'aspect_ratio' => aspect_ratio, 'quality' => 'standard',
+                           'request_type' => 'text_to_image', 'style' => style },
+            'status' => 'created',
+            'user_id' => user.id
+          )
+        )
       end
 
       it 'creates the prompts' do
@@ -73,15 +83,53 @@ RSpec.describe GenerateImageRequestForm do
           )
         )
       end
+
+      context 'when the request_type is provided' do
+        let(:valid_params) do
+          {
+            image_name: '1234abcd',
+            style:,
+            aspect_ratio:,
+            prompt: 'A golden retriever doggy sitting on a farm',
+            negative_prompt: 'Clouds in the sky',
+            request_type: 'image_to_image',
+            user:
+          }
+        end
+
+        it 'creates the generate_image_request record with the given request_type' do
+          expect(form.generate_image_request.attributes).to(
+            include(
+              'image_name' => '1234abcd',
+              'options' => { 'aspect_ratio' => aspect_ratio, 'quality' => 'standard',
+                             'request_type' => 'image_to_image', 'style' => style },
+              'status' => 'created',
+              'user_id' => user.id
+            )
+          )
+        end
+      end
     end
 
     context 'with a conversation' do
       let(:user) { create :user }
-      let(:conversation) { create :conversation, user: }
+      let(:conversation) { create :conversation, user:, image_quality: 'high' }
       let(:params) { valid_params.merge conversation: }
 
       it 'creates a conversation turn' do
         expect { form.submit }.to change(conversation.turns, :count).by(1)
+      end
+
+      it 'uses the image quality from the conversation to override the default' do
+        expect(form.generate_image_request.attributes).to(
+          include(
+            'image_name' => '1234abcd',
+            'options' => { 'aspect_ratio' => aspect_ratio, 'quality' => 'high',
+                           'request_type' => 'text_to_image', 'style' => style },
+            'status' => 'created',
+            'user_id' => user.id
+          )
+        )
       end
     end
 
