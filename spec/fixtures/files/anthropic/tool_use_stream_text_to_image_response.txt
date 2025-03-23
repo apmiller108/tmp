@@ -29,6 +29,9 @@ event: content_block_delta
 data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"{\"options\":{\"style\":\"fantasy-art\""}}
 
 event: content_block_delta
+data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":",\"request_type\":\"text_to_image\""}}
+
+event: content_block_delta
 data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":",\"aspect_ratio\":\"16:9\"}"}}
 
 event: content_block_delta

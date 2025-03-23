@@ -18,9 +18,11 @@
   - [ ] Open modal with readonly version
 * TODO Image sketch
 * TODO List view of generated images
+  or list of all conversation files?
 * TODO Wire up search
 * TODO Edit the last prompt. Trigger regenerate the last assistant response.
-* TODO support for image to image [8/8]
+* DONE support for image to image [8/8]
+CLOSED: [2025-03-23 Sun 15:39]
   - [X] Add ultra request object and update client
   - [X] Add ultra params to image tool schema options
   - [X] Add starting_image attachment gir. When image to image select gtr image

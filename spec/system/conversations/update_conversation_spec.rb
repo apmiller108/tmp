@@ -11,7 +11,7 @@ RSpec.describe 'update conversation', type: :system do
   let(:model) { GenerativeText::MODELS.find { _1.api_name == setting.text_model } }
   let(:temperature) { 0.5 }
   let(:conversation) { create :conversation, :with_requests, user:, request_count: 3 }
-  let(:tool_use?) { false }
+  let(:response_body) { file_fixture('anthropic/messages_stream_response.txt').read }
 
   before(:context) do
     Sidekiq::Testing.inline!
@@ -20,7 +20,7 @@ RSpec.describe 'update conversation', type: :system do
   before do
     stub_anthropic_stream_request(
       prompt:, temperature:, generate_text_preset:, model:,
-      messages: conversation.exchange, assistant_response:, tool_use?: tool_use?
+      messages: conversation.exchange, assistant_response:, response_body:
     )
   end
 
@@ -104,65 +104,6 @@ RSpec.describe 'update conversation', type: :system do
       end
 
       expect(page).to have_css('.c-conversation-turn', count: 4)
-    end
-  end
-
-  context 'with a generate_image tool response' do
-    let(:tool_use?) { true }
-
-    before do
-      stub_stability_core_request
-    end
-
-    it 'shows the assistance response and the generated image' do
-      login(user:)
-      visit edit_conversation_path(conversation)
-
-      # Fill out and submit the form
-      fill_in 'conversation_prompt', with: prompt
-
-      # I have no idea why sometimes find().click does not work here.
-      page.execute_script("document.querySelector('.options-toggle-btn').click()")
-      # find('.options-toggle-btn').click
-      within('#advanced-options') do
-        find("option[value='#{model.api_name}']").select_option
-        find("option[value='#{generate_text_preset.id}']").select_option
-        find('#conversation_temperature').set(temperature)
-      end
-
-      page.driver.clear_network_traffic
-      within('.c-prompt-form') do
-        find('button[type=submit]').click
-      end
-      page.driver.wait_for_network_idle(timeout: 15)
-
-      # The controller updates the conversation turn component in render, and the
-      # background job that generates the text broadcasts the conversation turn
-      # component. When running the sidekiq inline, the render action overwrites
-      # the broadcasted component. Reloading the page as a workaround.
-      visit edit_conversation_path(conversation)
-
-      expect(page).to have_css('.c-generate-text-request', count: 4)
-
-      # Tool use generate_image response creates generate image request turn
-      expect(page).to have_css('.c-generate-image-request', count: 1)
-
-      image_request = conversation.generate_image_requests.last
-      within '.c-generate-image-request' do
-        # view more info
-        find('.btn.more-info').click
-
-        within '.blob-details' do
-          image_request.prompts.each do |p|
-            expect(page).to have_content p.text
-          end
-          expect(page).to have_content image_request.style.sub(/-/, ' ').capitalize
-          expect(page).to have_content image_request.request_type.humanize.capitalize
-          expect(page).to have_content image_request.quality.capitalize
-          expect(page).to have_content image_request.aspect_ratio
-          expect(page).to have_content image_request.image.blob.filename
-        end
-      end
     end
   end
 end

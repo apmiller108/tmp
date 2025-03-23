@@ -12,7 +12,8 @@
         "input": {
             "options": {
                 "style": "fantasy-art",
-                "aspect_ratio": "16:9"
+                "aspect_ratio": "16:9",
+                "request_type": "text_to_image"
             },
             "prompts": {
                 "prompt": "image prompt",

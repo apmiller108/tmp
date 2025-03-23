@@ -11,7 +11,6 @@ class GenerateTextToolInputJob
     message = I18n.t('unable_to_generate_image')
     broadcast_flash_to_user(message:, user: generate_text_request.user) if generate_text_request
     Rails.logger.warn "#{self.class}: #{e} : generate_text_request_id: #{generate_text_request_id}"
-    Rails.logger.warn e.backtrace
   end
 
   private
