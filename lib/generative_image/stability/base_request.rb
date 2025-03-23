@@ -21,9 +21,8 @@ class GenerativeImage
         }.compact
       end
 
-      def path
-        raise NotImplementedError, 'Subclasses must implement #path'
-      end
+      # Subclasses must implement this.
+      def path; end
 
       def close
         # No-op by default, subclasses can override
