@@ -13,7 +13,7 @@ export default class ConversationController extends Controller {
   connect() {
     autoAnimate(this.turnsTarget)
 
-    this.scrollTurns()
+    this.scrollTurns() // Scroll to bottom (form into view) on conversation load
 
     // Check for changes in child nodes might affect the conversation container's height
     // When a conversation turn is added, scroll the container down so the new
@@ -67,9 +67,5 @@ export default class ConversationController extends Controller {
   // is in view
   scrollTurns() {
     this.element.scrollTop = this.element.scrollHeight
-  }
-
-  onPromptOptionsShow() {
-    this.scrollTurns()
   }
 }

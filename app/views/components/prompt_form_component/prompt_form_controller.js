@@ -136,7 +136,6 @@ export default class PromptFormController extends Controller {
 
   showOptions() {
     this.showOptionsButtonTarget.querySelector('i').classList.add('down')
-    this.dispatch('promptOptionsShow', { detail: {} })
   }
 
   onChangePreset(e) {
