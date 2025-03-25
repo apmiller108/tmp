@@ -8,20 +8,27 @@
           %button.btn-close{"type" => "button", "data-bs-dismiss" => "modal", "aria-label" => "Close"}
         .modal-body
           .search-form.mb-4
-            = form_with url: path, method: :get do |form|
+            = form_with url: path, method: :get, data: { 'search-modal-target' => 'form' } do |form|
               .input-group
                 %span.input-group-text
                   %i.bi.bi-search
-                = form.search_field :q, class: 'form-control', placeholder: 'Search conversations...', 'aria-label' => 'Search', data: { 'search-modal-target' => 'input', action: 'input->search-modal#onSearchInput keydown.enter->search-modal#search:prevent' }
+                = form.search_field :q, class: 'form-control', placeholder: 'Search conversations...', 'aria-label' => 'Search', data: { 'search-modal-target' => 'input', action: 'keydown.enter->search-modal#search:prevent' }
                 %button.btn.btn-primary#search-button{ "type" => "button",
                                                        data: { action: 'click->search-modal#search:prevent' } } Search
 
           .search-results
             %h6.mb-3 Results
-            #search-results-container.list-group{ data: { 'search-modal-target' => 'results' } }
-              <!-- Search results will be displayed here -->
-              .search-empty-state.text-center.py-5
+            #search-results-container
+              .list-group{ data: { 'search-modal-target' => 'results' } }
+              .empty-state.text-center.py-5{ data: { 'search-modal-target' => 'emptyState' } }
                 %i.bi.bi-search.fs-1.text-muted.d-block.mb-3
                 %p.text-muted Enter a search term to find conversations
+              .loading-state.text-center.py-5.d-none{ data: { 'search-modal-target' => 'loadingState' } }
+                = render SpinnerComponent.new
+                %p.mt-2 Searching...
+              .no-results-state.text-center.py-5.d-none{ data: { 'search-modal-target' => 'noResultsState '} }
+                %i.bi.bi-emoji-frown.fs-1.text-muted.d-block.mb-3
+                %p.text-muted No results found
+
         .modal-footer
           %button.btn.btn-secondary{"type" => "button", "data-bs-dismiss" => "modal"} Close
