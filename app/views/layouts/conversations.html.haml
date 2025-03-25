@@ -89,31 +89,4 @@
           #conversation_scroll_spy.conversation-scrollspy.h-50.collapse.show.collapse-horizontal{ data: { 'conversation-right-panel-target' => 'scrollspy', action: 'hidden.bs.collapse->conversation-right-panel#onHidePanel show.bs.collapse->conversation-right-panel#onShowPanel' } }
 
     <!-- Search Modal -->
-    .modal.fade#searchModal{"tabindex" => "-1", "aria-labelledby" => "searchModalLabel",
-                            "aria-hidden" => "true", data: { controller: 'search-modal' } }
-      .modal-dialog.modal-dialog-centered.modal-lg
-        .modal-content
-          .modal-header
-            %h5.modal-title#searchModalLabel Search Conversations
-            %button.btn-close{"type" => "button", "data-bs-dismiss" => "modal", "aria-label" => "Close"}
-          .modal-body
-            .search-form.mb-4
-              .input-group
-                %span.input-group-text
-                  %i.bi.bi-search
-                %input.form-control#search-input{"type" => "text", "placeholder" => "Search conversations...",
-                                                 "aria-label" => "Search",
-                                                 data: { 'search-modal-target' => 'input',
-                                                          action: 'input->search-modal#onSearchInput' } }
-                %button.btn.btn-primary#search-button{"type" => "button",
-                                                      data: { action: 'click->search-modal#search' } } Search
-
-            .search-results
-              %h6.mb-3 Results
-              #search-results-container.list-group{ data: { 'search-modal-target' => 'results' } }
-                <!-- Search results will be displayed here -->
-                .search-empty-state.text-center.py-5
-                  %i.bi.bi-search.fs-1.text-muted.d-block.mb-3
-                  %p.text-muted Enter a search term to find conversations
-          .modal-footer
-            %button.btn.btn-secondary{"type" => "button", "data-bs-dismiss" => "modal"} Close
+    = render SearchModalComponent.new(path: conversations_path, title: 'Search Conversations')
