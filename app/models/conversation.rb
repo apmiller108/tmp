@@ -12,6 +12,8 @@ class Conversation < ApplicationRecord
   has_many :generate_image_requests, through: :turns, source: :turnable, source_type: 'GenerateImageRequest'
   has_many :generate_text_requests, through: :turns, source: :turnable, source_type: 'GenerateTextRequest'
 
+  has_neighbors :embedding
+
   validates :title, presence: true, length: { maximum: 100 }
   validates :image_quality, inclusion: {
     in: image_qualities.values, message: "%<value>s must be one of #{image_qualities.values}"

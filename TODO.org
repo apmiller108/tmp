@@ -30,9 +30,10 @@
     context window.
     https://github.com/ankane/tokenizers-ruby
     https://docs.voyageai.com/docs/tokenization
-  - [ ] Add conversation_embeddings table
-    conversation_id, embeddings (vector type) limit ???/1024
-  - [ ] Create API interface to create embeddings
+  - [X] Add embedding to conversations
+  - [ ] Add index on conversations.embeddings
+    https://github.com/ankane/neighbor?tab=readme-ov-file#indexing
+  - [X] Create API interface to create embeddings
     https://docs.voyageai.com/reference/embeddings-api
     voyage3
   - [ ] Create embeddings for existing conversations
