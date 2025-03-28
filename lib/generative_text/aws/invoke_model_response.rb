@@ -20,6 +20,7 @@ class GenerativeText
       def content
         results.fetch('outputText')
       end
+      alias blobify content
 
       def results
         data.fetch('results')[0]

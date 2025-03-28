@@ -25,21 +25,26 @@
   - [X] Extract search component
   - [X] Setup pg-vector
   - [X] Create account with voyageai
-  - [ ] Add a tokenizer
+  - Add a tokenizer
     Maybe not, Voyage can automatically truncate the document if beyond the
     context window.
     https://github.com/ankane/tokenizers-ruby
     https://docs.voyageai.com/docs/tokenization
   - [X] Add embedding to conversations
-  - [ ] Add index on conversations.embeddings
-    https://github.com/ankane/neighbor?tab=readme-ov-file#indexing
   - [X] Create API interface to create embeddings
     https://docs.voyageai.com/reference/embeddings-api
     voyage3
   - [ ] Create embeddings for existing conversations
+        Make a one time use rake task.
+  - [ ] Test searching in the console
+  - [ ] Create an embeddings background job.
+    Enqueue it after a conversation is updated. Schedule it a few minutes
+    out and make it unique
   - [ ] Create search service to create embeddings for a search query
   - [ ] Use search query embedding to perform query
   - [ ] Return and display the results
+  - [ ] Add index on conversations.embeddings
+    https://github.com/ankane/neighbor?tab=readme-ov-file#indexing
 * DONE support for image to image [8/8]
 CLOSED: [2025-03-23 Sun 15:39]
   - [X] Add ultra request object and update client

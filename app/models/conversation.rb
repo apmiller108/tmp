@@ -36,6 +36,12 @@ class Conversation < ApplicationRecord
     generate_text_requests.sum(&:response_token_count)
   end
 
+  # @return [String] a raw text version of the conversation including tool use
+  # responses. Suitable for an embedding.
+  def blobify
+    generate_text_requests.completed.map(&:blobify).join
+  end
+
   private
 
   def memo_user_matches_conversation_user

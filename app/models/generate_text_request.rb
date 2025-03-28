@@ -45,6 +45,15 @@ class GenerateTextRequest < ApplicationRecord
     @response ||= response_wrapper_class.new(super) if super.present?
   end
 
+  def blobify
+    return '' unless completed?
+
+    [
+      prompt,
+      response.blobify
+    ].join
+  end
+
   def response_token_count
     if completed?
       response.token_count
