@@ -1,0 +1,12 @@
+class ConversationEmbeddingJob
+  include Sidekiq::Job
+
+  sidekiq_options lock: :until_executed
+
+  def perform(conversation_id)
+    conversation = Conversation.find(conversation_id)
+    response = Embeddings::Voyage.create_embedding(text: conversation.blobify, input_type: :document)
+
+    conversation.update!(embedding: response.embeddings.first.vector)
+  end
+end

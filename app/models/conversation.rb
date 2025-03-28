@@ -1,4 +1,7 @@
 class Conversation < ApplicationRecord
+  # excluding :embedding because it fill up the console with numbers
+  self.attributes_for_inspect = %i[id title image_quality user_id memo_id create_at updated_at]
+
   enum :image_quality,
        GenerativeImage::QUALITY_LEVELS.zip(GenerativeImage::QUALITY_LEVELS).to_h,
        default: GenerativeImage::DEFAULT_QUALITY_LEVEL

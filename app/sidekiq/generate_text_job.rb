@@ -24,6 +24,7 @@ class GenerateTextJob
     broadcast_content(generate_text_request, user, response.content)
 
     GenerateTextToolInputJob.perform_async(generate_text_request_id) if response.tool_use?
+    ConversationEmbeddingJob.perform_in(5.minutes, generate_text_request.conversation_id)
   end
 
   private

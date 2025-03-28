@@ -6,6 +6,8 @@ module Embeddings
     # @param input_type [Symbol] enum :document or :query
     # @return [Embeddings::Voyage::Response]
     def self.create_embedding(text:, input_type:)
+      raise ArgumentError, 'input_type must be one of :query or :document' unless input_type.in?(%i[document query])
+
       request = EmbeddingRequest.new(
         input: Array[text],
         input_type:

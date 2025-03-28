@@ -34,10 +34,10 @@
   - [X] Create API interface to create embeddings
     https://docs.voyageai.com/reference/embeddings-api
     voyage3
-  - [ ] Create embeddings for existing conversations
+  - [X] Create embeddings for existing conversations
         Make a one time use rake task.
-  - [ ] Test searching in the console
-  - [ ] Create an embeddings background job.
+  - [X] Test searching in the console
+  - [X] Create an embeddings background job.
     Enqueue it after a conversation is updated. Schedule it a few minutes
     out and make it unique
   - [ ] Create search service to create embeddings for a search query
