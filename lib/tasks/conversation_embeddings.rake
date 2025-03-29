@@ -2,7 +2,7 @@ namespace :conversations do
   desc 'Creates embeddings for existing conversations that do not have embeddings'
   task create_embeddings: :environment do
     Conversation.where(embedding: nil).find_each do |conversation|
-      response = Embeddings::Voyage.create_embedding(text: conversation.blobify, input_type: :document)
+      response = Embeddings::Voyage.create_embeddings(text: conversation.blobify, input_type: :document)
       conversation.embedding = response.embeddings.first.vector
 
       if conversation.save

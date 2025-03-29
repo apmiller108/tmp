@@ -23,11 +23,11 @@ class ConversationSearch
   def apply_vector_search
     return unless (search_term = params.dig(:q, :term))
 
-    response = Embeddings::Voyage.create_embedding(
+    response = Embeddings::Voyage.create_embeddings(
       text: search_term,
       input_type: :query
     )
 
-    @relation = relation.nearest_neighbors(:embeddings, response.embeddings.first.vector, distance: 'cosine')
+    @relation = relation.nearest_neighbors(:embedding, response.embeddings.first.vector, distance: 'cosine')
   end
 end

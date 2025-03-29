@@ -42,58 +42,13 @@
   - [X] Create an embeddings background job.
     Enqueue it after a conversation is updated. Schedule it a few minutes
     out and make it unique
-  - [ ] Create query object
-    #+begin_src ruby
-      # app/queries/conversation_search.rb
-        class ConversationSearch
-          attr_reader :user, :params, :relation
-
-          def initialize(user:, params: {})
-            @user = user
-            @params = params
-            @relation = user.conversations
-          end
-
-          def call
-            apply_memo_filter
-            apply_vector_search if search_term.present?
-            relation
-          end
-
-          private
-
-          def apply_memo_filter
-            return unless params.dig(:q, :memo_id)
-
-            @relation = relation.where(memo_id: params.dig(:q, :memo_id))
-          end
-
-          def apply_vector_search
-            return unless search_term.present?
-
-            query_vector = Embeddings::Voyage.create_embedding(
-              text: search_term,
-              input_type: :query
-            )
-
-            # Using the neighbors gem for nearest neighbor search
-            # Adjust the distance threshold and limit as needed
-            @relation = relation.nearest_neighbors(:embeddings, query_vector, distance_threshold: 0.8)
-          end
-
-          def search_term
-            params.dig(:q)&.is_a?(String) ? params[:q] : params.dig(:q, :term)
-          end
-        end
-    #+end_src
-
-    #+begin_src haml
-     = form.search_field :q, name: 'q[term]', class: 'form-control', placeholder: 'Search conversations...', 'aria-label' => 'Search', data: { 'search-modal-target' => 'input', action: 'keydown.enter->search-modal#search:prevent' } 
-    #+end_src
+  - [X] Create query object
   - [ ] Add title to blobification
-  - [ ] Create search service to create embeddings for a search query
+  - [X] Create search service to create embeddings for a search query
   - [ ] Use search query embedding to perform query
-  - [ ] Return and display the results
+  - [ ] Show the results
+  - [ ] When showing results show the query term with close icon to go back to default order
+  - [ ] Color the top 9 results each a lighter shade in a gradient
   - [ ] Add index on conversations.embeddings
     https://github.com/ankane/neighbor?tab=readme-ov-file#indexing
 * DONE support for image to image [8/8]

@@ -5,7 +5,7 @@ class ConversationEmbeddingJob
 
   def perform(conversation_id)
     conversation = Conversation.find(conversation_id)
-    response = Embeddings::Voyage.create_embedding(text: conversation.blobify, input_type: :document)
+    response = Embeddings::Voyage.create_embeddings(text: conversation.blobify, input_type: :document)
 
     conversation.update!(embedding: response.embeddings.first.vector)
   end

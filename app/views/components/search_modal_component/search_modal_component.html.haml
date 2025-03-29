@@ -12,7 +12,8 @@
               .input-group
                 %span.input-group-text
                   %i.bi.bi-search
-                = form.search_field :q, class: 'form-control', placeholder: 'Search conversations...', 'aria-label' => 'Search', data: { 'search-modal-target' => 'input', action: 'keydown.enter->search-modal#search:prevent' }
+                = form.search_field :q, name: 'q[term]', class: 'form-control', placeholder: 'Search conversations...', 'aria-label' => 'Search',
+                  data: { 'search-modal-target' => 'input', action: 'keydown.enter->search-modal#search:prevent' }
                 %button.btn.btn-primary#search-button{ "type" => "button",
                                                        data: { action: 'click->search-modal#search:prevent' } } Search
 

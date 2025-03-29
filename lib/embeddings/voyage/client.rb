@@ -4,7 +4,7 @@ module Embeddings
       EMBEDDINGS_PATH = '/v1/embeddings'.freeze
       ClientError = Class.new(StandardError)
 
-      def create_embedding(request)
+      def create_embeddings(request)
         response = connection.post(EMBEDDINGS_PATH) do |req|
           req.headers['Content-Type'] = 'application/json'
           req.body = request.to_json
