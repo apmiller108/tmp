@@ -33,6 +33,7 @@ module Tmp
     config.autoload_lib(ignore: %w[assets tasks])
     config.eager_load_paths << Rails.root.join('app', 'views', 'components')
     config.eager_load_paths << Rails.root.join('app', 'sidekiq', 'concerns')
+    config.eager_load_paths << Rails.root.join('app', 'queries')
 
     config.after_initialize do
       ActionText::ContentHelper.sanitizer.class.allowed_attributes += %w[

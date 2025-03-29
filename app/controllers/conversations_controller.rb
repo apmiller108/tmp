@@ -7,8 +7,7 @@ class ConversationsController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: -> { redirect_to root_path }
 
   def index
-    relation = current_user.conversations
-    relation = relation.where(memo_id: search_params[:q][:memo_id]) if search_params.dig(:q, :memo_id)
+    relation = ConversationSearch.new(relation: current_user.conversations, params: search_params).call
     @conversations, @cursor = Paginate.call(relation:, limit: 15, cursor: params[:c], order: { updated_at: :desc })
 
     respond_to do |format|
