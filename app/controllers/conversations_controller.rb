@@ -8,7 +8,8 @@ class ConversationsController < ApplicationController
 
   def index
     relation = ConversationSearch.new(relation: current_user.conversations, params: search_params).call
-    @conversations, @cursor = Paginate.call(relation:, limit: 15, cursor: params[:c], order: { updated_at: :desc })
+    @conversations, @pagination = Paginate.paginate(relation:, page: params.fetch(:page, 0), per_page: 15,
+                                                    order: { updated_at: :desc })
 
     respond_to do |format|
       format.html
@@ -108,7 +109,7 @@ class ConversationsController < ApplicationController
   end
 
   def search_params
-    params.permit(:c, :format, :term, q: %i[memo_id])
+    params.permit(:c, :format, :page, :per_page, q: %i[memo_id :term])
   end
 
   def conversation_params

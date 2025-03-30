@@ -43,6 +43,8 @@
     Enqueue it after a conversation is updated. Schedule it a few minutes
     out and make it unique
   - [X] Create query object
+  - [X] Switch conversations to page/offset pagination
+  - [ ] Make ordering dynamic. When displaying search results, order by neighbor_distance
   - [ ] Add title to blobification
   - [X] Create search service to create embeddings for a search query
   - [ ] Use search query embedding to perform query
@@ -51,6 +53,7 @@
   - [ ] Color the top 9 results each a lighter shade in a gradient
   - [ ] Add index on conversations.embeddings
     https://github.com/ankane/neighbor?tab=readme-ov-file#indexing
+  - [ ] Maybe drop the neighbor gem?
 * DONE support for image to image [8/8]
 CLOSED: [2025-03-23 Sun 15:39]
   - [X] Add ultra request object and update client

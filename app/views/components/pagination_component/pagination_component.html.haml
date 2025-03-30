@@ -9,6 +9,6 @@
       = list
   %turbo-stream{action: :replace, target: :pagination}
     %template
-      - if cursor.present?
+      - if cursor.present? || next_page_exists?
         %turbo-frame#pagination.d-flex.justify-content-center{ src: collection_path, loading: :lazy }
           = render SpinnerComponent.new(css_class: 'my-3')
