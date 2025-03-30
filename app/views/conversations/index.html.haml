@@ -1,5 +1,5 @@
 %turbo-frame.container{ id: :conversations_index }
-  = render PaginationComponent.new(path: [:conversations_path], pagination: @pagination) do |pagination|
+  = render PaginationComponent.new(path: [:conversations_path], pagination: @pagination, search_q: @search_q) do |pagination|
     = pagination.with_container do
       #conversations.list-group
 

@@ -7,7 +7,8 @@ class ConversationsController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: -> { redirect_to root_path }
 
   def index
-    relation = ConversationSearch.new(relation: current_user.conversations, params: search_params).call
+    @search_q = search_params[:q]
+    relation = ConversationSearch.new(relation: current_user.conversations, params: @search_q).call
     @conversations, @pagination = Paginate.paginate(relation:, page: params.fetch(:page, 0), per_page: 15,
                                                     order: { updated_at: :desc })
 
