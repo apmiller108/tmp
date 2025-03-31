@@ -39,7 +39,7 @@ en:
     name: 'Conversation'
     delete: 'Delete Conversation'
     new: 'New Conversation'
-    search: 'Search Conversations'
+    search: 'Search conversations or press "/" key to search'
   copy: 'copy'
   create: 'Create'
   delete: 'Delete %{name}'
