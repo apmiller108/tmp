@@ -51,7 +51,9 @@
   - [X] close modal when index begins to load (spinner visible)
   - [X] Create search service to create embeddings for a search query
   - [X] Show the results
-  - [ ] When showing results show the query term with close icon to go back full list
+  - [ ] When showing results show the query term with close icon to go back full
+    list
+  - [ ] Empty state
   - [ ] Add index on conversations.embeddings
     https://github.com/ankane/neighbor?tab=readme-ov-file#indexing
   - [ ] Maybe drop the neighbor gem?
