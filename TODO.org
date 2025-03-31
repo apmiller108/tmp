@@ -44,7 +44,7 @@
     out and make it unique
   - [X] Create query object
   - [X] Switch conversations to page/offset pagination
-  - [ ] Add title to blobification
+  - [X] Add title to blobification
   - [X] Make ordering dynamic. When displaying search results, order by
     neighbor_distance
   - [X] Submit form on enter

@@ -42,7 +42,10 @@ class Conversation < ApplicationRecord
   # @return [String] a raw text version of the conversation including tool use
   # responses. Suitable for an embedding.
   def blobify
-    generate_text_requests.completed.map(&:blobify).join
+    [
+      title,
+      generate_text_requests.completed.map(&:blobify)
+    ].join
   end
 
   private
