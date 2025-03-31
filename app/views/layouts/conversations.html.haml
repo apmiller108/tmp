@@ -34,7 +34,8 @@
                   %i.bi.bi-pencil-square
             #conversation-list.h-100.collapse.show.collapse-horizontal{data: { 'conversation-left-panel-target' => 'conversationsIndex',
               action: 'hidden.bs.collapse->conversation-left-panel#onHidePanel show.bs.collapse->conversation-left-panel#onShowPanel' } }
-              %turbo-frame{ id: :conversations_index, src: conversations_path }
+              %turbo-frame{ id: :conversations_index, src: conversations_path,
+                           data: { action: 'turbo:frame-render->conversation-left-panel#onIndexInitialized' } }
         .conversation-content.flex-grow-1.pb-3
           %turbo-frame{ id: :conversation_content }
             = yield
@@ -86,7 +87,9 @@
           .scrollspy-heading{ data: { 'conversation-right-panel-target' => 'scrollspyHeading' } }
             %strong.ms-3 In this chat
             %hr.my-2.ms-3
-          #conversation_scroll_spy.conversation-scrollspy.h-50.collapse.show.collapse-horizontal{ data: { 'conversation-right-panel-target' => 'scrollspy', action: 'hidden.bs.collapse->conversation-right-panel#onHidePanel show.bs.collapse->conversation-right-panel#onShowPanel' } }
-
+          #conversation_scroll_spy.conversation-scrollspy.h-50.collapse.show.collapse-horizontal{
+          data: { 'conversation-right-panel-target' => 'scrollspy',
+          action: 'hidden.bs.collapse->conversation-right-panel#onHidePanel show.bs.collapse->conversation-right-panel#onShowPanel' } }
     <!-- Search Modal -->
-    = render SearchModalComponent.new(path: conversations_path, title: 'Search Conversations')
+    = render SearchModalComponent.new(path: conversations_path, title: 'Search Conversations',
+                                      form_attrs: { data: { turbo_frame: :conversations_index, action: 'conversation-left-panel:conversationIndexInitialized@window->search-modal#close' } })

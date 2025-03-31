@@ -22,11 +22,13 @@ module Paginate
       page = page.to_i
       per_page = [per_page.to_i, 1].max
       offset = [(page - 1), 0].max * per_page
-      total_count = relation.count
+      # plucking ID to reset any select query customizations (eg,
+      # neighbor_distance) which makes generates invalid SQL when combined with
+      # `count`
+      total_count = relation.pluck(:id).count
       total_pages = (total_count.to_f / per_page).ceil
 
-      # Convert to array to use size property in metadata
-      records = relation.order(order).limit(per_page).offset(offset).to_a
+      records = relation.order(order).limit(per_page).offset(offset)
 
       # Calculate pagination metadata
       metadata = {

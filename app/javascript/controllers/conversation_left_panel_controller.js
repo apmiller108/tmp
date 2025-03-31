@@ -52,6 +52,10 @@ export default class ConversationLeftPanel extends Controller {
     this.setActiveConversation()
   }
 
+  onIndexInitialized() {
+    this.dispatch('conversationIndexInitialized')
+  }
+
   setActiveConversation() {
     const activeConvo = this.listItemTargets.find(i => i.dataset.conversationId == this.activeConversationId)
     this.listItemTargets.forEach(i => i.classList.remove('text-bg-light'))

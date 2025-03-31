@@ -5,31 +5,18 @@
       .modal-content
         .modal-header
           %h5.modal-title#searchModalLabel= title
-          %button.btn-close{"type" => "button", "data-bs-dismiss" => "modal", "aria-label" => "Close"}
+          %button.btn-close{"type" => "button", data: { "bs-dismiss" => "modal", 'search-modal-target' => 'closeButton' },
+                            "aria-label" => "Close"}
         .modal-body
           .search-form.mb-4
-            = form_with url: path, method: :get, data: { 'search-modal-target' => 'form' } do |form|
+            = form_with **form_attrs do |form|
+              = form.hidden_field :sort, name: 'q[order]', value: 'neighbor_distance asc'
               .input-group
                 %span.input-group-text
                   %i.bi.bi-search
-                = form.search_field :q, name: 'q[term]', class: 'form-control', placeholder: 'Search conversations...', 'aria-label' => 'Search',
-                  data: { 'search-modal-target' => 'input', action: 'keydown.enter->search-modal#search:prevent' }
-                %button.btn.btn-primary#search-button{ "type" => "button",
-                                                       data: { action: 'click->search-modal#search:prevent' } } Search
-
-          .search-results
-            %h6.mb-3 Results
-            #search-results-container
-              .list-group{ data: { 'search-modal-target' => 'results' } }
-              .empty-state.text-center.py-5{ data: { 'search-modal-target' => 'emptyState' } }
-                %i.bi.bi-search.fs-1.text-muted.d-block.mb-3
-                %p.text-muted Enter a search term to find conversations
-              .loading-state.text-center.py-5.d-none{ data: { 'search-modal-target' => 'loadingState' } }
-                = render SpinnerComponent.new
-                %p.mt-2 Searching...
-              .no-results-state.text-center.py-5.d-none{ data: { 'search-modal-target' => 'noResultsState '} }
-                %i.bi.bi-emoji-frown.fs-1.text-muted.d-block.mb-3
-                %p.text-muted No results found
-
-        .modal-footer
-          %button.btn.btn-secondary{"type" => "button", "data-bs-dismiss" => "modal"} Close
+                = form.search_field :term, name: 'q[term]', class: 'form-control', placeholder: 'Search conversations...',
+                  required: true, minlength: 3, 'aria-label' => 'Search',
+                  data: { 'search-modal-target' => 'input',
+                          action: 'keydown.enter->search-modal#search:prevent' }
+                = form.submit 'Search', class: 'btn btn-primary', id: '#search-button',
+                  data: { action: 'click->search-modal#search:prevent'}

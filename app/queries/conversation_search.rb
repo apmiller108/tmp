@@ -4,16 +4,25 @@ class ConversationSearch
   VECTOR_RELEVANCE_THRESHOLD = 0.75
 
   def initialize(relation:, params: {})
-    @params = params
+    @params = params || {}
     @relation = relation
   end
 
-  def call
+  def results
     return relation if params.blank?
 
     apply_memo_filter
     apply_vector_search
     relation
+  end
+
+  def order
+    case params[:order]
+    when 'neighbor_distance asc'
+      { neighbor_distance: :asc }
+    else
+      { updated_at: :desc }
+    end
   end
 
   private
@@ -28,11 +37,11 @@ class ConversationSearch
     return unless params[:term]
 
     vector = Embeddings::Voyage.create_embeddings(
-      text: param[:term],
+      text: params[:term],
       input_type: :query
     ).embeddings.first.vector
 
-    @relation = relation.select("conversations.*, (embedding <=> '[#{vector.join(',')}]') AS neighbor_distance")
+    @relation = relation.select("conversations.*, (embedding <=> '#{vector}') AS neighbor_distance")
                         .where('embedding <=> ? < ?', vector.to_s, VECTOR_RELEVANCE_THRESHOLD)
   end
 end
