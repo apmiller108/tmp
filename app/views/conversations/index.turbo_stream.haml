@@ -1,4 +1,4 @@
-= render PaginationComponent.new(pagination: @pagination, search_q: @search_q, container_id: :conversations,
+= render PaginationComponent.new(pagination: @pagination, search_q: @search.params, container_id: :conversations,
                                  path: [:conversations_path]) do |pagination|
   = pagination.with_list do
     = render partial: 'list_item', collection: @conversations, as: :conversation
