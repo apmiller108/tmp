@@ -8,24 +8,28 @@
   https://docs.anthropic.com/en/docs/build-with-claude/pdf-support
 * TODO validate schema for tool use responses
     https://github.com/voxpupuli/json-schema
-* TODO Conversation Stats
-  Images, other media, tokens...
-* TODO add audio transcription to conversations
-* TODO add audio generation to conversations
+* TODO audio transcription to conversations
+* TODO audio generation to conversations
   https://developers.deepgram.com/
-* TODO add video generation to conversations
+* TODO video generation to conversations
 * TODO add preview chat button on index item
   - [ ] Eye icon on click...
   - [ ] Open modal with readonly version
 * TODO Image sketch
-* TODO List view of generated images
-  or list of all conversation files?
+* TODO Enhance index
+  - expand title
+  - metadata regarding files, images
 * TODO export conversation
   - with options for markdown, html and org mode
 * TODO Edit the last prompt. Trigger regenerate the last assistant response.
-* TODO help section
+* TODO help section / Ask for help
+  - A help tool that returns all the help documentation to the LLM who proceeds
+    to generate an answer based on the those docs.
   - Capabilities / Tools
   - Keyboard shortcuts
+* TODO URL tool
+  - Tool to fetch a given URL, extract text content from HTML document and pipe
+    into the followup response.
 * TODO Wire up search
   - [X] Extract search component
   - [X] Setup pg-vector
@@ -57,8 +61,9 @@
   - [X] When showing results show the query term with close icon to go back full
     list
   - [X] Empty state
-  - [ ] Add index on conversations.embeddings
+  - Add index on conversations.embeddings
     https://github.com/ankane/neighbor?tab=readme-ov-file#indexing
+    Choosing not to do this. The dataset is too small to make it worth while.
   - [X] Maybe drop the neighbor gem?
   - [ ] Distill all this into some notes about how to implement vector search in ror
 * DONE support for image to image [8/8]
