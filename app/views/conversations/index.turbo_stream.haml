@@ -1,4 +1,25 @@
 = render PaginationComponent.new(pagination: @pagination, search_q: @search.params, container_id: :conversations,
                                  path: [:conversations_path]) do |pagination|
   = pagination.with_list do
-    = render partial: 'list_item', collection: @conversations, as: :conversation
+    - if @conversations.present?
+      = render partial: 'list_item', collection: @conversations, as: :conversation
+    - else
+      #conversations_empty_state.text-center.py-5.px-3
+        .mb-4
+          %i.bi.bi-chat-dots.text-muted{style: "font-size: 4rem;"}
+        %h4.text-muted No conversations found
+        - if @search.params.present?
+          %p.text-muted.mb-4
+            No conversations match your current filters.
+            %br
+            Try adjusting your search criteria or clearing filters.
+        - else
+          %p.text-muted.mb-4
+            You haven't started any conversations yet.
+            %br
+            Create your first conversation to get started.
+          .mt-3
+            = link_to new_conversation_path, class: "btn btn-primary",
+            data: { turbo_frame: :conversation_content, turbo_action: :advance } do
+              %i.bi.bi-plus-circle.me-1
+              Start a conversation

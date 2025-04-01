@@ -13,3 +13,4 @@
                                           icon_class: 'bi-body-text',
                                           href: "##{dom_id(conversation_form.turn)}",
                                           id: dom_id(conversation_form.turn, 'nav_item'))
+  = turbo_stream.remove('conversations_empty_state')

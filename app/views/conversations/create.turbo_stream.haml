@@ -2,3 +2,4 @@
   %turbo-frame{ id: :conversation_content, src: edit_conversation_path(@conversation_form.conversation) }
 = turbo_stream.prepend 'conversations' do
   = render partial: 'list_item', locals: { conversation: @conversation_form.conversation }
+= turbo_stream.remove('conversations_empty_state')

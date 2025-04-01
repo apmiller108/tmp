@@ -11,6 +11,7 @@ export default class SearchModalController extends Controller {
 
   disconnect() {
     document.removeEventListener('keydown', this.handleKeydown.bind(this))
+    this.modal.dispose()
   }
 
   search() {
