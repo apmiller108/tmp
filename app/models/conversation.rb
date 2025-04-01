@@ -2,6 +2,12 @@ class Conversation < ApplicationRecord
   # excluding :embedding because it fill up the console with numbers
   self.attributes_for_inspect = %i[id title image_quality user_id memo_id create_at updated_at]
 
+  # When getting the nearest neighbors, this attribute holds the distance if
+  # included in the select statement. Example: given `vector` is Array<Float>,
+  # Conversation.select("conversations.*, (embedding <=> '#{vector}') AS neighbor_distance")
+  #             .where('embedding <=> ? < ?', vector.to_s, 0.7)
+  attribute :neighbor_distance
+
   enum :image_quality,
        GenerativeImage::QUALITY_LEVELS.zip(GenerativeImage::QUALITY_LEVELS).to_h,
        default: GenerativeImage::DEFAULT_QUALITY_LEVEL
@@ -14,8 +20,6 @@ class Conversation < ApplicationRecord
   accepts_nested_attributes_for :turns
   has_many :generate_image_requests, through: :turns, source: :turnable, source_type: 'GenerateImageRequest'
   has_many :generate_text_requests, through: :turns, source: :turnable, source_type: 'GenerateTextRequest'
-
-  has_neighbors :embedding
 
   validates :title, presence: true, length: { maximum: 100 }
   validates :image_quality, inclusion: {
