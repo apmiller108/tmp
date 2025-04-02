@@ -46,7 +46,7 @@ class ConversationSearch
   def apply_memo_filter
     return unless params[:memo_id]
 
-    @relation = relation.where(memo_id: param[:memo_id])
+    @relation = relation.where(memo_id: params[:memo_id])
   end
 
   def apply_semantic_filter
