@@ -65,7 +65,7 @@
     https://github.com/ankane/neighbor?tab=readme-ov-file#indexing
     Choosing not to do this. The dataset is too small to make it worth while.
   - [X] Maybe drop the neighbor gem?
-  - [ ] Distill all this into some notes about how to implement vector search in ror
+  - [X] Distill all this into some notes about how to implement vector search in ror
 * DONE support for image to image [8/8]
 CLOSED: [2025-03-23 Sun 15:39]
   - [X] Add ultra request object and update client
