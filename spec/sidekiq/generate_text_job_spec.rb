@@ -14,7 +14,7 @@ RSpec.describe GenerateTextJob, type: :job do
     let(:conversation_turn) { build_stubbed :conversation_turn, conversation: }
     let(:generate_text_request) { build_stubbed :generate_text_request, :with_preset, conversation_turn:, user: }
     let(:user) { build_stubbed :user, setting: build(:setting) }
-    let(:conversation) { build :conversation }
+    let(:conversation) { build_stubbed :conversation }
     let(:response_data) { { 'content' => 'response data' } }
     let(:response) do
       instance_double(GenerativeText::Anthropic::InvokeModelResponse,
@@ -38,6 +38,7 @@ RSpec.describe GenerateTextJob, type: :job do
       allow(generate_text_request).to receive(:failed!)
       allow(generate_text_request).to receive(:conversation).and_return(conversation)
       allow(conversation).to receive(:reload).and_return(conversation)
+      allow(ConversationEmbeddingJob).to receive(:perform_in)
     end
 
     context 'when the text is generated successfully' do
@@ -79,6 +80,11 @@ RSpec.describe GenerateTextJob, type: :job do
           have_received(:call).with([user, TurboStreams::STREAMS[:main]],
                                     component: prompt_form_component, action: :replace)
         )
+      end
+
+      it 'schedules a ConversationEmbeddingJob' do
+        perform
+        expect(ConversationEmbeddingJob).to have_received(:perform_in).with(5.minutes, conversation.id)
       end
 
       context 'when streaming is true' do
