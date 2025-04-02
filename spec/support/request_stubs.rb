@@ -60,4 +60,23 @@ module RequestStubs
         'Accept': 'image/*'
       }).to_return(status: 200, body: png.read, headers: { 'seed' => 1234, 'finish-reason' => 'SUCCESS' })
   end
+
+  def stub_voyage_embedding_request(**args)
+    stub_request(:post, 'https://api.voyageai.com/v1/embeddings')
+      .with(body: { 'input' => args.fetch(:input, ['test input']),
+                    'model' => 'voyage-3',
+                    'input_type' => 'document',
+                    'truncation' => true,
+                    'output_dimension' => 1024 }.to_json,
+            headers: {
+              'Authorization' => "Bearer #{ENV.fetch('VOYAGE_API_KEY')}",
+              'Content-Type' => 'application/json'
+            })
+      .to_return(status: 200,
+                 body: {
+                   data: [{ object: 'embedding', embedding: Array.new(1024) { rand }, index: 0 }],
+                   model: 'voyage-3',
+                   useage: { total_tokens: 10 }
+                 }.to_json)
+  end
 end

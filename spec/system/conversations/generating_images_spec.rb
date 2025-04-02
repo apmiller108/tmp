@@ -11,6 +11,10 @@ RSpec.describe 'update conversation', type: :system do
   let(:model) { GenerativeText::MODELS.find { _1.api_name == setting.text_model } }
   let(:temperature) { 0.5 }
   let(:conversation) { create :conversation, :with_requests, user:, request_count: 3 }
+  let(:tool_use_response) do
+    { 'options' => { 'style' => 'fantasy-art', 'aspect_ratio' => '16:9', 'request_type' => 'text_to_image' },
+      'prompts' => { 'prompt' => 'image prompt', 'negative_prompt' => 'negative prompt' } }
+  end
 
   before(:context) do
     Sidekiq::Testing.inline!
@@ -21,6 +25,8 @@ RSpec.describe 'update conversation', type: :system do
       prompt:, temperature:, generate_text_preset:, model:,
       messages: conversation.exchange, assistant_response:, response_body:
     )
+    stub_voyage_embedding_request(input: [[conversation.blobify, prompt, assistant_response,
+                                           tool_use_response.to_s].join(' ')])
   end
 
   after(:context) do

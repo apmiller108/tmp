@@ -30,6 +30,8 @@ RSpec.describe 'Create and view memo', type: :system do
       generate_text_preset:,
       prompt: generate_text_prompt
     )
+
+    stub_voyage_embedding_request(input: ['This is my prompt This is my prompt test assistant response'])
   end
 
   after(:context) do

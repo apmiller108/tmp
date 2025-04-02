@@ -10,6 +10,9 @@ RSpec.describe 'create conversation', type: :system do
   let(:assistant_response) { 'test assistant response' }
   let(:model) { GenerativeText::MODELS.find { _1.api_name == setting.text_model } }
   let(:temperature) { 0.5 }
+  let(:embedding_request_stub) do
+    stub_voyage_embedding_request(input: ['This is my prompt This is my prompt test assistant response'])
+  end
 
   before(:context) do
     Sidekiq::Testing.inline!
@@ -19,6 +22,7 @@ RSpec.describe 'create conversation', type: :system do
     stub_anthropic_stream_request(
       model:, assistant_response:, temperature:, generate_text_preset:, prompt:
     )
+    embedding_request_stub
   end
 
   after(:context) do
@@ -51,6 +55,8 @@ RSpec.describe 'create conversation', type: :system do
     within('.segment-assistant') do
       expect(page).to have_content assistant_response
     end
+
+    expect(embedding_request_stub).to have_been_requested
 
     # Copy assistant response to clipboard
     within('.assistant-response') do

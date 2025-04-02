@@ -12,6 +12,9 @@ RSpec.describe 'update conversation', type: :system do
   let(:temperature) { 0.5 }
   let(:conversation) { create :conversation, :with_requests, user:, request_count: 3 }
   let(:response_body) { file_fixture('anthropic/messages_stream_response.txt').read }
+  let(:embedding_request_stub) do
+    stub_voyage_embedding_request(input: [[conversation.blobify, prompt, assistant_response].join(' ')])
+  end
 
   before(:context) do
     Sidekiq::Testing.inline!
@@ -22,6 +25,7 @@ RSpec.describe 'update conversation', type: :system do
       prompt:, temperature:, generate_text_preset:, model:,
       messages: conversation.exchange, assistant_response:, response_body:
     )
+    embedding_request_stub
   end
 
   after(:context) do
@@ -79,6 +83,8 @@ RSpec.describe 'update conversation', type: :system do
         expect(page).to have_content assistant_response
       end
     end
+
+    expect(embedding_request_stub).to have_been_requested
   end
 
   context 'with the default options' do

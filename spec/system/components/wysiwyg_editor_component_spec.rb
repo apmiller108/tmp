@@ -34,6 +34,8 @@ RSpec.describe 'WysiwygEditorComponent', type: :system do
       }.to_json)
       .to_return(status: 200, body: titan_generative_text_response)
 
+    stub_voyage_embedding_request(input: ['This is my prompt This is my prompt test assistant response'])
+
     stub_anthropic_messages_request(
       model:, assistant_response: generative_text, temperature: 0.0, prompt: 'This is my prompt'
     )
