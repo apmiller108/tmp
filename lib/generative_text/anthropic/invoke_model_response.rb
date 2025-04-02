@@ -73,7 +73,7 @@ class GenerativeText
         [
           content,
           *generate_image_inputs
-        ].join
+        ].join(' ')
       end
 
       def generate_image_inputs

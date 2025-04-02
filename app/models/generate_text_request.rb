@@ -51,7 +51,7 @@ class GenerateTextRequest < ApplicationRecord
     [
       prompt,
       response.blobify
-    ].join
+    ].join(' ')
   end
 
   def response_token_count

@@ -6,6 +6,10 @@ module Embeddings
 
       Embedding = Data.define(:vector, :index)
 
+      # Example response_data:
+      # { data: [{ object: 'embedding', embedding: Array.new(1024) { rand }, index: 0 }],
+      #   model: 'voyage-3',
+      #   useage: { total_tokens: 10 } }
       def initialize(response_data)
         @response_data = response_data
       end

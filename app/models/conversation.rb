@@ -49,7 +49,7 @@ class Conversation < ApplicationRecord
     [
       title,
       generate_text_requests.completed.map(&:blobify)
-    ].join
+    ].join(' ')
   end
 
   private
