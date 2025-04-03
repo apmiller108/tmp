@@ -55,8 +55,8 @@
                                                         "aria-controls" => "offcanvasNavbar", "aria-label" => "Toggle navigation"}
                   %i.bi.bi-justify-right
                 = render partial: 'layouts/offcanvas_nav'
-            = link_to generate_text_presets_path, class: 'btn icon-btn icon-btn-auto' do
-              %i.bi.bi-sliders{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => 'Presets' }}
+              = link_to generate_text_presets_path, class: 'btn icon-btn icon-btn-auto' do
+                %i.bi.bi-sliders{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => 'Presets' }}
             %button.btn.icon-btn.icon-btn-auto{ data: { 'bs-toggle' => 'collapse', 'bs-target' => '#conversation_scroll_spy' } }
               %i.bi.bi-arrows-collapse-vertical{ data: { 'conversation-right-panel-target' => 'collapseIcon',
                                                         'bs-toggle' => 'tooltip', 'bs-title' => 'Toggle Section' }}
