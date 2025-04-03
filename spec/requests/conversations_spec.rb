@@ -4,7 +4,8 @@ RSpec.describe 'Conversations', type: :request do
   describe 'GET #index' do
     let(:user) { create :user }
     let!(:conversations) { create_list :conversation, 2, user: }
-    let(:request) { get conversations_path, headers: }
+    let(:params) { {} }
+    let(:request) { get conversations_path, headers:, params: }
 
     before do
       sign_in user
@@ -18,6 +19,34 @@ RSpec.describe 'Conversations', type: :request do
       it 'returns an OK response' do
         request
         expect(response).to have_http_status :ok
+      end
+
+      context 'with a search term' do
+        let(:search_term) { 'test search term' }
+        let(:params) do
+          {
+            q: {
+              term: search_term
+            }
+          }
+        end
+        let(:stub_embedding_request) do
+          stub_voyage_embedding_request(input: [search_term], input_type: :query)
+        end
+
+        before do
+          stub_embedding_request
+        end
+
+        it 'creates an embedding for the search term' do
+          request
+          expect(stub_embedding_request).to have_been_requested
+        end
+
+        it 'returns an OK response' do
+          request
+          expect(response).to have_http_status :ok
+        end
       end
     end
 

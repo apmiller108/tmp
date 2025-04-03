@@ -65,7 +65,7 @@ module RequestStubs
     stub_request(:post, 'https://api.voyageai.com/v1/embeddings')
       .with(body: { 'input' => args.fetch(:input, ['test input']),
                     'model' => 'voyage-3',
-                    'input_type' => 'document',
+                    'input_type' => args.fetch(:input_type, 'document'),
                     'truncation' => true,
                     'output_dimension' => 1024 }.to_json,
             headers: {
