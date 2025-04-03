@@ -80,6 +80,8 @@ RSpec/MultipleMemoizedHelpers:
   Enabled: false
 RSpec/NestedGroups:
   Max: 5
+RSpec/SubjectStub:
+  Enabled: false
 RSpec/VerifiedDoubles:
   Enabled: false
 

@@ -48,7 +48,7 @@ class Conversation < ApplicationRecord
   def blobify
     [
       title,
-      generate_text_requests.completed.map(&:blobify)
+      *generate_text_requests.completed.map(&:blobify)
     ].join(' ')
   end
 

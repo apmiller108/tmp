@@ -34,4 +34,38 @@ RSpec.describe Conversation, type: :model do
       expect(conversation.token_count).to eq(expected_result)
     end
   end
+
+  describe '#blobify' do
+    subject(:conversation) { build_stubbed(:conversation, title: 'Test Conversation') }
+
+    let(:generate_text_requests) { GenerateTextRequest.none }
+
+    before do
+      allow(conversation).to receive(:generate_text_requests).and_return(generate_text_requests)
+      allow(generate_text_requests).to receive(:completed).and_return(completed_requests)
+    end
+
+    context 'when there are no completed text requests' do
+      let(:completed_requests) { [] }
+
+      it 'returns only the title' do
+        expect(conversation.blobify).to eq('Test Conversation')
+      end
+    end
+
+    context 'when there are completed text requests' do
+      let(:text_request1) { build_stubbed(:generate_text_request) }
+      let(:text_request2) { build_stubbed(:generate_text_request) }
+      let(:completed_requests) { [text_request1, text_request2] }
+
+      before do
+        allow(text_request1).to receive(:blobify).and_return('First request blob')
+        allow(text_request2).to receive(:blobify).and_return('Second request blob')
+      end
+
+      it 'combines the title with the blobified text requests' do
+        expect(conversation.blobify).to eq('Test Conversation First request blob Second request blob')
+      end
+    end
+  end
 end
