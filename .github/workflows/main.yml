@@ -150,6 +150,7 @@ jobs:
           RAILS_ENV: test
           TMP_USE_LOCAL_DB: true
           CHROME_URL: http://localhost:3333
+          VOYAGE_API_KEY: fake
         run: |
           bundle exec rspec --format documentation
       - name: Archive screenshots
