@@ -15,6 +15,8 @@
       = turbo_stream_from current_user, TurboStreams::STREAMS[:main]
       #alert-stream
       .d-flex.h-100{ style: '--bs-gap: 1rem;'}
+
+        <!-- Left Panel -->
         .left-panel.pb-3
           .h-100.conversation-left-panel{ data: { controller: 'conversation-left-panel',
                                           action: 'conversation:conversationLoaded@window->conversation-left-panel#onConversationLoaded' } }
@@ -36,11 +38,15 @@
               action: 'hidden.bs.collapse->conversation-left-panel#onHidePanel show.bs.collapse->conversation-left-panel#onShowPanel' } }
               %turbo-frame{ id: :conversations_index, src: conversations_path,
                            data: { action: 'turbo:frame-render->conversation-left-panel#onIndexInitialized' } }
+
+        <!-- Middle Panel -->
         .conversation-content.flex-grow-1.pb-3
           %turbo-frame{ id: :conversation_content }
             = yield
+
+        <!-- Right Panel -->
         .right-panel.pb-3{ data: { controller: 'conversation-right-panel tooltip',
-                                             action: 'scrollspy:navItemsChanged@window->conversation-right-panel#onNavItemsChanged' } }
+                                   action: 'scrollspy:navItemsChanged@window->conversation-right-panel#onNavItemsChanged' } }
           .controls.d-flex.justify-content-between.align-items-center.mb-3.pe-3{ data: { 'conversation-right-panel-target' => 'controls',
                                                                                           controller: 'tooltip' } }
             .d-flex.justify-content-between.align-items-center
@@ -48,38 +54,9 @@
                 %button.btn.icon-btn.icon-btn-auto.me-3{"data-bs-toggle" => "offcanvas", "data-bs-target" => "#offcanvasNavbar",
                                                         "aria-controls" => "offcanvasNavbar", "aria-label" => "Toggle navigation"}
                   %i.bi.bi-justify-right
-                .offcanvas.offcanvas-end#offcanvasNavbar{"tabindex" => "-1", "aria-labelledby" => "offcanvasNavbarLabel", "data-controller" => "navbar"}
-                  .offcanvas-header
-                    = link_to root_path, class: "logo navbar-brand" do
-                      = render inline: Rails.application.assets.find_asset('tmp-black.svg').source
-                    %button.btn-close{"type" => "button", "data-bs-dismiss" => "offcanvas", "aria-label" => "Close"}
-                  .offcanvas-body
-                    %ul.navbar-nav.flex-column.mb-auto
-                      %li.nav-item
-                        = link_to new_conversation_path, class: "nav-link #{'active' if controller_name == 'conversations'}" do
-                          %i.bi.bi-chat-dots.me-2
-                          Conversations
-
-                      %li.nav-item
-                        = link_to user_memos_path(current_user), class: "nav-link #{'active' if controller_name == 'memos'}" do
-                          %i.bi.bi-file-text.me-2
-                          Documents
-
-                      %li.nav-item
-                        = link_to user_path(current_user), class: "nav-link #{'active' if controller_name == 'users'}" do
-                          %i.bi.bi-gear.me-2
-                          Settings
-
-                    .mt-auto
-                      %hr
-                      %p.text-center= current_user.email
-                      = button_to destroy_user_session_path, class: "btn btn-outline-secondary w-100", method: :delete,
-                        data: { turbo_method: :delete } do
-                        %i.bi.bi-box-arrow-right.me-2
-                        Sign Out
-              = link_to generate_text_presets_path, class: 'btn icon-btn icon-btn-auto' do
-                %i.bi.bi-sliders{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => 'Presets' }}
-
+                = render partial: 'layouts/offcanvas_nav'
+            = link_to generate_text_presets_path, class: 'btn icon-btn icon-btn-auto' do
+              %i.bi.bi-sliders{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => 'Presets' }}
             %button.btn.icon-btn.icon-btn-auto{ data: { 'bs-toggle' => 'collapse', 'bs-target' => '#conversation_scroll_spy' } }
               %i.bi.bi-arrows-collapse-vertical{ data: { 'conversation-right-panel-target' => 'collapseIcon',
                                                         'bs-toggle' => 'tooltip', 'bs-title' => 'Toggle Section' }}

@@ -1,0 +1,29 @@
+.offcanvas.offcanvas-end#offcanvasNavbar{"tabindex" => "-1", "aria-labelledby" => "offcanvasNavbarLabel", "data-controller" => "navbar"}
+  .offcanvas-header
+    = link_to root_path, class: "logo navbar-brand" do
+      = render inline: Rails.application.assets.find_asset('tmp-black.svg').source
+    %button.btn-close{"type" => "button", "data-bs-dismiss" => "offcanvas", "aria-label" => "Close"}
+  .offcanvas-body
+    %ul.navbar-nav.flex-column.mb-auto
+      %li.nav-item
+        = link_to new_conversation_path, class: "nav-link #{'active' if controller_name == 'conversations'}" do
+          %i.bi.bi-chat-dots.me-2
+          Conversations
+
+      %li.nav-item
+        = link_to user_memos_path(current_user), class: "nav-link #{'active' if controller_name == 'memos'}" do
+          %i.bi.bi-file-text.me-2
+          Documents
+
+      %li.nav-item
+        = link_to user_path(current_user), class: "nav-link #{'active' if controller_name == 'users'}" do
+          %i.bi.bi-gear.me-2
+          Settings
+
+    .mt-auto
+      %hr
+      %p.text-center= current_user.email
+      = button_to destroy_user_session_path, class: "btn btn-outline-secondary w-100", method: :delete,
+        data: { turbo_method: :delete } do
+        %i.bi.bi-box-arrow-right.me-2
+        Sign Out
