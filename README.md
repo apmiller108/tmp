@@ -22,11 +22,11 @@ This side project was started in order to learn the latest features of RoR, Hotw
 - Generative image (text to image, image to image and upscaling)
 - Speech to text (transcribe audio files)
 - Transcription summaries
+- Semantic search (vector based search)
 
 ## Planned
 - Image to Video
 - Image editing
-- Search
 
 # Start
 
@@ -86,6 +86,8 @@ See also https://www.anthropic.com/claude
 ### Stability AI
 Text to Image
 https://stability.ai/
+### VoyageAI
+Embeddings for sematic search
 
 # Application
 ## Authentication
