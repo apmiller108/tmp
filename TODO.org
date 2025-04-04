@@ -21,6 +21,8 @@
   - metadata regarding files, images
 * TODO export conversation
   - with options for markdown, html and org mode
+* TODO one off interactions
+  Instead of all the overhead of a conversation, just a single text only interaction
 * TODO Edit the last prompt. Trigger regenerate the last assistant response.
 * TODO help section / Ask for help
   - A help tool that returns all the help documentation to the LLM who proceeds
