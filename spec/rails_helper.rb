@@ -71,4 +71,8 @@ RSpec.configure do |config|
   config.include Capybara::RSpecMatchers, type: :component
   config.include Dry::Effects::Handler.Reader(:current_user), type: :component
   config.include Rails.application.routes.url_helpers, type: :component
+
+  config.before(:suite) do
+    SidekiqUniqueJobs.config.enabled = false # prevents sidekiq-unique-jobs from attempting to connect with redis
+  end
 end

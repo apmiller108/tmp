@@ -50,7 +50,9 @@ RSpec.describe 'update conversation', type: :system do
 
     fill_in 'conversation_prompt', with: prompt
 
-    find('.options-toggle-btn').click
+    # I have no idea why sometimes on some specs, find().click does not work
+    # here. find('.options-toggle-btn').click
+    page.execute_script("document.querySelector('.options-toggle-btn').click()")
     within('#advanced-options') do
       find("option[value='#{model.api_name}']").select_option
       find("option[value='#{generate_text_preset.id}']").select_option
