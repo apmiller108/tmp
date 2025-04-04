@@ -146,4 +146,20 @@ RSpec.describe GenerateTextRequest, type: :model do
       end
     end
   end
+
+  describe '#blobify' do
+    subject(:request) { build_stubbed :generate_text_request, :with_response, prompt: 'test prompt' }
+
+    let(:response_obj) do
+      instance_double(GenerativeText::Anthropic::InvokeModelResponse, blobify: 'blobified response')
+    end
+
+    before do
+      allow(GenerativeText::Anthropic::InvokeModelResponse).to receive(:new).and_return(response_obj)
+    end
+
+    it 'combines the prompt and blobified turn' do
+      expect(request.blobify).to eq 'test prompt blobified response'
+    end
+  end
 end
