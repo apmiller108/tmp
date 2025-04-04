@@ -24,7 +24,7 @@ module Embeddings
 
       def _create_embeddings(text:, input_type:)
         request = EmbeddingRequest.new(
-          input: Array[text],
+          input: Array(text),
           input_type:
         )
 
