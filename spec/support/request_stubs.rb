@@ -74,7 +74,13 @@ module RequestStubs
             })
       .to_return(status: 200,
                  body: {
-                   data: [{ object: 'embedding', embedding: Array.new(1024) { rand }, index: 0 }],
+                   data: [
+                     {
+                       object: 'embedding',
+                       embedding: args.fetch(:embedding, Array.new(1024) { rand }),
+                       index: 0
+                     }
+                   ],
                    model: 'voyage-3',
                    useage: { total_tokens: 10 }
                  }.to_json)
