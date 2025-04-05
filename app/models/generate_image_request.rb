@@ -96,7 +96,7 @@ class GenerateImageRequest < ApplicationRecord
       generate_text_request.file.variant(:webp).processed.image
     elsif previous_image_requests.present? && upscale?
       previous_image_requests.last.image.variant(:webp).processed.image
-    else
+    elsif baseimage.present?
       baseimage.variant(:webp).processed.image
     end
   end

@@ -3,7 +3,9 @@ require 'sidekiq/testing'
 
 RSpec.describe 'search conversations', type: :system do
   let(:user) { create :user }
-  let!(:conversation) { create :conversation, :with_requests, user:, request_count: 3, embedding: search_term_embedding }
+  let!(:conversation) do
+    create :conversation, :with_requests, user:, request_count: 3, embedding: search_term_embedding
+  end
   let(:search_term) { 'feline friend' }
   let(:search_term_embedding) { JSON.parse(file_fixture('embeddings/feline_friend.json').read) }
 
