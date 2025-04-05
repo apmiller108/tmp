@@ -1,8 +1,6 @@
 :PROPERTIES:
 :CATEGORY: tmp
 :END:
-* TODO cache token count on the conversation
-  Or soft delete requests
 * TODO flatten the routes
 * TODO Add support for PDFs
   https://docs.anthropic.com/en/docs/build-with-claude/pdf-support
@@ -32,7 +30,17 @@
 * TODO URL tool
   - Tool to fetch a given URL, extract text content from HTML document and pipe
     into the followup response.
-* TODO Wire up search
+  - LLM can pick out a URL in a blob of text.
+* TOOD Related conversations [/]
+  - [ ] Update query object
+  - [ ] lazy loaded turbo frame. URL with variant query param and q[conversation_id]
+  - [ ] Render variant view
+  - [ ] Update section after embedding is updated. Broadcast over my_channel
+    messageType and conversation id. if the current conversation is the same as
+    the one in the message. reload the turbo frame.
+    https://discuss.hotwired.dev/t/how-to-auto-reload-frame/1872/6
+* DONE Wire up search
+CLOSED: [2025-04-04 Fri 23:25]
   - [X] Extract search component
   - [X] Setup pg-vector
   - [X] Create account with voyageai

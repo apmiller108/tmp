@@ -67,6 +67,22 @@
           #conversation_scroll_spy.conversation-scrollspy.h-50.collapse.show.collapse-horizontal{
           data: { 'conversation-right-panel-target' => 'scrollspy',
           action: 'hidden.bs.collapse->conversation-right-panel#onHidePanel show.bs.collapse->conversation-right-panel#onShowPanel' } }
+
+          <!-- New Related Chats Section -->
+          .related-chats-heading.mt-4{ data: { 'conversation-right-panel-target' => 'relatedChatsHeading' } }
+            %strong.ms-3 Related to this chat
+            %hr.my-2.ms-3
+          #related_conversations.related-chats.collapse.show.collapse-horizontal{
+          data: { 'conversation-right-panel-target' => 'relatedChats' } }
+            .related-chat-item.d-flex.align-items-center.py-2.px-3
+              %i.bi.bi-chat-left-text.me-2
+              %span Testing schtuff
+            .related-chat-item.d-flex.align-items-center.py-2.px-3
+              %i.bi.bi-chat-left-text.me-2
+              %span I'd like to know what JS library...
+            .related-chat-item.d-flex.align-items-center.py-2.px-3
+              %i.bi.bi-chat-left-text.me-2
+              %span Let's think about the next steps...
     <!-- Search Modal -->
     = render SearchModalComponent.new(path: conversations_path, title: 'Search Conversations',
                                       form_attrs: { data: { turbo_frame: :conversations_index, action: 'conversation-left-panel:conversationIndexInitialized@window->search-modal#close' } })
