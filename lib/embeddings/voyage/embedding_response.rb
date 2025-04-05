@@ -1,4 +1,3 @@
-# app/services/embeddings/voyage/response.rb
 module Embeddings
   module Voyage
     class EmbeddingResponse
@@ -6,7 +5,7 @@ module Embeddings
 
       Embedding = Data.define(:vector, :index)
 
-      # Example response_data:
+      # @param response_data [Hash]
       # { data: [{ object: 'embedding', embedding: Array.new(1024) { rand }, index: 0 }],
       #   model: 'voyage-3',
       #   useage: { total_tokens: 10 } }

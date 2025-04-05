@@ -82,7 +82,7 @@ module RequestStubs
                      }
                    ],
                    model: 'voyage-3',
-                   useage: { total_tokens: 10 }
+                   usage: { total_tokens: 10 }
                  }.to_json)
   end
 end

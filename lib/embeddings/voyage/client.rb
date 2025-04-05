@@ -19,15 +19,9 @@ module Embeddings
 
       def connection
         @connection ||= Faraday.new(url: HOST) do |f|
-          f.headers['Authorization'] = "Bearer #{api_key}"
+          f.headers['Authorization'] = "Bearer #{ENV.fetch('VOYAGE_API_KEY')}"
           f.adapter Faraday.default_adapter
           f.response :raise_error
-        end
-      end
-
-      def api_key
-        @api_key ||= ENV.fetch('VOYAGE_API_KEY') do
-          raise 'Missing VOYAGE_API_KEY environment'
         end
       end
     end

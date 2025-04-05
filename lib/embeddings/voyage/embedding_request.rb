@@ -1,4 +1,3 @@
-# app/services/embeddings/voyage/request.rb
 module Embeddings
   module Voyage
     class EmbeddingRequest
