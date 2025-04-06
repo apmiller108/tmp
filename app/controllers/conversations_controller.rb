@@ -111,7 +111,7 @@ class ConversationsController < ApplicationController
   end
 
   def search_params
-    params.permit(:c, :format, :page, :per_page, q: %i[memo_id term order])
+    params.permit(:c, :format, :variant, :page, :per_page, q: %i[conversation_id memo_id order term])
   end
 
   def conversation_params

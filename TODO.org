@@ -31,10 +31,12 @@
   - Tool to fetch a given URL, extract text content from HTML document and pipe
     into the followup response.
   - LLM can pick out a URL in a blob of text.
-* TOOD Related conversations [/]
-  - [ ] Update query object
-  - [ ] lazy loaded turbo frame. URL with variant query param and q[conversation_id]
-  - [ ] Render variant view
+* TOOD Related conversations [3/5]
+  - [X] Update query object
+  - [X] lazy loaded turbo frame. URL with variant query param and
+    q[conversation_id]
+  - [X] Fix collapsible right panel
+  - [ ] Make and Render variant view
   - [ ] Update section after embedding is updated. Broadcast over my_channel
     messageType and conversation id. if the current conversation is the same as
     the one in the message. reload the turbo frame.
