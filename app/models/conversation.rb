@@ -12,6 +12,11 @@ class Conversation < ApplicationRecord
        GenerativeImage::QUALITY_LEVELS.zip(GenerativeImage::QUALITY_LEVELS).to_h,
        default: GenerativeImage::DEFAULT_QUALITY_LEVEL
 
+  scope :similar_to, ->(vector, threshold) {
+    select("conversations.*, (embedding <=> '#{vector}') AS neighbor_distance")
+      .where(['embedding <=> ? < ?', vector.to_s, threshold])
+  }
+
   belongs_to :memo, optional: true
   belongs_to :user, optional: false
 

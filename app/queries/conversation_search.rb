@@ -14,7 +14,7 @@ class ConversationSearch
   # Adjust this threshold to balance between search precision and result breadth.
   VECTOR_RELEVANCE_THRESHOLD = 0.75
 
-  def initialize(relation:, params: {})
+  def initialize(relation: Conversation.all, params: {})
     @params = params || {}
     @relation = relation
     @applied_filters = []
@@ -25,6 +25,8 @@ class ConversationSearch
 
     apply_memo_filter
     apply_semantic_filter
+    apply_related_conversations_filter
+
     relation
   end
 
@@ -41,25 +43,37 @@ class ConversationSearch
     params[:term]
   end
 
+  def conversation_id
+    params[:conversation_id]
+  end
+
   private
 
   def apply_memo_filter
-    return unless params[:memo_id]
+    return @relation unless params[:memo_id]
 
     @relation = relation.where(memo_id: params[:memo_id])
   end
 
   def apply_semantic_filter
-    return unless search_term
+    return @relation unless search_term
 
     vector = Embeddings::Voyage.create_embeddings(
       text: search_term,
       input_type: :query
     ).embeddings.first.vector
 
-    @relation = relation.select("conversations.*, (embedding <=> '#{vector}') AS neighbor_distance")
-                        .where('embedding <=> ? < ?', vector.to_s, VECTOR_RELEVANCE_THRESHOLD)
+    @relation = relation.similar_to(vector, VECTOR_RELEVANCE_THRESHOLD).tap do
+      applied_filters << :semantic
+    end
+  end
 
-    applied_filters << :semantic
+  def apply_related_conversations_filter
+    return @relation unless conversation_id
+
+    @relation = relation.similar_to(
+      Conversation.where(id: conversation_id).pick(:embedding),
+      VECTOR_RELEVANCE_THRESHOLD
+    ).where.not(id: conversation_id).tap { applied_filters << :related_conversations }
   end
 end
