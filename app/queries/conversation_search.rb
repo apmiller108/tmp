@@ -13,6 +13,8 @@ class ConversationSearch
   #
   # Adjust this threshold to balance between search precision and result breadth.
   VECTOR_RELEVANCE_THRESHOLD = 0.75
+  SEMANTIC = :semantic
+  RELATED_CONVERSATIONS = :related_conversations
 
   def initialize(relation: Conversation.all, params: {})
     @params = params || {}
@@ -32,7 +34,7 @@ class ConversationSearch
 
   def order
     case params[:order]
-    when 'neighbor_distance asc'
+    when ->(o) { o == 'neighbor_distance asc' && vector_filter_applied? }
       { neighbor_distance: :asc }
     else
       { updated_at: :desc }
@@ -45,6 +47,10 @@ class ConversationSearch
 
   def conversation_id
     params[:conversation_id]
+  end
+
+  def related_conversations_filter_applied?
+    applied_filters.include? RELATED_CONVERSATIONS
   end
 
   private
@@ -64,16 +70,24 @@ class ConversationSearch
     ).embeddings.first.vector
 
     @relation = relation.similar_to(vector, VECTOR_RELEVANCE_THRESHOLD).tap do
-      applied_filters << :semantic
+      applied_filters << SEMANTIC
     end
   end
 
   def apply_related_conversations_filter
     return @relation unless conversation_id
 
+    conversation = Conversation.find(conversation_id)
+
+    return @relation if conversation.embedding.blank?
+
     @relation = relation.similar_to(
-      Conversation.where(id: conversation_id).pick(:embedding),
+      conversation.embedding,
       VECTOR_RELEVANCE_THRESHOLD
-    ).where.not(id: conversation_id).tap { applied_filters << :related_conversations }
+    ).where.not(id: conversation_id).tap { applied_filters << RELATED_CONVERSATIONS }
+  end
+
+  def vector_filter_applied?
+    applied_filters.intersect?([SEMANTIC, RELATED_CONVERSATIONS])
   end
 end
