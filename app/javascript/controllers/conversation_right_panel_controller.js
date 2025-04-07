@@ -38,7 +38,7 @@ export default class ConversationRightPanel extends Controller {
       const params = new URLSearchParams()
       params.append('q[order]', 'neighbor_distance asc')
       params.append('q[conversation_id]', conversationId)
-      params.append('variant', 'readonly')
+      params.append('variant', 'lite')
       this.relatedChatsFrameTarget.src = `/conversations?${params.toString()}`
       this.relatedChatsFrameTarget.classList.remove('d-none')
     }

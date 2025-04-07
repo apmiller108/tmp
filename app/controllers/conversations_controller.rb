@@ -13,6 +13,7 @@ class ConversationsController < ApplicationController
                                                     per_page: 15,
                                                     order: @search.order)
 
+    request.variant = :lite if search_params[:variant] == 'lite'
     respond_to do |format|
       format.html
       format.turbo_stream
@@ -20,6 +21,15 @@ class ConversationsController < ApplicationController
         render json: @conversations.as_json(only: %i[id created_at updated_at]), status: :ok
       end
     end
+  end
+
+  def show
+    @conversation = current_user.conversations
+                                .includes(
+                                  turns: {
+                                    turnable: [:file_attachment, :file_blob, :image_attachment, :image_blob, :prompts]
+                                  }
+                                ).find(params[:id])
   end
 
   def new
