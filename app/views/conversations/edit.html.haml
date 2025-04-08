@@ -10,3 +10,7 @@
       - icon_class = turn.text? ? 'bi-body-text' : 'bi-file-earmark-image'
       - scrollspy.with_item do
         = render ScrollspyNavItemComponent.new(text: turn.turnable.prompt, icon_class:, href: "##{dom_id(turn)}", id: dom_id(turn, 'nav_item'))
+= content_for :related_chats do
+  %turbo-frame#related-chats{ src: conversations_path(q: { conversation_id: @conversation.id, order: 'neighbor_distance asc' }, variant: :lite), loading: :lazy, data: { controller: 'related-chats', related_chats_target: 'turboFrame', action: 'conversation:conversationLoaded@window->related-chats#onConversationLoaded' } }
+    .d-flex.justify-content-center.align-items-center.pt-5
+      = render SpinnerComponent.new

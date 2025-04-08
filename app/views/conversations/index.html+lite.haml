@@ -3,7 +3,7 @@
     .related-chats-heading
       %strong.ms-3 Related to this chat
       %hr.my-2.ms-3
-    #related_conversations.list-group{ data: { controller: "related-chats" } }
+    #related_conversations.list-group
       - @conversations.limit(3).each do |conversation|
         .related-chat-item.d-flex.align-items-center.py-2.px-3.list-group-item.list-group-item-action.border.border-0{
           style: 'cursor: pointer;',
@@ -17,7 +17,7 @@
           %i.bi.bi-chat-right-text.me-2
           %span= conversation.title
 
-      <!-- Modal for Related Chat Preview -->
+      <!-- Modal for Related Chat -->
       .modal.fade#relatedChatModal{ tabindex: "-1", "aria-labelledby": "relatedChatModalLabel", "aria-hidden": "true",
                                   data: { related_chats_target: 'modal' } }
         .modal-dialog.modal-dialog-scrollable.modal-lg

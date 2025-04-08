@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 import autoAnimate from '@formkit/auto-animate'
 
 export default class ConversationRightPanel extends Controller {
-  static targets = ['collapseIcon', 'controls', 'scrollspy', 'relatedChatsFrame']
+  static targets = ['collapseIcon', 'controls', 'scrollspy']
 
   connect() {
     autoAnimate(this.scrollspyTarget)
@@ -30,17 +30,5 @@ export default class ConversationRightPanel extends Controller {
     this.controlsTarget.classList.remove('panel-hide')
     this.collapseIconTarget.classList.remove('bi-arrows-expand-vertical')
     this.collapseIconTarget.classList.add('bi-arrows-collapse-vertical')
-  }
-
-  onConversationLoaded(e) {
-    const { conversationId } = e.detail
-    if (conversationId) {
-      const params = new URLSearchParams()
-      params.append('q[order]', 'neighbor_distance asc')
-      params.append('q[conversation_id]', conversationId)
-      params.append('variant', 'lite')
-      this.relatedChatsFrameTarget.src = `/conversations?${params.toString()}`
-      this.relatedChatsFrameTarget.classList.remove('d-none')
-    }
   }
 }
