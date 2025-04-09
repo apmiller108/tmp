@@ -36,7 +36,7 @@
   - [ ] Create a production Dockerfile
   - [ ] Deploy with kamal
   - [ ] Set up DNS
-* TOOD Related conversations [5/6]
+* TOOO Related conversations [7/8]
   - [X] Update query object
   - [X] lazy loaded turbo frame. URL with variant query param and
     q[conversation_id]
@@ -46,8 +46,8 @@
     messageType and conversation id. if the current conversation is the same as
     the one in the message. reload the turbo frame.
     https://discuss.hotwired.dev/t/how-to-auto-reload-frame/1872/6
-  - [ ] Extract related conversations frame partial
-  - [ ] Rename frame ID to convo index lite or something
+  - [X] Extract related conversations frame partial
+  - [X] Rename frame ID to convo index lite or something
   - [ ] show readonly view of convo
 * DONE Wire up search
 CLOSED: [2025-04-04 Fri 23:25]

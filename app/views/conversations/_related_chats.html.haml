@@ -1,0 +1,8 @@
+%turbo-frame#conversation-index-lite{ src: conversations_url(q: { conversation_id: conversation_id, order: 'neighbor_distance asc' },
+                                                              variant: :lite),
+                                      class: [hidden && 'd-none'], loading: :lazy,
+                                      data: { conversation_id: conversation_id, controller: 'related-chats',
+                                              related_chats_target: 'turboFrame',
+                                              action: 'conversation:conversationLoaded@window->related-chats#onConversationLoaded my-channel:embeddingCreated@window->related-chats#reload' } }
+  .d-flex.justify-content-center.align-items-center.pt-5
+    = render SpinnerComponent.new

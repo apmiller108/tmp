@@ -11,10 +11,4 @@
       - scrollspy.with_item do
         = render ScrollspyNavItemComponent.new(text: turn.turnable.prompt, icon_class:, href: "##{dom_id(turn)}", id: dom_id(turn, 'nav_item'))
 = content_for :related_chats do
-  %turbo-frame#related-chats{ src: conversations_path(q: { conversation_id: @conversation.id, order: 'neighbor_distance asc' },
-                                                      variant: :lite),
-                             loading: :lazy, data: { conversation_id: @conversation.id, controller: 'related-chats',
-                                                     related_chats_target: 'turboFrame',
-                                                     action: 'conversation:conversationLoaded@window->related-chats#onConversationLoaded my-channel:embeddingCreated@window->related-chats#reload' } }
-    .d-flex.justify-content-center.align-items-center.pt-5
-      = render SpinnerComponent.new
+  = render partial: 'related_chats', locals: { conversation_id: @conversation.id, hidden: false }
