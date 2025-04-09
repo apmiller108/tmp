@@ -20,8 +20,7 @@
           - else
             .generated-image.mb-3.d-flex.justify-content-center
               = image_tag image.variant(:webp), class: 'd-none', data: { 'generate-image-request-target' => 'image',
-                                                                         action: 'click->generate-image-request#expandImage',
-                                                                         'original-url' => url_for(image) }
+                                                                         action: 'click->generate-image-request#expandImage' }
               = render SpinnerComponent.new(css_class: 'text-center', 'data-generate-image-request-target': 'spinner')
             .tool-tray.d-flex.justify-content-between.align-items-center
               .buttons.d-flex.align-items-center
@@ -47,7 +46,7 @@
             %h5.modal-title{ id: "imageModalLabel-#{id}" }= image.blob.filename
             %button.btn-close{ type: "button", "data-bs-dismiss": "modal", "aria-label": "Close" }
           .modal-body.text-center
-            %img.img-fluid{ data: { 'generate-image-request-target': 'fullImage' } }
+            %img.img-fluid{ loading: :lazy, src: url_for(image), data: { 'generate-image-request-target': 'fullImage' } }
           .modal-footer.d-flex
             = link_to blob_path(image.blob), data: { turbo: false, 'bs-toggle' => 'tooltip', 'bs-title' => t('download_image') },
                                             class: 'btn icon-btn icon-btn-sm' do

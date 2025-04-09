@@ -55,8 +55,6 @@ export default class GenerateImageRequestController extends Controller {
   }
 
   expandImage() {
-    const fullSizeUrl = this.imageTarget.dataset.originalUrl
-    this.fullImageTarget.src = fullSizeUrl
     const modal = new Modal(this.modalTarget)
     modal.show()
   }
