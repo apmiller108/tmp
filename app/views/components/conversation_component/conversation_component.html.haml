@@ -1,7 +1,6 @@
 .c-conversation.scroll-no-bar-container.container-sm.pb-1.h-100{id:, class: opts[:class],
                             data: { controller: :conversation,
                                     conversation_id: conversation_form.conversation.id } }
-  = render ModalComponent.new(size: :lg)
   #conversation-turns.conversation-turns.mb-2{ data: { 'conversation-target': 'turns' } }
     = render ConversationTurnComponent.with_collection(conversation.turns)
   = render PromptFormComponent.new(conversation_form:)
