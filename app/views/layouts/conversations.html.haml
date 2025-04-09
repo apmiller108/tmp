@@ -45,8 +45,8 @@
             = yield
 
         <!-- Right Panel -->
-        .right-panel.pb-3{ data: { controller: 'conversation-right-panel tooltip',
-                                   action: 'scrollspy:navItemsChanged@window->conversation-right-panel#onNavItemsChanged' } }
+        .right-panel.pb-3.d-flex.flex-column{ data: { controller: 'conversation-right-panel tooltip',
+               action: 'scrollspy:navItemsChanged@window->conversation-right-panel#onNavItemsChanged' } }
           .controls.d-flex.justify-content-between.align-items-center.mb-3.pe-3{ data: { 'conversation-right-panel-target' => 'controls',
                                                                                           controller: 'tooltip' } }
             .d-flex.justify-content-between.align-items-center
@@ -64,12 +64,12 @@
           .scrollspy-heading.right-panel-collapsible.collapse.show.collapse-horizontal
             %strong.ms-3 In this chat
             %hr.my-2.ms-3
-          #conversation_scroll_spy.right-panel-collapsible.conversation-scrollspy.h-50.collapse.show.collapse-horizontal{
+          #conversation_scroll_spy.conversation-scrollspy.right-panel-collapsible.collapse.show.collapse-horizontal{
           data: { 'conversation-right-panel-target' => 'scrollspy',
           action: 'hidden.bs.collapse->conversation-right-panel#onHidePanel show.bs.collapse->conversation-right-panel#onShowPanel' } }
 
           <!-- Related Chats Section -->
-          .related-conversations.right-panel-collapsibe.collapse.show.collapse-horizontal.mt-4
+          .related-conversations.right-panel-collapsible.collapse.show.collapse-horizontal.pb-3.mt-3
             = yield :related_chats
     <!-- Search Modal -->
     = render SearchModalComponent.new(path: conversations_path, title: 'Search Conversations',
