@@ -3,3 +3,11 @@
 = turbo_stream.update :conversation_scroll_spy do
   = render ScrollspyComponent.new(container_id: 'conversation_component', target_id: 'conversation-nav',
                                   action: 'conversation:turnsChanged@window->scrollspy#refresh')
+= content_for :related_chats do
+  %turbo-frame#related-chats.d-none{ src: conversations_url(q: { conversation_id: 0, order: 'neighbor_distance asc' },
+                                                      variant: :lite),
+                             loading: :lazy, data: { conversation_id: 0, controller: 'related-chats',
+                                                     related_chats_target: 'turboFrame',
+                                                     action: 'conversation:conversationLoaded@window->related-chats#onConversationLoaded my-channel:embeddingCreated@window->related-chats#reload' } }
+    .d-flex.justify-content-center.align-items-center.pt-5
+      = render SpinnerComponent.new

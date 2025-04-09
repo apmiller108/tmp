@@ -4,6 +4,12 @@ import { Modal } from 'bootstrap'
 export default class RelatedChatsController extends Controller {
   static targets = ['item', 'modalFrame', 'modal', 'modalEditLink', 'turboFrame']
 
+  conversationId;
+
+  connect() {
+    this.conversationId = this.element.dataset.conversationId
+  }
+
   showConversation(event) {
     event.preventDefault()
 
@@ -23,14 +29,21 @@ export default class RelatedChatsController extends Controller {
   }
 
   onConversationLoaded(e) {
-    const { conversationId } = e.detail
-    if (conversationId) {
-      const params = new URLSearchParams()
-      params.append('q[order]', 'neighbor_distance asc')
-      params.append('q[conversation_id]', conversationId)
-      params.append('variant', 'lite')
-      this.turboFrameTarget.src = `/conversations?${params.toString()}`
+    this.conversationId = e.detail.conversationId
+    if (this.conversationId) {
+      const url = new URL(this.element.src)
+      url.searchParams.set('q[conversation_id]', this.conversationId)
+      this.turboFrameTarget.src = url.toString()
       this.turboFrameTarget.classList.remove('d-none')
+    } else {
+      // When new conversation, don't show related chats
+      this.element.classList.add('d-none')
+    }
+  }
+
+  reload(e) {
+    if (this.conversationId == e.detail.embedding_created.conversation_id) {
+      this.element.reload()
     }
   }
 }

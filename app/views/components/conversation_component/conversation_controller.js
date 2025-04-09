@@ -37,16 +37,15 @@ export default class ConversationController extends Controller {
     // turbo-action.
     try {
       if (!this.conversationId) {
-        console.warn('No conversation ID found');
-        return;
-      }
+        console.warn('New conversation');
+      } else {
+        const desiredPath = `/conversations/${this.conversationId}/edit`;
 
-      const desiredPath = `/conversations/${this.conversationId}/edit`;
-
-      if (window.location.pathname !== desiredPath) {
-        const url = new URL(desiredPath, window.location.href)
-        Turbo.navigator.history.push(url)
-        window.history.pushState(history.state, '', url)
+        if (window.location.pathname !== desiredPath) {
+          const url = new URL(desiredPath, window.location.href)
+          Turbo.navigator.history.push(url)
+          window.history.pushState(history.state, '', url)
+        }
       }
     } catch (error) {
       console.error('Error updating pushState:', error);
