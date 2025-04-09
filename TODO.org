@@ -31,16 +31,24 @@
   - Tool to fetch a given URL, extract text content from HTML document and pipe
     into the followup response.
   - LLM can pick out a URL in a blob of text.
-* TOOD Related conversations [3/5]
+* TODO Create a production version
+  - [ ] Set up a box somewhere
+  - [ ] Create a production Dockerfile
+  - [ ] Deploy with kamal
+  - [ ] Set up DNS
+* TOOD Related conversations [5/6]
   - [X] Update query object
   - [X] lazy loaded turbo frame. URL with variant query param and
     q[conversation_id]
   - [X] Fix collapsible right panel
-  - [ ] Make and Render variant view
-  - [ ] Update section after embedding is updated. Broadcast over my_channel
+  - [X] Make and Render variant view
+  - [X] Update section after embedding is updated. Broadcast over my_channel
     messageType and conversation id. if the current conversation is the same as
     the one in the message. reload the turbo frame.
     https://discuss.hotwired.dev/t/how-to-auto-reload-frame/1872/6
+  - [ ] Extract related conversations frame partial
+  - [ ] Rename frame ID to convo index lite or something
+  - [ ] show readonly view of convo
 * DONE Wire up search
 CLOSED: [2025-04-04 Fri 23:25]
   - [X] Extract search component

@@ -16,6 +16,9 @@ export default class MyChannelController extends Controller {
         case 'generate_image':
           dispatch('generateImage', { detail: data })
           break;
+        case 'embedding_created':
+          dispatch('embeddingCreated', { detail: data})
+          break;
         default:
           throw new Error(`Unkonwn message type: ${messageType}`)
         }
