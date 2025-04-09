@@ -1,2 +1,3 @@
 %turbo-frame#conversation-show
-  = @conversation.title
+  #conversation-turns.conversation-turns.mb-2{ data: { 'conversation-target': 'turns' } }
+    = render ConversationTurnComponent.with_collection(@conversation.turns)
