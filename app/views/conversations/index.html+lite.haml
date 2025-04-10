@@ -1,15 +1,12 @@
 %turbo-frame#conversation-index-lite
-  - if @search.related_conversations_filter_applied?
-    .related-chats-heading
-      %strong.ms-3 Related to this chat
-      %hr.my-2.ms-3
-    #related_conversations.list-group
+  %div{ data: { controller: 'conversation-index-lite' } }
+    .list-group
       - @conversations.limit(3).each do |conversation|
-        .related-chat-item.d-flex.align-items-center.py-2.px-3.list-group-item.list-group-item-action.border.border-0{
+        .conversation-item.d-flex.align-items-center.py-2.px-3.list-group-item.list-group-item-action.border.border-0{
           style: 'cursor: pointer;',
           data: {
-            action: "click->related-chats#showConversation",
-            related_chats_target: 'item',
+            action: "click->conversation-index-lite#onItemClick",
+            conversation_index_lite_target: 'item',
             conversation_id: conversation.id,
             conversation_title: conversation.title
           }
@@ -17,18 +14,3 @@
           %i.bi.bi-chat-right-text.me-2
           %span= conversation.title
 
-      <!-- Modal for Related Chat -->
-      .modal.fade#relatedChatModal{ tabindex: "-1", "aria-labelledby": "relatedChatModalLabel", "aria-hidden": "true",
-                                  data: { related_chats_target: 'modal' } }
-        .modal-dialog.modal-dialog-scrollable.modal-lg
-          .modal-content
-            .modal-header
-              %h5.modal-title#relatedChatModalLabel Related Chat
-              %button.btn-close{ type: "button", "data-bs-dismiss": "modal", "aria-label": "Close" }
-            .modal-body
-              %turbo-frame#conversation-show{ src: "", loading: "lazy", data: { related_chats_target: "modalFrame" } }
-                .d-flex.justify-content-center.align-items-center.py-5
-                  = render SpinnerComponent.new
-            .modal-footer
-              %button.btn.btn-secondary{ type: "button", "data-bs-dismiss": "modal" } Close
-              %a.btn.btn-primary#goToConversationBtn{ href: "#", data: { related_chats_target: 'modalEditLink'} } Go to Conversation

@@ -1,8 +1,31 @@
-%turbo-frame#conversation-index-lite{ src: conversations_url(q: { conversation_id: conversation_id, order: 'neighbor_distance asc' },
-                                                              variant: :lite),
-                                      class: [hidden && 'd-none'], loading: :lazy,
-                                      data: { conversation_id: conversation_id, controller: 'related-chats',
-                                              related_chats_target: 'turboFrame',
-                                              action: 'conversation:conversationLoaded@window->related-chats#onConversationLoaded my-channel:embeddingCreated@window->related-chats#reload' } }
-  .d-flex.justify-content-center.align-items-center.pt-5
-    = render SpinnerComponent.new
+.related-chats{ class: [hidden && 'd-none'], data: { controller: 'related-chats',
+                        conversation_id: conversation_id,
+                        action: 'conversation:conversationLoaded@window->related-chats#onConversationLoaded my-channel:embeddingCreated@window->related-chats#reload conversation-index-lite:itemClicked->related-chats#showConversation'  } }
+
+  .related-chats-heading
+    %strong.ms-3 Related to this chat
+    %hr.my-2.ms-3
+  %turbo-frame#conversation-index-lite{ src: conversations_url(q: { conversation_id: conversation_id, order: 'neighbor_distance asc' },
+                                                               variant: :lite), loading: :lazy,
+                                        data: { related_chats_target: 'turboFrame'} }
+    .d-flex.justify-content-center.align-items-center.pt-5
+      = render SpinnerComponent.new
+
+  <!-- Modal for Related Chat -->
+  .modal.fade#relatedChatModal{ tabindex: "-1", "aria-labelledby": "relatedChatModalLabel", "aria-hidden": "true",
+                              data: { related_chats_target: 'modal' } }
+    .modal-dialog.modal-dialog-scrollable.modal-lg
+      .modal-content
+        .modal-header
+          %h5.modal-title{ data: { related_chats_target: 'modalTitle' } } Related Chat
+          %button.btn-close{ type: "button", "data-bs-dismiss": "modal", "aria-label": "Close" }
+        .modal-body
+          %turbo-frame#conversation-show{ src: "", loading: "lazy", data: { related_chats_target: "modalFrame" } }
+            .d-flex.justify-content-center.align-items-center.py-5
+              = render SpinnerComponent.new
+        .modal-footer
+          %button.btn.btn-secondary.text-white{ type: "button", "data-bs-dismiss": "modal" } Close
+          %a.btn.btn-primary#goToConversationBtn{ href: "#",
+                                                  data: { related_chats_target: 'modalEditLink',
+                                                          turbo_frame: :conversation_content,
+                                                          turbo_action: :advance} } Go to Conversation
