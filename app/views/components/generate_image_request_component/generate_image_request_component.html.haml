@@ -11,12 +11,13 @@
               = render SpinnerComponent.new
           - elsif failed?
             = t('failed_to_generate_image')
-            = link_to conversation_conversation_turn_path(conversation, conversation_turn),
-              class: 'float-end fs-5 btn icon-btn icon-btn-sm danger',
-              data: { turbo_method: 'delete', turbo_confirm: t('confirm'),
-                    'bs-toggle' => 'tooltip',
-                    'bs-title' => t('delete', name: t('image')) } do
-              %i.bi-trash3
+            - unless readonly?
+              = link_to conversation_conversation_turn_path(conversation, conversation_turn),
+                class: 'float-end fs-5 btn icon-btn icon-btn-sm danger',
+                data: { turbo_method: 'delete', turbo_confirm: t('confirm'),
+                      'bs-toggle' => 'tooltip',
+                      'bs-title' => t('delete', name: t('image')) } do
+                %i.bi-trash3
           - else
             .generated-image.mb-3.d-flex.justify-content-center
               = image_tag image.variant(:webp), class: 'd-none', data: { 'generate-image-request-target' => 'image',
@@ -31,12 +32,13 @@
                 %a.btn.icon-btn.icon-btn-sm.more-info.me-2{ tabindex: 0, data: { 'generate-image-request-target' => 'moreInfo',
                                                                                  src: blob_detail_path(image.blob)  } }
                   %i.bi-info-square{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => 'Info' } }
-              .delete.justify-content-end.align-items-center
-                = link_to conversation_conversation_turn_path(conversation, conversation_turn),
-                  class: 'float-end fs-5 btn icon-btn icon-btn-sm danger',
-                  data: { turbo_method: 'delete', turbo_confirm: t('confirm'),
-                         'bs-toggle' => 'tooltip', 'bs-title' => t('delete', name: t('image')) } do
-                  %i.bi-trash3
+              - unless readonly?
+                .delete.justify-content-end.align-items-center
+                  = link_to conversation_conversation_turn_path(conversation, conversation_turn),
+                    class: 'float-end fs-5 btn icon-btn icon-btn-sm danger',
+                    data: { turbo_method: 'delete', turbo_confirm: t('confirm'),
+                          'bs-toggle' => 'tooltip', 'bs-title' => t('delete', name: t('image')) } do
+                    %i.bi-trash3
   - if completed?
     .modal.fade{ id: "imageModal-#{id}", tabindex: "-1", "aria-labelledby": "imageModalLabel-#{id}", "aria-hidden": "true",
                 data: { 'generate-image-request-target': 'modal' } }

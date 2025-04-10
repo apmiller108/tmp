@@ -10,9 +10,10 @@ class GenerateTextRequestComponent < ApplicationViewComponent
   delegate :conversation, to: :conversation_turn
 
   # @param [ConversationTurn] generate_text_request
-  def initialize(conversation_turn:)
+  def initialize(conversation_turn:, readonly: false)
     @conversation_turn = conversation_turn
     @generate_text_request = conversation_turn.turnable
+    @readonly = readonly
   end
 
   # Heading anchor tags are removed as they will interfere with the Scrollspy
@@ -62,5 +63,9 @@ class GenerateTextRequestComponent < ApplicationViewComponent
       resize_to_limit: [100, 100],
       **ActiveStorage::Blob::WEBP_VARIANT_OPTS
     }
+  end
+
+  def readonly?
+    @readonly
   end
 end

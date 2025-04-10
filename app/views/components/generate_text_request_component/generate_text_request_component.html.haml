@@ -42,9 +42,10 @@
               = clipboard.with_additional_content do
                 %a.btn.icon-btn.icon-btn-sm.more-info{ tabindex: 0, data: { 'generate-text-request-target' => 'moreInfo' } }
                   %i.bi-info-square{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => 'Info' } }
-                = link_to conversation_conversation_turn_path(conversation, conversation_turn),
-                  class: 'float-end fs-5 icon-btn icon-btn-sm danger',
-                  data: { turbo_method: 'delete', turbo_confirm: t('confirm'),
-                        'bs-toggle' => 'tooltip',
-                        'bs-title' => t('delete', name: t('response')) } do
-                  %i.bi-trash3
+                - unless readonly?
+                  = link_to conversation_conversation_turn_path(conversation, conversation_turn),
+                    class: 'float-end fs-5 icon-btn icon-btn-sm danger',
+                    data: { turbo_method: 'delete', turbo_confirm: t('confirm'),
+                          'bs-toggle' => 'tooltip',
+                          'bs-title' => t('delete', name: t('response')) } do
+                    %i.bi-trash3
