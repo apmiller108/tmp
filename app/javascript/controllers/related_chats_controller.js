@@ -2,12 +2,14 @@ import { Controller } from "@hotwired/stimulus"
 import { Modal } from 'bootstrap'
 
 export default class RelatedChatsController extends Controller {
-  static targets = ['modalTitle', 'modalFrame', 'modal', 'modalEditLink', 'turboFrame']
+  static targets = ['modalTitle', 'modalFrame', 'modal', 'modalEditLink', 'modalContent', 'turboFrame']
 
   conversationId;
+  modal;
 
   connect() {
     this.conversationId = this.element.dataset.conversationId
+    this.modal = new Modal(this.modalTarget)
   }
 
   showConversation(event) {
@@ -24,8 +26,11 @@ export default class RelatedChatsController extends Controller {
     this.modalEditLinkTarget.href = `/conversations/${conversationId}/edit`
 
     // Show the modal
-    const modal = new Modal(this.modalTarget)
-    modal.show()
+    this.modal.show()
+  }
+
+  hideConversation() {
+    this.modal.hide()
   }
 
   onConversationLoaded(e) {
@@ -41,9 +46,27 @@ export default class RelatedChatsController extends Controller {
     }
   }
 
+  onEditLinkClick() {
+    this.hideConversation()
+  }
+
   reload(e) {
     if (this.conversationId == e.detail.embedding_created.conversation_id) {
       this.turboFrameTarget.reload()
     }
+  }
+
+  toggleModalSize() {
+    if (this.modalContentTarget.classList.contains('modal-lg')) {
+      this.modalContentTarget.classList.remove('modal-lg')
+      this.modalContentTarget.classList.add('modal-fullscreen')
+    } else {
+      this.resetModalSize()
+    }
+  }
+
+  resetModalSize() {
+    this.modalContentTarget.classList.remove('modal-fullscreen')
+    this.modalContentTarget.classList.add('modal-lg')
   }
 }

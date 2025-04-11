@@ -14,11 +14,12 @@
   <!-- Modal for Related Chat -->
   .modal.fade#relatedChatModal{ tabindex: "-1", "aria-labelledby": "relatedChatModalLabel", "aria-hidden": "true",
                               data: { related_chats_target: 'modal' } }
-    .modal-dialog.modal-dialog-scrollable.modal-lg
+    .modal-dialog.modal-dialog-scrollable.modal-lg{ data: { related_chats_target: 'modalContent' } }
       .modal-content
-        .modal-header
+        .modal-header.bg-primary.text-white
           %h5.modal-title{ data: { related_chats_target: 'modalTitle' } } Related Chat
-          %button.btn-close{ type: "button", "data-bs-dismiss": "modal", "aria-label": "Close" }
+          %button.btn.icon-btn.icon-btn-sm.white{ data: { action: 'click->related-chats#toggleModalSize'} }
+            %i.bi.bi-arrows-angle-expand
         .modal-body
           %turbo-frame#conversation-show{ src: "", loading: "lazy", data: { related_chats_target: "modalFrame" } }
             .d-flex.justify-content-center.align-items-center.py-5
@@ -27,5 +28,6 @@
           %button.btn.btn-secondary.text-white{ type: "button", "data-bs-dismiss": "modal" } Close
           %a.btn.btn-primary#goToConversationBtn{ href: "#",
                                                   data: { related_chats_target: 'modalEditLink',
+                                                          action: 'click->related-chats#onEditLinkClick',
                                                           turbo_frame: :conversation_content,
                                                           turbo_action: :advance} } Go to Conversation

@@ -36,7 +36,7 @@
   - [ ] Create a production Dockerfile
   - [ ] Deploy with kamal
   - [ ] Set up DNS
-* TOOO Related conversations [8/10]
+* TODO Related conversations [10/10]
   - [X] Update query object
   - [X] lazy loaded turbo frame. URL with variant query param and
     q[conversation_id]
@@ -49,8 +49,8 @@
   - [X] Extract related conversations frame partial
   - [X] Rename frame ID to convo index lite or something
   - [X] show readonly view of convo
-  - [ ] Close modal on edit link click
-  - [ ] Improve modal appearance
+  - [X] Close modal on edit link click
+  - [X] Improve modal appearance
 * DONE Wire up search
 CLOSED: [2025-04-04 Fri 23:25]
   - [X] Extract search component
