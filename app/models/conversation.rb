@@ -14,7 +14,7 @@ class Conversation < ApplicationRecord
 
   scope :similar_to, ->(vector, threshold) {
     select("conversations.*, (embedding <=> '#{vector}') AS neighbor_distance")
-      .where(['embedding <=> ? < ?', vector.to_s, threshold])
+      .where('embedding <=> ? < ?', vector.to_s, threshold)
   }
 
   belongs_to :memo, optional: true

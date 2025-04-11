@@ -33,7 +33,6 @@ RSpec.describe ConversationSearch do
       let(:vector) { [0.1, 0.2, 0.3] }
       let(:embeddings) { [Embeddings::Voyage::EmbeddingResponse::Embedding.new(vector:, index: 0)] }
       let(:embeddings_response) { instance_double(Embeddings::Voyage::EmbeddingResponse, embeddings:) }
-      let(:selected_relation) { instance_double(ActiveRecord::Relation) }
       let(:filtered_relation) { instance_double(ActiveRecord::Relation) }
 
       before do
@@ -41,12 +40,8 @@ RSpec.describe ConversationSearch do
           .with(text: 'search query', input_type: :query)
           .and_return(embeddings_response)
 
-        allow(relation).to receive(:select)
-          .with("conversations.*, (embedding <=> '#{vector}') AS neighbor_distance")
-          .and_return(selected_relation)
-
-        allow(selected_relation).to receive(:where)
-          .with('embedding <=> ? < ?', vector.to_s, described_class::VECTOR_RELEVANCE_THRESHOLD)
+        allow(relation).to receive(:similar_to)
+          .with(vector, described_class::VECTOR_RELEVANCE_THRESHOLD)
           .and_return(filtered_relation)
       end
 
@@ -56,7 +51,34 @@ RSpec.describe ConversationSearch do
 
       it 'adds semantic to applied_filters' do
         search.results
-        expect(search.applied_filters).to include(:semantic)
+        expect(search.applied_filters).to include(described_class::SEMANTIC)
+      end
+    end
+
+    context 'with the conversation_id param' do
+      let(:params) { { conversation_id: '99' } }
+      let(:vector) { [0.1, 0.2, 0.3] }
+      let(:conversation) { build_stubbed(:conversation, id: 99, embedding: vector) }
+      let(:filtered_relation) { instance_double(ActiveRecord::Relation) }
+      let(:where_chain) { instance_double(ActiveRecord::QueryMethods::WhereChain) }
+      let(:final_relation) { instance_double(ActiveRecord::Relation) }
+
+      before do
+        allow(Conversation).to receive(:find).with('99').and_return(conversation)
+        allow(relation).to receive(:similar_to)
+          .with(vector, described_class::VECTOR_RELEVANCE_THRESHOLD)
+          .and_return(filtered_relation)
+        allow(filtered_relation).to receive(:where).and_return(where_chain)
+        allow(where_chain).to receive(:not).with(id: '99').and_return(final_relation)
+      end
+
+      it 'applies the related conversations filter' do
+        expect(search.results).to eq(final_relation)
+      end
+
+      it 'adds related conversations to the applied filters' do
+        search.results
+        expect(search.applied_filters).to include(described_class::RELATED_CONVERSATIONS)
       end
     end
 
@@ -65,8 +87,7 @@ RSpec.describe ConversationSearch do
       let(:vector) { [0.1, 0.2, 0.3] }
       let(:embeddings) { [Embeddings::Voyage::EmbeddingResponse::Embedding.new(vector:, index: 0)] }
       let(:embeddings_response) { instance_double(Embeddings::Voyage::EmbeddingResponse, embeddings:) }
-      let(:memo_filtered_relation) { instance_double(ActiveRecord::Relation) }
-      let(:selected_relation) { instance_double(ActiveRecord::Relation) }
+      let(:memo_filtered_relation) { double('Conversation::ActiveRecord_Relation') }
       let(:final_relation) { instance_double(ActiveRecord::Relation) }
 
       before do
@@ -76,12 +97,8 @@ RSpec.describe ConversationSearch do
           .with(text: 'search query', input_type: :query)
           .and_return(embeddings_response)
 
-        allow(memo_filtered_relation).to receive(:select)
-          .with("conversations.*, (embedding <=> '#{vector}') AS neighbor_distance")
-          .and_return(selected_relation)
-
-        allow(selected_relation).to receive(:where)
-          .with('embedding <=> ? < ?', vector.to_s, described_class::VECTOR_RELEVANCE_THRESHOLD)
+        allow(memo_filtered_relation).to receive(:similar_to)
+          .with(vector, described_class::VECTOR_RELEVANCE_THRESHOLD)
           .and_return(final_relation)
       end
 
@@ -95,8 +112,17 @@ RSpec.describe ConversationSearch do
     context 'when order param is "neighbor_distance asc"' do
       let(:params) { { order: 'neighbor_distance asc' } }
 
-      it 'returns the correct order hash' do
-        expect(search.order).to eq({ neighbor_distance: :asc })
+      context 'when vector search was applied' do
+        before do
+          search.applied_filters << [described_class::SEMANTIC, described_class::RELATED_CONVERSATIONS].sample
+        end
+
+        it 'returns the correct order hash' do
+          expect(search.order).to eq({ neighbor_distance: :asc })
+        end
+      end
+      it 'returns the default order hash' do
+        expect(search.order).to eq({ updated_at: :desc })
       end
     end
 
