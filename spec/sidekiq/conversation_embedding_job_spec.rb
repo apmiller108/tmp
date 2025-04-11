@@ -5,7 +5,7 @@ RSpec.describe ConversationEmbeddingJob, type: :job do
 
   describe '#perform' do
     let(:conversation_id) { 1 }
-    let(:conversation) { build_stubbed(:conversation) }
+    let(:conversation) { build_stubbed(:conversation, id: conversation_id) }
     let(:blobified_convo) { 'blobified convo' }
     let(:embedding_vector) { [0.1, 0.2, 0.3] }
     let(:embedding_response) do
@@ -22,6 +22,7 @@ RSpec.describe ConversationEmbeddingJob, type: :job do
         .and_return(embedding_response)
       allow(conversation).to receive(:blobify).and_return(blobified_convo)
       allow(conversation).to receive(:update!)
+      allow(MyChannel).to receive(:broadcast_to)
     end
 
     it 'finds the conversation by id' do
@@ -32,6 +33,12 @@ RSpec.describe ConversationEmbeddingJob, type: :job do
     it 'updates the conversation with the embedding vector' do
       job.perform(conversation_id)
       expect(conversation).to have_received(:update!).with(embedding: embedding_vector)
+    end
+
+    it 'broadcasts a message to the client' do
+      job.perform(conversation_id)
+      expect(MyChannel).to have_received(:broadcast_to)
+        .with(conversation.user, { embedding_created: { conversation_id: } })
     end
   end
 

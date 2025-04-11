@@ -36,7 +36,8 @@
   - [ ] Create a production Dockerfile
   - [ ] Deploy with kamal
   - [ ] Set up DNS
-* TODO Related conversations [10/10]
+* DONE Related conversations [10/10]
+CLOSED: [2025-04-11 Fri 15:53]
   - [X] Update query object
   - [X] lazy loaded turbo frame. URL with variant query param and
     q[conversation_id]

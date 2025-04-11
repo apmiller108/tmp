@@ -46,6 +46,9 @@ RSpec.describe 'search conversations', type: :system do
           within('.segment-assistant') do
             expect(page).to have_content gtr.response.content
           end
+
+          # readonly view
+          expect(page).not_to have_css('a[data-turbo-method="delete"]')
         end
       end
     end
