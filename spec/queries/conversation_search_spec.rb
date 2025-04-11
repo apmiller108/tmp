@@ -121,6 +121,7 @@ RSpec.describe ConversationSearch do
           expect(search.order).to eq({ neighbor_distance: :asc })
         end
       end
+
       it 'returns the default order hash' do
         expect(search.order).to eq({ updated_at: :desc })
       end

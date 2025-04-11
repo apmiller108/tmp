@@ -44,6 +44,8 @@ gem 'view_component'
 group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw], require: 'debug/prelude'
   gem 'factory_bot_rails', '~> 6.2'
+  gem 'pry-rails'
+  gem 'pry-nav'
   gem 'rspec-rails', '~> 6.0'
 end
 
