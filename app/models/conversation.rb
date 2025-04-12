@@ -13,7 +13,7 @@ class Conversation < ApplicationRecord
        default: GenerativeImage::DEFAULT_QUALITY_LEVEL
 
   scope :similar_to, ->(vector, threshold) {
-    select("conversations.*, (embedding <=> '#{vector}') AS neighbor_distance")
+    select(sanitize_sql_array(["conversations.*, (embedding <=> '[?]') AS neighbor_distance", vector]))
       .where('embedding <=> ? < ?', vector.to_s, threshold)
   }
 
