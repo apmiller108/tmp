@@ -1,6 +1,23 @@
 require 'spec_helper'
 
 ENV['RAILS_ENV'] ||= 'test'
+
+ENV['AWS_ACCESS_KEY'] = 'aws-access_key_id'
+ENV['AWS_SECRET_KEY'] = 'aws-secret_key_id'
+ENV['AWS_REGION'] = 'aws-region'
+ENV['AWS_BUCKET'] = 'aws-bucket'
+ENV['ANTHROPIC_KEY'] = 'anthropic_key'
+ENV['DEVISE_JWT_KEY'] = '5c2bfb28d566bd3aff8e3d5571803149648215d6bfe2f24e2290d9ba15acd73f1fa0bcaa16817dc0db5f8b96da74e2a598806c436dce999327d82c89245fee4f'
+ENV['GITHUB_ID'] = 'github_id'
+ENV['GITHUB_SECRET'] = 'github_secret'
+ENV['POSTGRES_HOST'] = 'database'
+ENV['POSTGRES_USER'] = 'postgres'
+ENV['POSTGRES_PASSWORD'] = 'postgres'
+ENV['REDIS_URL'] = 'redis://redis:6379/1'
+ENV['SECRET_KEY_BASE'] = 'e58ce2d32d05cb26d6d46882be63932f5d35e2f71523e67b5a6ebe40652259d50bf85886a5580b6c2b22138597962ae483a3e51aae31bce18355471318e036d9'
+ENV['STABILITY_KEY'] = 'stability_key'
+ENV['VOYAGE_API_KEY'] = 'voyage api key'
+
 require_relative '../config/environment'
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 

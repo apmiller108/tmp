@@ -273,8 +273,8 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   config.omniauth :github,
-                  Rails.application.credentials[:github_id],
-                  Rails.application.credentials[:github_secret],
+                  ENV.fetch('GITHUB_ID'),
+                  ENV.fetch('GITHUB_SECRET'),
                   scope: 'user'
 
   # ==> Warden configuration
@@ -314,7 +314,7 @@ Devise.setup do |config|
   # config.sign_in_after_change_password = true
 
   config.jwt do |jwt|
-    jwt.secret = Rails.application.credentials[:devise_jwt_key]
+    jwt.secret = ENV.fetch('DEVISE_JWT_KEY')
     jwt.expiration_time = 7.days.to_i
     jwt.request_formats = { user: [:json] }
   end

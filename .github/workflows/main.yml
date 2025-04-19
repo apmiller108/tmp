@@ -133,6 +133,13 @@ jobs:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           RAILS_ENV: test
           TMP_USE_LOCAL_DB: true
+          POSTGRES_HOST: database
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          GITHUB_ID: github_id
+          GITHUB_SECRET: github_secret
+          DEVISE_JWT_KEY: '5c2bfb28d566bd3aff8e3d5571803149648215d6bfe2f24e2290d9ba15acd73f1fa0bcaa16817dc0db5f8b96da74e2a598806c436dce999327d82c89245fee4f'
+          REDIS_URL: 'redis://redis:6379/1'
         run: |
           bin/rails db:setup
       - name: Build assets
@@ -145,7 +152,14 @@ jobs:
           RAILS_ENV: test
           TMP_USE_LOCAL_DB: true
           CHROME_URL: http://localhost:3333
-          VOYAGE_API_KEY: fake
+          POSTGRES_HOST: database
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          GITHUB_ID: github_id'
+          GITHUB_SECRET: github_secret'
+          DEVISE_JWT_KEY: '5c2bfb28d566bd3aff8e3d5571803149648215d6bfe2f24e2290d9ba15acd73f1fa0bcaa16817dc0db5f8b96da74e2a598806c436dce999327d82c89245fee4f'
+          REDIS_URL: 'redis://redis:6379/1'
+          VOYAGE_API_KEY: 'voyage api key'
         run: |
           bundle exec rspec --format documentation
       - name: Archive screenshots

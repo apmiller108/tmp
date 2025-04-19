@@ -37,7 +37,7 @@ class TranscriptionService
       end
 
       def resource_uri
-        "s3://#{Rails.application.credentials.dig(:aws, :bucket)}/#{blob.key}"
+        "s3://#{ENV.fetch('AWS_BUCKET')}/#{blob.key}"
       end
 
       # AWS does not support toxicity with diarization

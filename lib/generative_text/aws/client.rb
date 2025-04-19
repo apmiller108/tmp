@@ -6,11 +6,10 @@ class GenerativeText
       delegate :invoke_model_with_response_stream, to: :@client
 
       def initialize
-        config = Rails.application.credentials.fetch(:aws)
         @client = Aws::BedrockRuntime::Client.new(
-          region: config[:region],
+          region: ENV.fetch('AWS_REGION'),
           credentials: Aws::Credentials.new(
-            config.fetch(:access_key_id), config.fetch(:secret_access_key)
+            ENV.fetch('AWS_ACCESS_KEY'), ENV.fetch('AWS_SECRET_KEY')
           )
         )
       end

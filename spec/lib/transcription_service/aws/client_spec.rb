@@ -7,12 +7,12 @@ describe TranscriptionService::AWS::Client do
 
   before do
     allow(Aws::Credentials).to(
-      receive(:new).with(Rails.application.credentials.dig(:aws, :access_key_id),
-                         Rails.application.credentials.dig(:aws, :secret_access_key))
+      receive(:new).with(ENV.fetch('AWS_ACCESS_KEY'),
+                         ENV.fetch('AWS_SECRET_KEY'))
                     .and_return(aws_credentials)
     )
     allow(Aws::TranscribeService::Client).to(
-      receive(:new).with(region: Rails.application.credentials.dig(:aws, :region),
+      receive(:new).with(region: ENV.fetch('AWS_REGION'),
                          credentials: aws_credentials)
                     .and_return(aws_lib_client)
     )

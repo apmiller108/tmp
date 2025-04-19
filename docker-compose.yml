@@ -91,7 +91,6 @@ services:
         condition: service_started
     env_file:
       - ".env"
-      - ".anycable.env"
     mem_limit: "${TMP_ANYCABLE_MEM_LIMIT:-250m}"
   nginx:
     image: nginx:1.27

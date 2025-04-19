@@ -1,5 +1,5 @@
 Sidekiq.configure_server do |config|
-  config.redis = { url: Rails.application.credentials[:redis_url] }
+  config.redis = { url: ENV.fetch('REDIS_URL') }
 
   config.on(:startup) do
     schedule_file = 'config/sidekiq_cron.yml'
@@ -20,7 +20,7 @@ Sidekiq.configure_server do |config|
 end
 
 Sidekiq.configure_client do |config|
-  config.redis = { url: Rails.application.credentials[:redis_url] }
+  config.redis = { url: ENV.fetch('REDIS_URL') }
 
   config.client_middleware do |chain|
     chain.add SidekiqUniqueJobs::Middleware::Client

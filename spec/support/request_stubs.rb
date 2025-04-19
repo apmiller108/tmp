@@ -47,7 +47,7 @@ module RequestStubs
     png = file_fixture 'image.png'
     stub_request(:post, 'https://api.stability.ai/v2beta/stable-image/generate/core')
       .with(headers: {
-        'Authorization': "Bearer #{Rails.application.credentials.fetch(:stability_key)}",
+        'Authorization': "Bearer #{ENV.fetch('STABILITY_KEY')}",
         'Accept': 'image/*'
       }).to_return(status: 200, body: png.read, headers: { 'seed' => 1234, 'finish-reason' => 'SUCCESS' })
   end
@@ -56,7 +56,7 @@ module RequestStubs
     png = file_fixture 'image.png'
     stub_request(:post, 'https://api.stability.ai/v2beta/stable-image/generate/ultra')
       .with(headers: {
-        'Authorization': "Bearer #{Rails.application.credentials.fetch(:stability_key)}",
+        'Authorization': "Bearer #{ENV.fetch('STABILITY_KEY')}",
         'Accept': 'image/*'
       }).to_return(status: 200, body: png.read, headers: { 'seed' => 1234, 'finish-reason' => 'SUCCESS' })
   end

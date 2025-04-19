@@ -53,7 +53,7 @@ class GenerativeImage
         Faraday.new(
           url: HOST,
           headers: {
-            'Authorization': "Bearer #{Rails.application.credentials.fetch(:stability_key)}",
+            'Authorization': "Bearer #{ENV.fetch('STABILITY_KEY')}",
             'Content-Type': 'multipart/form-data'
           }
         ) do |f|

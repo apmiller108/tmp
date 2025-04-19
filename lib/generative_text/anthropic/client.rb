@@ -5,7 +5,7 @@ class GenerativeText
         @conn = Faraday.new(
           url: HOST,
           headers: {
-            'x-api-key': Rails.application.credentials.fetch(:anthropic_key),
+            'x-api-key': ENV.fetch('ANTHROPIC_KEY'),
             'Content-Type': 'application/json',
             'anthropic-version': VERSION
           }

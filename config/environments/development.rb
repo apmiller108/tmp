@@ -6,7 +6,7 @@ Rails.application.routes.default_url_options = { host: "localhost", port: 3000 }
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  config.secret_key_base = Rails.application.credentials[:secret_key_base]
+  config.secret_key_base = ENV.fetch('SECRET_KEY_BASE')
 
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development

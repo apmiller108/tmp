@@ -62,7 +62,7 @@ RSpec.describe GenerativeText::Anthropic::Client do
           headers: {
             'Content-Type' => 'application/json',
             'anthropic-version' => GenerativeText::Anthropic::VERSION,
-            'x-api-key' => Rails.application.credentials.fetch(:anthropic_key)
+            'x-api-key' => ENV.fetch('ANTHROPIC_KEY')
           }
         )
         .to_return(

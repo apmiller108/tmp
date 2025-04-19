@@ -9,11 +9,10 @@ class TranscriptionService
       delegate_missing_to :@client
 
       def initialize
-        config = Rails.application.credentials.fetch(:aws)
-        @client ||= Aws::TranscribeService::Client.new(
-          region: config[:region],
+        @client = Aws::TranscribeService::Client.new(
+          region: ENV.fetch('AWS_REGION'),
           credentials: Aws::Credentials.new(
-            config.fetch(:access_key_id), config.fetch(:secret_access_key)
+            ENV.fetch('AWS_ACCESS_KEY'), ENV.fetch('AWS_SECRET_KEY')
           )
         )
       end

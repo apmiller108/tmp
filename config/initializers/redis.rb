@@ -1,1 +1,1 @@
-REDIS = Redis.new(url: Rails.application.credentials[:redis_url])
+REDIS = Redis.new(url: ENV.fetch('REDIS_URL'))

@@ -1,10 +1,10 @@
-# primary:
-#   service: S3
-#   access_key_id: <%= Rails.application.credentials.dig(:aws, :access_key_id) %>
-#   secret_access_key: <%= Rails.application.credentials.dig(:aws, :secret_access_key) %>
-#   region: us-east-1
-#   bucket: <%= Rails.application.credentials.dig(:aws, :bucket) %>
-#   retry_limit: 0
+primary:
+  service: S3
+  access_key_id: ENV.fetch('AWS_ACCESS_KEY')
+  secret_access_key: ENV.fetch('AWS_SECRET_KEY')
+  region: ENV.fetch('AWS_REGION')
+  bucket: ENV.fetch('AWS_BUCKET')
+  retry_limit: 3
 
 # local:
 #   service: Disk

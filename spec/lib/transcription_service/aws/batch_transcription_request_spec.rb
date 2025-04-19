@@ -10,7 +10,7 @@ RSpec.describe TranscriptionService::AWS::BatchTranscriptionRequest do
     let(:expected_params) do
       { transcription_job_name: "#{blob.id}_#{blob.filename}",
         language_code: TranscriptionService::LANG,
-        media: { media_file_uri: "s3://#{Rails.application.credentials.dig(:aws, :bucket)}/#{blob.key}" },
+        media: { media_file_uri: "s3://#{ENV.fetch('AWS_BUCKET')}/#{blob.key}" },
         tags: [{ key: 'blob_id', value: blob.id.to_s }],
         settings: { show_speaker_labels: true, max_speaker_labels: 2, channel_identification: false,
                     show_alternatives: false } }
@@ -22,7 +22,7 @@ RSpec.describe TranscriptionService::AWS::BatchTranscriptionRequest do
       let(:expected_params) do
         { transcription_job_name: "#{blob.id}_#{blob.filename}",
           language_code: TranscriptionService::LANG,
-          media: { media_file_uri: "s3://#{Rails.application.credentials.dig(:aws, :bucket)}/#{blob.key}" },
+          media: { media_file_uri: "s3://#{ENV.fetch('AWS_BUCKET')}/#{blob.key}" },
           tags: [{ key: 'blob_id', value: blob.id.to_s }],
           toxicity_detection: [{ toxicity_categories: ['ALL'] }] }
       end

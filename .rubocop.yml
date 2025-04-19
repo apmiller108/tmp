@@ -21,6 +21,9 @@ Capybara/VisibilityMatcher:
 
 Layout/FirstHashElementIndentation:
   EnforcedStyle: consistent
+Layout/LineLength:
+  Exclude:
+    - 'spec/rails_helper.rb'
 
 Lint/MissingSuper:
   Enabled: false

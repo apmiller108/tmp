@@ -133,18 +133,8 @@ that supports having a fixed domain.
 ngrok http --domain=titmouse-charming-correctly.ngrok-free.app 3000
 ```
 ## Secrets
-This application stores encrypted credentials per the [Custom
-Credentials](https://edgeguides.rubyonrails.org/security.html#custom-credentials)
-Rails convention.
-### Adding a secret
-1. Generate a secret `bundle exec rake secret`
-2. Add it to the environment's secrets: `bin/rails credentials:edit --environment development`
-#### keys
-Adding and updating keys requires having a key (not in source control) for a particular environment. The keys are
-- config/credentials/development.key
-- config/credentials/production.key
-- config/credentials/test.key
-- config/master.key
+Secrets are envars. A `.env` is provided to the containers in development/test
+
 ## Hotwire
 Front end built with [turbo](https://turbo.hotwired.dev/) and [stimulus](https://stimulus.hotwired.dev/).
 

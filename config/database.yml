@@ -1,9 +1,9 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  host: <%= ENV['TMP_USE_LOCAL_DB'].present? ? 'localhost' : Rails.application.credentials[:postgres_host] %>
-  user: <%= Rails.application.credentials[:postgres_user] %>
-  password: <%= Rails.application.credentials[:postgres_password] %>
+  host: <%= ENV['TMP_USE_LOCAL_DB'].present? ? 'localhost' : ENV.fetch('POSTGRES_HOST') %>
+  user: <%= ENV.fetch('POSTGRES_USER') %>
+  password: <%= ENV.fetch('POSTGRES_PASSWORD') %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 development:
   <<: *default
