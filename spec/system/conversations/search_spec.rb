@@ -25,7 +25,10 @@ RSpec.describe 'search conversations', type: :system do
 
   specify 'search' do
     login(user:)
+
     visit new_conversation_path
+
+    page.driver.resize(1440, 900)
 
     # Verify that all four convos are in the list
     within('#conversations') do
