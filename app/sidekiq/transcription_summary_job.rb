@@ -7,28 +7,35 @@ class TranscriptionSummaryJob
     transcription = user.transcriptions.find(transcription_id)
     summary = transcription.summary
     prompt = GenerativeText.summary_prompt_for(transcription:)
-    request = GenerateTextRequest.new(prompt:,
-                                      model: 'amazon.titan-text-express-v1',
-                                      temperature: 0.2)
+    request = GenerateTextRequest.create!(prompt:,
+                                          user:,
+                                          model: GenerativeText::SUMMARY_MODEL.api_name,
+                                          temperature: 0.2)
     summary.in_progress!
 
-    # @stream_response [InvokeModelStreamResponse, #content, #final_chunk?]
-    GenerativeText.new.invoke_model_stream(request) do |stream_response|
-      summary.content += stream_response.content
+    # @text_content [String]
+    response = GenerativeText.new.invoke_model_stream(request) do |text|
+      summary.content += text
+      broadcast(user, transcription)
+    end
 
-      if stream_response.final_chunk?
-        summary.status = Summary.statuses[:completed]
-        summary.save!
-      end
-
-      ViewComponentBroadcaster.call(
-        [user, TurboStreams::STREAMS[:memos]],
-        component: TranscriptionSummaryComponent.new(transcription:),
-        action: :replace
-      )
+    if response.complete?
+      summary.status = Summary.statuses[:completed]
+      summary.save!
+      broadcast(user, transcription)
     end
   rescue ActiveRecord::RecordNotFound => e
     Rails.logger.warn("#{self.class}: #{e} : transcription_id: #{transcription_id}; user_id: #{user_id}")
   end
   # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+
+  private
+
+  def broadcast(user, transcription)
+    ViewComponentBroadcaster.call(
+      [user, TurboStreams::STREAMS[:memos]],
+      component: TranscriptionSummaryComponent.new(transcription:),
+      action: :replace
+    )
+  end
 end

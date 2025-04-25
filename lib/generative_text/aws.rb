@@ -1,4 +1,6 @@
 class GenerativeText
+  # GenerateText via AWS is not longer used. This is being kept in the event
+  # there should be reason to use it in the future.
   module AWS
     def self.vendor = :aws
     def self.capabilities = Model::Capabilities.new(image?: false)

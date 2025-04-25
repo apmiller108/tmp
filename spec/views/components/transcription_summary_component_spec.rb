@@ -8,14 +8,10 @@ RSpec.describe TranscriptionSummaryComponent, type: :component do
   let(:user) { build_stubbed :user }
   let(:transcription) { build_stubbed :transcription, summary: }
   let(:summary) { build_stubbed :summary, content:, status: }
-  let(:bullet_points?) { false }
-  let(:bullet_points) { [] }
   let(:component) { described_class.new(transcription:) }
 
   context 'with a summary' do
     before do
-      allow(summary).to receive(:bullet_points?).and_return(bullet_points?)
-      allow(summary).to receive(:bullet_points).and_return(bullet_points)
       with_current_user(user) { render_inline(component) }
     end
 
@@ -32,17 +28,6 @@ RSpec.describe TranscriptionSummaryComponent, type: :component do
 
       it 'shows the summary content' do
         expect(page).to have_content(summary.content)
-      end
-
-      context 'with bullet points' do
-        let(:bullet_points?) { true }
-        let(:bullet_points) { ['bullet 1', 'bullet 2'] }
-
-        it 'shows each bullet point' do
-          bullet_points.each do |bp|
-            expect(page).to have_content bp
-          end
-        end
       end
     end
   end

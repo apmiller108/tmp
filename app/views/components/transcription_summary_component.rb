@@ -2,7 +2,7 @@ class TranscriptionSummaryComponent < ApplicationViewComponent
   attr_reader :transcription
 
   delegate :summary, to: :transcription
-  delegate :bullet_points?, :bullet_points, :content, :completed?, :created?, :queued?, :in_progress?, :failed?,
+  delegate :content, :completed?, :created?, :queued?, :in_progress?, :failed?,
            to: :summary, allow_nil: true
 
   def self.id(transcription:)
@@ -15,6 +15,10 @@ class TranscriptionSummaryComponent < ApplicationViewComponent
 
   def id
     self.class.id(transcription:)
+  end
+
+  def formatted_content
+    MarkdownToHtml.call(markdown: content)
   end
 
   def generating_summary?

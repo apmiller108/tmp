@@ -55,6 +55,10 @@ class GenerativeText
         data.fetch('stop_reason')
       end
 
+      def complete?
+        completion_reason.present?
+      end
+
       def tool_use?
         completion_reason == TOOL_USE
       end

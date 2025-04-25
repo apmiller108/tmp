@@ -26,6 +26,7 @@ class GenerativeText
     Helpers.transcription_summary_prompt(transcription)
   end
 
+  # AWS models have been disabled
   def self.client_for(generate_text_request)
     case generate_text_request.model.vendor
     when :aws

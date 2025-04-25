@@ -4,20 +4,20 @@ RSpec.describe TranscriptionSummaryJob, type: :job do
   subject(:job) { described_class.new }
 
   let(:user) { build_stubbed :user }
+  let(:generate_text_request) { build_stubbed :generate_text_request }
   let(:summary) { build_stubbed :summary, content: 'summary content ' }
   let(:transcription) { build_stubbed :transcription, summary: }
   let(:transcriptions) { Transcription.none }
   let(:generative_text) { instance_double(GenerativeText) }
-  let(:invoke_model_stream_response) do
-    instance_double GenerativeText::AWS::InvokeModelStreamResponse,
-                    content: 'response content', final_chunk?: final_chunk?
-  end
+  let(:invoke_model_stream_content) { 'stream content' }
+  let(:invoke_model_response) { instance_double(GenerativeText::Anthropic::InvokeModelResponse, complete?: true) }
   let(:final_chunk?) { false }
   let(:prompt) { 'transcription summary prompt' }
   let(:transcription_summary_component) { instance_double(TranscriptionSummaryComponent) }
 
   before do
     allow(User).to receive(:find).and_return(user)
+    allow(GenerateTextRequest).to receive(:create!).and_return(generate_text_request)
     allow(user).to receive(:transcriptions).and_return(transcriptions)
     allow(transcriptions).to receive(:find).with(transcription.id).and_return(transcription)
     allow(summary).to receive(:in_progress!)
@@ -25,7 +25,8 @@ RSpec.describe TranscriptionSummaryJob, type: :job do
     allow(GenerativeText).to receive(:new).and_return(generative_text)
     allow(GenerativeText).to receive(:summary_prompt_for).with(transcription:).and_return(prompt)
     allow(generative_text).to receive(:invoke_model_stream).with(kind_of(GenerateTextRequest))
-                                                           .and_yield(invoke_model_stream_response)
+                                                           .and_yield(invoke_model_stream_content)
+                                                           .and_return(invoke_model_response)
     allow(ViewComponentBroadcaster).to receive(:call)
     allow(TranscriptionSummaryComponent).to receive(:new).with(transcription:)
                                                          .and_return(transcription_summary_component)
@@ -38,7 +39,7 @@ RSpec.describe TranscriptionSummaryJob, type: :job do
 
   it 'appends the response to the summary content' do
     job.perform(user.id, transcription.id)
-    expect(summary.content).to eq 'summary content response content'
+    expect(summary.content).to eq 'summary content stream content'
   end
 
   it 'broadcasts the transcription summary component' do
@@ -46,7 +47,7 @@ RSpec.describe TranscriptionSummaryJob, type: :job do
     expect(ViewComponentBroadcaster).to(
       have_received(:call).with(
         [user, TurboStreams::STREAMS[:memos]], component: transcription_summary_component, action: :replace
-      )
+      ).twice # once for the stream chunk and once when the stream is complete
     )
   end
 

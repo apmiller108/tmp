@@ -5,6 +5,7 @@ class ContentCustomizerComponent < ApplicationViewComponent
 
   # @param markup [String] markdown or html formatted string
   # @option opts [Boolean] :simple (true) no rendering customizations
+  # @option opts [Boolean] :markdown (false) indicates that the markup is markdown and will be converted to HTML
   def initialize(markup:, **opts)
     @markup = markup
     @opts = opts

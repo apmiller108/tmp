@@ -4,12 +4,8 @@
       .alert.alert-info.py-1.my-1.text-center{role: :alert, class: [summary.status, 'i-pulse']}= t('summary.generating')
     - elsif failed?
       .alert.alert-warning.py-1.my-1.text-center{role: :alert, class: [summary.status]}= t('summary.failed')
-    - elsif bullet_points?
-      %ul
-        - bullet_points.each do |bp|
-          %li= bp
     - else
-      = content
+      = render ContentCustomizerComponent.new(markup: content, simple: true, markdown: true)
   - else
     = button_to(user_transcription_summaries_path(current_user),
     { method: :post, params: { transcription_summary: { transcription_id: transcription.id } },
