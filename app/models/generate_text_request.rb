@@ -23,7 +23,7 @@ class GenerateTextRequest < ApplicationRecord
   belongs_to :generate_text_preset, optional: true
   has_one :generate_image_request, dependent: :nullify
 
-  validates :text_id, presence: true, length: { maximum: 50 }
+  validates :text_id, length: { maximum: 50 }
   validates :prompt, presence: true, length: { maximum: 24_000 }
   validates :temperature, inclusion: { in: TEMPERATURE_VALUES }, allow_nil: true
   validates :model, presence: true
