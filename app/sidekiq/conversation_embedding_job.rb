@@ -12,5 +12,7 @@ class ConversationEmbeddingJob
     MyChannel.broadcast_to(conversation.user, {
       embedding_created: { conversation_id: }
     })
+  rescue ActiveRecord::RecordNotFound => e
+    Rails.logger.warn("#{self.class}: #{e.message}")
   end
 end
