@@ -9,7 +9,14 @@ class GenerativeText
     *AWS::MODELS
   ].freeze
 
-  DEFAULT_MODEL = MODELS.find { _1.api_name == 'claude-3-5-haiku-latest' }
+  def self.find_model(api_name)
+    MODELS.find { _1.api_name == api_name }.tap do |model|
+      raise "Model not found: #{api_name}" if model.nil?
+    end
+  end
+
+  DEFAULT_MODEL = find_model 'claude-3-5-haiku-latest'
+  SUMMARY_MODEL = find_model 'claude-3-haiku-20240307'
 
   def self.active_models
     MODELS.select(&:active?)

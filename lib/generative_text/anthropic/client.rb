@@ -57,7 +57,7 @@ class GenerativeText
 
           stream_response.update(event)
 
-          block.call(event.text_content) if event.text?
+          block.call(event.text_content) if event.text? # block only yielded to for text (not tool use JSON or anything else)
         end
       end
     end
