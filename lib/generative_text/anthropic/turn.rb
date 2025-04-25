@@ -96,8 +96,11 @@ class GenerativeText
         turn_index.positive? ? turns[turn_index - 1] : nil
       end
 
+      # In the special case of creating summaries, there won't be a Conversation
+      # (NullConversation) and hence turns will be empty. In this case return 0
+      # for the turn_index.
       def turn_index
-        turns.find_index { _1.turnable_id == generate_text_request.id }
+        turns.find_index { _1.turnable_id == generate_text_request.id } || 0
       end
     end
   end
