@@ -47,7 +47,13 @@ RSpec.describe 'create conversation', type: :system do
 
     find('button[type=submit]').click
 
-    conversation = user.conversations.last
+    retries = 0
+    conversation = nil
+    while conversation.nil? && retries < 3
+      conversation = user.conversations.last
+      retries += 1
+    end
+
     expect(page).to have_current_path edit_conversation_path(conversation)
 
     expect(page).to have_css('.segment-user', text: prompt)

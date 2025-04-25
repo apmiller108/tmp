@@ -35,8 +35,8 @@
   - [ ] Deploy with kamal
   - [ ] Set up DNS
 * TODO Image sketch
-* TODO Replace titan with Haiku
-  - [ ] transcriptions belong to user
+* DONE Remove dependency on AWS titan
+CLOSED: [2025-04-25 Fri 14:30]
 * DONE Related conversations [10/10]
 CLOSED: [2025-04-11 Fri 15:53]
   - [X] Update query object
