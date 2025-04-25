@@ -27,6 +27,8 @@ This side project was started in order to learn the latest features of RoR, Hotw
 ## Planned
 - Image to Video
 - Image editing
+- Audio transcription conversation tool
+- URLs in conversations
 
 # Start
 
@@ -77,9 +79,6 @@ The user's access key and secret needs to be added to the applications credentia
 See also [#activestorage-configuration](ActiveStorage Configuration)
 ### AWS Transcribe
 This uses AWS Transcription Jobs for speech to text
-### AWS Titan
-LLM used for summaries
-See also https://aws.amazon.com/bedrock/titan/
 ### Anthopic Claude
 LLM used generative text features
 See also https://www.anthropic.com/claude
