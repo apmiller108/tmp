@@ -1,0 +1,39 @@
+= form_with(model: llm_tool) do |form|
+  .card-body
+    - if llm_tool.errors.any?
+      .alert.alert-danger
+        %h5= "#{pluralize(llm_tool.errors.count, 'error')} prohibited this tool from being saved:"
+        %ul
+          - llm_tool.errors.full_messages.each do |message|
+            %li= message
+
+    .mb-3
+      = form.label :name, class: 'form-label'
+      = form.text_field :name, class: 'form-control', placeholder: 'weather, search, generate image, etc.'
+      %small.form-text.text-muted
+        The name should match the handler mapping in the model.
+
+    .mb-3
+      = form.label :description, class: 'form-label'
+      = form.text_area :description, rows: 3, class: 'form-control', placeholder: 'Describe what this tool does and how it should be used...'
+      %small.form-text.text-muted
+        This description will be sent to the LLM to help it understand when and how to use this tool.
+
+    .mb-3
+      = form.label :input_schema, class: 'form-label'
+      = form.text_area :input_schema, rows: 10, class: 'form-control code-editor', placeholder: '{"type": "object", "properties": {...}}'
+      %small.form-text.text-muted
+        JSON Schema defining the parameters for this tool. Must include "type" and "properties" fields.
+
+    .mb-3.form-check
+      = form.check_box :active, class: 'form-check-input'
+      = form.label :active, class: 'form-check-label'
+      %small.form-text.text-muted.d-block
+        Inactive tools won't be available to the LLM.
+  .card-footer
+    .d-flex.justify-content-end.mt-4
+      - if llm_tool.persisted?
+        = link_to 'Cancel', llm_tool_path(llm_tool), class: 'btn btn-outline-secondary me-2'
+      - else
+        = link_to 'Cancel', llm_tools_path, class: 'btn btn-outline-secondary me-2'
+      = form.submit class: 'btn btn-primary'

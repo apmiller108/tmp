@@ -52,4 +52,5 @@ Rails.application.routes.draw do
   resources :generate_text_presets, except: %i[show]
   resources :generate_image_requests, only: %i[create]
 
+  resources :llm_tools, except: :show
 end

@@ -1,0 +1,31 @@
+.container-fluid.mt-4
+  .row.mb-3
+    .col-12.d-flex.justify-content-between.align-items-center
+      %h1 LLM Tools
+      - if @llm_tools.present?
+        = link_to 'Create New Tool', new_llm_tool_path, class: 'btn btn-primary'
+
+  .row
+    .col-md-8.offset-md-2
+      - if @llm_tools.any?
+        .list-group.shadow-sm
+          - @llm_tools.each do |tool|
+            .tool.list-group-item{ id: dom_id(tool) }
+              .d-flex.justify-content-between.align-items-start
+                .d-flex.flex-column
+                  %h5.mb-1= tool.name
+                  %p.text-muted.mb-1= truncate(tool.description, length: 100)
+                .d-flex.flex-column.align-items-end
+                  %span.updated_at.mb-2= "Updated #{time_ago_in_words(tool.updated_at)} ago"
+              %div{ data: { controller: 'tooltip' }}
+                = link_to edit_llm_tool_path(tool), class: 'btn icon-btn icon-btn-sm',
+                data: { 'bs-toggle' => 'tooltip', 'bs-title' => t('edit') }  do
+                  %i.bi.bi-pencil-square.text-secondary
+                = link_to tool, data: { turbo_method: 'delete', turbo_confirm: t('confirm'),
+                                                       'bs-toggle' => 'tooltip', 'bs-title' => t('delete', name: '') },
+                                                        class: 'btn icon-btn icon-btn-sm' do
+                  %i.bi.bi-trash3.text-danger
+      - else
+        .alert.alert-info.text-center
+          %p No LLM tools found.
+          = link_to 'Create New Tool', new_llm_tool_path, class: 'btn btn-primary'
