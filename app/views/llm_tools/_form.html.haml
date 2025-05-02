@@ -21,9 +21,8 @@
 
     .mb-3
       = form.label :input_schema, class: 'form-label'
-      = form.text_area :input_schema, rows: 10, class: 'form-control code-editor', placeholder: '{"type": "object", "properties": {...}}'
-      %small.form-text.text-muted
-        JSON Schema defining the parameters for this tool. Must include "type" and "properties" fields.
+      = render JsonEditorComponent.new(form:, css_class: 'code-editor', placeholder: '{"type": "object", "properties": {...}}',
+      helper_text: 'JSON Schema defining the parameters for this tool. Must include "type" and "properties" fields.' )
 
     .mb-3.form-check
       = form.check_box :active, class: 'form-check-input'
@@ -32,8 +31,5 @@
         Inactive tools won't be available to the LLM.
   .card-footer
     .d-flex.justify-content-end.mt-4
-      - if llm_tool.persisted?
-        = link_to 'Cancel', llm_tool_path(llm_tool), class: 'btn btn-outline-secondary me-2'
-      - else
-        = link_to 'Cancel', llm_tools_path, class: 'btn btn-outline-secondary me-2'
+      = link_to 'Cancel', llm_tools_path, class: 'btn btn-outline-secondary me-2'
       = form.submit class: 'btn btn-primary'
