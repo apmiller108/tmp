@@ -25,16 +25,17 @@
     to generate an answer based on the those docs.
   - Capabilities / Tools
   - Keyboard shortcuts
-* TODO URL tool
-  - Tool to fetch a given URL, extract text content from HTML document and pipe
-    into the followup response.
-  - LLM can pick out a URL in a blob of text.
 * TODO Create a production version
   - [ ] Set up a box somewhere
   - [ ] Create a production Dockerfile
   - [ ] Deploy with kamal
   - [ ] Set up DNS
 * TODO Image sketch
+* TODO Github tool
+* TODO URL tool
+  - Tool to fetch a given URL, extract text content from HTML document and pipe
+    into the followup response.
+  - LLM can pick out a URL in a blob of text.
 * DONE Remove dependency on AWS titan
 CLOSED: [2025-04-25 Fri 14:30]
 * DONE Related conversations [10/10]

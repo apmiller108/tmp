@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_25_155920) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_02_180801) do
   create_schema "rollback"
 
   # These are extensions that must be enabled in order to support this database
@@ -141,6 +141,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_25_155920) do
     t.index ["user_id", "text_id"], name: "index_generate_text_requests_on_user_id_and_text_id", unique: true
     t.index ["user_id"], name: "index_generate_text_requests_on_user_id"
     t.check_constraint "status = ANY (ARRAY['created'::text, 'queued'::text, 'in_progress'::text, 'failed'::text, 'completed'::text])", name: "status_check"
+  end
+
+  create_table "llm_tools", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description", null: false
+    t.jsonb "input_schema", null: false
+    t.boolean "active", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_llm_tools_on_name", unique: true
   end
 
   create_table "memos", force: :cascade do |t|
