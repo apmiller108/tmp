@@ -1,5 +1,7 @@
 # app/models/llm_tool.rb
 class LlmTool < ApplicationRecord
+  before_validation :parse_input_schema
+
   validates :name, presence: true, uniqueness: true
   validates :description, presence: true
   validates :input_schema, presence: true
@@ -30,11 +32,14 @@ class LlmTool < ApplicationRecord
 
   def validate_input_schema
     # Basic validation that it's proper JSON Schema
-    schema = JSON.parse(input_schema)
-    unless schema.key?('properties') && schema.key?('type')
+    unless input_schema.key?('properties') && input_schema.key?('type')
       errors.add(:input_schema, 'must be a valid JSON Schema')
     end
+  end
+
+  def parse_input_schema
+    self.input_schema = JSON.parse(input_schema)
   rescue JSON::ParserError
-    errors.add(:input_schema, 'must be a valid JSON Schema')
+    self.input_schema = {}
   end
 end

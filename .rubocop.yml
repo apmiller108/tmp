@@ -92,6 +92,8 @@ RSpec/VerifiedDoubles:
 
 Style/Documentation:
   Enabled: false
+Style/GuardClause:
+  Enabled: false
 Style/FrozenStringLiteralComment:
   Enabled: false
 Style/HashAsLastArrayItem:
