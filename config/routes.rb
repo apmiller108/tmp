@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   # Require authentication via devise and current_user be developer to view Sidekiq Web UI
   authenticate :user, ->(user) { user.developer? } do
     mount Sidekiq::Web => '/sidekiq'
+    resources :llm_tools, except: :show
   end
 
   resources :users, only: %i[show] do
@@ -51,6 +52,4 @@ Rails.application.routes.draw do
   end
   resources :generate_text_presets, except: %i[show]
   resources :generate_image_requests, only: %i[create]
-
-  resources :llm_tools, except: :show
 end
