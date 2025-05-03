@@ -30,8 +30,8 @@ CURRENT_TIMESTAMP
   end
 
   def down
-    # execute <<~SQL
-    #   DELETE FROM llm_tools where name = 'Generate Image';
-    # SQL
+    execute <<~SQL
+      DELETE FROM llm_tools where name = 'Generate Image';
+    SQL
   end
 end
