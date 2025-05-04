@@ -2,6 +2,9 @@
 class LlmTool < ApplicationRecord
   before_validation :parse_input_schema
 
+  # Must match the regex ^[a-zA-Z0-9_-]{1,64}$ for Anthropic to accept the request
+  normalizes :name, with: -> (name) { name.gsub(/\s+/, '_').camelize }
+
   validates :name, presence: true, uniqueness: true
   validates :description, presence: true
   validates :input_schema, presence: true
@@ -10,17 +13,17 @@ class LlmTool < ApplicationRecord
 
   scope :active, -> { where(active: true) }
 
-  def self.handler_mapping
-    {
-      # 'generate image' => 'LlmTool::Handlers::GenerateImage',
-    }
+  def self.names
+    @names ||= pluck(:name)
   end
 
-  def handler
-    self.class.handler_mapping[name].constantize
+  def self.handler_for(name)
+    raise "Unknown LLM tool: #{name}" unless name.in?(names)
+
+    "LlmTool::Handlers::#{name}".constantize
   end
 
-  def as_function_definition
+  def as_json
     {
       name:,
       description:,

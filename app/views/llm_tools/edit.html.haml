@@ -3,5 +3,5 @@
     .col-md-8.offset-md-2
       .card.shadow-sm
         .card-header.bg-primary.text-white
-          %h4.m-0 New LLM Tool
+          %h4.m-0= @llm_tool.name
         = render 'form', llm_tool: @llm_tool

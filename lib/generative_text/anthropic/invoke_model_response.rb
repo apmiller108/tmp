@@ -76,14 +76,12 @@ class GenerativeText
       def blobify
         [
           content,
-          *generate_image_inputs
+          *tool_inputs.map { _1['input'] }
         ].join(' ')
       end
 
-      def generate_image_inputs
-        results.select { |c| c['type'] == TOOL_USE && c['name'] == ToolBox::GenerateImage::NAME }
-               .map { _1['input'] }
-               .take(1)
+      def tool_inputs
+        results.select { |c| c['type'] == TOOL_USE }
       end
     end
   end

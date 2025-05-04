@@ -6,7 +6,7 @@ class GenerateTextToolInputJob
     generate_text_request = GenerateTextRequest.find(generate_text_request_id)
     return unless generate_text_request.response.tool_use?
 
-    handle_image_inputs(generate_text_request)
+    handle_inputs(generate_text_request)
   rescue StandardError => e
     message = I18n.t('unable_to_generate_image')
     broadcast_flash_to_user(message:, user: generate_text_request.user) if generate_text_request
@@ -15,21 +15,27 @@ class GenerateTextToolInputJob
 
   private
 
-  def handle_image_inputs(generate_text_request)
-    generate_text_request.response.generate_image_inputs.each do |input|
-      if input.blank?
-        log_and_broadcast_errors(generate_text_request.user, nil)
-        next
+  def handle_inputs(generate_text_request)
+    generate_text_request.response.tool_inputs.each do |input|
+      handler = LlmTool.handler_for(input['name'])
+      if handler
+        handle_image_inputs(input['input'], generate_text_request)
       end
+    end
+  end
 
-      attrs = image_request_attrs(input, generate_text_request)
-      form = GenerateImageRequestForm.new(attrs)
+  def handle_image_inputs(input, generate_text_request)
+    if input.blank?
+      return log_and_broadcast_errors(generate_text_request.user, nil)
+    end
 
-      if form.submit
-        Conversations::GenerateImageJob.perform_async(form.generate_image_request.id)
-      else
-        log_and_broadcast_errors(generate_text_request.user, form)
-      end
+    attrs = image_request_attrs(input, generate_text_request)
+    form = GenerateImageRequestForm.new(attrs)
+
+    if form.submit
+      Conversations::GenerateImageJob.perform_async(form.generate_image_request.id)
+    else
+      log_and_broadcast_errors(generate_text_request.user, form)
     end
   end
 

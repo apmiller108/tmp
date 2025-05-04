@@ -36,13 +36,14 @@
   - Tool to fetch a given URL, extract text content from HTML document and pipe
     into the followup response.
   - LLM can pick out a URL in a blob of text.
-* TODO CRUD for tools [4/6]
+* TODO CRUD for tools [5/6]
   - [X] Add data migration
   - [X] Add seed file
   - [X] Lint JSON on client
   - [X] Implement stater template with each possible datatype
   - [ ] Create and map handler
-  - [ ] Replace hardcoded tool
+  - [X] Replace hardcoded tool
+  - [ ] Delete hardcoded tool
 * DONE Remove dependency on AWS titan
 CLOSED: [2025-04-25 Fri 14:30]
 * DONE Related conversations [10/10]

@@ -33,7 +33,7 @@ class GenerativeText
       end
 
       def tools
-        ToolBox.all_tools
+        LlmTool.all
       end
     end
   end
