@@ -21,7 +21,7 @@
 
     .mb-3
       = form.label :input_schema, class: 'form-label'
-      = render JsonEditorComponent.new(form:, field_name: :input_schema, css_class: 'code-editor',
+      = render JsonEditorComponent.new(form:, field_name: :input_schema, css_class: 'input-schema-editor',
       placeholder: '{"type": "object", "properties": {...}}',
       helper_text: 'JSON Schema defining the parameters for this tool. Must include "type" and "properties" fields.' )
 

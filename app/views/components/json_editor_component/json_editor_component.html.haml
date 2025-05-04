@@ -1,4 +1,8 @@
 .editor-container{ class: css_class, data: { controller: 'json-editor' } }
   = form.text_area field_name, value:, rows: 10, class: ['form-control', 'd-none'], placeholder: placeholder, data: { 'json-editor-target' => 'input' }
   .editor{ data: { 'json-editor-target' => 'editorElem' } }
-  %small.form-text.text-muted= helper_text
+  %small.form-text.text-muted.d-block= helper_text
+  %button.btn.btn-sm.btn-outline-secondary.mt-2{type: "button", disabled: value.present?,
+                                                data: { 'json-editor-target' => 'templateButton', action: 'click->json-editor#insertSchemaTemplate' }}
+    %i.bi.bi-code-square
+    Insert JSON Schema Template

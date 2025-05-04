@@ -12,6 +12,9 @@ class JsonEditorComponent < ApplicationViewComponent
   end
 
   def value
-    form.object.public_send(field_name).to_json
+    return @value if defined? @value
+
+    val = form.object.public_send(field_name)
+    @value ||= val.blank? ? val : val.to_json
   end
 end
