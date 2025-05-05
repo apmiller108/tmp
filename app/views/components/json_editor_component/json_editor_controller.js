@@ -11,7 +11,10 @@ export default class JsonEditor extends Controller {
   }
 
   disconnect() {
-    // tear down editor
+    if (this.editorView) {
+      this.editorView.destroy();
+      this.editorView = null;
+    }
   }
 
   get extensions() {
@@ -142,7 +145,7 @@ export default class JsonEditor extends Controller {
         }
       }
     };
-    
+
     // Replace the entire document with the template
     const transaction = this.editorView.state.update({
       changes: {
@@ -151,7 +154,7 @@ export default class JsonEditor extends Controller {
         insert: this.formatJSON(schemaTemplate)
       }
     });
-    
+
     this.editorView.dispatch(transaction);
   }
 }
