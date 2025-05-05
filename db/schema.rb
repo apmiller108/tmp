@@ -235,7 +235,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_03_021640) do
     t.string "provider"
     t.string "uid"
     t.boolean "developer", default: false, null: false
-    t.vector "embedding", limit: 1024
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["jti"], name: "index_users_on_jti", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
