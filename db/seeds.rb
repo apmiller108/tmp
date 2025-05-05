@@ -18,7 +18,7 @@ puts 'Inserting LLM Tools'
 ActiveRecord::Base.connection.execute(<<~SQL)
 INSERT INTO llm_tools (name, description, input_schema, active, created_at, updated_at)
 VALUES (
-'Generate Image',
+'GenerateImage',
 'This tool creates a request to generate an image using a Stable Diffusion generative image AI model. Your job is to turn the user''s request to generate an image into a detailed, thoughtful and effective prompt to produce the best image possible. Use adjectives and detailed descriptive phrases. Be clear about the subject or main focal point of the image. To control the weight of a given word use the format (word:weight), where word is the word you''d like to control the weight of and weight is a value between 0 and 1. For example: The sky was a crisp (blue:0.3) and (green:0.8) would convey a sky that was blue and green, but more green than blue.
 
 Negative prompt and style are optional, but should be used where needed to produce the most optimal results.
