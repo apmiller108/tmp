@@ -16,10 +16,10 @@ class GenerateTextToolInputJob
   private
 
   def handle_inputs(generate_text_request)
-    generate_text_request.response.tool_inputs.each do |input|
-      handler = LlmTool.handler_for(input['name'])
+    generate_text_request.response.tool_inputs.each do |tool_input|
+      handler = LlmTool.handler_for(tool_input['name'])
       if handler
-        handle_image_inputs(input['input'], generate_text_request)
+        handle_image_inputs(tool_input['input'], generate_text_request)
       end
     end
   end
