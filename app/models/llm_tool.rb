@@ -17,10 +17,17 @@ class LlmTool < ApplicationRecord
     @names ||= pluck(:name)
   end
 
-  def self.handler_for(name)
+  # @param tool_input [Hash] hash matching LLM tool input content block
+  # Example:
+  # { "id" => "toolu_01MdQEyXJfvM5hUpabMKKwMU",
+  #   "name"=>"generate_image",
+  #   "type"=>"tool_use",
+  #   "input"=>{ "tool_use_input_json" => "here" }
+  def self.handler_for(tool_input)
+    name = tool_input.fetch('name')
     raise "Unknown LLM tool: #{name}" unless name.in?(names)
 
-    "LlmTool::Handlers::#{name}".constantize
+    "LlmTool::Handlers::#{name}".constantize.new(tool_input.fetch('input'))
   end
 
   def as_json

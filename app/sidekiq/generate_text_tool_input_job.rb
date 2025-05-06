@@ -17,40 +17,16 @@ class GenerateTextToolInputJob
 
   def handle_inputs(generate_text_request)
     generate_text_request.response.tool_inputs.each do |tool_input|
-      handler = LlmTool.handler_for(tool_input['name'])
-      if handler
-        handle_image_inputs(tool_input['input'], generate_text_request)
+      handler = LlmTool.handler_for(tool_input)
+      unless handler.call(generate_text_request)
+        log_and_broadcast_errors(generate_text_request.user, handler)
       end
     end
   end
 
-  def handle_image_inputs(input, generate_text_request)
-    if input.blank?
-      return log_and_broadcast_errors(generate_text_request.user, nil)
-    end
-
-    attrs = image_request_attrs(input, generate_text_request)
-    form = GenerateImageRequestForm.new(attrs)
-
-    if form.submit
-      Conversations::GenerateImageJob.perform_async(form.generate_image_request.id)
-    else
-      log_and_broadcast_errors(generate_text_request.user, form)
-    end
-  end
-
-  def image_request_attrs(input, generate_text_request)
-    {
-      **input['options'],
-      **input['prompts'],
-      **generate_text_request.slice(:user, :conversation),
-      'generate_text_request' => generate_text_request
-    }
-  end
-
-  def log_and_broadcast_errors(user, form)
-    message = I18n.t('unable_to_generate_image')
-    broadcast_flash_to_user(message:, user:, record: form)
-    Rails.logger.warn "#{self.class}: form_errors : #{form&.errors&.full_messages}"
+  def log_and_broadcast_errors(user, handler)
+    message = I18n.t('llm_tool_failed', handler_name: handler.class.to_s.split('::').last)
+    broadcast_flash_to_user(message:, user:)
+    Rails.logger.warn "#{self.class}: #{message}"
   end
 end
