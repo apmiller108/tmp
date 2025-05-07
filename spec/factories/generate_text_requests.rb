@@ -66,13 +66,12 @@ FactoryBot.define do
             },
             {
               'id' => 'toolu_0196KvCx6JumrjS1g6qvN14H',
-              'name' => 'generate_image',
+              'name' => 'GenerateImage',
               'type' => 'tool_use',
-              'input' =>
-            { 'options' => { 'style' => 'fantasy-art', 'aspect_ratio' => '16:9' },
-              'prompts' =>
-              { 'prompt' => 'image prompt',
-                'negative_prompt' => 'negative prompt' } }
+              'input' => {
+                'options' => { 'style' => 'fantasy-art', 'aspect_ratio' => '16:9' },
+                'prompts' => { 'prompt' => 'image prompt', 'negative_prompt' => 'negative prompt' }
+              }
             }
           ],
           'model' => 'claude-3-haiku-20240307',
