@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe GenerateTextToolInputJob do
   subject(:job) { described_class.new }
 
-
   describe '#perform' do
     let(:handler) { instance_double LlmTool::Handlers::GenerateImage }
     let(:input) do
@@ -29,7 +28,6 @@ RSpec.describe GenerateTextToolInputJob do
     end
 
     context 'when response is not a tool use' do
-
       it 'returns early' do
         job.perform(generate_text_request.id)
         expect(LlmTool).not_to have_received(:handler_for)
