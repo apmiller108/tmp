@@ -1,5 +1,5 @@
 class LlmToolsController < ApplicationController
-  before_action :set_llm_tool, only: %i[show edit update destroy]
+  before_action :set_llm_tool, only: %i[edit update destroy]
 
   def index
     @llm_tools = LlmTool.all

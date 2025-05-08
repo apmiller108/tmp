@@ -3,7 +3,7 @@ class LlmTool < ApplicationRecord
   before_validation :parse_input_schema
 
   # Must match the regex ^[a-zA-Z0-9_-]{1,64}$ for Anthropic to accept the request
-  normalizes :name, with: -> (name) { name.gsub(/\s+/, '_').camelize }
+  normalizes :name, with: ->(name) { name.gsub(/\s+/, '_').camelize }
 
   validates :name, presence: true, uniqueness: true
   validates :description, presence: true
