@@ -20,7 +20,7 @@ class LlmTool < ApplicationRecord
   # @param tool_input [Hash] hash matching LLM tool input content block
   # Example:
   # { "id" => "toolu_01MdQEyXJfvM5hUpabMKKwMU",
-  #   "name"=>"generate_image",
+  #   "name"=>"GenerateImage",
   #   "type"=>"tool_use",
   #   "input"=>{ "tool_use_input_json" => "here" }
   def self.handler_for(tool_input)

@@ -3,21 +3,25 @@ require 'rails_helper'
 RSpec.describe GenerateTextToolInputJob do
   subject(:job) { described_class.new }
 
-  let(:user) { create(:user, :with_setting) }
-  let(:input) do
-    {
-      'id' => 'toolu_0196KvCx6JumrjS1g6qvN14H',
-      'name' => 'GenerateImage',
-      'type' => 'tool_use',
-      'input' => {
-        'options' => { 'style' => 'fantasy-art', 'aspect_ratio' => '16:9' },
-        'prompts' => { 'prompt' => 'image prompt', 'negative_prompt' => 'negative prompt' }
-      }
-    }
-  end
 
   describe '#perform' do
     let(:handler) { instance_double LlmTool::Handlers::GenerateImage }
+    let(:input) do
+      {
+        'id' => 'toolu_0196KvCx6JumrjS1g6qvN14H',
+        'name' => 'GenerateImage',
+        'type' => 'tool_use',
+        'input' => {
+          'options' => { 'style' => 'fantasy-art', 'aspect_ratio' => '16:9' },
+          'prompts' => { 'prompt' => 'image prompt', 'negative_prompt' => 'negative prompt' }
+        }
+      }
+    end
+
+    let(:user) { create(:user, :with_setting) }
+    let(:generate_text_request) do
+      create(:generate_text_request, :with_response, user:)
+    end
 
     before do
       allow(LlmTool).to receive(:handler_for).with(input).and_return(handler)
@@ -25,9 +29,6 @@ RSpec.describe GenerateTextToolInputJob do
     end
 
     context 'when response is not a tool use' do
-      let(:generate_text_request) do
-        create(:generate_text_request, :with_response, user:)
-      end
 
       it 'returns early' do
         job.perform(generate_text_request.id)

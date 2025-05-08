@@ -7,7 +7,7 @@
         "text": "test assistant response"
     }, {
         "id": "toolu_0196KvCx6JumrjS1g6qvN14H",
-        "name": "generate_image",
+        "name": "GenerateImage",
         "type": "tool_use",
         "input": {
             "options": {
