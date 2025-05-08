@@ -1,0 +1,7 @@
+= form_with(model: model, url: '/example', scope: 'test') do |form|
+  .card-body
+    .mb-3
+      = form.label :json_field, class: 'form-label'
+      = render JsonEditorComponent.new(form:, field_name: :json_field, css_class: 'json-field-editor',
+      placeholder: '{"type": "object", "properties": {...}}',
+      helper_text: 'This is the helper text' )
