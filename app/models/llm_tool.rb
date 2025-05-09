@@ -1,4 +1,14 @@
 class LlmTool < ApplicationRecord
+<<<<<<< HEAD
+=======
+  enum :tool_type, {
+    image: 'image'
+  }
+  validates :tool_type, inclusion: { in: tool_types.values, message: "%<value>s must be one of #{tool_types.values}" }
+
+  has_many :conversation_llm_tools, dependent: :destroy
+
+>>>>>>> 2ab5e3b (Adds llm tool type)
   before_validation :parse_input_schema
 
   # Must match the regex ^[a-zA-Z0-9_-]{1,64}$ for Anthropic to accept the request

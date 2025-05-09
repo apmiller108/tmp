@@ -150,6 +150,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_03_021640) do
     t.boolean "active", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "tool_type", limit: 24, null: false
     t.index ["name"], name: "index_llm_tools_on_name", unique: true
   end
 
