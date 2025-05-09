@@ -33,6 +33,8 @@ class Conversation < ApplicationRecord
 
   validate :memo_user_matches_conversation_user, if: :memo_id_changed?
 
+  validate :tool_types_inclusion, if: -> { tool_types.present? }
+
   # @param [String] prompt
   def self.title_from_prompt(prompt)
     return Time.current.strftime('%a, %d %b %Y %H:%M:%S') if prompt.blank?
@@ -57,6 +59,29 @@ class Conversation < ApplicationRecord
     ].join(' ')
   end
 
+  # Helper methods for tool types
+  def tool_type?(type)
+    tool_types.include?(type.to_s)
+  end
+
+  # def add_tool_type(type)
+  #   return if tool_type?(type)
+  #   self.tool_types = (tool_types || []) + [type.to_s]
+  # end
+
+  # def remove_tool_type(type)
+  #   return unless tool_type?(type)
+  #   self.tool_types = tool_types - [type.to_s]
+  # end
+
+  # def toggle_tool_type(type, enabled)
+  #   if enabled
+  #     add_tool_type(type)
+  #   else
+  #     remove_tool_type(type)
+  #   end
+  # end
+
   private
 
   def memo_user_matches_conversation_user
@@ -67,5 +92,13 @@ class Conversation < ApplicationRecord
     return if user_id == memo_user_id
 
     errors.add(:memo_id, 'must belong to the same user as the conversation')
+  end
+
+  def tool_types_inclusion
+    invalid_types = tool_types - LlmTool.tool_types.keys.map(&:to_s)
+
+    if invalid_types.any?
+      errors.add(:tool_types, 'contains invalid types')
+    end
   end
 end
