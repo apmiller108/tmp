@@ -36,7 +36,8 @@ RSpec.describe LlmTool, type: :model do
 
   describe '#as_json' do
     let(:tool) do
-      build_stubbed(:llm_tool, name: 'TestTool', description: 'A test tool', input_schema: { 'type' => 'object', 'properties' => {} })
+      build_stubbed(:llm_tool, name: 'TestTool', description: 'A test tool',
+                               input_schema: { 'type' => 'object', 'properties' => {} })
     end
 
     it 'returns a hash with the required fields' do
