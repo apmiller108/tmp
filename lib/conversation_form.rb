@@ -16,6 +16,7 @@ class ConversationForm
   attribute :turnable_type
   attribute :stream, :boolean, default: false
   attribute :image_quality
+  attribute :tool_types
 
   validates :user, presence: true
   validate :valid_turnable, if: -> { turnable.present? }
@@ -75,6 +76,7 @@ class ConversationForm
     assign_default_title
     assign_defaults_from_last_request
     self.image_quality ||= conversation.image_quality
+    self.tool_types ||= conversation.tool_types
   end
 
   def assign_default_title

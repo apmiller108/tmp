@@ -6,6 +6,7 @@
     = form.hidden_field :text_id, data: { 'prompt-form-target' => 'textId' }
     = form.hidden_field :stream, value: 1
     = form.hidden_field :image_quality, { data: { 'prompt-form-target' => 'imageQuality' } }
+    = form.hidden_field :tool_types, { data: { 'prompt-form-target' => 'toolTypes' } }
     .grid{ style: '--bs-gap: 0.5rem;'}
       .g-col-12.form-container
         .options.d-flex.justify-content-start.align-items-center
@@ -89,15 +90,8 @@
           .llm-tools-container
             - LlmTool.active.pluck(:tool_type).uniq.each do |tool_type|
               .form-check.form-switch.mb-3
-                %input.form-check-input{ type: 'checkbox',
-                                        id: "tool-type-#{tool_type}",
-                                        checked: false,
-                                        data: {
-                                          'tool-selection-target': 'toolTypeSwitch',
-                                          'action': 'change->tool-selection#toggleToolType',
-                                          'tool-type': tool_type,
-                                          'conversation-id': conversation.id
-                                        } }
+                = check_box :conversation, "tool_type_#{tool_type}", checked: conversation.tool_type?(tool_type), include_hidden: false,
+                role: :switch, class: 'form-check-input', data: { action: 'change->prompt-form#toggleToolType', 'tool-type' => tool_type }
                 %label.form-check-label{ for: "tool-type-#{tool_type}" }
                   = tool_type.titleize
                 %i.bi.bi-info-circle.ms-1.text-muted{ data: { 'bs-toggle' => 'tooltip',

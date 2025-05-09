@@ -1,6 +1,7 @@
 class LlmTool < ApplicationRecord
   enum :tool_type, {
-    image: 'image'
+    image: 'image',
+    github: 'github'
   }
   validates :tool_type, inclusion: { in: tool_types.values, message: "%<value>s must be one of #{tool_types.values}" }
 

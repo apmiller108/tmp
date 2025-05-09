@@ -9,7 +9,7 @@ export default class PromptFormController extends Controller {
   static targets = [
     'promptInput', 'form', 'submitButton', 'showOptionsButton', 'options',
     'temperatureSlider', 'temperatureValue', 'temperatureSelect', 'modelSelect',
-    'presetSelect', 'textId', 'toggleTextAreaButton', 'imageQuality'
+    'presetSelect', 'textId', 'toggleTextAreaButton', 'imageQuality', 'toolTypes'
   ]
 
   connect() {
@@ -195,5 +195,21 @@ export default class PromptFormController extends Controller {
         console.error('error setting image quality', err)
       }
     }
+  }
+
+  toggleToolType(e) {
+    const type = e.target.dataset.toolType
+    const enabled = e.target.checked
+    let toolTypes = this.toolTypesTarget.value.split(' ')
+
+    if (enabled) {
+      if (!toolTypes.includes(type)) {
+        toolTypes.push(type)
+      }
+    } else {
+      toolTypes = toolTypes.filter(t => t !== type)
+    }
+
+    this.toolTypesTarget.value = toolTypes.join(' ')
   }
 }
