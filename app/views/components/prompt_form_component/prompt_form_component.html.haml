@@ -83,3 +83,22 @@
               = label :converstion, :image_quality, 'Text to Image Quality', class: 'form-label'
               %i.bi.bi-info-circle.ms-1.text-muted{ data: { 'bs-toggle' => 'tooltip',
                                                             'bs-title' => 'Select standard for faster generation times. Select high for photorealistic and professional print quality. Image to image will always be high quality' } }
+
+          %h6.mb-3 AI Tools
+
+          .llm-tools-container
+            - LlmTool.active.pluck(:tool_type).uniq.each do |tool_type|
+              .form-check.form-switch.mb-3
+                %input.form-check-input{ type: 'checkbox',
+                                        id: "tool-type-#{tool_type}",
+                                        checked: false,
+                                        data: {
+                                          'tool-selection-target': 'toolTypeSwitch',
+                                          'action': 'change->tool-selection#toggleToolType',
+                                          'tool-type': tool_type,
+                                          'conversation-id': conversation.id
+                                        } }
+                %label.form-check-label{ for: "tool-type-#{tool_type}" }
+                  = tool_type.titleize
+                %i.bi.bi-info-circle.ms-1.text-muted{ data: { 'bs-toggle' => 'tooltip',
+                                                              'bs-title': helpers.tool_type_description(tool_type) } }
