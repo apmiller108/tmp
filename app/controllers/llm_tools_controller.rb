@@ -6,7 +6,7 @@ class LlmToolsController < ApplicationController
   end
 
   def new
-    @llm_tool = LlmTool.new
+    @llm_tool = LlmTool.new(active: false)
   end
 
   def edit; end

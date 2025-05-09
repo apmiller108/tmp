@@ -1,4 +1,3 @@
-# app/models/llm_tool.rb
 class LlmTool < ApplicationRecord
   before_validation :parse_input_schema
 
@@ -13,21 +12,30 @@ class LlmTool < ApplicationRecord
 
   scope :active, -> { where(active: true) }
 
-  def self.names
-    @names ||= pluck(:name)
+  # Finds and instantiates the appropriate handler for a given LLM tool input
+  #
+  # @param tool_input [Hash] The LLM tool input content block
+  # @option tool_input [String] 'name' The name of the tool to handle
+  # @option tool_input [Hash] 'input' The input parameters for the tool
+  #
+  # @example
+  #   tool_input = {
+  #     "id" => "toolu_01MdQEyXJfvM5hUpabMKKwMU",
+  #     "name" => "GenerateImage",
+  #     "type" => "tool_use",
+  #     "input" => { "prompt" => "A sunset over mountains" }
+  #   }
+  #   handler = LlmTool.handler_for(tool_input)
+  #
+  # @raise [ActiveRecord::RecordNotFound] If the active tool is not found
+  # @return [LlmTool::Handlers::Base] An instance of the appropriate handler class
+  def self.handler_for(tool_input)
+    tool = active.find_by!(name: tool_input.fetch('name'))
+    tool.handler_class.new(tool_input.fetch('input'))
   end
 
-  # @param tool_input [Hash] hash matching LLM tool input content block
-  # Example:
-  # { "id" => "toolu_01MdQEyXJfvM5hUpabMKKwMU",
-  #   "name"=>"GenerateImage",
-  #   "type"=>"tool_use",
-  #   "input"=>{ "tool_use_input_json" => "here" }
-  def self.handler_for(tool_input)
-    name = tool_input.fetch('name')
-    raise "Unknown LLM tool: #{name}" unless name.in?(names)
-
-    "LlmTool::Handlers::#{name}".constantize.new(tool_input.fetch('input'))
+  def handler_class
+    "LlmTool::Handlers::#{name}".constantize
   end
 
   def as_json
