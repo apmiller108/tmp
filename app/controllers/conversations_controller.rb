@@ -126,17 +126,18 @@ class ConversationsController < ApplicationController
 
   def conversation_params
     params.require(:conversation).permit(
-      :title,
+      :file,
+      :generate_text_preset_id,
       :image_quality,
       :memo_id,
-      :turnable_type,
-      :prompt,
-      :text_id,
-      :temperature,
-      :generate_text_preset_id,
       :model,
-      :file,
-      :stream
+      :prompt,
+      :stream,
+      :temperature,
+      :text_id,
+      :title,
+      :tool_types,
+      :turnable_type
     ).merge(user: current_user)
   end
 end

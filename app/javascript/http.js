@@ -29,16 +29,26 @@ export const createConversation = (params) => {
 }
 
 export const updateConversation = (params) => {
-  const { conversation_id, memo_id, prompt, text_id, temperature, generate_text_preset_id, image_quality } = params
+  const {
+    conversation_id, memo_id, prompt, text_id, temperature,
+    generate_text_preset_id, image_quality, tool_types
+  } = params
+
+  console.log(params)
+
   const headers = jsonFormatHeaders()
   let body = { conversation: {} }
+
   if (memo_id) {
     body.conversation.memo_id = memo_id
   }
 
-  console.log(params)
   if (image_quality) {
     body.conversation.image_quality = image_quality
+  }
+
+  if (tool_types !== undefined) {
+    body.conversation.tool_types = tool_types
   }
 
   if (prompt) {

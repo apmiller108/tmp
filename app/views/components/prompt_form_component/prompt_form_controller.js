@@ -188,9 +188,15 @@ export default class PromptFormController extends Controller {
   onImageQualityChange(e) {
     const imageQuality = e.target.value
     this.imageQualityTarget.value = imageQuality
+    this.updateConversation({
+      image_quality: imageQuality
+    })
+  }
+
+  updateConversation(params) {
     if (this.conversationId) {
       try {
-        updateConversation({ conversation_id: this.conversationId, image_quality: imageQuality })
+        updateConversation({ conversation_id: this.conversationId, ...params })
       } catch (err) {
         console.error('error setting image quality', err)
       }
@@ -211,5 +217,8 @@ export default class PromptFormController extends Controller {
     }
 
     this.toolTypesTarget.value = toolTypes.join(' ')
+    this.updateConversation({
+      tool_types: this.toolTypesTarget.value
+    })
   }
 }

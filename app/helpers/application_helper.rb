@@ -11,7 +11,7 @@ module ApplicationHelper
   def tool_type_description(tool_type)
     case tool_type.to_sym
     when :image
-      'Enable AI image generation capabilities for this conversation'
+      'Enable AI image generation capabilities for this conversation: text to image, image to image and upscale.'
     else
       "Enable the #{tool_type.titleize} tools for this conversation"
     end

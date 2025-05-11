@@ -1,12 +1,14 @@
 class Conversation < ApplicationRecord
   # excluding :embedding because it fill up the console with numbers
-  self.attributes_for_inspect = %i[id title image_quality user_id memo_id create_at updated_at]
+  self.attributes_for_inspect = %i[id title image_quality tool_types user_id memo_id create_at updated_at]
 
   # When getting the nearest neighbors, this attribute holds the distance if
   # included in the select statement. Example: given `vector` is Array<Float>,
   # Conversation.select("conversations.*, (embedding <=> '#{vector}') AS neighbor_distance")
   #             .where('embedding <=> ? < ?', vector.to_s, 0.7)
   attribute :neighbor_distance
+
+  normalizes :tool_types, with: ->(types) { Array(types).map { _1.to_s.downcase }.uniq }
 
   enum :image_quality,
        GenerativeImage::QUALITY_LEVELS.zip(GenerativeImage::QUALITY_LEVELS).to_h,
@@ -59,28 +61,9 @@ class Conversation < ApplicationRecord
     ].join(' ')
   end
 
-  # Helper methods for tool types
   def tool_type?(type)
     tool_types.include?(type.to_s)
   end
-
-  # def add_tool_type(type)
-  #   return if tool_type?(type)
-  #   self.tool_types = (tool_types || []) + [type.to_s]
-  # end
-
-  # def remove_tool_type(type)
-  #   return unless tool_type?(type)
-  #   self.tool_types = tool_types - [type.to_s]
-  # end
-
-  # def toggle_tool_type(type, enabled)
-  #   if enabled
-  #     add_tool_type(type)
-  #   else
-  #     remove_tool_type(type)
-  #   end
-  # end
 
   private
 

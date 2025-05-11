@@ -40,8 +40,9 @@
   - [X] Add tool type enum to llm tools
   - [X] Add tool type array column to conversations
   - [X] Add tool type switches to to conversation settings modal
-  - [ ] Update stimulus controller to manage the tool type list
-  - [ ] Update the controller and form object to handle tool_types
+  - [X] Update stimulus controller to manage the tool type list
+  - [X] Update the controller and form object to handle tool_types
+  - [X] Update stimulus controller to make PUT request on change
   - [ ] When creating the request, select only the tools the conversation is
     configured with
 * DONE CRUD for tools [7/7]

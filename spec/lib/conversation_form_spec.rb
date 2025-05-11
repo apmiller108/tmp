@@ -172,7 +172,7 @@ RSpec.describe ConversationForm do
     end
   end
 
-  describe 'default values' do
+  describe 'default attributes' do
     context 'with existing conversation' do
       let(:existing_request) do
         create(:generate_text_request, temperature:, model:, generate_text_preset_id: generate_text_preset.id)
@@ -190,6 +190,35 @@ RSpec.describe ConversationForm do
         expect(form.attributes.symbolize_keys).to(
           include(model:, temperature:, generate_text_preset_id: generate_text_preset.id)
         )
+      end
+    end
+
+    context 'when tool_types is nil' do
+      let(:conversation) { build_stubbed :conversation, tool_types: ['image'] }
+      let(:attributes) do
+        {
+          user:,
+          conversation:
+        }
+      end
+
+      it 'sets tool_types to what is already set on the conversation' do
+        expect(form.attributes).to include('tool_types' => conversation.tool_types)
+      end
+    end
+
+    context 'when tool_types is provided' do
+      let(:conversation) { build_stubbed :conversation, tool_types: 'image' }
+      let(:attributes) do
+        {
+          user:,
+          conversation:,
+          tool_types: 'test1 test2'
+        }
+      end
+
+      it 'sets tool_types to the parsed provided value' do
+        expect(form.attributes).to include('tool_types' => %w[test1 test2])
       end
     end
 
