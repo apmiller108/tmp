@@ -34,8 +34,6 @@ export const updateConversation = (params) => {
     generate_text_preset_id, image_quality, tool_types
   } = params
 
-  console.log(params)
-
   const headers = jsonFormatHeaders()
   let body = { conversation: {} }
 
