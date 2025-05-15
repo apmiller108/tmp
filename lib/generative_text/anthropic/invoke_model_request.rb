@@ -16,10 +16,9 @@ class GenerativeText
           max_tokens: model.max_tokens,
           stream:,
           system: system_message,
-          tools:,
-          tool_choice: { type: :auto },
           temperature:,
-          messages:
+          messages:,
+          **tool_params,
         }.compact
       end
 
@@ -27,13 +26,22 @@ class GenerativeText
 
       private
 
+      def tool_params
+        return {} if tools.empty?
+
+        {
+          tools:,
+          tool_choice: { type: :auto }
+        }
+      end
+
       def messages
         turns = generate_text_request.conversation.turns.to_a
         conversation.exchange.push(Turn.user_turn(generate_text_request, turns:))
       end
 
       def tools
-        LlmTool.active
+        @tools ||= LlmTool.active.where(tool_type: conversation.tool_types)
       end
     end
   end
