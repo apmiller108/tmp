@@ -10,7 +10,7 @@ RSpec.describe 'update conversation', type: :system do
   let(:assistant_response) { 'test assistant response' }
   let(:model) { GenerativeText::MODELS.find { _1.api_name == setting.text_model } }
   let(:temperature) { 0.5 }
-  let(:conversation) { create :conversation, :with_requests, user:, request_count: 3 }
+  let(:conversation) { create :conversation, :with_requests, user:, request_count: 3, tool_types: ['image'] }
   let(:response_body) { file_fixture('anthropic/messages_stream_response.txt').read }
   let(:embedding_request_stub) do
     stub_voyage_embedding_request(input: [[conversation.blobify, prompt, assistant_response].join(' ')])

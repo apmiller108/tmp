@@ -81,7 +81,7 @@ RSpec.describe MemoFormComponent, type: :component do
   end
 
   context 'when the memo has a color' do
-    let(:memo) { build_stubbed(:memo, :with_user, color: Memo::COLORS.sample) }
+    let(:memo) { build_stubbed(:memo, :with_user, color: Memo::COLORS.last) }
 
     it "sets the color picker's selected color property" do
       expected_args = {

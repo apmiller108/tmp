@@ -37,7 +37,8 @@ RSpec.describe 'WysiwygEditorComponent', type: :system do
     stub_voyage_embedding_request(input: ['This is my prompt This is my prompt test assistant response'])
 
     stub_anthropic_messages_request(
-      model:, assistant_response: generative_text, temperature: 0.0, prompt: 'This is my prompt'
+      model:, assistant_response: generative_text, temperature: 0.0, prompt: 'This is my prompt',
+      tools: nil, tool_choice: nil
     )
     stub_stability_core_request
   end

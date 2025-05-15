@@ -12,11 +12,11 @@ module RequestStubs
           max_tokens: args.fetch(:model).max_tokens,
           stream: false,
           system: GenerateTextRequest.new(generate_text_preset: args.fetch(:generate_text_preset, nil)).system_message,
-          tools: LlmTool.all.map(&:as_json),
-          tool_choice: { type: 'auto' },
+          tools: args.fetch(:tools, LlmTool.all.map(&:as_json)),
+          tool_choice: args.fetch(:tool_choice, { type: 'auto' }),
           temperature: args.fetch(:temperature),
           messages:
-        }.to_json
+        }.compact.to_json
       ).to_return(status: args.fetch(:response_status, 200), body: args.fetch(:response_body, body))
   end
 

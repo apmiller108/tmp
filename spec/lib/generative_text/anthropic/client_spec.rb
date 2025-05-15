@@ -10,7 +10,8 @@ RSpec.describe GenerativeText::Anthropic::Client do
 
   describe '#invoke_model' do
     before do
-      create :conversation_turn, turnable: generate_text_request
+      create :conversation_turn, turnable: generate_text_request,
+                                 conversation: create(:conversation, tool_types: ['image'])
       stub_anthropic_messages_request(model:, temperature:, prompt:)
     end
 

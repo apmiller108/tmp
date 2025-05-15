@@ -36,7 +36,8 @@
   - Tool to fetch a given URL, extract text content from HTML document and pipe
     into the followup response.
   - LLM can pick out a URL in a blob of text.
-* TODO Selectable LLM Tools
+* DONE Selectable LLM Tools
+CLOSED: [2025-05-15 Thu 15:20]
   - [X] Add tool type enum to llm tools
   - [X] Add tool type array column to conversations
   - [X] Add tool type switches to to conversation settings modal
@@ -45,7 +46,7 @@
   - [X] Update stimulus controller to make PUT request on change
   - [X] When creating the request, select only the tools the conversation is
     configured with
-  - [ ] Update specs
+  - [X] Update specs
 * DONE CRUD for tools [7/7]
 CLOSED: [2025-05-09 Fri 08:21]
   - [X] Add data migration

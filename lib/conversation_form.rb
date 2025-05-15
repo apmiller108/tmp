@@ -93,7 +93,7 @@ class ConversationForm
     {
       user:,
       updated_at: Time.current,
-      tool_types: 
+      tool_types:
     }.tap do |attrs|
       attrs[:title] = title if title.present?
       attrs[:memo_id] = memo_id if memo_id.present?

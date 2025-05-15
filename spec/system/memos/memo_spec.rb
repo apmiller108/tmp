@@ -28,7 +28,9 @@ RSpec.describe 'Create and view memo', type: :system do
       assistant_response: generative_text,
       temperature: generate_text_preset.temperature,
       generate_text_preset:,
-      prompt: generate_text_prompt
+      prompt: generate_text_prompt,
+      tools: nil,
+      tool_choice: nil
     )
 
     stub_voyage_embedding_request(input: ['This is my prompt This is my prompt test assistant response'])

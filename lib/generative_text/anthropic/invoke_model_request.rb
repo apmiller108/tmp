@@ -16,9 +16,9 @@ class GenerativeText
           max_tokens: model.max_tokens,
           stream:,
           system: system_message,
-          temperature:,
-          messages:,
           **tool_params,
+          temperature:,
+          messages:
         }.compact
       end
 
