@@ -5,7 +5,7 @@ module ApplicationHelper
 
   # @param [ActiveRecord, #dom_id]
   def list_dom_id(record)
-    dom_id(record, 'list')
+    ActionView::RecordIdentifier.dom_id(record, 'list')
   end
 
   def tool_type_description(tool_type)
@@ -16,4 +16,6 @@ module ApplicationHelper
       "Enable the #{tool_type.titleize} tools for this conversation"
     end
   end
+
+  module_function :list_dom_id
 end
