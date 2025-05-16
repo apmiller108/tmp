@@ -20,6 +20,7 @@ class TranscriptionSummaryJob
     end
 
     if response.complete?
+      request.update(response: response.data, status: GenerateTextRequest.statuses[:completed])
       summary.status = Summary.statuses[:completed]
       summary.save!
       broadcast(user, transcription)
