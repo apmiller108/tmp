@@ -39,8 +39,9 @@ class GenerativeText
                 end
       end
 
-      # This is the assistant response.
-      # Sometimes it will not be present if the response contains a tool use block.
+      # This is the assistant response. Sometimes it will not be present if the
+      # response contains a tool use block. In other words, there are rare
+      # occassions where the response will only contain the tool use block.
       # @return [String, nil]
       def content
         results.find { |c| c['type'] == 'text' }&.fetch('text')

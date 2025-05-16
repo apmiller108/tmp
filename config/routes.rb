@@ -40,6 +40,9 @@ Rails.application.routes.draw do
   end
 
   resources :conversations do
+    member do
+      post 'generate_title'
+    end
     resources :conversation_turns, only: %i[destroy]
   end
   resources :blobs, only: %i[show], param: :active_storage_blob_id

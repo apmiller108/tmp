@@ -10,6 +10,10 @@ function jsonFormatHeaders() {
   }
 }
 
+export const generateConversationTitle = (conversation_id) => {
+  return fetch(`/conversations/${conversation_id}/generate_title`, { method: 'POST', headers: jsonFormatHeaders() })
+}
+
 export const createConversation = (params) => {
   const { prompt, text_id, temperature, generate_text_preset_id } = params
   const headers = jsonFormatHeaders()
@@ -130,6 +134,7 @@ export const generateImage = ({ prompt, negative_prompt, image_name, style, aspe
 export default {
   getConversations,
   generateImage,
+  generateConversationTitle,
   updateConversation,
   createConversation,
   autoSaveMemo

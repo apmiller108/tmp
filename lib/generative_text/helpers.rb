@@ -29,5 +29,14 @@ class GenerativeText
     def self.markdown_sys_msg
       MARKDOWN_FORMAT_SYSTEM_MESSAGE
     end
+
+    def self.conversation_title_prompt(conversation)
+      <<~PROMPT
+        Create a brief title for the following conversation. Only return the title,
+        without any quotation marks. Do not prefix the title with "Title:".
+
+        #{conversation.blobify}
+      PROMPT
+    end
   end
 end

@@ -97,3 +97,20 @@ a[disabled] {
   opacity: 0.6;
 }
 
+.btn:disabled {
+  border: none;
+}
+
+// Rotate element in the clockwise direction indefinitely
+@keyframes rotateClockwise {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rotate-clockwise {
+  animation: rotateClockwise 1s linear infinite;
+}

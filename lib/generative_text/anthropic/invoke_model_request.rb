@@ -35,6 +35,9 @@ class GenerativeText
         }
       end
 
+      # In some cases text is generated outside the context of a Conversation
+      # (eg, summaries) In this case the NullConversation provides the empty
+      # exchange.
       def messages
         turns = generate_text_request.conversation.turns.to_a
         conversation.exchange.push(Turn.user_turn(generate_text_request, turns:))

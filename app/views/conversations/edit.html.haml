@@ -1,7 +1,7 @@
 = turbo_frame_tag :conversation_content do
   .conversation-title.container.mb-1{ data: { controller: 'tooltip' } }
     %div
-      = render partial: 'title_form', locals: { conversation_form: @conversation_form, conversation: @conversation }
+      = render partial: 'title_form', locals: { conversation: @conversation }
   = render ConversationComponent.new(conversation_form: @conversation_form)
 = turbo_stream.update :conversation_scroll_spy do
   = render ScrollspyComponent.new(container_id: 'conversation_component', target_id: 'conversation-nav',

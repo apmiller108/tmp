@@ -2,7 +2,7 @@ class ConversationsController < ApplicationController
   layout 'conversations', except: :index
   layout 'application', only: :index
 
-  before_action :set_conversation, only: %i[update destroy]
+  before_action :set_conversation, only: %i[update destroy generate_title]
 
   rescue_from ActiveRecord::RecordNotFound, with: -> { redirect_to root_path }
 
@@ -111,6 +111,15 @@ class ConversationsController < ApplicationController
     respond_to do |format|
       format.turbo_stream
       format.html { redirect_to conversations_path, notice: 'Conversation deleted' }
+    end
+  end
+
+  def generate_title
+    GenerateConversationTitleJob.perform_async(@conversation.id)
+    respond_to do |format|
+      format.json do
+        head :ok
+      end
     end
   end
 

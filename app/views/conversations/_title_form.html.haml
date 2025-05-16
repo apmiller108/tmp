@@ -1,8 +1,13 @@
 .title.d-flex.justify-content-center.align-items-center#conversation-title{ data: { controller: 'tooltip inline-edit' } }
-  %div{ data: { 'inline-edit-target' => 'field' }}
+  .d-flex.justify-content-center.align-items-center{ data: { 'inline-edit-target' => 'field' }}
     .title-field.fw-bold{ data: { action: 'click->inline-edit#onClickField', 'bs-toggle' => 'tooltip', 'bs-title' => conversation.title } }
       = truncate(conversation.title, length: 50, separator: ' ')
-  = form_with model: conversation_form, scope: :conversation, url: polymorphic_path(conversation), class: 'd-none',
+    %button.btn.icon-btn.icon-btn-sm.ms-3{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => 'Generate title',
+                                                   controller: 'conversation-title-generator',
+                                                   action: 'click->conversation-title-generator#generateTitle',
+                                                   'conversation-title-generator-conversation-id-value' => conversation.id } }
+      %i.bi.bi-arrow-clockwise
+  = form_with model: conversation, scope: :conversation, url: polymorphic_path(conversation), class: 'd-none',
     data: { 'inline-edit-target' => 'form' } do |form|
     .d-flex.justify-content-center.align-items-center
       = form.text_field :title, value: conversation.title, class: 'form-control me-1 title-input',
