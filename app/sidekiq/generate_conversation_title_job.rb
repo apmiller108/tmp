@@ -27,13 +27,16 @@ class GenerateConversationTitleJob
     Turbo::StreamsChannel.broadcast_action_to(
       [conversation.user, TurboStreams::STREAMS[:main]],
       target: 'conversation-title',
-      content: ApplicationController.render(partial: 'conversations/title_form', locals: { conversation: }),
+      partial: 'conversations/title_form',
+      locals: { conversation: },
       action: :replace
     )
     Turbo::StreamsChannel.broadcast_action_to(
       [conversation.user, TurboStreams::STREAMS[:main]],
       target: ApplicationHelper.list_dom_id(conversation),
-      content: ApplicationController.render(partial: 'conversations/list_item', locals: { conversation: }),
+      partial: 'conversations/list_item',
+      formats: [:turbo_stream],
+      locals: { conversation: },
       action: :replace
     )
   end
