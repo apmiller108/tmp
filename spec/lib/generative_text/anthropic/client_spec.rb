@@ -9,21 +9,44 @@ RSpec.describe GenerativeText::Anthropic::Client do
   let(:generate_text_request) { create :generate_text_request, :with_anthropic_model, prompt:, temperature: }
 
   describe '#invoke_model' do
-    before do
-      create :conversation_turn, turnable: generate_text_request,
-                                 conversation: create(:conversation, tool_types: ['image'])
-      stub_anthropic_messages_request(model:, temperature:, prompt:)
-    end
-
     context 'with a valid request' do
-      it 'returns an InvokeModelResponse object' do
-        response = client.invoke_model(generate_text_request)
-        expect(response).to be_a(GenerativeText::Anthropic::InvokeModelResponse)
+      context 'with a conversation' do
+        let!(:http_request) do
+          stub_anthropic_messages_request(model:, temperature:, prompt:)
+        end
+
+        before do
+          create :conversation_turn, turnable: generate_text_request,
+                                     conversation: create(:conversation, tool_types: ['image'])
+        end
+
+        it 'calls the messages endpoint' do
+          client.invoke_model(generate_text_request)
+          expect(http_request).to have_been_requested
+        end
+
+        it 'returns an InvokeModelResponse object' do
+          response = client.invoke_model(generate_text_request)
+          expect(response).to be_a(GenerativeText::Anthropic::InvokeModelResponse)
+        end
+      end
+
+      context 'without a conversation' do
+        let!(:http_request) do
+          stub_anthropic_messages_request(model:, temperature:, prompt:, tools: nil, tool_choice: nil)
+        end
+
+        it 'calls the messages endpoint without conversation dependent options' do
+          client.invoke_model(generate_text_request)
+          expect(http_request).to have_been_requested
+        end
       end
     end
 
     context 'with invalid parameters' do
       before do
+        create :conversation_turn, turnable: generate_text_request,
+                                    conversation: create(:conversation, tool_types: ['image'])
         stub_anthropic_messages_request(
           model:, temperature:, prompt:, response_status: 500, response_body: 'Invalid request'
         )

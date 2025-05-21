@@ -38,8 +38,8 @@
   - LLM can pick out a URL in a blob of text.
 * TODO Generate conversation titles
   - [X] Click button and generate title in background
-  - [ ] Write anthropic client test the depends on NullConversation
-  - [ ] Unit test 
+  - [X] Write anthropic client test the depends on NullConversation
+  - [X] Unit test 
   - [ ] System test generating title
 * DONE Selectable LLM Tools
 CLOSED: [2025-05-15 Thu 15:20]
