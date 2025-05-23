@@ -36,11 +36,12 @@
   - Tool to fetch a given URL, extract text content from HTML document and pipe
     into the followup response.
   - LLM can pick out a URL in a blob of text.
-* TODO Generate conversation titles
+* DONE Generate conversation titles
+CLOSED: [2025-05-23 Fri 14:44]
   - [X] Click button and generate title in background
   - [X] Write anthropic client test the depends on NullConversation
-  - [X] Unit test 
-  - [ ] System test generating title
+  - [X] Unit test
+  - [X] System test generating title
 * DONE Selectable LLM Tools
 CLOSED: [2025-05-15 Thu 15:20]
   - [X] Add tool type enum to llm tools

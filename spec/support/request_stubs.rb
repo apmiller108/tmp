@@ -11,7 +11,10 @@ module RequestStubs
           model: args.fetch(:model).api_name,
           max_tokens: args.fetch(:model).max_tokens,
           stream: false,
-          system: GenerateTextRequest.new(generate_text_preset: args.fetch(:generate_text_preset, nil)).system_message,
+          system: GenerateTextRequest.new(
+            generate_text_preset: args.fetch(:generate_text_preset, nil),
+            markdown_format: args.fetch(:markdown_format, nil)
+          ).system_message,
           tools: args.fetch(:tools, LlmTool.all.map(&:as_json)),
           tool_choice: args.fetch(:tool_choice, { type: 'auto' }),
           temperature: args.fetch(:temperature),
