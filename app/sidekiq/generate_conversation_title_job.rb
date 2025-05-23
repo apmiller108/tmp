@@ -9,6 +9,7 @@ class GenerateConversationTitleJob
     request = GenerateTextRequest.create!(markdown_format: false,
                                           user: conversation.user,
                                           prompt: GenerativeText::Helpers.conversation_title_prompt(conversation),
+                                          temperature: 0.2,
                                           model: GenerativeText::SUMMARY_MODEL.api_name)
 
     response = GenerativeText.new.invoke_model(request)

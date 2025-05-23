@@ -2,10 +2,10 @@
   .d-flex.justify-content-center.align-items-center{ data: { 'inline-edit-target' => 'field' }}
     .title-field.fw-bold{ data: { action: 'click->inline-edit#onClickField', 'bs-toggle' => 'tooltip', 'bs-title' => conversation.title } }
       = truncate(conversation.title, length: 50, separator: ' ')
-    %button.btn.icon-btn.icon-btn-sm.ms-3{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => 'Generate title',
-                                                   controller: 'conversation-title-generator',
-                                                   action: 'click->conversation-title-generator#generateTitle',
-                                                   'conversation-title-generator-conversation-id-value' => conversation.id } }
+    %button.btn.icon-btn.icon-btn-sm.ms-3#generate-title-btn{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => 'Generate title',
+                                                              controller: 'conversation-title-generator',
+                                                              action: 'click->conversation-title-generator#generateTitle',
+                                                              'conversation-title-generator-conversation-id-value' => conversation.id } }
       %i.bi.bi-arrow-clockwise
   = form_with model: conversation, scope: :conversation, url: polymorphic_path(conversation), class: 'd-none',
     data: { 'inline-edit-target' => 'form' } do |form|
