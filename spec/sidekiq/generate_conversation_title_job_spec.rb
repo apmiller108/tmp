@@ -93,7 +93,7 @@ RSpec.describe GenerateConversationTitleJob, type: :job do
 
       it 'logs the error' do
         job.perform(conversation.id)
-        expect(Rails.logger).to have_received(:warn).with("GenerateConversationTitleJob: Test error")
+        expect(Rails.logger).to have_received(:warn).with('GenerateConversationTitleJob: Test error')
       end
     end
   end

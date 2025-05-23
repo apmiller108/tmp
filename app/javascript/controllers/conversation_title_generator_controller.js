@@ -6,7 +6,7 @@ export default class ConversationTitleGeneratorController extends Controller {
     conversationId: Number
   }
 
-  async generateTitle(e) {
+  async generateTitle() {
     this.element.classList.add('rotate-clockwise')
     this.element.disabled = true
     await generateConversationTitle(this.conversationIdValue)
