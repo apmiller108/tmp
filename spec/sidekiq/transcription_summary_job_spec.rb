@@ -10,7 +10,9 @@ RSpec.describe TranscriptionSummaryJob, type: :job do
   let(:transcriptions) { Transcription.none }
   let(:generative_text) { instance_double(GenerativeText) }
   let(:invoke_model_stream_content) { 'stream content' }
-  let(:invoke_model_response) { instance_double(GenerativeText::Anthropic::InvokeModelResponse, complete?: true) }
+  let(:invoke_model_response) do
+    instance_double(GenerativeText::Anthropic::InvokeModelResponse, complete?: true, data: 'test data')
+  end
   let(:final_chunk?) { false }
   let(:prompt) { 'transcription summary prompt' }
   let(:transcription_summary_component) { instance_double(TranscriptionSummaryComponent) }
@@ -30,6 +32,7 @@ RSpec.describe TranscriptionSummaryJob, type: :job do
     allow(ViewComponentBroadcaster).to receive(:call)
     allow(TranscriptionSummaryComponent).to receive(:new).with(transcription:)
                                                          .and_return(transcription_summary_component)
+    allow(generate_text_request).to receive(:update)
   end
 
   it 'sets the summary to in progress' do
@@ -49,6 +52,12 @@ RSpec.describe TranscriptionSummaryJob, type: :job do
         [user, TurboStreams::STREAMS[:memos]], component: transcription_summary_component, action: :replace
       ).twice # once for the stream chunk and once when the stream is complete
     )
+  end
+
+  it 'updates the generate_text_request' do
+    job.perform(user.id, transcription.id)
+    expect(generate_text_request).to have_received(:update)
+      .with(response: invoke_model_response.data, status: 'completed')
   end
 
   context 'with the final chunk' do

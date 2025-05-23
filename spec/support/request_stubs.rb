@@ -13,7 +13,7 @@ module RequestStubs
           stream: false,
           system: GenerateTextRequest.new(
             generate_text_preset: args.fetch(:generate_text_preset, nil),
-            markdown_format: args.fetch(:markdown_format, nil)
+            markdown_format: args.fetch(:markdown_format, true)
           ).system_message,
           tools: args.fetch(:tools, LlmTool.all.map(&:as_json)),
           tool_choice: args.fetch(:tool_choice, { type: 'auto' }),

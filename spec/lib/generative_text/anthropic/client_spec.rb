@@ -46,7 +46,7 @@ RSpec.describe GenerativeText::Anthropic::Client do
     context 'with invalid parameters' do
       before do
         create :conversation_turn, turnable: generate_text_request,
-                                    conversation: create(:conversation, tool_types: ['image'])
+                                   conversation: create(:conversation, tool_types: ['image'])
         stub_anthropic_messages_request(
           model:, temperature:, prompt:, response_status: 500, response_body: 'Invalid request'
         )

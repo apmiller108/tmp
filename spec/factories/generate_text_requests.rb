@@ -5,6 +5,7 @@ FactoryBot.define do
     prompt_html { Faker::Lorem.paragraph }
     temperature { GenerateTextRequest::TEMPERATURE_VALUES.sample }
     model { GenerativeText.active_models.sample.api_name }
+    markdown_format { true }
     user
 
     trait :with_anthropic_model do
