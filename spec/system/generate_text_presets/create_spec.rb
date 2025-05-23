@@ -6,9 +6,7 @@ RSpec.describe 'create generate text preset', type: :system do
 
   specify 'create preset from conversation' do
     login(user:)
-    visit edit_conversation_path(conversation)
-
-    page.driver.resize(1440, 900)
+    navigate_to edit_conversation_path(conversation)
 
     # I have no idea why sometimes find().click does not work here.
     # find('.options-toggle-btn').click

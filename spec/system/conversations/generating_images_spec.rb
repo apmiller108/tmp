@@ -36,7 +36,7 @@ RSpec.describe 'update conversation', type: :system do
   shared_examples 'LLM uses generative image AI and shows the results' do
     specify 'generating an image and viewing the results' do
       login(user:)
-      visit edit_conversation_path(conversation)
+      navigate_to edit_conversation_path(conversation)
       # Fill out and submit the form
       fill_in 'conversation_prompt', with: prompt
 

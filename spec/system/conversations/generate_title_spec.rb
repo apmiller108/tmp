@@ -12,15 +12,19 @@ RSpec.describe 'generating a conversation title' do
     GenerativeText::Helpers.conversation_title_prompt(conversation)
   end
 
+  let(:request_stub) do
+    stub_anthropic_messages_request(
+      prompt: generate_title_prompt, model: GenerativeText::SUMMARY_MODEL, temperature: 0.2,
+      tools: nil, tool_choice: nil, markdown_format: nil
+    )
+  end
+
   before(:context) do
     Sidekiq::Testing.inline!
   end
 
   before do
-    stub_anthropic_messages_request(
-      prompt: generate_title_prompt, model: GenerativeText::SUMMARY_MODEL, temperature: 0.2,
-      tools: nil, tool_choice: nil, markdown_format: nil
-    )
+    request_stub
   end
 
   after(:context) do
@@ -29,18 +33,20 @@ RSpec.describe 'generating a conversation title' do
 
   specify 'generating a conversation title' do
     login(user:)
-    visit edit_conversation_path(conversation)
+    navigate_to edit_conversation_path(conversation)
     expect(page).to have_css '.title-field', text: conversation.title
 
     # Generate a title
     find('#generate-title-btn').click
+    sleep 1
+    expect(request_stub).to have_been_requested
 
     # The controller replaces the conversation title, and the background job
     # that generates the title broadcasts the title form. When running the
     # sidekiq inline, the controller render happenes (with a stale conversation
     # object) after the job broadcasts the title. Reloading the page as a
     # workaround.
-    visit edit_conversation_path(conversation)
+    navigate_to edit_conversation_path(conversation)
     expect(page).to have_css '.title-field', text: 'test assistant response'
   end
 end

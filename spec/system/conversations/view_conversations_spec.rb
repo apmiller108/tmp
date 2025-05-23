@@ -16,7 +16,7 @@ RSpec.describe 'update conversation', type: :system do
   specify 'view conversations' do
     login(user:)
     conversation = conversations.first
-    visit edit_conversation_path(conversation)
+    edit_conversation_path(conversation)
 
     expect(page).to have_content conversation.title
 

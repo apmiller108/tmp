@@ -31,7 +31,7 @@ RSpec.describe 'create conversation', type: :system do
 
   specify 'create conversation' do
     login(user:)
-    visit new_conversation_path
+    navigate_to new_conversation_path
 
     fill_in 'conversation_prompt', with: prompt
 

@@ -23,7 +23,7 @@ RSpec.describe 'search conversations', type: :system do
 
   specify 'viewing related conversations' do
     login(user:)
-    visit edit_conversation_path(conversation)
+    navigate_to edit_conversation_path(conversation)
 
     # shows the top 3 related conversations
     related_convo = nil

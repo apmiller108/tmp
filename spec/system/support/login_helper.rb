@@ -5,6 +5,11 @@ module LoginHelper
     fill_in 'Password', with: user.password
     click_button 'Log in'
   end
+
+  def navigate_to(path)
+    visit path
+    page.driver.resize(1440, 900)
+  end
 end
 
 RSpec.configure do |c|
