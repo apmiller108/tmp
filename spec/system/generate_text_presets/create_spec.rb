@@ -8,6 +8,8 @@ RSpec.describe 'create generate text preset', type: :system do
     login(user:)
     visit edit_conversation_path(conversation)
 
+    page.driver.resize(1440, 900)
+
     # I have no idea why sometimes find().click does not work here.
     # find('.options-toggle-btn').click
     page.execute_script("document.querySelector('.options-toggle-btn').click()")
