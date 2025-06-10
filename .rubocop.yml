@@ -102,5 +102,7 @@ Style/IfUnlessModifier:
   Enabled: false
 Style/Lambda:
   Enabled: false
+Style/MultilineBlockChain:
+  Enabled: false
 Style/SymbolArray:
   Enabled: false

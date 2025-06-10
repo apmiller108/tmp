@@ -45,7 +45,9 @@ class PromptFormComponent < ApplicationViewComponent
   end
 
   def model_options
-    GenerativeText.active_models.sort_by(&:vendor).map { |m| [m.name, m.api_name] }
+    GenerativeText.active_models.sort do |a, b|
+      [a.vendor, a.name] <=> [b.vendor, b.name]
+    end.map { |m| [m.name, m.api_name] }
   end
 
   def model_data
