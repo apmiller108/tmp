@@ -2,8 +2,6 @@
 :CATEGORY: tmp
 :END:
 * TODO flatten the routes
-* TODO Add support for PDFs
-  https://docs.anthropic.com/en/docs/build-with-claude/pdf-support
 * TODO validate schema for tool use responses
     https://github.com/voxpupuli/json-schema
 * TODO audio transcription to conversations
@@ -20,22 +18,19 @@
   - with options for markdown, html and org mode
 * TODO one off interactions
   Instead of all the overhead of a conversation, just a single text only interaction
-* TODO help section / Ask for help
-  - A help tool that returns all the help documentation to the LLM who proceeds
-    to generate an answer based on the those docs.
-  - Capabilities / Tools
-  - Keyboard shortcuts
-* TODO Create a production version
-  - [ ] Set up a box somewhere
-  - [ ] Create a production Dockerfile
-  - [ ] Deploy with kamal
-  - [ ] Set up DNS
 * TODO Image sketch
 * TODO Github tool
 * TODO URL tool
   - Tool to fetch a given URL, extract text content from HTML document and pipe
     into the followup response.
   - LLM can pick out a URL in a blob of text.
+* TODO Add support for PDFs
+  https://docs.anthropic.com/en/docs/build-with-claude/pdf-support
+  Possible options:
+  1. Attach a file to the gtr
+  2. Drop a link in the chat, use regex to check for presence and add a document
+     content block to the request
+  3. Add support for using Anthropic's File API: https://docs.anthropic.com/en/docs/build-with-claude/files
 * DONE Generate conversation titles
 CLOSED: [2025-05-23 Fri 14:44]
   - [X] Click button and generate title in background
