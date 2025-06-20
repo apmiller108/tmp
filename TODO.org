@@ -30,7 +30,13 @@
   1. Attach a file to the gtr
   2. Drop a link in the chat, use regex to check for presence and add a document
      content block to the request
-  3. Add support for using Anthropic's File API: https://docs.anthropic.com/en/docs/build-with-claude/files
+  3. Add support for using Anthropic's File API:
+     https://docs.anthropic.com/en/docs/build-with-claude/files
+  - [ ] Add file response wrapper
+  - [ ] Add error classes
+  - [ ] Use error classes in the messages client
+  - [ ] Add controller for adding conversation context
+  - [ ] build UI for uploading conversation context files
 * DONE Generate conversation titles
 CLOSED: [2025-05-23 Fri 14:44]
   - [X] Click button and generate title in background
