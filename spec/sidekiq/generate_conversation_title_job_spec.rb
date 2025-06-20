@@ -9,7 +9,7 @@ RSpec.describe GenerateConversationTitleJob, type: :job do
     let(:request) { build_stubbed(:generate_text_request) }
     let(:generative_text) { instance_double(GenerativeText) }
     let(:response) do
-      instance_double(GenerativeText::Anthropic::InvokeModelResponse, data: 'response data', content: 'New Title')
+      instance_double(Anthropic::InvokeModelResponse, data: 'response data', content: 'New Title')
     end
     let(:prompt) { 'conversation title prompt' }
 

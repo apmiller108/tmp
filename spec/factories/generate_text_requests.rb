@@ -9,7 +9,7 @@ FactoryBot.define do
     user
 
     trait :with_anthropic_model do
-      model { GenerativeText::Anthropic.active_models.sample.api_name }
+      model { Anthropic.active_models.sample.api_name }
     end
 
     trait :with_aws_model do
@@ -29,7 +29,7 @@ FactoryBot.define do
     end
 
     trait :with_response do
-      model { GenerativeText::Anthropic.active_models.sample.api_name }
+      model { Anthropic.active_models.sample.api_name }
       status { 'completed' }
       response do
         {

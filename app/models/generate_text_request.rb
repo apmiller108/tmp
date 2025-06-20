@@ -67,7 +67,7 @@ class GenerateTextRequest < ApplicationRecord
   def to_turn(turns: [])
     case model.vendor
     when :anthropic
-      GenerativeText::Anthropic::Turn.for(self, turns:)
+      Anthropic::Turn.for(self, turns:)
     when :aws
       GenerativeText::AWS::Turn.for(self)
     end
@@ -110,7 +110,7 @@ class GenerateTextRequest < ApplicationRecord
   def response_wrapper_class
     case model.vendor
     when :anthropic
-      GenerativeText::Anthropic::InvokeModelResponse
+      Anthropic::InvokeModelResponse
     when :aws
       GenerativeText::AWS::InvokeModelResponse
     end

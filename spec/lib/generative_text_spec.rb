@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe GenerativeText do
   let(:generate_text_request) { build_stubbed :generate_text_request }
   let(:aws_client) { instance_double(GenerativeText::AWS::Client) }
-  let(:anthropic_client) { instance_double(GenerativeText::Anthropic::Client) }
+  let(:anthropic_client) { instance_double(Anthropic::Client) }
 
   describe '.summary_prompt_for' do
     it 'calls Helpers.transcription_summary_prompt' do
@@ -26,7 +26,7 @@ RSpec.describe GenerativeText do
       let(:generate_text_request) { build_stubbed :generate_text_request, :with_anthropic_model }
 
       it 'returns Anthropic::Client' do
-        expect(described_class.client_for(generate_text_request)).to eq(GenerativeText::Anthropic::Client)
+        expect(described_class.client_for(generate_text_request)).to eq(Anthropic::Client)
       end
     end
   end
@@ -47,11 +47,11 @@ RSpec.describe GenerativeText do
   describe '#invoke_model' do
     subject(:generative_text) { described_class.new }
 
-    let(:response) { instance_double(GenerativeText::Anthropic::InvokeModelResponse) }
+    let(:response) { instance_double(Anthropic::InvokeModelResponse) }
     let(:generate_text_request) { build_stubbed :generate_text_request, :with_anthropic_model }
 
     it 'creates client and calls invoke_model' do
-      allow(GenerativeText::Anthropic::Client).to receive(:new).and_return(anthropic_client)
+      allow(Anthropic::Client).to receive(:new).and_return(anthropic_client)
       allow(anthropic_client).to receive(:invoke_model)
         .with(generate_text_request)
         .and_return(response)

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe GenerativeText::Anthropic::InvokeModelResponse do
+RSpec.describe Anthropic::InvokeModelResponse do
   let(:json_response) do
     <<~JSON
       {

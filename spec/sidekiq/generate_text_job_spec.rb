@@ -17,7 +17,7 @@ RSpec.describe GenerateTextJob, type: :job do
     let(:conversation) { build_stubbed :conversation }
     let(:response_data) { { 'content' => 'response data' } }
     let(:response) do
-      instance_double(GenerativeText::Anthropic::InvokeModelResponse,
+      instance_double(Anthropic::InvokeModelResponse,
                       content: Faker::Lorem.paragraph, data: response_data, tool_use?: false)
     end
     let(:prompt_form_component) { instance_double PromptFormComponent }

@@ -1,3 +1,4 @@
+require_relative './anthropic'
 class GenerativeText
   InvalidRequestError = Class.new(StandardError)
 
@@ -5,7 +6,7 @@ class GenerativeText
   Model::Capabilities = Struct.new('ModelCapabilities', :image?)
 
   MODELS = [
-    *Anthropic::MODELS,
+    *::Anthropic.models,
     *AWS::MODELS
   ].freeze
 
@@ -32,7 +33,7 @@ class GenerativeText
     when :aws
       AWS::Client
     when :anthropic
-      Anthropic::Client
+      ::Anthropic::Client
     end
   end
 

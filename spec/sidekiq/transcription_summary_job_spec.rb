@@ -11,7 +11,7 @@ RSpec.describe TranscriptionSummaryJob, type: :job do
   let(:generative_text) { instance_double(GenerativeText) }
   let(:invoke_model_stream_content) { 'stream content' }
   let(:invoke_model_response) do
-    instance_double(GenerativeText::Anthropic::InvokeModelResponse, complete?: true, data: 'test data')
+    instance_double(Anthropic::InvokeModelResponse, complete?: true, data: 'test data')
   end
   let(:final_chunk?) { false }
   let(:prompt) { 'transcription summary prompt' }

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe GenerativeText::Anthropic::InvokeModelRequest do
+RSpec.describe Anthropic::InvokeModelRequest do
   subject(:request) { described_class.new(generate_text_request) }
 
   let(:conversation) { nil }

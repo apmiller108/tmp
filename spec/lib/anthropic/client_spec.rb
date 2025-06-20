@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'faraday'
 
-RSpec.describe GenerativeText::Anthropic::Client do
+RSpec.describe Anthropic::Client do
   let(:client) { described_class.new }
   let(:prompt) { 'Write a haiku about a rainy day.' }
   let(:model) { generate_text_request.model }
@@ -27,7 +27,7 @@ RSpec.describe GenerativeText::Anthropic::Client do
 
         it 'returns an InvokeModelResponse object' do
           response = client.invoke_model(generate_text_request)
-          expect(response).to be_a(GenerativeText::Anthropic::InvokeModelResponse)
+          expect(response).to be_a(Anthropic::InvokeModelResponse)
         end
       end
 
@@ -54,7 +54,7 @@ RSpec.describe GenerativeText::Anthropic::Client do
 
       it 'raises a ClientError exception' do
         expect { client.invoke_model(generate_text_request) }
-          .to raise_error(GenerativeText::Anthropic::ClientError, '500: Invalid request')
+          .to raise_error(Anthropic::ClientError, '500: Invalid request')
       end
     end
   end
@@ -64,28 +64,28 @@ RSpec.describe GenerativeText::Anthropic::Client do
 
     let(:generate_text_request) { build_stubbed :generate_text_request }
     let(:invoke_model_request) do
-      instance_double(GenerativeText::Anthropic::InvokeModelRequest, to_json: '{"request":"data"}')
+      instance_double(Anthropic::InvokeModelRequest, to_json: '{"request":"data"}')
     end
     let(:stream_response) do
-      instance_double(GenerativeText::Anthropic::StreamResponse, update: nil, to_response_format: response_format)
+      instance_double(Anthropic::StreamResponse, update: nil, to_response_format: response_format)
     end
     let(:response_format) { { 'response' => 'data' } }
 
     before do
-      allow(GenerativeText::Anthropic::InvokeModelRequest).to receive(:new).with(generate_text_request, stream: true)
+      allow(Anthropic::InvokeModelRequest).to receive(:new).with(generate_text_request, stream: true)
                                                                            .and_return(invoke_model_request)
-      allow(GenerativeText::Anthropic::StreamResponse).to receive(:new).and_return(stream_response)
-      allow(GenerativeText::Anthropic::InvokeModelResponse).to receive(:new).with(response_format)
+      allow(Anthropic::StreamResponse).to receive(:new).and_return(stream_response)
+      allow(Anthropic::InvokeModelResponse).to receive(:new).with(response_format)
                                                                             .and_return('final_response')
 
-      allow(GenerativeText::Anthropic::StreamEvent).to receive(:parse).and_call_original
+      allow(Anthropic::StreamEvent).to receive(:parse).and_call_original
 
-      stub_request(:post, "#{GenerativeText::Anthropic::HOST}#{GenerativeText::Anthropic::MESSAGES_PATH}")
+      stub_request(:post, "#{Anthropic::HOST}#{Anthropic::MESSAGES_PATH}")
         .with(
           body: '{"request":"data"}',
           headers: {
             'Content-Type' => 'application/json',
-            'anthropic-version' => GenerativeText::Anthropic::VERSION,
+            'anthropic-version' => Anthropic::VERSION,
             'x-api-key' => ENV.fetch('ANTHROPIC_KEY')
           }
         )
@@ -110,24 +110,24 @@ RSpec.describe GenerativeText::Anthropic::Client do
 
     it 'parses the SSE events' do
       client.invoke_model_stream(generate_text_request) {}
-      expect(GenerativeText::Anthropic::StreamEvent).to have_received(:parse).exactly(8).times
+      expect(Anthropic::StreamEvent).to have_received(:parse).exactly(8).times
     end
 
     it 'updates the stream response with all event other than ping' do
       client.invoke_model_stream(generate_text_request) {}
-      expect(stream_response).to have_received(:update).with(kind_of(GenerativeText::Anthropic::StreamEvent))
+      expect(stream_response).to have_received(:update).with(kind_of(Anthropic::StreamEvent))
                                                        .exactly(7).times
     end
 
     context 'when an error occurs' do
       before do
-        stub_request(:post, "#{GenerativeText::Anthropic::HOST}#{GenerativeText::Anthropic::MESSAGES_PATH}")
+        stub_request(:post, "#{Anthropic::HOST}#{Anthropic::MESSAGES_PATH}")
           .to_return(status: 400, body: '')
       end
 
       it 'raises a ClientError with status and body' do
         expect { client.invoke_model_stream(generate_text_request) {} }
-          .to raise_error(GenerativeText::Anthropic::ClientError)
+          .to raise_error(Anthropic::ClientError)
       end
     end
   end

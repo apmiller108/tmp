@@ -67,7 +67,7 @@ RSpec.describe GenerateTextRequest, type: :model do
         subject(:request) { build(:generate_text_request, :with_response, :with_anthropic_model) }
 
         it 'returns an Anthropic::InvokeModelResponse instance' do
-          expect(request.response).to be_a(GenerativeText::Anthropic::InvokeModelResponse)
+          expect(request.response).to be_a(Anthropic::InvokeModelResponse)
         end
       end
 
@@ -96,7 +96,7 @@ RSpec.describe GenerateTextRequest, type: :model do
       let(:anthropic_turn_data) { double }
 
       before do
-        allow(GenerativeText::Anthropic::Turn).to receive(:for).with(request, turns: []).and_return(anthropic_turn_data)
+        allow(Anthropic::Turn).to receive(:for).with(request, turns: []).and_return(anthropic_turn_data)
       end
 
       it 'calls Turn.for on Anthropic::Turn' do
@@ -125,10 +125,10 @@ RSpec.describe GenerateTextRequest, type: :model do
         build(:generate_text_request, :with_response, :completed)
       end
 
-      let(:response_obj) { instance_double(GenerativeText::Anthropic::InvokeModelResponse, token_count: 100) }
+      let(:response_obj) { instance_double(Anthropic::InvokeModelResponse, token_count: 100) }
 
       before do
-        allow(GenerativeText::Anthropic::InvokeModelResponse).to receive(:new).and_return(response_obj)
+        allow(Anthropic::InvokeModelResponse).to receive(:new).and_return(response_obj)
       end
 
       it 'returns the token count from the response' do
@@ -151,11 +151,11 @@ RSpec.describe GenerateTextRequest, type: :model do
     subject(:request) { build_stubbed :generate_text_request, :with_response, prompt: 'test prompt' }
 
     let(:response_obj) do
-      instance_double(GenerativeText::Anthropic::InvokeModelResponse, blobify: 'blobified response')
+      instance_double(Anthropic::InvokeModelResponse, blobify: 'blobified response')
     end
 
     before do
-      allow(GenerativeText::Anthropic::InvokeModelResponse).to receive(:new).and_return(response_obj)
+      allow(Anthropic::InvokeModelResponse).to receive(:new).and_return(response_obj)
     end
 
     it 'combines the prompt and blobified turn' do

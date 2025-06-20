@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe GenerativeText::Anthropic::StreamResponse do
+RSpec.describe Anthropic::StreamResponse do
   subject(:stream_response) { described_class.new }
 
   let(:message_start_event) do
     instance_double(
-      GenerativeText::Anthropic::StreamEvent,
+      Anthropic::StreamEvent,
       type: 'message_start',
       data: {
         'message' => {
@@ -30,7 +30,7 @@ RSpec.describe GenerativeText::Anthropic::StreamResponse do
 
   let(:text_block_start_event) do
     instance_double(
-      GenerativeText::Anthropic::StreamEvent,
+      Anthropic::StreamEvent,
       type: 'content_block_start',
       index: 0,
       content_block_type: 'text',
@@ -47,7 +47,7 @@ RSpec.describe GenerativeText::Anthropic::StreamResponse do
 
   let(:text_delta_event) do
     instance_double(
-      GenerativeText::Anthropic::StreamEvent,
+      Anthropic::StreamEvent,
       type: 'content_block_delta',
       index: 0,
       delta_type: 'text_delta',
@@ -64,7 +64,7 @@ RSpec.describe GenerativeText::Anthropic::StreamResponse do
 
   let(:text_block_stop_event) do
     instance_double(
-      GenerativeText::Anthropic::StreamEvent,
+      Anthropic::StreamEvent,
       type: 'content_block_stop',
       index: 0,
       data: {
@@ -75,7 +75,7 @@ RSpec.describe GenerativeText::Anthropic::StreamResponse do
 
   let(:tool_use_start_event) do
     instance_double(
-      GenerativeText::Anthropic::StreamEvent,
+      Anthropic::StreamEvent,
       type: 'content_block_start',
       index: 1,
       content_block_type: 'tool_use',
@@ -99,7 +99,7 @@ RSpec.describe GenerativeText::Anthropic::StreamResponse do
 
   let(:tool_use_delta_event) do
     instance_double(
-      GenerativeText::Anthropic::StreamEvent,
+      Anthropic::StreamEvent,
       type: 'content_block_delta',
       index: 1,
       delta_type: 'input_json_delta',
@@ -116,7 +116,7 @@ RSpec.describe GenerativeText::Anthropic::StreamResponse do
 
   let(:tool_use_stop_event) do
     instance_double(
-      GenerativeText::Anthropic::StreamEvent,
+      Anthropic::StreamEvent,
       type: 'content_block_stop',
       index: 1,
       data: {
@@ -127,7 +127,7 @@ RSpec.describe GenerativeText::Anthropic::StreamResponse do
 
   let(:message_delta_event) do
     instance_double(
-      GenerativeText::Anthropic::StreamEvent,
+      Anthropic::StreamEvent,
       type: 'message_delta',
       data: {
         'delta' => {
@@ -143,7 +143,7 @@ RSpec.describe GenerativeText::Anthropic::StreamResponse do
 
   let(:message_stop_event) do
     instance_double(
-      GenerativeText::Anthropic::StreamEvent,
+      Anthropic::StreamEvent,
       type: 'message_stop',
       data: {
         'type' => 'message_stop'
@@ -224,7 +224,7 @@ RSpec.describe GenerativeText::Anthropic::StreamResponse do
     context 'with content_block_stop event for tool_use with invalid JSON' do
       let(:invalid_tool_use_delta_event) do
         instance_double(
-          GenerativeText::Anthropic::StreamEvent,
+          Anthropic::StreamEvent,
           type: 'content_block_delta',
           index: 1,
           delta_type: 'input_json_delta',

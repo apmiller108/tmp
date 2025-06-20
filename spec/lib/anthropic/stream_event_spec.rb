@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe GenerativeText::Anthropic::StreamEvent do
+RSpec.describe Anthropic::StreamEvent do
   subject(:stream_event) { described_class.new(type: event_type, data: event_data) }
 
   let(:event_type) { 'content_block_delta' }
