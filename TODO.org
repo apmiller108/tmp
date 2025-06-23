@@ -32,8 +32,8 @@
      content block to the request
   3. Add support for using Anthropic's File API:
      https://docs.anthropic.com/en/docs/build-with-claude/files
-  - [ ] Add file response wrapper
-  - [ ] Add error classes
+  - [X] Add file response wrapper
+  - [X] Add error classes
   - [ ] Use error classes in the messages client
   - [ ] Add controller for adding conversation context
   - [ ] build UI for uploading conversation context files
