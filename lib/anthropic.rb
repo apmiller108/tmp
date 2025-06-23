@@ -87,5 +87,17 @@ module Anthropic
   def self.active_models
     models.select(&:active?)
   end
+
   ClientError = Class.new(StandardError)
+  InvalidRequestError = Class.new(StandardError)
+  AuthenticationError = Class.new(StandardError)
+  PermissionError = Class.new(StandardError)
+  NotFoundError = Class.new(StandardError)
+  RateLimitError = Class.new(StandardError)
+  RequestTooLarge = Class.new(StandardError)
+  TimeoutError = Class.new(StandardError)
+  OverloadedError = Class.new(StandardError)
+  APIError = Class.new(StandardError)
+  ServerError = Class.new(StandardError)
+  UnknownError = Class.new(StandardError)
 end

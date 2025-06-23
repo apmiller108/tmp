@@ -56,7 +56,8 @@ module Anthropic
 
         stream_response.update(event)
 
-        # block only yielded to for text (not tool use JSON or anything else)
+        # Block only yielded to for text (not tool use JSON or anything else),
+        # so the client can handle text intented to be read by the client/user
         block.call(event.text_content) if event.text?
       end
     end

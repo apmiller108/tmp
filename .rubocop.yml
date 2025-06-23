@@ -40,14 +40,7 @@ Metrics/BlockLength:
     - 'app/**/concerns/**/*'
     - 'lib/tasks/**/*'
 Metrics/MethodLength:
-  CountAsOne:
-    - 'array'
-    - 'hash'
-    - 'heredoc'
-    - 'method_call'
-  Exclude:
-    - 'app/controllers/**/*'
-    - 'app/sidekiq/**/*'
+  Enabled: false
 Metrics/ClassLength:
   CountAsOne:
     - 'array'
