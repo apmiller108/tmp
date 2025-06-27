@@ -1,5 +1,7 @@
 module Anthropic
   class Client
+    include ErrorHandling
+
     def initialize
       @conn = Faraday.new(
         url: HOST,
@@ -10,7 +12,6 @@ module Anthropic
         }
       ) do |f|
         f.adapter :typhoeus
-        f.response :raise_error
         # f.response :logger, nil, { bodies: { request: true, response: true } } # Log request and response to stdout
       end
     end
@@ -21,9 +22,12 @@ module Anthropic
       response = conn.post(MESSAGES_PATH) do |req|
         req.body = InvokeModelRequest.new(generate_text_request).to_json
       end
-      InvokeModelResponse.new(response.body)
-    rescue Faraday::Error => e
-      raise ClientError, "#{e.response_status}: #{e.response_body}"
+
+      if response.status.in?(200..299)
+        InvokeModelResponse.new(response.body)
+      else
+        handle_error(response)
+      end
     end
 
     # Stream responses from the Anthropic API
@@ -33,16 +37,18 @@ module Anthropic
     def invoke_model_stream(generate_text_request, &block)
       stream_response = StreamResponse.new
 
-      conn.post(MESSAGES_PATH) do |req|
+      response = conn.post(MESSAGES_PATH) do |req|
         req.body = InvokeModelRequest.new(generate_text_request, stream: true).to_json
         req.options.on_data = lambda do |chunk, _received_bytes|
           process_stream_chunk(chunk, stream_response, &block)
         end
       end
 
-      InvokeModelResponse.new(stream_response.to_response_format)
-    rescue Faraday::Error => e
-      raise ClientError, "#{e.response_status}: #{e.response_body}"
+      if response.status.in?(200..299)
+        InvokeModelResponse.new(stream_response.to_response_format)
+      else
+        handle_error(response)
+      end
     end
 
     private

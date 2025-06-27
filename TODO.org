@@ -34,9 +34,11 @@
      https://docs.anthropic.com/en/docs/build-with-claude/files
   - [X] Add file response wrapper
   - [X] Add error classes
-  - [ ] Use error classes in the messages client
-  - [ ] Add controller for adding conversation context
-  - [ ] build UI for uploading conversation context files
+  - [X] Use error classes in the messages client
+  - [X] Model to persist conversation context
+  - [ ] Add controller for adding conversation context WIP
+  - [ ] build UI for uploading conversation context files. What about a drag and
+    drop to add context?
 * DONE Generate conversation titles
 CLOSED: [2025-05-23 Fri 14:44]
   - [X] Click button and generate title in background

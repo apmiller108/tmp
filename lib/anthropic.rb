@@ -88,6 +88,13 @@ module Anthropic
     models.select(&:active?)
   end
 
+  # Upload a file to Anthropic via Files API
+  # @param file [ActionDispatch::UploadedFile]
+  # @return [Anthropic::FileResponse]
+  def self.upload_file(file)
+    FilesClient.new.upload_file(file)
+  end
+
   ClientError = Class.new(StandardError)
   InvalidRequestError = Class.new(StandardError)
   AuthenticationError = Class.new(StandardError)
