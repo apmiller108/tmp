@@ -25,6 +25,7 @@ module Anthropic
     end
 
     # @param file [ActionDispatch::Http::UploadedFile]
+    # @return [Anthropic::FileResponse]
     def upload_file(file)
       response = conn.post(PATH) do |req|
         req.body = {

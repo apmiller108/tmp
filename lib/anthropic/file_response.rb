@@ -12,6 +12,7 @@ module Anthropic
     attribute :created_at, :datetime
     attribute :downloadable, :boolean, default: false
 
+    # @return [Anthropic::FileResponse | Array<Anthropic::FileResponse>]
     def self.for(data)
       if data['data'].respond_to?(:each)
         data['data'].map { |r| new(r) }

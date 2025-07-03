@@ -1,4 +1,6 @@
 class ConversationContext < ApplicationRecord
+  belongs_to :conversation
+
   validates :file_ref, :filename, presence: true
 
   enum :mime_type, {
@@ -20,4 +22,15 @@ class ConversationContext < ApplicationRecord
   enum :context_type, {
     file: 'file'
   }, validate: true
+
+  # @param conversation [Conversation]
+  # @param file_response [Anthropic::FileResponse]
+  # @return [ConversationContext]
+  def self.create_for(conversation, file_response)
+    create(conversation:,
+           file_ref: file_response.id,
+           filename: file_response.filename,
+           mime_type: file_response.mime_type,
+           context_type: context_types['file'])
+  end
 end
