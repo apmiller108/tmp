@@ -1,6 +1,7 @@
 class ConversationContextsController < ApplicationController
+  before_action :set_conversation, only: [:create, :index]
+
   def create
-    @conversation = current_user.conversations.find(params[:conversation_id])
     file_response = Anthropic.upload_file(conversation_context_params[:file])
     context = ConversationContext.create_for(@conversation, file_response)
 
@@ -13,7 +14,18 @@ class ConversationContextsController < ApplicationController
     end
   end
 
+  def index
+    @contexts = @conversation.conversation_contexts.order(created_at: :desc)
+    respond_to do |format|
+      format.json { render json: @contexts, status: :ok }
+    end
+  end
+
   private
+
+  def set_conversation
+    @conversation = current_user.conversations.find(params[:conversation_id])
+  end
 
   def conversation_context_params
     params.require(:conversation_context).permit(:file)
