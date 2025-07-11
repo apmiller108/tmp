@@ -36,9 +36,13 @@
   - [X] Add error classes
   - [X] Use error classes in the messages client
   - [X] Model to persist conversation context
-  - [ ] Add controller for adding conversation context WIP
-  - [ ] build UI for uploading conversation context files. What about a drag and
+  - [X] Add controller for adding conversation context
+  - [X] build UI for uploading conversation context files. What about a drag and
     drop to add context?
+  - [ ] Replace upload button with spinner during fetch post
+  - [ ] delete conversation context
+  - [ ] refresh conversation context
+  - [ ] Add conversation context files to conversation
 * DONE Generate conversation titles
 CLOSED: [2025-05-23 Fri 14:44]
   - [X] Click button and generate title in background

@@ -131,11 +131,27 @@ export const generateImage = ({ prompt, negative_prompt, image_name, style, aspe
   })
 }
 
+export const createConversationContext = (conversation_id, file, signal) => {
+  const formData = new FormData()
+  formData.append('conversation_context[file]', file)
+
+  return fetch(`/conversations/${conversation_id}/conversation_contexts`, {
+    method: 'POST',
+    body: formData,
+    headers: {
+      'Accept': 'application/json',
+      'X-CSRF-Token': getCsrfToken()
+    },
+    signal
+  })
+}
+
 export default {
   getConversations,
   generateImage,
   generateConversationTitle,
   updateConversation,
   createConversation,
+  createConversationContext,
   autoSaveMemo
 }
