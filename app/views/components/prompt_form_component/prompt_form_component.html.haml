@@ -7,71 +7,83 @@
     = form.hidden_field :stream, value: 1
     = form.hidden_field :image_quality, { data: { 'prompt-form-target' => 'imageQuality' } }
     = form.hidden_field :tool_types, { data: { 'prompt-form-target' => 'toolTypes' } }
-    .grid{ style: '--bs-gap: 0.5rem;'}
-      .g-col-12.form-container
-        .options.d-flex.justify-content-start.align-items-center
-          .mb-2
-            %button.btn.fs-6.options-toggle-btn.p-0.mx-2{ 'data-bs-toggle' => 'collapse',
-                                                          'data-bs-target' => '#advanced-options',
-                                                          'data-prompt-form-target' => 'showOptionsButton',
-                                                          'data-action' => 'click->prompt-form#onClickShowOptions:prevent' }
-              %i.bi.bi-chevron-up{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => 'toggle options' }}
-          .collapse.mb-2#advanced-options{ data: { 'prompt-form-target' => 'options' } }
-            .grid
-              .g-col-3
-                .form-floating
-                  = form.select :model, model_options, {},
-                  { class: 'form-select', data: { 'prompt-form-target' => 'modelSelect',
-                                                  'model-data' => model_data, action: 'change->prompt-form#onChangeModel' } }
-                  = form.label :model, 'Model'
-              .g-col-3.d-flex.align-items-center
-                .form-floating
-                  = form.select :generate_text_preset_id, preset_options, { include_blank: true },
-                    { class: 'form-select', data: { 'prompt-form-target' => 'presetSelect', 'preset-data' => preset_data,
-                                                    action: 'change->prompt-form#onChangePreset' } }
-                  = form.label :generate_text_preset_id, 'Preset'
+
+    .form-container
+      .options.d-flex.justify-content-start.align-items-center
+        .mb-2
+          %button.btn.fs-6.options-toggle-btn.p-0.mx-2{ 'data-bs-toggle' => 'collapse',
+                                                        'data-bs-target' => '#advanced-options',
+                                                        'data-prompt-form-target' => 'showOptionsButton',
+                                                        'data-action' => 'click->prompt-form#onClickShowOptions:prevent' }
+            %i.bi.bi-chevron-up{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => 'toggle options' }}
+        .collapse.mb-2#advanced-options{ data: { 'prompt-form-target' => 'options' } }
+          .options-grid
+            / Model Selection
+            .option-item.model-select
+              .form-floating
+                = form.select :model, model_options, {},
+                { class: 'form-select', data: { 'prompt-form-target' => 'modelSelect',
+                                                'model-data' => model_data, action: 'change->prompt-form#onChangeModel' } }
+                = form.label :model, 'Model'
+
+            / Preset Selection
+            .option-item.preset-select
+              .d-flex.align-items-end.gap-2
+                .flex-grow-1
+                  .form-floating
+                    = form.select :generate_text_preset_id, preset_options, { include_blank: true },
+                      { class: 'form-select', data: { 'prompt-form-target' => 'presetSelect', 'preset-data' => preset_data,
+                                                      action: 'change->prompt-form#onChangePreset' } }
+                    = form.label :generate_text_preset_id, 'Preset'
                 = link_to new_generate_text_preset_path(redirect_after_create: after_create_preset_redirect_path),
-                  class: 'icon-btn', id: 'new_preset_link', data: { turbo_frame: '_top' } do
+                  class: 'icon-btn flex-shrink-0', id: 'new_preset_link', data: { turbo_frame: '_top' } do
                   %i.bi.bi-plus{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => t('generate_text_preset.add') }}
-              .g-start-10.g-col-3
-                .form-group
-                  .d-flex.justify-content-between.align-items-center
-                    .d-flex.justify-content-start.align-items-center
-                      = form.label :temperature, 'Temperature', class: 'form-label mb-0'
-                      %i.bi.bi-info-circle.ms-1.text-muted{ data: { 'bs-toggle' => 'tooltip',
-                                                                    'bs-title' => 'Lower values produce more predictable outputs. Higher values produce more creative results' } }
-                    %span.badge.ms-2{ data: { 'prompt-form-target' => 'temperatureValue' } }
-                  .d-flex.align-items-center.gap-2
-                    = form.range_field :temperature,
-                                       min: 0,
-                                       max: 1,
-                                       step: 0.1,
-                                       class: 'form-range',
-                                       data: { 'prompt-form-target' => 'temperatureSlider',
-                                               'action' => 'input->prompt-form#onTempInput' }
-        .grid.prompt-input-container
-          .g-col-12.position-relative
-            = form.text_area :prompt, class: 'form-control scroll-no-bar-container', data: { 'prompt-form-target' => 'promptInput' },
-                              placeholder: 'Type a message', rows: 2
-            %button.btn.icon-btn{ type: 'submit', name: 'commit', data: { 'prompt-form-target' => 'submitButton' },
-                                  disabled: disabled?}
-              %i.bi.bi-send-fill
-            .text-area-tray.d-flex.justify-content-center.align-items-center
-              %button.btn.fs-6.p-0{ 'data-prompt-form-target' => 'toggleTextAreaButton',
-                                    'data-action' => 'click->prompt-form#onToggleTextAreaSize:prevent' }
-                %i.bi.bi-chevron-down{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => 'Toggle text area size'} }
-          .g-col-6.mt-1
+
+            / Temperature
+            .option-item.temperature-control
+              .form-group
+                .d-flex.justify-content-between.align-items-center.mb-2
+                  .d-flex.justify-content-start.align-items-center
+                    = form.label :temperature, 'Temperature', class: 'form-label mb-0 small'
+                    %i.bi.bi-info-circle.ms-1.text-muted{ data: { 'bs-toggle' => 'tooltip',
+                                                                  'bs-title' => 'Lower values produce more predictable outputs. Higher values produce more creative results' } }
+                  %span.badge.temperature-badge{ data: { 'prompt-form-target' => 'temperatureValue' } }
+                = form.range_field :temperature,
+                                   min: 0,
+                                   max: 1,
+                                   step: 0.1,
+                                   class: 'form-range',
+                                   data: { 'prompt-form-target' => 'temperatureSlider',
+                                           'action' => 'input->prompt-form#onTempInput' }
+
+      / Message Input Section
+      .prompt-input-section
+        .position-relative.mb-2
+          = form.text_area :prompt, class: 'form-control scroll-no-bar-container', data: { 'prompt-form-target' => 'promptInput' },
+                            placeholder: 'Type a message', rows: 2
+          %button.btn.icon-btn.submit-btn{ type: 'submit', name: 'commit', data: { 'prompt-form-target' => 'submitButton' },
+                                          disabled: disabled?}
+            %i.bi.bi-send-fill
+          .text-area-tray
+            %button.btn.fs-6.p-0{ 'data-prompt-form-target' => 'toggleTextAreaButton',
+                                  'data-action' => 'click->prompt-form#onToggleTextAreaSize:prevent' }
+              %i.bi.bi-chevron-down{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => 'Toggle text area size'} }
+
+        / Bottom Controls Row
+        .bottom-controls
+          .file-input-section
             = render FileInputComponent.new(form:, disabled: file_input_disabled?, file_types:, max_size: max_file_size)
 
-          .g-col-6.details-fields.p-0
-            %div.d-flex.align-items-center.justify-content-end.mt-1
-              %div.d-flex.align-items-center
-                %span.label.me-2 Tokens:
-                %pre.value= conversation.token_count
-              %button.context-btn.btn.icon-btn.icon-btn-sm.ms-2{ type: 'button', data: { 'bs-toggle': 'modal', 'bs-target': '#convo-context-modal' }}
-                %i.bi.bi-folder-plus{ data: { 'bs-toggle': 'tooltip', 'bs-title': 'Conversation Context' }}
-              %button.settings-btn.btn.icon-btn.icon-btn-sm.ms-2{ type: 'button', data: { 'bs-toggle': 'modal', 'bs-target': '#convo-settings-modal' }}
-                %i.bi.bi-gear{ data: { 'bs-toggle': 'tooltip', 'bs-title': 'Conversation Settings' }}
+          .control-buttons-section
+            .d-flex.align-items-center.justify-content-end.gap-2
+              .token-display.d-flex.align-items-center
+                %span.label.me-1.small Tokens:
+                %span.value.badge.bg-secondary= conversation.token_count
+              .button-group.d-flex.gap-1
+                %button.context-btn.btn.icon-btn.icon-btn-sm{ type: 'button', data: { 'bs-toggle': 'modal', 'bs-target': '#convo-context-modal' }}
+                  %i.bi.bi-folder-plus{ data: { 'bs-toggle': 'tooltip', 'bs-title': 'Conversation Context' }}
+                %button.settings-btn.btn.icon-btn.icon-btn-sm{ type: 'button', data: { 'bs-toggle': 'modal', 'bs-target': '#convo-settings-modal' }}
+                  %i.bi.bi-gear{ data: { 'bs-toggle': 'tooltip', 'bs-title': 'Conversation Settings' }}
 
   -# CONVERSATION SETTINGS MODAL
 
