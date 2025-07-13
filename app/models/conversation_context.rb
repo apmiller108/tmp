@@ -11,6 +11,7 @@ class ConversationContext < ApplicationRecord
     'application/vnd.ms-excel' => 'application/vnd.ms-excel',
     'application/json' => 'application/json',
     'application/xml' => 'application/xml',
+    'application/pdf' => 'application/pdf',
     'text/xml' => 'text/xml',
     'image/jpeg' => 'image/jpeg',
     'image/png' => 'image/png',
