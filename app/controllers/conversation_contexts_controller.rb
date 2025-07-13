@@ -16,6 +16,7 @@ class ConversationContextsController < ApplicationController
         end
       else
         format.json { render json: context.errors, status: :unprocessable_entity }
+        DeleteRemoteConversationContextJob.perform_async(file_response.id)
       end
     end
   end
