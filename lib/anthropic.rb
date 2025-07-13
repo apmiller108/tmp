@@ -95,6 +95,10 @@ module Anthropic
     FilesClient.new.upload_file(file)
   end
 
+  def self.delete_file(file_id)
+    FilesClient.new.delete_file(file_id)
+  end
+
   ClientError = Class.new(StandardError)
   InvalidRequestError = Class.new(StandardError)
   AuthenticationError = Class.new(StandardError)

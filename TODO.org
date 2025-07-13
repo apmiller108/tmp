@@ -37,8 +37,8 @@
   - [X] build UI for uploading conversation context files. What about a drag and
     drop to add context?
   - [X] Replace upload button with spinner during fetch post
-  - [ ] After upload respond with modal partial replace with Turbostream
-  - [ ] delete conversation context
+  - [X] After upload respond with context file item (turbo stream prepend to list)
+  - [X] delete conversation context
   - [ ] Add conversation context files to conversation when making the request
   - [ ] Handle case where conversation is new
 * DONE Generate conversation titles
