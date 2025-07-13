@@ -39,6 +39,11 @@
   - [X] Replace upload button with spinner during fetch post
   - [X] After upload respond with context file item (turbo stream prepend to list)
   - [X] delete conversation context
+  - [X] associate conversation context to a user
+  - [X] create conversations_conversation_contexts join table
+  - [ ] Add multi select to associate contexts to a conversation
+  - [ ] Build crud interface to manage files
+  - [ ] Change the controller to ConversationsConversationContextsController
   - [ ] Add conversation context files to conversation when making the request
   - [ ] Handle case where conversation is new
 * DONE Generate conversation titles

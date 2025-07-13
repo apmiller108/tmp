@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_27_190022) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_13_213054) do
   create_schema "rollback"
 
   # These are extensions that must be enabled in order to support this database
@@ -67,13 +67,21 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_27_190022) do
 
   create_table "conversation_contexts", force: :cascade do |t|
     t.string "file_ref", null: false
-    t.bigint "conversation_id", null: false
+    t.bigint "user_id", null: false
     t.string "filename", null: false
     t.string "mime_type", null: false
     t.string "context_type", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["conversation_id"], name: "index_conversation_contexts_on_conversation_id"
+    t.index ["user_id"], name: "index_conversation_contexts_on_user_id"
+  end
+
+  create_table "conversation_contexts_conversations", id: false, force: :cascade do |t|
+    t.bigint "conversation_id", null: false
+    t.bigint "conversation_context_id", null: false
+    t.index ["conversation_context_id"], name: "idx_on_conversation_context_id_566942c244"
+    t.index ["conversation_id", "conversation_context_id"], name: "index_conversations_on_contexts", unique: true
+    t.index ["conversation_id"], name: "index_conversation_contexts_conversations_on_conversation_id"
   end
 
   create_table "conversation_turns", force: :cascade do |t|
@@ -257,7 +265,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_27_190022) do
   add_foreign_key "active_storage_blobs_generate_image_requests", "active_storage_blobs"
   add_foreign_key "active_storage_blobs_generate_image_requests", "generate_image_requests"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "conversation_contexts", "conversations"
+  add_foreign_key "conversation_contexts", "users"
+  add_foreign_key "conversation_contexts_conversations", "conversation_contexts"
+  add_foreign_key "conversation_contexts_conversations", "conversations"
   add_foreign_key "conversation_turns", "conversations"
   add_foreign_key "conversations", "memos"
   add_foreign_key "conversations", "users"

@@ -1,5 +1,8 @@
 class ConversationContext < ApplicationRecord
-  belongs_to :conversation
+  belongs_to :user
+
+  has_many :conversation_contexts_conversations, dependent: :destroy
+  has_many :conversations, through: :conversation_contexts_conversations
 
   validates :file_ref, :filename, presence: true
 
