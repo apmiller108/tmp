@@ -5,7 +5,7 @@ export default class ConversationContextController extends Controller {
   static targets = [
     "dropZone", "fileInput", "progressContainer", "progressBar",
     "fileName", "fileSize", "successAlert", "errorAlert",
-    "successMessage", "errorMessage", "filesList"
+    "successMessage", "errorMessage", "filesList", "spinner"
   ]
 
   abortController = null;
@@ -53,6 +53,16 @@ export default class ConversationContextController extends Controller {
     }
   }
 
+  showSpinner() {
+    this.spinnerTarget.classList.remove('d-none')
+    this.dropZoneTarget.classList.add('d-none')
+  }
+
+  hideSpinner() {
+    this.spinnerTarget.classList.add('d-none')
+    this.dropZoneTarget.classList.remove('d-none')
+  }
+
   async uploadContext(file) {
     this.hideAlerts()
 
@@ -63,6 +73,7 @@ export default class ConversationContextController extends Controller {
     formData.append('file', file)
 
     try {
+      this.showSpinner()
       const response = await createConversationContext(
         this.conversationId,
         file,
@@ -85,7 +96,7 @@ export default class ConversationContextController extends Controller {
         this.showError('Upload failed. Please try again.')
       }
     } finally {
-      this.hideProgress()
+      this.hideSpinner()
       this.resetFileInput()
     }
   }
