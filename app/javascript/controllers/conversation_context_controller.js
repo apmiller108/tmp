@@ -47,7 +47,6 @@ export default class ConversationContextController extends Controller {
     this.dropZoneTarget.classList.remove('border-primary', 'bg-light')
 
     const files = event.dataTransfer.files
-    console.log(`Dropped files: ${files.length}`)
     if (files.length > 0) {
       this.uploadContext(files[0])
     }
@@ -81,9 +80,9 @@ export default class ConversationContextController extends Controller {
       )
 
       if (response.ok) {
-        const result = await response.json()
-        this.showSuccess(`File "${result.filename}" uploaded successfully!`)
-        // this.refreshFilesList()
+        const responseBody = await response.text()
+        Turbo.renderStreamMessage(responseBody)
+        this.showSuccess(`File "${file.name}" uploaded successfully!`)
       } else if (response.status === 413) {
         this.showError('File is too large. Please upload a smaller file.')
       } else {

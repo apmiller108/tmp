@@ -1,5 +1,5 @@
 class ConversationContextsController < ApplicationController
-  before_action :set_conversation, only: [:create, :index]
+  before_action :set_conversation, only: [:create, :index, :destroy]
 
   def create
     file_response = Anthropic.upload_file(conversation_context_params[:file])
@@ -7,7 +7,13 @@ class ConversationContextsController < ApplicationController
 
     respond_to do |format|
       if context.persisted?
-        format.json { render json: context, status: :created }
+        format.json do
+          render turbo_stream: turbo_stream.prepend(
+            'conversation-context-list',
+            partial: 'conversation_contexts/conversation_context',
+            locals: { context: }
+          )
+        end
       else
         format.json { render json: context.errors, status: :unprocessable_entity }
       end
@@ -27,10 +33,15 @@ class ConversationContextsController < ApplicationController
 
     respond_to do |format|
       if @context.destroy
-        format.json { head :no_content }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.remove(@context)
+        end
       else
-        fomat.json do
-          render json: { error: 'Unable to delete context' },
+        format.turbo_stream do
+          flash.now.alert = 'Unable to delete conversation turn'
+          flash_component = FlashMessageComponent.new(flash:)
+
+          render turbo_stream: turbo_stream.update(flash_component.id, flash_component),
                  status: :unprocessable_entity
         end
       end
