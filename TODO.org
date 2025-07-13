@@ -26,12 +26,9 @@
   - LLM can pick out a URL in a blob of text.
 * TODO Add support for PDFs
   https://docs.anthropic.com/en/docs/build-with-claude/pdf-support
-  Possible options:
-  1. Attach a file to the gtr
-  2. Drop a link in the chat, use regex to check for presence and add a document
-     content block to the request
-  3. Add support for using Anthropic's File API:
-     https://docs.anthropic.com/en/docs/build-with-claude/files
+  Add support for using Anthropic's File API:
+  https://docs.anthropic.com/en/docs/build-with-claude/files
+
   - [X] Add file response wrapper
   - [X] Add error classes
   - [X] Use error classes in the messages client
@@ -39,10 +36,11 @@
   - [X] Add controller for adding conversation context
   - [X] build UI for uploading conversation context files. What about a drag and
     drop to add context?
-  - [ ] Replace upload button with spinner during fetch post
+  - [X] Replace upload button with spinner during fetch post
+  - [ ] After upload respond with modal partial replace with Turbostream
   - [ ] delete conversation context
-  - [ ] refresh conversation context
-  - [ ] Add conversation context files to conversation
+  - [ ] Add conversation context files to conversation when making the request
+  - [ ] Handle case where conversation is new
 * DONE Generate conversation titles
 CLOSED: [2025-05-23 Fri 14:44]
   - [X] Click button and generate title in background

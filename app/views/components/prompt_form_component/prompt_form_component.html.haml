@@ -80,12 +80,13 @@
                 %span.label.me-1.small Tokens:
                 %span.value.badge.bg-secondary= conversation.token_count
               .button-group.d-flex.gap-1
-                %button.context-btn.btn.icon-btn.icon-btn-sm{ type: 'button', data: { 'bs-toggle': 'modal', 'bs-target': '#convo-context-modal' }}
-                  %i.bi.bi-folder-plus{ data: { 'bs-toggle': 'tooltip', 'bs-title': 'Conversation Context' }}
+                - if conversation.persisted?
+                  %button.context-btn.btn.icon-btn.icon-btn-sm{ type: 'button', data: { 'bs-toggle': 'modal', 'bs-target': '#convo-context-modal' }}
+                    %i.bi.bi-folder-plus{ data: { 'bs-toggle': 'tooltip', 'bs-title': 'Conversation Context' }}
                 %button.settings-btn.btn.icon-btn.icon-btn-sm{ type: 'button', data: { 'bs-toggle': 'modal', 'bs-target': '#convo-settings-modal' }}
                   %i.bi.bi-gear{ data: { 'bs-toggle': 'tooltip', 'bs-title': 'Conversation Settings' }}
 
-  -# CONVERSATION SETTINGS MODAL
+  / CONVERSATION SETTINGS MODAL
 
   .modal.fade.settings-modal#convo-settings-modal{ tabindex: '-1', 'aria-labelledby': 'conversationSettingsModalLabel', 'aria-hidden': 'true' }
     .modal-dialog
@@ -114,55 +115,9 @@
                 %i.bi.bi-info-circle.ms-1.text-muted{ data: { 'bs-toggle' => 'tooltip',
                                                               'bs-title': helpers.tool_type_description(tool_type) } }
 
-  -# CONVERSATION CONTEXT MODAL
+  / CONVERSATION CONTEXT MODAL
+  - if conversation.persisted?
+    .modal.fade.context-modal#convo-context-modal{ tabindex: '-1', 'aria-labelledby': 'conversationContextModalLabel', 'aria-hidden': 'true' }
+      .modal-dialog
+        %turbo-frame#conversation-contexts{ loading: :lazy, src: conversation_conversation_contexts_path(conversation) }
 
-  .modal.fade.context-modal#convo-context-modal{ tabindex: '-1', 'aria-labelledby': 'conversationContextModalLabel', 'aria-hidden': 'true' }
-    .modal-dialog
-      .modal-content
-        .modal-header.bg-primary.text-white
-          %h5.modal-title#conversationContextModalLabel Conversation Context
-          %button.btn-close.btn-close-white{ type: 'button', 'data-bs-dismiss': 'modal', 'aria-label': 'Close' }
-        .modal-body{ data: { controller: 'conversation-context', 'conversation-id': conversation.id } }
-          .mb-3
-            %h6 Upload File
-            %p.text-muted Add documents, images, or other files to provide context for this conversation.
-
-          .upload-area.border.border-2.border-dashed.rounded.p-4.text-center.mb-3{ data: { 'conversation-context-target': 'dropZone', action: 'dragover->conversation-context#handleDragOver drop->conversation-context#handleDrop dragleave->conversation-context#handleDragLeave' } }
-            %i.bi.bi-cloud-upload.fs-1.text-muted.mb-2
-            %p.mb-2 Drag and drop a file here, or click to select
-            %input.d-none{ type: 'file', data: { 'conversation-context-target': 'fileInput',
-                                                 action: 'change->conversation-context#handleFileSelect' },
-                           accept: '.pdf,.txt,.doc,.docx,.json,.csv,.jpg,.jpeg,.png,.gif' }
-            %button.btn.btn-outline-primary{ type: 'button', data: { action: 'click->conversation-context#openFileDialog' } }
-              %i.bi.bi-folder-plus.me-2
-              Select File
-
-          .alert.alert-success.d-none{ data: { 'conversation-context-target': 'successAlert' } }
-            %i.bi.bi-check-circle.me-2
-            %span{ data: { 'conversation-context-target': 'successMessage' } }
-
-          .alert.alert-danger.d-none{ data: { 'conversation-context-target': 'errorAlert' } }
-            %i.bi.bi-exclamation-triangle.me-2
-            %span{ data: { 'conversation-context-target': 'errorMessage' } }
-
-          .existing-files.mt-4{ data: { 'conversation-context-target': 'filesList' } }
-            %h6 Context Files
-            .files-container
-              - if conversation.contexts.any?
-                - conversation.contexts.order(created_at: :desc).each do |context|
-                  .file-item.d-flex.justify-content-between.align-items-center.p-2.border.rounded.mb-2
-                    .file-info.d-flex.align-items-center
-                      %i.bi.bi-file-earmark.me-2.text-muted
-                      .file-details
-                        .file-name.fw-medium= context.filename
-                        .file-meta.small.text-muted
-                          = time_ago_in_words(context.created_at)
-                          ago
-                    .file-actions
-                      %button.btn.btn-sm.btn-outline-danger{ type: 'button',
-                                                             data: { action: 'click->conversation-context#deleteFile', 'file-id': context.id } }
-                        %i.bi.bi-trash
-              - else
-                .text-muted.text-center.py-3
-                  %i.bi.bi-folder.me-2
-                  No context files uploaded yet

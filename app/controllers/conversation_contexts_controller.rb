@@ -17,6 +17,7 @@ class ConversationContextsController < ApplicationController
   def index
     @contexts = @conversation.contexts.order(created_at: :desc)
     respond_to do |format|
+      format.html
       format.json { render json: @contexts, status: :ok }
     end
   end
