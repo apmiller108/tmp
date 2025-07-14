@@ -37,7 +37,8 @@ class ConversationContext < ApplicationRecord
       file_ref: file_response.id,
       filename: file_response.filename,
       mime_type: file_response.mime_type,
-      context_type: context_types['file']
+      context_type: context_types['file'],
+      user_id: conversation.user_id
     )
   end
 end

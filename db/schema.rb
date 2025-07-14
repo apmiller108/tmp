@@ -76,9 +76,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_13_213054) do
     t.index ["user_id"], name: "index_conversation_contexts_on_user_id"
   end
 
-  create_table "conversation_contexts_conversations", id: false, force: :cascade do |t|
+  create_table "conversation_contexts_conversations", force: :cascade do |t|
     t.bigint "conversation_id", null: false
     t.bigint "conversation_context_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["conversation_context_id"], name: "idx_on_conversation_context_id_566942c244"
     t.index ["conversation_id", "conversation_context_id"], name: "index_conversations_on_contexts", unique: true
     t.index ["conversation_id"], name: "index_conversation_contexts_conversations_on_conversation_id"

@@ -1,8 +1,9 @@
 class CreateConversationContextsConversationsJoinTable < ActiveRecord::Migration[8.0]
   def change
-    create_table :conversation_contexts_conversations, id: false do |t|
+    create_table :conversation_contexts_conversations do |t|
       t.references :conversation, null: false, foreign_key: true
       t.references :conversation_context, null: false, foreign_key: true
+      t.timestamps
     end
 
     add_index :conversation_contexts_conversations,
