@@ -29,16 +29,16 @@ class ConversationContext < ApplicationRecord
     file: 'file'
   }, validate: true
 
-  # @param conversation [Conversation]
+  # @param user [User]
   # @param file_response [Anthropic::FileResponse]
   # @return [ConversationContext]
-  def self.create_for(conversation, file_response)
-    conversation.contexts.create(
+  def self.create_for!(user, file_response)
+    create!(
       file_ref: file_response.id,
       filename: file_response.filename,
       mime_type: file_response.mime_type,
       context_type: context_types['file'],
-      user_id: conversation.user_id
+      user_id: user.id
     )
   end
 end

@@ -135,7 +135,7 @@ export const createConversationContext = (conversation_id, file, signal) => {
   const formData = new FormData()
   formData.append('conversation_context[file]', file)
 
-  return fetch(`/conversations/${conversation_id}/conversation_contexts`, {
+  return fetch(`/conversations/${conversation_id}/conversation_contexts_conversations`, {
     method: 'POST',
     body: formData,
     headers: {

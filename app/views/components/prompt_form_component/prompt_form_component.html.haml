@@ -119,5 +119,5 @@
   - if conversation.persisted?
     .modal.fade.context-modal#convo-context-modal{ tabindex: '-1', 'aria-labelledby': 'conversationContextModalLabel', 'aria-hidden': 'true' }
       .modal-dialog
-        %turbo-frame#conversation-contexts{ loading: :lazy, src: conversation_conversation_contexts_path(conversation) }
+        %turbo-frame#conversation-contexts{ loading: :lazy, src: conversation_conversation_contexts_conversations_path(conversation) }
 

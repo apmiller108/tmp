@@ -1,17 +1,23 @@
-class ConversationContextsController < ApplicationController
+class ConversationContextsConversationsController < ApplicationController
   before_action :set_conversation, only: [:create, :index, :destroy]
 
   def create
-    file_response = Anthropic.upload_file(conversation_context_params[:file])
-    context = ConversationContext.create_for(@conversation, file_response)
+    context = if conversation_context_params[:conversation_context_id].present?
+                ConversationContext.find(params[:conversation_context_id])
+              elsif conversation_context_params[:file].present?
+                file_response = Anthropic.upload_file(conversation_context_params[:file])
+                ConversationContext.create_for!(current_user, file_response)
+              end
+
+    conversation_context = @conversation.conversation_contexts_conversations.create(context:)
 
     respond_to do |format|
-      if context.persisted?
+      if conversation_context.persisted?
         format.json do
           render turbo_stream: turbo_stream.prepend(
             'conversation-context-list',
-            partial: 'conversation_contexts/conversation_context',
-            locals: { context: }
+            partial: 'conversation_contexts_conversations/conversation_context',
+            locals: { conversation_context: }
           )
         end
       else
@@ -22,7 +28,7 @@ class ConversationContextsController < ApplicationController
   end
 
   def index
-    @contexts = @conversation.contexts.order(created_at: :desc)
+    @contexts = @conversation.conversation_contexts_conversations.order(created_at: :desc)
     respond_to do |format|
       format.html
       format.json { render json: @contexts, status: :ok }
@@ -56,6 +62,6 @@ class ConversationContextsController < ApplicationController
   end
 
   def conversation_context_params
-    params.require(:conversation_context).permit(:file)
+    params.require(:conversation_context).permit(:file, :conversation_context_id)
   end
 end
