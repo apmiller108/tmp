@@ -3,9 +3,7 @@ import { createConversationContext } from '@javascript/http';
 
 export default class ConversationContextController extends Controller {
   static targets = [
-    "dropZone", "fileInput", "progressContainer", "progressBar",
-    "fileName", "fileSize", "successAlert", "errorAlert",
-    "successMessage", "errorMessage", "filesList", "spinner"
+    "dropZone", "fileInput", "successAlert", "errorAlert", "successMessage", "errorMessage", "spinner"
   ]
 
   abortController = null;
