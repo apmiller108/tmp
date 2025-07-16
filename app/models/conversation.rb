@@ -28,8 +28,8 @@ class Conversation < ApplicationRecord
   has_many :generate_image_requests, through: :turns, source: :turnable, source_type: 'GenerateImageRequest'
   has_many :generate_text_requests, through: :turns, source: :turnable, source_type: 'GenerateTextRequest'
 
-  has_many :conversation_contexts_conversations, dependent: :destroy
-  has_many :contexts, through: :conversation_contexts_conversations, source: :context
+  has_many :conversation_contexts, class_name: 'ConversationContextsConversation'
+  has_many :contexts, through: :conversation_contexts, source: :context, dependent: :destroy
 
   validates :title, presence: true, length: { maximum: 100 }
   validates :image_quality, inclusion: {

@@ -40,5 +40,9 @@ class ConversationContext < ApplicationRecord
       context_type: context_types['file'],
       user_id: user.id
     )
+  rescue StandardError
+    raise CreateError
   end
+
+  CreateError = Class.new(StandardError)
 end

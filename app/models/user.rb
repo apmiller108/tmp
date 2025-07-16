@@ -7,6 +7,7 @@ class User < ApplicationRecord
          jwt_revocation_strategy: self, omniauth_providers: %i[github]
 
   has_many :conversations, dependent: :destroy
+  has_many :conversation_contexts
   has_many :generate_image_requests, dependent: :destroy
   has_many :generate_text_requests, dependent: :destroy
   has_many :generate_text_presets_users, dependent: :destroy

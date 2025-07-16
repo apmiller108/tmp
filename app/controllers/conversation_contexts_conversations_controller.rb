@@ -9,7 +9,7 @@ class ConversationContextsConversationsController < ApplicationController
                 ConversationContext.create_for!(current_user, file_response)
               end
 
-    conversation_context = @conversation.conversation_contexts_conversations.create(context:)
+    conversation_context = @conversation.conversation_contexts.create(context:)
 
     respond_to do |format|
       if conversation_context.persisted?
@@ -22,13 +22,14 @@ class ConversationContextsConversationsController < ApplicationController
         end
       else
         format.json { render json: context.errors, status: :unprocessable_entity }
-        DeleteRemoteConversationContextJob.perform_async(file_response.id)
       end
     end
+  rescue ConversationContext::CreateError
+    DeleteRemoteConversationContextJob.perform_async(file_response.id)
   end
 
   def index
-    @contexts = @conversation.conversation_contexts_conversations.order(created_at: :desc)
+    @contexts = @conversation.conversation_contexts.order(created_at: :desc)
     respond_to do |format|
       format.html
       format.json { render json: @contexts, status: :ok }
@@ -36,7 +37,7 @@ class ConversationContextsConversationsController < ApplicationController
   end
 
   def destroy
-    @context = @conversation.contexts.find(params[:id])
+    @context = @conversation.conversation_contexts.find(params[:id])
 
     respond_to do |format|
       if @context.destroy
