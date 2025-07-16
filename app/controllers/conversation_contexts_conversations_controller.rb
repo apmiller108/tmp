@@ -1,5 +1,6 @@
 class ConversationContextsConversationsController < ApplicationController
   before_action :set_conversation, only: [:create, :index, :destroy]
+  before_action :set_available_contexts, only: [:index]
 
   def create
     context = if conversation_context_params[:conversation_context_id].present?
@@ -60,6 +61,15 @@ class ConversationContextsConversationsController < ApplicationController
 
   def set_conversation
     @conversation = current_user.conversations.find(params[:conversation_id])
+  end
+
+  def set_available_contexts
+    @available_contexts = current_user.conversation_contexts
+                                      .where('id NOT IN (:ids)',
+                                             ids: ConversationContext.select(:id)
+                                                                     .joins(conversation_contexts_conversations: :conversation)
+                                                                     .where(conversation: { id: @conversation.id }))
+                                      .order(:filename)
   end
 
   def conversation_context_params

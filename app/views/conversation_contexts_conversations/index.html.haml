@@ -5,6 +5,25 @@
       %button.btn-close.btn-close-white{ type: 'button', 'data-bs-dismiss': 'modal', 'aria-label': 'Close' }
     .modal-body
       = render partial: 'upload_area', locals: { conversation: @conversation }
+    .existing-files-selector.mt-4
+      %h6 Add Existing Files
+      = form_with url: conversation_conversation_contexts_conversations_path(@conversation),
+                  method: :post,
+                  local: false,
+                  data: { controller: 'existing-files-form', turbo_frame: 'conversation-contexts' } do |form|
+        .mb-3
+          = form.select :conversation_context_ids,
+                        options_from_collection_for_select(@available_contexts, :id, :filename),
+                        { prompt: 'Select files to add...' },
+                        { multiple: true,
+                          class: 'form-select',
+                          size: 5,
+                          data: { action: 'change->existing-files-form#toggleSubmitButton' } }
+        .mb-3
+          = form.submit 'Add Selected Files',
+                        class: 'btn btn-outline-primary',
+                        disabled: true,
+                        data: { 'existing-files-form-target': 'submitButton' }
       .existing-files.mt-4
         %h6 Context Files
         .contexts-container#conversation-context-list
