@@ -29,6 +29,13 @@ class ConversationContext < ApplicationRecord
     file: 'file'
   }, validate: true
 
+  scope :available_for, ->(conversation) {
+    where('id NOT IN (:ids)',
+          ids: ConversationContext.select(:id)
+                                  .joins(conversation_contexts_conversations: :conversation)
+                                  .where(conversation: { id: conversation.id }))
+  }
+
   # @param user [User]
   # @param file_response [Anthropic::FileResponse]
   # @return [ConversationContext]

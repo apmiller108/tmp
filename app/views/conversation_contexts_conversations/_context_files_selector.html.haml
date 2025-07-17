@@ -1,0 +1,22 @@
+%h6 Add Existing Files
+= form_with url: conversation_conversation_contexts_conversations_path(conversation),
+            scope: :conversation_context,
+            method: :post,
+            local: false,
+            data: { controller: 'conversation-context-selector', turbo_frame: 'conversation-contexts' } do |form|
+  .mb-3
+    = form.select :conversation_context_ids,
+                  [],
+                  { prompt: 'Select files to add...' },
+                  { multiple: true,
+                    class: 'form-select',
+                    size: 5,
+                    data: { action: 'change->conversation-context-selector#toggleSubmit',
+                                    'conversation-context-selector-target' => 'select' } } do
+      - available_contexts.each do |context|
+        %option{ value: context.id, id: dom_id(context) }= context.filename
+  .mb-3
+    = form.submit 'Add Selected Files',
+                  class: 'btn btn-outline-primary',
+                  disabled: true,
+                  data: { 'conversation-context-selector-target': 'submitButton' }

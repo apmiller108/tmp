@@ -41,10 +41,10 @@
   - [X] delete conversation context
   - [X] associate conversation context to a user
   - [X] create conversations_conversation_contexts join table
-  - [ ] Change the controller to ConversationsConversationContextsController
-  - [ ] Add multi select to associate contexts to a conversation
-  - [ ] Build crud interface to manage files
+  - [X] Change the controller to ConversationsConversationContextsController
+  - [X] Add multi select to associate contexts to a conversation
   - [ ] Add conversation context files to conversation when making the request
+  - [ ] Build crud interface to manage files
   - [ ] Handle case where conversation is new
 * DONE Generate conversation titles
 CLOSED: [2025-05-23 Fri 14:44]

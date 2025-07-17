@@ -1,0 +1,3 @@
+= turbo_stream.remove(@context)
+= turbo_stream.update('context-files-selector') do
+  = render partial: 'context_files_selector', locals: { conversation: @conversation, available_contexts: @available_contexts }
