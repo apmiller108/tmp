@@ -38,7 +38,7 @@ module Anthropic
     # (eg, summaries) In this case the NullConversation provides the empty
     # exchange.
     def messages
-      turns = generate_text_request.conversation.turns.to_a
+      turns = conversation.turns.to_a
       conversation.exchange.push(Turn.user_turn(generate_text_request, turns:))
     end
 

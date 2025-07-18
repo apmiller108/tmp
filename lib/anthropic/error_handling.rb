@@ -1,7 +1,7 @@
 module Anthropic
   module ErrorHandling
     def handle_error(response)
-      error_data = response.body.fetch('error', {})
+      error_data = JSON.parse(response.body).fetch('error', {})
       error_type = error_data['type']
       error_message = error_data.fetch('message', 'Client error occurred')
 
@@ -13,6 +13,8 @@ module Anthropic
       else
         raise UnknownError, response.body
       end
+    rescue JSON::ParserError
+      raise UnknownError, "Unable to parse error response: #{response.body} #{response.status}"
     end
 
     def handle_client_error(error_type:, error_message:)
