@@ -56,4 +56,5 @@ Rails.application.routes.draw do
   end
   resources :generate_text_presets, except: %i[show]
   resources :generate_image_requests, only: %i[create]
+  resources :conversation_contexts, only: %i[index destroy]
 end

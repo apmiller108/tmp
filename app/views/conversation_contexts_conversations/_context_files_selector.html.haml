@@ -1,10 +1,12 @@
-%h6 Add Existing Files
+.d-flex.align-items-center.mb-3
+  %h6.mb-0 Add Existing Files
+  = link_to 'Manage Files', conversation_contexts_path, class: 'btn btn-link btn-sm', data: { turbo: false }
 = form_with url: conversation_conversation_contexts_conversations_path(conversation),
             scope: :conversation_context,
             method: :post,
             local: false,
             data: { controller: 'conversation-context-selector', turbo_frame: 'conversation-contexts' } do |form|
-  .mb-3
+  .mb-1
     = form.select :conversation_context_ids,
                   [],
                   { prompt: 'Select files to add...' },
