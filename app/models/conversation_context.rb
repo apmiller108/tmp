@@ -29,6 +29,16 @@ class ConversationContext < ApplicationRecord
     file: 'file'
   }, validate: true
 
+  DOCUMENT_CONTENT_TYPE = 'document'.freeze
+  IMAGE_CONTENT_TYPE = 'image'.freeze
+  DEFAULT_CONTENT_BLOCK_TYPE = 'container_upload'.freeze
+  CONTENT_BLOCK_TYPES = {
+    ['application/pdf', 'text/plain'] => DOCUMENT_CONTENT_TYPE,
+    ['image/jpeg', 'image/png', 'image/gif', 'image/webp'] => IMAGE_CONTENT_TYPE
+  }
+
+  CreateError = Class.new(StandardError)
+
   scope :available_for, ->(conversation) {
     where('id NOT IN (:ids)',
           ids: ConversationContext.select(:id)
@@ -51,5 +61,27 @@ class ConversationContext < ApplicationRecord
     raise CreateError
   end
 
-  CreateError = Class.new(StandardError)
+  def to_content_block
+    {
+      type: content_block_type,
+      source: {
+        type: context_type,
+        file_id: file_ref
+      },
+      **metadata
+    }
+  end
+
+  # @return [String] the type of content block to use when including this context in a conversation
+  def content_block_type
+    CONTENT_BLOCK_TYPES.find { |types, _| types.include?(mime_type) }&.last || DEFAULT_CONTENT_BLOCK_TYPE
+  end
+
+  def metadata
+    if content_block_type == DOCUMENT_CONTENT_TYPE
+      { filename: }
+    else
+      {}
+    end
+  end
 end

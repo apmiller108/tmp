@@ -24,6 +24,8 @@
   - Tool to fetch a given URL, extract text content from HTML document and pipe
     into the followup response.
   - LLM can pick out a URL in a blob of text.
+* TODO Add support for code execution tool
+  https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/code-execution-tool
 * TODO Add support for PDFs
   https://docs.anthropic.com/en/docs/build-with-claude/pdf-support
   Add support for using Anthropic's File API:
@@ -43,7 +45,7 @@
   - [X] create conversations_conversation_contexts join table
   - [X] Change the controller to ConversationsConversationContextsController
   - [X] Add multi select to associate contexts to a conversation
-  - [ ] Add conversation context files to conversation when making the request
+  - [X] Add conversation context files to conversation when making the request
   - [ ] Build crud interface to manage files
   - [ ] Handle case where conversation is new
 * DONE Generate conversation titles

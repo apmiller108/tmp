@@ -8,7 +8,8 @@ module Anthropic
         headers: {
           'x-api-key': ENV.fetch('ANTHROPIC_KEY'),
           'Content-Type': 'application/json',
-          'anthropic-version': VERSION
+          'anthropic-version': VERSION,
+          'anthropic-beta': FilesClient::BETA_VERSION
         }
       ) do |f|
         f.adapter :typhoeus

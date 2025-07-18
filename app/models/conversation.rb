@@ -48,15 +48,24 @@ class Conversation < ApplicationRecord
   end
 
   def exchange
-    generate_text_requests.completed.flat_map { _1.to_turn(turns: turns.to_a) }
+    generate_text_requests.completed.flat_map { _1.to_turn(turns: turns.to_a) }.tap do |ex|
+      # prepend contexts to the first user message
+      ex.first['content'] = [*contexts.map(&:to_content_block), *ex.first['content']]
+    end
+  end
+
+  def documents
+    if contexts.any?
+      contexts.map(&:to_content_block)
+    else
+      []
+    end
   end
 
   def token_count
     generate_text_requests.sum(&:response_token_count)
   end
 
-  # @return [String] a raw text version of the conversation including tool use
-  # responses. Suitable for an embedding.
   def blobify
     [
       title,
