@@ -46,7 +46,8 @@
   - [X] Change the controller to ConversationsConversationContextsController
   - [X] Add multi select to associate contexts to a conversation
   - [X] Add conversation context files to conversation when making the request
-  - [ ] Build crud interface to manage files
+  - [X] Build crud interface to manage files
+  - [ ] Paginate contexts
   - [ ] Handle case where conversation is new
 * DONE Generate conversation titles
 CLOSED: [2025-05-23 Fri 14:44]

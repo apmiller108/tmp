@@ -30,6 +30,7 @@
                                           class: 'form-select'
               .g-start-9.g-col-4.d-flex.justify-content-center.flex-column.my-0.mx-auto
                 = link_to "Manage presets", generate_text_presets_path, class: 'link-offset-1'
+                = link_to "Manage files", conversation_contexts_path, class: 'link-offset-1'
                 - if current_user.developer?
                   = link_to "Manage tools", llm_tools_path, class: 'link-offset-1'
             .d-flex.justify-content-center.align-items-center
