@@ -50,7 +50,9 @@ class Conversation < ApplicationRecord
   def exchange
     generate_text_requests.completed.flat_map { _1.to_turn(turns: turns.to_a) }.tap do |ex|
       # prepend contexts to the first user message
-      ex.first['content'] = [*contexts.map(&:to_content_block), *ex.first['content']]
+      if ex.first.present?
+        ex.first['content'] = [*contexts.map(&:to_content_block), *ex.first['content']]
+      end
     end
   end
 
