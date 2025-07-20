@@ -2,6 +2,7 @@ class ConversationContextsConversationsController < ApplicationController
   before_action :set_conversation, only: [:create, :index, :destroy]
   before_action :set_available_contexts, only: [:index]
 
+  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def create
     contexts = []
     conversation_contexts = []
@@ -48,6 +49,7 @@ class ConversationContextsConversationsController < ApplicationController
   rescue ConversationContext::CreateError
     DeleteRemoteConversationContextJob.perform_async(file_response.id)
   end
+  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   def index
     @contexts = @conversation.conversation_contexts.order(created_at: :desc)

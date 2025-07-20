@@ -8,6 +8,7 @@ class ConversationContext < ApplicationRecord
 
   after_destroy_commit -> { DeleteRemoteConversationContextJob.perform_async(file_ref) }
 
+  # rubocop:disable Layout/LineLength
   enum :mime_type, {
     'text/csv' => 'text/csv',
     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -24,6 +25,7 @@ class ConversationContext < ApplicationRecord
     'text/markdown' => 'text/markdown',
     'text/x-python' => 'text/x-python'
   }, validate: true
+  # rubocop:enable Layout/LineLength
 
   enum :context_type, {
     file: 'file'
@@ -35,7 +37,7 @@ class ConversationContext < ApplicationRecord
   CONTENT_BLOCK_TYPES = {
     ['application/pdf', 'text/plain'] => DOCUMENT_CONTENT_TYPE,
     ['image/jpeg', 'image/png', 'image/gif', 'image/webp'] => IMAGE_CONTENT_TYPE
-  }
+  }.freeze
 
   CreateError = Class.new(StandardError)
 

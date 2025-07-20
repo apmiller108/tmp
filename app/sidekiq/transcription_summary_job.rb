@@ -1,7 +1,7 @@
 class TranscriptionSummaryJob
   include Sidekiq::Job
 
-  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  # rubocop:disable Metrics/AbcSize
   def perform(user_id, transcription_id)
     user = User.find(user_id)
     transcription = user.transcriptions.find(transcription_id)

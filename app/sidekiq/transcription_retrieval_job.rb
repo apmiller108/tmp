@@ -3,7 +3,7 @@ class TranscriptionRetrievalJob
 
   sidekiq_options lock: :until_executed
 
-  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  # rubocop:disable Metrics/AbcSize
   def perform(transcription_job_id)
     transcription_job = TranscriptionJob.find(transcription_job_id)
     remote_job = transcription_job.remote_job

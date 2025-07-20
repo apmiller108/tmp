@@ -50,6 +50,13 @@ Metrics/ClassLength:
   Exclude:
     - 'app/controllers/**/*'
     - 'lib/**/*_form.rb'
+Metrics/ModuleLength:
+  CountAsOne:
+    - 'array'
+    - 'hash'
+    - 'heredoc'
+    - 'method_call'
+  Exclude:
 
 Naming/MethodParameterName:
   Enabled: false

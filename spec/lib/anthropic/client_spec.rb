@@ -73,10 +73,10 @@ RSpec.describe Anthropic::Client do
 
     before do
       allow(Anthropic::InvokeModelRequest).to receive(:new).with(generate_text_request, stream: true)
-                                                                           .and_return(invoke_model_request)
+                                                           .and_return(invoke_model_request)
       allow(Anthropic::StreamResponse).to receive(:new).and_return(stream_response)
       allow(Anthropic::InvokeModelResponse).to receive(:new).with(response_format)
-                                                                            .and_return('final_response')
+                                                            .and_return('final_response')
 
       allow(Anthropic::StreamEvent).to receive(:parse).and_call_original
 

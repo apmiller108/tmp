@@ -42,7 +42,7 @@ class ContentCustomizerComponent < ApplicationViewComponent
     @opts.fetch(:markdown, false)
   end
 
-  # rubocop:disable Rails/OutputSafety, Metrics/MethodLength
+  # rubocop:disable Rails/OutputSafety
   def customized_pre(pre_tag)
     original_content = pre_tag.inner_html
     attributes = pre_tag.attributes.transform_values(&:value)

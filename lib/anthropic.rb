@@ -7,6 +7,8 @@ module Anthropic
 
   def self.vendor = :anthropic
   def self.capabilities = GenerativeText::Model::Capabilities.new(image?: true)
+
+  # rubocop:disable Metrics/AbcSize
   def self.models
     [
       GenerativeText::Model.new(
@@ -83,6 +85,7 @@ module Anthropic
       )
     ]
   end
+  # rubocop:enable Metrics/AbcSize
 
   def self.active_models
     models.select(&:active?)

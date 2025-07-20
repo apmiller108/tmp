@@ -34,7 +34,6 @@ class AttachmentSummaryComponent < ApplicationViewComponent
     "#{count} #{file_type.pluralize(count)}"
   end
 
-  # rubocop:disable Metrics/MethodLength
   def icon_class(count_type)
     case count_type
     when :image_count

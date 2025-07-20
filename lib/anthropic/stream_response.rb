@@ -8,7 +8,6 @@ module Anthropic
       @complete = false
     end
 
-    # rubocop:disable Metrics/MethodLength
     # Update the response state based on an event
     # @param event [StreamEvent] The event to process
     def update(event)

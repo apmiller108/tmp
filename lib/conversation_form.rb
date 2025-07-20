@@ -34,7 +34,6 @@ class ConversationForm
     end
   end
 
-  # rubocop:disable Metrics/MethodLength
   def save
     conversation.assign_attributes(conversation_attributes)
 
