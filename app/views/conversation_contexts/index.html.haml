@@ -5,33 +5,21 @@
 
   .row.mb-3
     .col-md-8.offset-md-2
-      = form_with url: conversation_contexts_path, method: :get, class: 'mb-3' do |form|
+      = form_with url: conversation_contexts_path, method: :get, scope: :q, class: 'mb-3' do |form|
         .input-group
           = form.text_field :search, placeholder: 'Search conversation contexts...',
-                           value: params[:search], class: 'form-control'
+                           value: @search_params.dig(:q, :search), class: 'form-control'
           = form.submit 'Search', class: 'btn btn-outline-secondary'
-          - if params[:search].present?
+          - if @search_params.dig(:q, :search).present?
             = link_to 'Clear', conversation_contexts_path, class: 'btn btn-outline-secondary'
 
   .row
     .col-md-8.offset-md-2
-      - if @conversation_contexts.any?
-        .list-group.shadow-sm
-          - @conversation_contexts.each do |context|
-            .context.list-group-item{ id: dom_id(context) }
-              .d-flex.justify-content-between.align-items-start
-                .d-flex.flex-column
-                  %h5.mb-1= context.filename
-                  %p.text-muted.mb-1= context.mime_type
-                .d-flex.flex-column.align-items-end
-                  %span.updated_at.mb-2= "Created #{time_ago_in_words(context.created_at)} ago"
-                  .d-flex.justify-content-end
-                    %span.badge.bg-primary= "Used in #{context.conversations.to_a.size} #{'conversation'.pluralize(context.conversations.to_a.size)}"
-              %div{ data: { controller: 'tooltip' }}
-                = link_to context, data: { turbo_method: 'delete', turbo_confirm: 'Are you sure you want to delete this conversation context?',
-                                          'bs-toggle' => 'tooltip', 'bs-title' => 'Delete' },
-                                          class: 'btn icon-btn icon-btn-sm' do
-                  %i.bi.bi-trash3.text-danger
-      - else
-        .alert.alert-info.text-center
-          %p.mb-0 No conversation contexts found.
+      = render PaginationComponent.new(path: [:conversation_contexts_path], pagination: @pagination, search_q: @search_params[:q]) do |pagination|
+        = pagination.with_container do
+          #conversation_contexts.list-group.shadow-sm
+            - if @conversation_contexts.any?
+              = render partial: 'conversation_context', collection: @conversation_contexts, as: :context
+            - else
+              .alert.alert-info.text-center
+                %p.mb-0 No conversation contexts found.

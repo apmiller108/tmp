@@ -1,0 +1,5 @@
+= render PaginationComponent.new(path: [:conversation_contexts_path], pagination: @pagination,
+                                 search_q: { search: params[:search] }, container_id: :conversation_contexts) do |pagination|
+  = pagination.with_list do
+    - if @conversation_contexts.present?
+      = render partial: 'conversation_context', collection: @conversation_contexts, as: :context, formats: [:html]
