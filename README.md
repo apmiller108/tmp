@@ -39,7 +39,7 @@ This orchestrates the following services:
 - redis: Redis v7
 - ws: Anycable WebSocket server
 - anycable: Anycable [gRPC](https://grpc.io/) server
-- web: Ruby on Rails application
+- app: Ruby on Rails application
 - sidekiq: Sidekiq background job process
 - chrome: Browserless chrome for running feature/system tests.
 ### Build
@@ -56,10 +56,10 @@ docker compose up
 Or just what you need (ie, without sidekiq, chrome, etc)
 
 ```
-docker compose up web
+docker compose up app
 ```
 ### Access to running containers
-  - docker compose exec -it web bash
+  - docker compose exec -it app bash
   - docker compose exec -it database psql -U postgres
 
 ### ENV vars
@@ -223,7 +223,7 @@ This Uses [browserless' Chrome image](https://www.browserless.io/docs/docker-qui
 
 Running system tests
 - To start chrome, run `docker compose up -d chrome`
-- Run `rspec spec/system` on the web container
+- Run `rspec spec/system` on the app container
 - visit http://localhost:3333/
 
 ## CI
