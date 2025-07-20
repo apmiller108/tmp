@@ -18,7 +18,7 @@ RSpec.describe PromptFormComponent, type: :component do
 
   it 'shows the token count' do
     with_current_user(user) { render_inline component }
-    expect(page).to have_css '.details-fields', text: /Tokens:\s+#{token_count}/
+    expect(page).to have_css '.token-display', text: /Tokens:\s+#{token_count}/
   end
 
   describe '#id' do

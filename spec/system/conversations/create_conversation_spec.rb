@@ -45,14 +45,11 @@ RSpec.describe 'create conversation', type: :system do
       find('#conversation_temperature').set(temperature)
     end
 
-    # Configure converation settings
-    within('.c-prompt-form') do
-      find('button.settings-btn').click
-      within('#convoSettingsModal') do
-        # Enable image tools
-        find('#conversation_tool_type_image').click
-        find('button.btn-close').click
-      end
+    find('button.settings-btn').click
+    within('#convo-settings-modal') do
+      # Enable image tools
+      find('#conversation_tool_type_image').click
+      find('button.btn-close').click
     end
 
     find('button[type=submit]').click
