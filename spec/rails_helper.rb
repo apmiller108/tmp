@@ -90,6 +90,7 @@ RSpec.configure do |config|
   config.include Rails.application.routes.url_helpers, type: :component
 
   config.before(:suite) do
+    Rails.application.load_seed
     SidekiqUniqueJobs.config.enabled = false # prevents sidekiq-unique-jobs from attempting to connect with redis
   end
 end
