@@ -1,0 +1,16 @@
+{
+  "ignored_warnings": [
+    {
+      "fingerprint": "12733137dfb5edae4d3465a81755745dd025581893823ae997f9cf71dda767e2",
+      "note": "Ignoring XSS in dom_id for conversation_context partial"
+    },
+    {
+      "fingerprint": "c188df3b0a94cfc1e4d77e2d1c11a2b895854843f37f7ea80de644045d79fbba",
+      "note": "Ignoring XSS in dom_id for transcriptions index"
+    },
+    {
+      "fingerprint": "cbf2336e6482b6dc0d26b4d78b775c8521ec2d075ca88173a98441300434aaa9",
+      "note": "Ignoring XSS in dom_id for llm_tools index"
+    }
+  ]
+}
