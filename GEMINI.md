@@ -64,6 +64,11 @@ The project uses RSpec for testing.
     - JSON request specs: Use the `auth_headers` helper.
 - **Turbo Streams:** Use the `have_turbo_stream` RSpec matcher.
 
+### Testing Guidelines
+
+- Do not write tests for active record model associations. These are typically covered by Rails itself.
+- Before testing or interacting with an Active Record object, always inspect its model file and `db/schema.rb` to understand its attributes and associations. Do not assume attribute existence or type.
+
 ## Common Commands
 
 - **Build docker images:** `docker compose build`
