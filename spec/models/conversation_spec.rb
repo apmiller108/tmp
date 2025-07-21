@@ -12,14 +12,58 @@ RSpec.describe Conversation, type: :model do
 
   describe '#exchange' do
     let(:turns) { conversation.turns }
-    let(:expected_result) { turns.flat_map { _1.turnable.to_turn(turns:) } }
 
     before do
       create_list(:generate_text_request, 2, :completed, :with_response, conversation:)
     end
 
-    it 'returns flattened turns from completed generate text requests' do
-      expect(conversation.exchange).to eq(expected_result)
+    context 'when there are no contexts' do
+      let(:expected_result) { turns.flat_map { _1.turnable.to_turn(turns:) } }
+
+      it 'returns flattened turns from completed generate text requests' do
+        expect(conversation.exchange).to eq(expected_result)
+      end
+    end
+
+    context 'when there are contexts' do
+      let(:context1) { create(:conversation_context) }
+      let(:context2) { create(:conversation_context) }
+
+      before do
+        conversation.contexts << context1
+        conversation.contexts << context2
+      end
+
+      it 'prepends context content to the first user message' do
+        result = conversation.exchange
+        expect(result.first['content']).to start_with(context1.to_content_block, context2.to_content_block)
+      end
+    end
+  end
+
+  describe '#documents' do
+    context 'when there are no contexts' do
+      it 'returns an empty array' do
+        expect(conversation.documents).to eq([])
+      end
+    end
+
+    context 'when there are contexts' do
+      let(:context1) { create(:conversation_context) }
+      let(:context2) { create(:conversation_context) }
+
+      before do
+        conversation.contexts << context1
+        conversation.contexts << context2
+      end
+
+      it 'returns content blocks from associated contexts' do
+        expected_documents = [
+          context1.to_content_block,
+          context2.to_content_block
+        ]
+        expect(conversation.documents).to eq(expected_documents)
+      end
     end
   end
 
