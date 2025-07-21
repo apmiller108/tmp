@@ -39,7 +39,7 @@ RSpec.describe 'generating a conversation title' do
     # Generate a title
     find('#generate-title-btn').click
     sleep 1
-    expect(page).to have_css('.title-field', text: 'test assistant response')
     expect(request_stub).to have_been_requested
+    expect(page).to have_css('.title-field', text: 'test assistant response')
   end
 end
