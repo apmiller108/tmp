@@ -63,6 +63,7 @@ The project uses RSpec for testing.
     - Feature/System specs: Use the `LoginHelper#login` helper.
     - JSON request specs: Use the `auth_headers` helper.
 - **Turbo Streams:** Use the `have_turbo_stream` RSpec matcher.
+- **Navigation in system specs:** Use the `navigate_to` helper method instead of `visit`.
 
 ### Testing Guidelines
 

@@ -6,9 +6,9 @@
   .upload-area.border.border-2.border-dashed.rounded.p-4.text-center.mb-3{ data: { 'conversation-context-target': 'dropZone', action: 'dragover->conversation-context#handleDragOver drop->conversation-context#handleDrop dragleave->conversation-context#handleDragLeave' } }
     %i.bi.bi-cloud-upload.fs-1.text-muted.mb-2
     %p.mb-2 Drag and drop a file here, or click to select
-    %input.d-none{ type: 'file', data: { 'conversation-context-target': 'fileInput',
-                                          action: 'change->conversation-context#handleFileSelect' },
-                    accept: '.pdf,.txt,.doc,.docx,.json,.csv,.jpg,.jpeg,.png,.gif' }
+    %input.d-none#conversation-context-file-input{ type: 'file', data: { 'conversation-context-target': 'fileInput',
+                                                   action: 'change->conversation-context#handleFileSelect' },
+                                                   accept: '.pdf,.txt,.doc,.docx,.json,.csv,.jpg,.jpeg,.png,.gif' }
     %button.btn.btn-outline-primary{ type: 'button', data: { action: 'click->conversation-context#openFileDialog' } }
       %i.bi.bi-folder-plus.me-2
       Select File
