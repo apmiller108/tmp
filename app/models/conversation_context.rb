@@ -81,7 +81,7 @@ class ConversationContext < ApplicationRecord
 
   def metadata
     if content_block_type == DOCUMENT_CONTENT_TYPE
-      { filename: }
+      { title: filename }
     else
       {}
     end

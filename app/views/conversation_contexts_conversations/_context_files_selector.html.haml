@@ -6,7 +6,7 @@
             method: :post,
             local: false,
             data: { controller: 'conversation-context-selector', turbo_frame: 'conversation-contexts' } do |form|
-  .mb-1
+  .mb-2
     = form.select :conversation_context_ids,
                   [],
                   { prompt: 'Select files to add...' },
