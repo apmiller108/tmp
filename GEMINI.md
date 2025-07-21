@@ -69,6 +69,8 @@ The project uses RSpec for testing.
 
 - Do not write tests for active record model associations. These are typically covered by Rails itself.
 - Before testing or interacting with an Active Record object, always inspect its model file and `db/schema.rb` to understand its attributes and associations. Do not assume attribute existence or type.
+- Use named subjects in RSpec tests.
+- Ensure only one expectation per `it` block.
 
 ## Common Commands
 
@@ -137,3 +139,16 @@ This project follows a modern Ruby on Rails architecture with a strong emphasis 
 - **RSpec:** A testing framework for Ruby.
 - **Capybara:** An acceptance test framework for web applications.
 - **Cuprite:** A headless Chrome driver for Capybara.
+
+## New Features (pdf-support branch)
+
+### File Context for Conversations
+
+This branch introduces the ability to attach files to conversations, providing context to the LLM. Key components include:
+
+- **`ConversationContext` Model:** Stores metadata about uploaded files (e.g., `file_ref`, `filename`, `mime_type`).
+- **Anthropic Files API Integration:** Uses Anthropic's API for file uploads and management. This involves new `Anthropic::FilesClient` and `Anthropic::FileResponse` classes.
+- **Background Jobs:**
+    - `DeleteRemoteConversationContextJob`: Handles deletion of files from Anthropic.
+- **UI for File Management:** A new modal allows users to upload new files or attach existing ones to a conversation. This is handled by `ConversationContextsController` and `ConversationContextsConversationsController`.
+- **Prompt Augmentation:** The `Conversation#exchange` method is updated to include the content of attached files in the prompt sent to the LLM, enabling context-aware responses.
