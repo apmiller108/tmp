@@ -3,7 +3,9 @@ require 'system_helper'
 RSpec.describe 'Conversation Contexts', type: :system do
   let(:user) { create(:user) }
   let!(:conversation) { create(:conversation, user:) }
-  let(:file_response) { instance_double(Anthropic::FileResponse, id: 'file_id', filename: 'test.pdf', mime_type: 'application/pdf') }
+  let(:file_response) do
+    instance_double(Anthropic::FileResponse, id: 'file_id', filename: 'test.pdf', mime_type: 'application/pdf')
+  end
 
   before do
     allow(Anthropic).to receive(:upload_file).and_return(file_response)

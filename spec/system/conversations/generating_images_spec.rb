@@ -49,7 +49,7 @@ RSpec.describe 'update conversation', type: :system do
         find('#conversation_temperature').set(temperature)
       end
 
-      find('button.settings-btn').click
+      page.execute_script("document.querySelector('button.settings-btn').click()")
       within('#convo-settings-modal') do
         # Enable image tools
         find('#conversation_tool_type_image').click
