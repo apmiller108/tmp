@@ -78,11 +78,61 @@ The project uses RSpec for testing.
 - **Run Rubocop:** `docker compose exec app bundle exec rubocop`
 - **Open a Rails console:** `docker compose exec app bundle exec rails c`
 - **Open a shell in the app container:** `docker compose exec app bash`
+- **Run Brakeman:** `docker run -v "$PWD":/code presidentbeef/brakeman`
 
-## Key Technologies
+## Architecture and Patterns
 
-- **Backend:** Ruby on Rails, Sidekiq, Anycable
-- **Frontend:** Hotwire (Turbo, Stimulus), ViewComponent, Bootstrap
-- **Database:** PostgreSQL, Redis
-- **Testing:** RSpec, Capybara, Cuprite
-- **Deployment:** Docker
+This project follows a modern Ruby on Rails architecture with a strong emphasis on componentization, background processing, and real-time features.
+
+### Backend
+
+- **Service Objects:** Business logic is encapsulated in service objects within the `lib/` directory (e.g., `TranscriptionService`, `GenerativeImage`). This keeps controllers thin and promotes reusability.
+- **Query Objects:** Complex database queries are isolated in Query Objects located in the `app/queries` directory. This separates query logic from models and controllers.
+- **Real-time with Anycable:** The application uses Anycable for handling WebSocket connections, providing a more performant alternative to the default Action Cable server. This is crucial for the real-time features of the chat application.
+- **Authentication:** User authentication is handled by Devise, with support for both traditional session-based authentication and JWT for API requests. OmniAuth is used for third-party authentication (e.g., GitHub).
+- **Dependency Injection:** The project uses `Dry::Effects` for dependency injection, as seen in the `ApplicationController` for providing the `current_user`.
+
+### Frontend
+
+- **Hotwire:** The frontend is built with Hotwire (Turbo and Stimulus), enabling a single-page application experience with server-rendered HTML.
+- **ViewComponent:** UI elements are built as reusable ViewComponents, which are located in `app/views/components`. This promotes a modular and testable frontend architecture.
+- **Component Previews:** ViewComponent previews are used for developing and testing components in isolation.
+
+### Testing
+
+- **RSpec:** The application is tested with RSpec, with a comprehensive suite of model, request, system, and component tests.
+- **System Tests:** End-to-end testing is performed with Capybara and Cuprite, running in a headless Chrome container.
+- **Test Helpers:** Custom test helpers are used to streamline testing, such as for authentication and mocking external services.
+
+## Code Style
+
+- **RuboCop:** The project uses RuboCop to enforce a consistent code style. The configuration is defined in the `.rubocop.yml` file.
+
+## Key Technologies and Libraries
+
+### Backend
+
+- **Ruby on Rails:** A modern web application framework.
+- **Sidekiq:** For background job processing.
+- **Anycable:** For high-performance WebSocket communication.
+- **Devise:** For user authentication.
+- **Dry-rb:** A collection of libraries for writing robust and maintainable Ruby code.
+- **ViewComponent:** For building reusable, testable UI components.
+
+### Frontend
+
+- **Hotwire (Turbo & Stimulus):** For building modern, responsive web applications with minimal JavaScript.
+- **Bootstrap:** A popular CSS framework for building responsive, mobile-first sites.
+- **esbuild:** A fast JavaScript bundler.
+
+### Database
+
+- **PostgreSQL:** A powerful, open-source object-relational database system.
+- **pgvector:** A PostgreSQL extension for vector similarity search.
+- **Redis:** An in-memory data structure store, used for caching and Sidekiq.
+
+### Testing
+
+- **RSpec:** A testing framework for Ruby.
+- **Capybara:** An acceptance test framework for web applications.
+- **Cuprite:** A headless Chrome driver for Capybara.
