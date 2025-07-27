@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'faraday'
 
 RSpec.describe Anthropic::Client do
   let(:client) { described_class.new }
