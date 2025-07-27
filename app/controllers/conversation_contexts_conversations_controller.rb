@@ -21,7 +21,7 @@ class ConversationContextsConversationsController < ApplicationController
       contexts << ConversationContext.create_for!(current_user, file_response)
     end
 
-    contexts.each do |context|
+    contexts.select(&:persisted?).each do |context|
       conversation_context = @conversation.conversation_contexts.create(context:)
       if conversation_context.persisted?
         conversation_contexts << conversation_context
@@ -46,8 +46,6 @@ class ConversationContextsConversationsController < ApplicationController
         end
       end
     end
-  rescue ConversationContext::CreateError
-    DeleteRemoteConversationContextJob.perform_async(file_response.id)
   end
   # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 

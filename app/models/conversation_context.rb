@@ -52,15 +52,20 @@ class ConversationContext < ApplicationRecord
   # @param file_response [Anthropic::FileResponse]
   # @return [ConversationContext]
   def self.create_for!(user, file_response)
-    create!(
+    context = create(
       file_ref: file_response.id,
       filename: file_response.filename,
       mime_type: file_response.mime_type,
       context_type: context_types['file'],
       user_id: user.id
     )
+    unless context.persisted?
+      DeleteRemoteConversationContextJob.perform_async(file_response.id)
+    end
+    context
   rescue StandardError
-    raise CreateError
+    DeleteRemoteConversationContextJob.perform_async(file_response.id)
+    raise CreateError, "Failed to create conversation context for file: #{file_response.id}"
   end
 
   def to_content_block
