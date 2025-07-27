@@ -2,15 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Anthropic::FilesClient do
   let(:client) { described_class.new }
-  let(:anthropic_key) { 'test_anthropic_key' }
-
-  before do
-    ENV['ANTHROPIC_KEY'] = anthropic_key
-  end
-
-  after do
-    ENV.delete('ANTHROPIC_KEY')
-  end
+  let(:anthropic_key) { 'anthropic_key' }
 
   describe '#initialize' do
     it 'sets the correct URL prefix' do

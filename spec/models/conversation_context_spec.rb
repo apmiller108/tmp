@@ -32,7 +32,7 @@ RSpec.describe ConversationContext, type: :model do
 
     context 'when an error occurs during creation' do
       before do
-        allow(described_class).to receive(:create!).and_raise(StandardError, 'Database error')
+        allow(described_class).to receive(:create).and_raise(StandardError, 'Database error')
       end
 
       it 'raises a CreateError' do

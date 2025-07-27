@@ -13,12 +13,14 @@ RSpec.describe 'Conversation Contexts Conversations', type: :request do
 
   describe 'GET #index' do
     let(:request) { get conversation_conversation_contexts_conversations_path(conversation) }
-    let!(:ccc) { create :conversation_contexts_conversation, conversation: }
 
     it_behaves_like 'an authenticated route'
 
     context 'when the request is made' do
-      before { request }
+      before do
+        create(:conversation_contexts_conversation, conversation:)
+        request
+      end
 
       it { is_expected.to have_http_status(:ok) }
     end
