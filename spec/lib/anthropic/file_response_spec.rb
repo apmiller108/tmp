@@ -9,14 +9,14 @@ RSpec.describe Anthropic::FileResponse do
           'type' => 'file',
           'filename' => 'document.pdf',
           'mime_type' => 'application/pdf',
-          'size_bytes' => 12345,
+          'size_bytes' => 12_345,
           'created_at' => '2023-01-01T12:00:00Z'
         }
       end
 
       it 'returns a single FileResponse object' do
         file_response = described_class.for(data)
-        expect(file_response).to be_an_instance_of(Anthropic::FileResponse)
+        expect(file_response).to be_an_instance_of(described_class)
       end
 
       it 'has the proper attributes' do
@@ -61,11 +61,23 @@ RSpec.describe Anthropic::FileResponse do
         }
       end
 
-      it 'returns an array of FileResponse objects' do
+      it 'returns an array' do
         file_responses = described_class.for(data)
         expect(file_responses).to be_an(Array)
+      end
+
+      it 'returns the correct number of objects' do
+        file_responses = described_class.for(data)
         expect(file_responses.count).to eq(2)
-        expect(file_responses.first).to be_an_instance_of(Anthropic::FileResponse)
+      end
+
+      it 'returns an array of FileResponse objects' do
+        file_responses = described_class.for(data)
+        expect(file_responses.first).to be_an_instance_of(described_class)
+      end
+
+      it 'returns the correct filenames' do
+        file_responses = described_class.for(data)
         expect(file_responses.first.filename).to eq('document1.pdf')
         expect(file_responses.last.filename).to eq('document2.txt')
       end

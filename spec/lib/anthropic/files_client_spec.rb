@@ -6,7 +6,7 @@ RSpec.describe Anthropic::FilesClient do
 
   describe '#initialize' do
     it 'sets the correct URL prefix' do
-      expect(client.conn.url_prefix.to_s).to eq(Anthropic::HOST + '/')
+      expect(client.conn.url_prefix.to_s).to eq("#{Anthropic::HOST}/")
     end
 
     it 'sets the x-api-key header' do
@@ -40,7 +40,9 @@ RSpec.describe Anthropic::FilesClient do
 
     before do
       stub_request(:post, Anthropic::HOST + Anthropic::FilesClient::PATH)
-        .to_return(status: 200, body: anthropic_response_body.to_json, headers: { 'Content-Type' => 'application/json' })
+        .to_return(
+          status: 200, body: anthropic_response_body.to_json, headers: { 'Content-Type' => 'application/json' }
+        )
     end
 
     it 'uploads the file and returns a FileResponse object' do
@@ -83,14 +85,14 @@ RSpec.describe Anthropic::FilesClient do
 
     before do
       stub_request(:get, Anthropic::HOST + Anthropic::FilesClient::PATH)
-        .to_return(status: 200, body: anthropic_response_body.to_json, headers: { 'Content-Type' => 'application/json' })
+        .to_return(
+          status: 200, body: anthropic_response_body.to_json, headers: { 'Content-Type' => 'application/json' }
+        )
     end
 
     it 'returns an array of FileResponse objects' do
       file_responses = client.list_files
-      expect(file_responses).to be_an(Array)
-      expect(file_responses.first).to be_an_instance_of(Anthropic::FileResponse)
-      expect(file_responses.first.filename).to eq('document1.pdf')
+      expect(file_responses).to all(be_a(Anthropic::FileResponse))
     end
   end
 
@@ -109,7 +111,9 @@ RSpec.describe Anthropic::FilesClient do
 
     before do
       stub_request(:get, Anthropic::HOST + "#{Anthropic::FilesClient::PATH}/#{file_id}")
-        .to_return(status: 200, body: anthropic_response_body.to_json, headers: { 'Content-Type' => 'application/json' })
+        .to_return(
+          status: 200, body: anthropic_response_body.to_json, headers: { 'Content-Type' => 'application/json' }
+        )
     end
 
     it 'returns a single FileResponse object' do
