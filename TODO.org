@@ -2,35 +2,22 @@
 :CATEGORY: tmp
 :END:
 * TODO flatten the routes
-* TODO validate schema for tool use responses
-    https://github.com/voxpupuli/json-schema
 * TODO audio transcription to conversations
 * TODO audio generation to conversations
   https://developers.deepgram.com/
 * TODO video generation to conversations
-* TODO add preview chat button on index item
-  - [ ] Eye icon on click...
-  - [ ] Open modal with readonly version
-* TODO Enhance index
+* TODO Enhance index column
   - expand title
   - metadata regarding files, images
-* TODO export conversation
-  - with options for markdown, html and org mode
 * TODO one off interactions
   Instead of all the overhead of a conversation, just a single text only interaction
-* TODO Image sketch
-* TODO Github tool
-* TODO URL tool
-  - Tool to fetch a given URL, extract text content from HTML document and pipe
-    into the followup response.
-  - LLM can pick out a URL in a blob of text.
-* TODO Add support for code execution tool
-  https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/code-execution-tool
-* TODO Add support for PDFs
+* TODO better handling of new conversations
+  The issue is that context files can't be added until a conversation is persisted.
+* DONE Add support for PDFs
+CLOSED: [2025-07-30 Wed 16:13]
   https://docs.anthropic.com/en/docs/build-with-claude/pdf-support
   Add support for using Anthropic's File API:
   https://docs.anthropic.com/en/docs/build-with-claude/files
-
   - [X] Add file response wrapper
   - [X] Add error classes
   - [X] Use error classes in the messages client
@@ -48,7 +35,6 @@
   - [X] Add conversation context files to conversation when making the request
   - [X] Build crud interface to manage files
   - [X] Paginate contexts
-  - [ ] Handle case where conversation is new
 * DONE Generate conversation titles
 CLOSED: [2025-05-23 Fri 14:44]
   - [X] Click button and generate title in background
