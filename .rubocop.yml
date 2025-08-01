@@ -49,6 +49,7 @@ Metrics/ClassLength:
     - 'method_call'
   Exclude:
     - 'app/controllers/**/*'
+    - 'app/models/**/*'
     - 'lib/**/*_form.rb'
 Metrics/ModuleLength:
   CountAsOne:

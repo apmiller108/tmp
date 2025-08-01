@@ -9,16 +9,23 @@ RSpec.describe PromptFormComponent, type: :component do
   let(:setting) { build_stubbed(:setting) }
   let(:conversation) { build_stubbed(:conversation, user:) }
   let(:conversation_form) { ConversationForm.new conversation:, user: }
-  let(:token_count) { 99 }
+  let(:input_token_count) { 99 }
+  let(:output_token_count) { 101 }
   let(:opts) { {} }
 
   before do
-    allow(conversation).to receive(:token_count).and_return token_count
+    allow(conversation).to receive(:input_token_count).and_return input_token_count
+    allow(conversation).to receive(:output_token_count).and_return output_token_count
   end
 
-  it 'shows the token count' do
+  it 'shows the input token count' do
     with_current_user(user) { render_inline component }
-    expect(page).to have_css '.token-display', text: /Tokens:\s+#{token_count}/
+    expect(page).to have_css '#input-tokens', text: /#{input_token_count}/
+  end
+
+  it 'shows the output token count' do
+    with_current_user(user) { render_inline component }
+    expect(page).to have_css '#output-tokens', text: /#{output_token_count}/
   end
 
   describe '#id' do

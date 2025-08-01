@@ -77,10 +77,10 @@
           .control-buttons-section
             .d-flex.align-items-center.justify-content-end.gap-2
               .token-display.d-flex.align-items-center.gap-2
-                .token-item.d-flex.align-items-center{ data: { 'bs-toggle': 'tooltip', 'bs-title': 'Input tokens' }}
+                #input-tokens.token-item.d-flex.align-items-center{ data: { 'bs-toggle': 'tooltip', 'bs-title': 'Input tokens' }}
                   %i.bi.bi-arrow-down-circle.text-primary
                   %span.value.badge.bg-primary= conversation.input_token_count
-                .token-item.d-flex.align-items-center{ data: { 'bs-toggle': 'tooltip', 'bs-title': 'Output tokens' }}
+                #output-tokens.token-item.d-flex.align-items-center{ data: { 'bs-toggle': 'tooltip', 'bs-title': 'Output tokens' }}
                   %i.bi.bi-arrow-up-circle.text-success
                   %span.value.badge.bg-success= conversation.output_token_count
               .button-group.d-flex.gap-1

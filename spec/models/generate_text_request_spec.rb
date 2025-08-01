@@ -125,7 +125,9 @@ RSpec.describe GenerateTextRequest, type: :model do
         build(:generate_text_request, :with_response, :completed)
       end
 
-      let(:response_obj) { instance_double(Anthropic::InvokeModelResponse, token_count: 100) }
+      let(:response_obj) do
+        instance_double(Anthropic::InvokeModelResponse, input_token_count: 50, output_token_count: 50)
+      end
 
       before do
         allow(Anthropic::InvokeModelResponse).to receive(:new).and_return(response_obj)
