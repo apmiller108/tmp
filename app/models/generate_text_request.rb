@@ -55,8 +55,20 @@ class GenerateTextRequest < ApplicationRecord
   end
 
   def response_token_count
+    response_input_token_count + response_output_token_count
+  end
+
+  def response_input_token_count
     if completed?
-      response.token_count
+      response.input_token_count
+    else
+      0
+    end
+  end
+
+  def response_output_token_count
+    if completed?
+      response.output_token_count
     else
       0
     end

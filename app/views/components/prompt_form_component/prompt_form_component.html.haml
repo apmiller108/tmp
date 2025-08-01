@@ -76,15 +76,20 @@
 
           .control-buttons-section
             .d-flex.align-items-center.justify-content-end.gap-2
-              .token-display.d-flex.align-items-center
-                %span.label.me-1.small Tokens:
-                %span.value.badge.bg-secondary= conversation.token_count
+              .token-display.d-flex.align-items-center.gap-2
+                .token-item.d-flex.align-items-center{ data: { 'bs-toggle': 'tooltip', 'bs-title': 'Input tokens' }}
+                  %i.bi.bi-arrow-down-circle.text-primary
+                  %span.value.badge.bg-primary= conversation.input_token_count
+                .token-item.d-flex.align-items-center{ data: { 'bs-toggle': 'tooltip', 'bs-title': 'Output tokens' }}
+                  %i.bi.bi-arrow-up-circle.text-success
+                  %span.value.badge.bg-success= conversation.output_token_count
               .button-group.d-flex.gap-1
                 - if conversation.persisted?
                   %button.context-btn.btn.icon-btn.icon-btn-sm{ type: 'button', data: { 'bs-toggle': 'modal', 'bs-target': '#convo-context-modal' }}
                     %i.bi.bi-folder-plus{ data: { 'bs-toggle': 'tooltip', 'bs-title': 'Conversation Context' }}
                 %button.settings-btn.btn.icon-btn.icon-btn-sm{ type: 'button', data: { 'bs-toggle': 'modal', 'bs-target': '#convo-settings-modal' }}
                   %i.bi.bi-gear{ data: { 'bs-toggle': 'tooltip', 'bs-title': 'Conversation Settings' }}
+
 
   / CONVERSATION SETTINGS MODAL
 

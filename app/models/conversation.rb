@@ -69,6 +69,14 @@ class Conversation < ApplicationRecord
     generate_text_requests.sum(&:response_token_count)
   end
 
+  def input_token_count
+    generate_text_requests.sum(&:response_input_token_count)
+  end
+
+  def output_token_count
+    generate_text_requests.sum(&:response_output_token_count)
+  end
+
   def blobify
     [
       title,

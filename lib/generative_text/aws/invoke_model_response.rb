@@ -33,7 +33,15 @@ class GenerativeText
       end
 
       def token_count
-        (data['inputTextTokenCount'] || 0) + (results['tokenCount'] || 0)
+        input_token_count + output_token_count
+      end
+
+      def input_token_count
+        data['inputTextTokenCount'] || 0
+      end
+
+      def output_token_count
+        results['tokenCount'] || 0
       end
     end
   end

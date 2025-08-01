@@ -65,8 +65,16 @@ module Anthropic
 
     # Cache token keys were added later. Older responses won't have that key.
     def token_count
-      usage.fetch('input_tokens') + usage.fetch('output_tokens') +
+      input_token_count + output_token_count
+    end
+
+    def input_token_count
+      usage.fetch('input_tokens') +
         usage.fetch('cache_creation_input_tokens', 0) + usage.fetch('cache_read_input_tokens', 0)
+    end
+
+    def output_token_count
+      usage.fetch('output_tokens')
     end
 
     def usage
