@@ -11,8 +11,14 @@
   - metadata regarding files, images
 * TODO one off interactions
   Instead of all the overhead of a conversation, just a single text only interaction
+* TODO create a view to manage all generated image content from all conversations
+* TODO re-generate the previous request
+  Could be useful for image to image.
 * TODO better handling of new conversations
   The issue is that context files can't be added until a conversation is persisted.
+* TODO Make it optional to include generated images in the conversation context
+  Right now it's decided by the backend to include them automatically. This
+  isn't always -- or usually -- what I want
 * DONE Add support for PDFs
 CLOSED: [2025-07-30 Wed 16:13]
   https://docs.anthropic.com/en/docs/build-with-claude/pdf-support
