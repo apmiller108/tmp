@@ -24,7 +24,7 @@ class GenerateTextRequest < ApplicationRecord
   has_one :generate_image_request, dependent: :nullify
 
   validates :text_id, length: { maximum: 50 }
-  validates :prompt, presence: true, length: { maximum: 24_000 }
+  validates :prompt, presence: true, length: { maximum: 48_000 }
   validates :temperature, inclusion: { in: TEMPERATURE_VALUES }, allow_nil: true
   validates :model, presence: true
 
