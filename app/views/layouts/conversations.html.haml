@@ -29,7 +29,8 @@
                 %button#search-btn.btn.icon-btn.icon-btn-auto.me-3{ data: { 'bs-toggle' => 'modal',
                                                                             'bs-target' => '#searchModal' } }
                   %i.bi.bi-search{ data: { 'bs-toggle' => 'tooltip', 'bs-title' => t('conversation.search') } }
-                = link_to new_conversation_path, class: 'btn icon-btn icon-btn-auto', id: 'new-conversation',
+                = button_to conversations_path, method: :post, params: { conversation: { title: Conversation.default_title } },
+                class: 'btn icon-btn icon-btn-auto', id: 'new-conversation',
                 data: { turbo_frame: :conversation_content, turbo_action: :advance,
                         action: 'click->conversation-left-panel#onNewConversation',
                         'bs-toggle' => 'tooltip', 'bs-title' => t('conversation.new') } do

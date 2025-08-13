@@ -43,9 +43,13 @@ class Conversation < ApplicationRecord
 
   # @param [String] prompt
   def self.title_from_prompt(prompt)
-    return Time.current.strftime('%a, %d %b %Y %H:%M:%S') if prompt.blank?
+    return default_title if prompt.blank?
 
     prompt.truncate(40, separator: ' ')
+  end
+
+  def self.default_title
+    Time.current.strftime('%a, %d %b %Y %H:%M:%S')
   end
 
   def exchange
