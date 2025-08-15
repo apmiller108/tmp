@@ -12,7 +12,9 @@ RSpec.describe 'create conversation', type: :system do
   let(:temperature) { 0.5 }
   let(:time) { Time.zone.now } # default time for the conversation title
   let(:embedding_request_stub) do
-    stub_voyage_embedding_request(input: ["#{time.strftime('%a, %d %b %Y %H:%M:%S')} This is my prompt test assistant response"])
+    stub_voyage_embedding_request(
+      input: ["#{time.strftime('%a, %d %b %Y %H:%M:%S')} This is my prompt test assistant response"]
+    )
   end
 
   before(:context) do
@@ -37,6 +39,7 @@ RSpec.describe 'create conversation', type: :system do
 
     click_button 'Start New Conversation!'
 
+    expect(page).to have_css('#conversation_prompt')
     fill_in 'conversation_prompt', with: prompt
 
     # I have no idea why sometimes on some specs, find().click does not work

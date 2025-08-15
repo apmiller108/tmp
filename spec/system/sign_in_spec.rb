@@ -10,6 +10,6 @@ RSpec.describe 'signing in', type: :system do
     fill_in 'Password', with: password
     click_button 'Log in'
     expect(page).to have_current_path('/')
-    expect(page).to have_css('.c-prompt-form')
+    expect(page).to have_button('Start New Conversation!')
   end
 end

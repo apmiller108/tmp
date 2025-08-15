@@ -151,6 +151,7 @@ jobs:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           RAILS_ENV: test
           TMP_USE_LOCAL_DB: true
+          TMP_CI: true
           CHROME_URL: http://localhost:3333
           POSTGRES_HOST: database
           POSTGRES_USER: postgres
