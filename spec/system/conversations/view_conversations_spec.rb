@@ -16,7 +16,7 @@ RSpec.describe 'update conversation', type: :system do
   specify 'view conversations' do
     login(user:)
     conversation = conversations.first
-    edit_conversation_path(conversation)
+    navigate_to edit_conversation_path(conversation)
 
     expect(page).to have_content conversation.title
 
@@ -42,6 +42,7 @@ RSpec.describe 'update conversation', type: :system do
     expect(page).to have_content conversation.title
 
     find('#new-conversation').click
-    expect(page).to have_current_path new_conversation_path
+    conversation = Conversation.last
+    expect(page).to have_current_path edit_conversation_path(conversation)
   end
 end

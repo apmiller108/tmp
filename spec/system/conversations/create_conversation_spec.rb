@@ -10,8 +10,9 @@ RSpec.describe 'create conversation', type: :system do
   let(:assistant_response) { 'test assistant response' }
   let(:model) { GenerativeText::MODELS.find { _1.api_name == setting.text_model } }
   let(:temperature) { 0.5 }
+  let(:time) { Time.zone.now } # default time for the conversation title
   let(:embedding_request_stub) do
-    stub_voyage_embedding_request(input: ['This is my prompt This is my prompt test assistant response'])
+    stub_voyage_embedding_request(input: ["#{time.strftime('%a, %d %b %Y %H:%M:%S')} This is my prompt test assistant response"])
   end
 
   before(:context) do
@@ -19,6 +20,7 @@ RSpec.describe 'create conversation', type: :system do
   end
 
   before do
+    travel_to(time)
     stub_anthropic_stream_request(
       model:, assistant_response:, temperature:, generate_text_preset:, prompt:
     )
@@ -32,6 +34,8 @@ RSpec.describe 'create conversation', type: :system do
   specify 'create conversation' do
     login(user:)
     navigate_to new_conversation_path
+
+    click_button 'Start New Conversation!'
 
     fill_in 'conversation_prompt', with: prompt
 
@@ -52,7 +56,9 @@ RSpec.describe 'create conversation', type: :system do
       find('button.btn-close').click
     end
 
-    find('button[type=submit]').click
+    within('.prompt-input-section') do
+      find('button[type=submit]').click
+    end
 
     retries = 0
     conversation = nil
@@ -65,6 +71,11 @@ RSpec.describe 'create conversation', type: :system do
 
     expect(page).to have_css('.segment-user', text: prompt)
 
+    # The controller updates the conversation turn component in render, and the
+    # background job that generates the text broadcasts the conversation turn
+    # component. When running the sidekiq inline, the render action overwrites
+    # the broadcasted component. Reloading the page as a workaround.
+    navigate_to edit_conversation_path(conversation)
     within('.segment-assistant') do
       expect(page).to have_content assistant_response
     end
