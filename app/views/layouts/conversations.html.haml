@@ -42,7 +42,7 @@
 
         <!-- Middle Panel -->
         .conversation-content.flex-grow-1.pb-3
-          %turbo-frame{ id: :conversation_content }
+          %turbo-frame.conversation-content{ id: :conversation_content }
             = yield
 
         <!-- Right Panel -->

@@ -114,3 +114,17 @@ a[disabled] {
 .rotate-clockwise {
   animation: rotateClockwise 1s linear infinite;
 }
+
+.sexy-cta {
+  letter-spacing: 0.03em;
+  font-weight: 700;
+  transition: transform 0.15s, box-shadow 0.15s;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.sexy-cta:hover, .sexy-cta:focus {
+  transform: scale(1.05);
+  box-shadow: 0 0.5rem 1.5rem rgba(0,123,255,.2);
+}

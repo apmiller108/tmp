@@ -1,9 +1,3 @@
-.new-conversation {
-  height: 100%;
-  display: flex;
-  align-items: center;
-}
-
 .conversation-main {
   .left-panel {
     max-width: $conversation-panel-width;
@@ -20,8 +14,6 @@
         background: $white;
       }
     }
-  }
-  .left-panel {
     .list-group-item {
       border: none;
     }
@@ -45,6 +37,11 @@
       // width set in order for the bs collapse to animate the opening of the panel.
       min-width: calc($conversation-panel-width - 1rem);
       overflow-y: auto;
+    }
+  }
+  .conversation-content {
+    form.button_to {
+      margin-top: 50%
     }
   }
   .conversation-title {
