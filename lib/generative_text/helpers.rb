@@ -31,11 +31,12 @@ class GenerativeText
     end
 
     def self.conversation_title_prompt(conversation)
+      instructions = 'Create a brief title for the following conversation. Only return the title, '\
+                     'without any quotation marks. Do not prefix the title with \"Title:\".'
       <<~PROMPT
-        Create a brief title for the following conversation. Only return the title,
-        without any quotation marks. Do not prefix the title with "Title:".
+        #{instructions}
 
-        #{conversation.blobify}
+        #{conversation.blobify[0..(GenerateTextRequest::MAX_PROMPT_LENGTH - instructions.length - 4)]}
       PROMPT
     end
   end

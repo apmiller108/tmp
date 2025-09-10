@@ -4,4 +4,5 @@ class NullConversation
   def memo = nil
   def turns = []
   def tool_types = []
+  def documents = []
 end

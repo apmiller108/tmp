@@ -5,6 +5,7 @@ class GenerateTextRequest < ApplicationRecord
   include Turnable
 
   TEMPERATURE_VALUES = 0.step(to: 1, by: 0.1).map { _1.round(1) }
+  MAX_PROMPT_LENGTH = 48_000
 
   SUPPORTED_MIME_TYPES = %w[image/jpeg image/gif image/png image/webp].freeze
   MAX_FILE_SIZE = 4.megabytes
@@ -24,7 +25,7 @@ class GenerateTextRequest < ApplicationRecord
   has_one :generate_image_request, dependent: :nullify
 
   validates :text_id, length: { maximum: 50 }
-  validates :prompt, presence: true, length: { maximum: 48_000 }
+  validates :prompt, presence: true, length: { maximum: MAX_PROMPT_LENGTH }
   validates :temperature, inclusion: { in: TEMPERATURE_VALUES }, allow_nil: true
   validates :model, presence: true
 
