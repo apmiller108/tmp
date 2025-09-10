@@ -39,7 +39,10 @@ module Anthropic
     # exchange.
     def messages
       turns = conversation.turns.to_a
-      conversation.exchange.push(Turn.user_turn(generate_text_request, turns:))
+      conversation.exchange.push(Turn.user_turn(generate_text_request, turns:)).tap do |ex|
+        # prepend contexts to the first user message
+        ex.first['content'] = [*conversation.documents, *ex.first['content']]
+      end
     end
 
     def tools
