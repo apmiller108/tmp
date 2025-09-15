@@ -2,7 +2,7 @@
 
 class GenerateTextPreset < ApplicationRecord
   NAME_MAX_LENGTH = 40
-  SYSTEM_MESSAGE_MAX_LENGTH = 5000
+  SYSTEM_MESSAGE_MAX_LENGTH = 10_000
 
   has_many :generate_text_request, dependent: :nullify
   has_one :generate_text_presets_user, dependent: :destroy
