@@ -24,6 +24,8 @@ CLOSED: [2025-09-15 Mon 08:19]
  - [ ] Refactor existing claude integration to adapter
  - [ ] Add Gemini interface
  - [ ] Add Gemini models selectable in UI
+* TODO Enhaned copy response
+ - [ ] Option to copy markdown formatted response
 * DONE Add support for PDFs
 CLOSED: [2025-07-30 Wed 16:13]
   https://docs.anthropic.com/en/docs/build-with-claude/pdf-support
