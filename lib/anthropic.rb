@@ -28,6 +28,14 @@ module Anthropic
         active?: true
       ),
       GenerativeText::Model.new(
+        api_name: 'claude-sonnet-4-5-20250929',
+        name: 'Claude Sonnet 4.5',
+        vendor:,
+        capabilities:,
+        max_tokens: 64_000,
+        active?: true
+      ),
+      GenerativeText::Model.new(
         api_name: 'claude-sonnet-4-0',
         name: 'Claude Sonnet 4 Latest',
         vendor:,
@@ -41,7 +49,7 @@ module Anthropic
         vendor:,
         capabilities:,
         max_tokens: 64_000,
-        active?: true
+        active?: false
       ),
       GenerativeText::Model.new(
         api_name: 'claude-3-5-sonnet-latest',
