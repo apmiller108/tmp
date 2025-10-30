@@ -20,14 +20,15 @@ module Anthropic
     # @param generate_text_request [GenerateTextRequest]
     # @return [InvokeModelResponse]
     def invoke_model(generate_text_request)
+      req_body = InvokeModelRequest.new(generate_text_request).to_json
       response = conn.post(MESSAGES_PATH) do |req|
-        req.body = InvokeModelRequest.new(generate_text_request).to_json
+        req.body = req_body
       end
 
       if response.status.in?(200..299)
         InvokeModelResponse.new(response.body)
       else
-        handle_error(response)
+        handle_error(response, req_body)
       end
     end
 
@@ -37,9 +38,10 @@ module Anthropic
     # @return [InvokeModelResponse] Returns the complete response when done
     def invoke_model_stream(generate_text_request, &block)
       stream_response = StreamResponse.new
+      req_body = InvokeModelRequest.new(generate_text_request, stream: true).to_json
 
       response = conn.post(MESSAGES_PATH) do |req|
-        req.body = InvokeModelRequest.new(generate_text_request, stream: true).to_json
+        req.body = req_body
         req.options.on_data = lambda do |chunk, _received_bytes|
           process_stream_chunk(chunk, stream_response, &block)
         end
@@ -48,7 +50,7 @@ module Anthropic
       if response.status.in?(200..299)
         InvokeModelResponse.new(stream_response.to_response_format)
       else
-        handle_error(response)
+        handle_error(response, req_body)
       end
     end
 

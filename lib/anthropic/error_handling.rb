@@ -1,26 +1,29 @@
 module Anthropic
   module ErrorHandling
-    def handle_error(response)
-      error_data = JSON.parse(response.body).fetch('error', {})
+    def handle_error(response, req_body = {}.to_json)
+      error_data = begin
+        JSON.parse(response.body).fetch('error', {})
+      rescue JSON::ParserError
+        {}
+      end
+
       error_type = error_data['type']
-      error_message = error_data.fetch('message', 'Client error occurred')
+      error_message = error_data.fetch('message', 'No error message from server')
 
       case response.status
       when 400..499
-        handle_client_error(error_type:, error_message:)
+        handle_client_error(error_type:, error_message:, req_body:)
       when 500..599
         handle_server_error(response)
       else
         raise UnknownError, response.body
       end
-    rescue JSON::ParserError
-      raise UnknownError, "Unable to parse error response: #{response.body} #{response.status}"
     end
 
-    def handle_client_error(error_type:, error_message:)
+    def handle_client_error(error_type:, error_message:, req_body:)
       case error_type
       when 'invalid_request_error'
-        raise Anthropic::InvalidRequestError, error_message
+        raise Anthropic::InvalidRequestError, "#{error_message}: Check request body: \n\n#{JSON.parse(req_body)}"
       when 'authentication_error'
         raise Anthropic::AuthenticationError, error_message
       when 'permission_error'
@@ -32,7 +35,7 @@ module Anthropic
       when 'request_too_large'
         raise Anthropic::RequestTooLarge, error_message
       else
-        raise Anthropic::ClientError, error_message
+        raise Anthropic::ClientError, "#{error_message}: Check request body: \n\n#{JSON.parse(req_body)}"
       end
     end
 
