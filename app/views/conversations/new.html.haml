@@ -1,9 +1,4 @@
-= button_to conversations_path, method: :post, params: { conversation: { title: Conversation.default_title } },
-  class: 'btn btn-primary btn-lg d-flex align-items-center gap-2 shadow rounded-pill sexy-cta', id: 'new-conversation',
-  data: { turbo_frame: :conversation_content, turbo_action: :advance,
-          'bs-toggle' => 'tooltip', 'bs-title' => t('conversation.new') } do
-  %i.bi.bi-chat-dots-fill
-  %span= t('conversation.start_new')
+= render partial: 'conversations/new_convo_button'
 = turbo_stream.update :conversation_scroll_spy do
   = render ScrollspyComponent.new(container_id: 'conversation_component', target_id: 'conversation-nav',
                                   action: 'conversation:turnsChanged@window->scrollspy#refresh')

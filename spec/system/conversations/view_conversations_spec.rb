@@ -30,7 +30,9 @@ RSpec.describe 'update conversation', type: :system do
 
     # delete conversation
     within("#list_conversation_#{conversation.id}") do
-      find("#delete_conversation_#{conversation.id}").click
+      accept_confirm do
+        find("#delete_conversation_#{conversation.id}").click
+      end
     end
     expect(page).not_to have_content conversation.title
     within('#conversations') do

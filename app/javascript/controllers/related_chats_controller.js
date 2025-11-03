@@ -52,6 +52,7 @@ export default class RelatedChatsController extends Controller {
 
   reload(e) {
     if (this.conversationId == e.detail.embedding_created.conversation_id) {
+      this.element.classList.remove('d-none')
       this.turboFrameTarget.reload()
     }
   }

@@ -33,7 +33,6 @@ class ConversationsController < ApplicationController
   end
 
   def new
-    @conversation_form = ConversationForm.new(user: current_user)
   end
 
   def create

@@ -11,4 +11,4 @@
       - scrollspy.with_item do
         = render ScrollspyNavItemComponent.new(text: turn.turnable.prompt, icon_class:, href: "##{dom_id(turn)}", id: dom_id(turn, 'nav_item'))
 = content_for :related_chats do
-  = render partial: 'related_chats', locals: { conversation_id: @conversation.id, hidden: false }
+  = render partial: 'related_chats', locals: { conversation_id: @conversation.id, hidden: @conversation.embedding.blank? }

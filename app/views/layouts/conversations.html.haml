@@ -70,7 +70,7 @@
           action: 'hidden.bs.collapse->conversation-right-panel#onHidePanel show.bs.collapse->conversation-right-panel#onShowPanel' } }
 
           <!-- Related Chats Section -->
-          .related-conversations.right-panel-collapsible.collapse.show.collapse-horizontal.pb-3.mt-3
+          #related_conversations.related-conversations.right-panel-collapsible.collapse.show.collapse-horizontal.pb-3.mt-3
             = yield :related_chats
     <!-- Search Modal -->
     = render SearchModalComponent.new(path: conversations_path, title: 'Search Conversations',

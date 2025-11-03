@@ -2,6 +2,9 @@
 - if request.referer == edit_conversation_url(@conversation)
   = turbo_stream.replace('conversation_content') do
     = turbo_frame_tag :conversation_content do
-      = render ConversationComponent.new(conversation_form: ConversationForm.new(user: current_user), class: 'new-conversation')
+      = render partial: 'conversations/new_convo_button'
 = turbo_stream.update :conversation_scroll_spy do
-  %div
+  = render ScrollspyComponent.new(container_id: 'conversation_component', target_id: 'conversation-nav',
+                                  action: 'conversation:turnsChanged@window->scrollspy#refresh')
+= turbo_stream.update :related_conversations do
+  = render partial: 'related_chats', locals: { conversation_id: 0, hidden: true }
