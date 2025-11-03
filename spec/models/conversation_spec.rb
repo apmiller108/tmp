@@ -12,12 +12,11 @@ RSpec.describe Conversation, type: :model do
 
   describe '#exchange' do
     let(:turns) { conversation.turns }
+    let(:expected_result) { turns.flat_map { _1.turnable.to_turn(turns:) } }
 
     before do
       create_list(:generate_text_request, 2, :completed, :with_response, conversation:)
     end
-
-    let(:expected_result) { turns.flat_map { _1.turnable.to_turn(turns:) } }
 
     it 'returns flattened turns from completed generate text requests' do
       expect(conversation.exchange).to eq(expected_result)
