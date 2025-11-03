@@ -18,13 +18,14 @@
 CLOSED: [2025-09-15 Mon 08:19]
   The issue is that context files can't be added until a conversation is persisted.
 * TODO Make it optional to include generated images in the conversation context
-  Right now it's decided by the backend to include them automatically. This
+  Right now it's decided by the backend to include the previous one automatically. This
   isn't always -- or usually -- what I want
 * TODO Gemini integration
  - [ ] Refactor existing claude integration to adapter
  - [ ] Add Gemini interface
  - [ ] Add Gemini models selectable in UI
-* TODO Enhaned copy response
+ - [ ] Handle context documents
+* TODO Enhanced copy response
  - [ ] Option to copy markdown formatted response
 * DONE Add support for PDFs
 CLOSED: [2025-07-30 Wed 16:13]
