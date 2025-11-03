@@ -53,7 +53,7 @@ RSpec.describe Anthropic::Client do
 
       it 'raises a UnknownError exception' do
         expect { client.invoke_model(generate_text_request) }
-          .to raise_error(Anthropic::UnknownError, 'Unable to parse error response: Invalid request 500')
+          .to raise_error(Anthropic::ServerError, 'No error message from server')
       end
     end
   end
@@ -118,15 +118,15 @@ RSpec.describe Anthropic::Client do
                                                        .exactly(7).times
     end
 
-    context 'when an error occurs' do
+    context 'when a 400 error occurs' do
       before do
         stub_request(:post, "#{Anthropic::HOST}#{Anthropic::MESSAGES_PATH}")
           .to_return(status: 400, body: '')
       end
 
-      it 'raises a UnknownError with status and body' do
+      it 'raises a ClientError' do
         expect { client.invoke_model_stream(generate_text_request) {} }
-          .to raise_error(Anthropic::UnknownError)
+          .to raise_error(Anthropic::ClientError, /: Check request body:/)
       end
     end
   end

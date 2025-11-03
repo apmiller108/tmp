@@ -62,7 +62,7 @@ RSpec.describe Anthropic::FilesClient do
       end
 
       it 'raises an Anthropic::InvalidRequestError' do
-        expect { client.upload_file(uploaded_file) }.to raise_error(Anthropic::InvalidRequestError, 'Bad request')
+        expect { client.upload_file(uploaded_file) }.to raise_error(Anthropic::InvalidRequestError, /Bad request/)
       end
     end
   end
@@ -160,7 +160,7 @@ RSpec.describe Anthropic::FilesClient do
       end
 
       it 'raises an Anthropic::InvalidRequestError' do
-        expect { client.delete_file(file_id) }.to raise_error(Anthropic::InvalidRequestError, 'Bad request')
+        expect { client.delete_file(file_id) }.to raise_error(Anthropic::InvalidRequestError, /Bad request/)
       end
     end
   end
