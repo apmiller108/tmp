@@ -59,6 +59,23 @@ RSpec.describe Anthropic::InvokeModelRequest do
           expect(request.to_h[:tools].map(&:id)).to eq LlmTool.where(tool_type: conversation.tool_types).map(&:id)
         end
       end
+
+      context 'with documents in conversation' do
+        it 'prepends documents to the user message content' do
+          document1 = build_stubbed(:conversation_context)
+          document2 = build_stubbed(:conversation_context)
+
+          allow(conversation).to receive(:contexts).and_return([document1, document2])
+
+          expected_content = [
+            document1.to_content_block,
+            document2.to_content_block,
+            { 'text' => generate_text_request.prompt, 'type' => 'text' }
+          ]
+
+          expect(request.to_h[:messages].first['content']).to eq(expected_content)
+        end
+      end
     end
   end
 end
