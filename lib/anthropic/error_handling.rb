@@ -14,7 +14,7 @@ module Anthropic
       when 400..499
         handle_client_error(error_type:, error_message:, req_body:)
       when 500..599
-        handle_server_error(response)
+        handle_server_error(error_type:, error_message:)
       else
         raise UnknownError, response.body
       end

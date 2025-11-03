@@ -6,22 +6,29 @@ module Anthropic
     # Converts a GenerateTextRequest object to a tuple that consists of a user
     # message and an assistant response.
     # @param [GenerateTextRequest] generate_text_request
-    # @param [Array<ConversationTurn>]
+    # @param [Array<ConversationTurn>] turns
+    #   The list of previous turns in the conversation. This is used to include
+    #   previously generated images in the user turn.
+    # @param [Boolean] include_previous_gen_image
+    #   Whether to include the previously generated image in the user turn. By
+    #   default this is configured to only include the previously generated
+    #   image when buidling the user turn for the current generate_text_request.
     # @return [Array<Hash>]
-    def self.for(generate_text_request, turns: [])
-      new(generate_text_request:, turns:).turn
+    def self.for(generate_text_request, turns: [], include_previous_gen_image: false)
+      new(generate_text_request:, turns:, include_previous_gen_image:).turn
     end
 
-    def self.user_turn(generate_text_request, turns: [])
-      new(generate_text_request:, turns:).user_turn
+    def self.user_turn(generate_text_request, turns: [], include_previous_gen_image: true)
+      new(generate_text_request:, turns:, include_previous_gen_image:).user_turn
     end
 
-    attr_reader :generate_text_request, :turns
+    attr_reader :generate_text_request, :turns, :include_previous_gen_image
 
     delegate :prompt, :response_content, to: :generate_text_request
     alias assistant_content response_content
 
-    def initialize(generate_text_request:, turns:)
+    def initialize(generate_text_request:, turns:, include_previous_gen_image: false)
+      @include_previous_gen_image = include_previous_gen_image
       @generate_text_request = generate_text_request
       @turns = turns
     end
@@ -72,7 +79,7 @@ module Anthropic
     end
 
     def user_generate_image_content
-      return unless previous_turn.present? && previous_turn.generated_image?
+      return unless include_previous_gen_image && previous_turn.present? && previous_turn.generated_image?
 
       user_image_content(image: previous_turn.turnable.image.variant(:webp).image)
     end
