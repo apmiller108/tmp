@@ -47,3 +47,5 @@ yarn-error.log
 spec/examples.txt
 
 data_dump.sql
+
+!.dir-locals.el
