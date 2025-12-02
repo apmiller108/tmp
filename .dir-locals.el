@@ -5,7 +5,7 @@
   (eval . (setq-local rspec-docker-cwd "/rails/"))
   (eval . (setq-local rspec-docker-file-name "Dockerfile.dev"))
   (eval . (setq-local rspec-primary-source-dirs '("app")))
-  (flycheck-checker . ruby-rubocop)
+  (eval . (setq-local flycheck-checker 'ruby-rubocop))
   (eval . (add-to-list 'lsp-disabled-clients 'ruby-ls))
   (eval . (add-to-list 'lsp-disabled-clients 'rubocop-ls))
   (eval . (setq-local rspec-use-spring-when-possible t)))
