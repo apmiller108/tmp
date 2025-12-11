@@ -28,6 +28,14 @@ module Anthropic
         active?: true
       ),
       GenerativeText::Model.new(
+        api_name: 'claude-haiku-4-5',
+        name: 'Claude Haiku 4.5',
+        vendor:,
+        capabilities:,
+        max_tokens: 64_000,
+        active?: true
+      ),
+      GenerativeText::Model.new(
         api_name: 'claude-sonnet-4-5-20250929',
         name: 'Claude Sonnet 4.5',
         vendor:,
