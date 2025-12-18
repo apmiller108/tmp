@@ -157,7 +157,8 @@ export default class WysiwygEditor extends Controller {
         temperature: this.generateTextTemperatureTarget.value,
         generate_text_preset_id: this.generateTextPresetTarget.value,
         conversation_id: this.conversationId,
-        user_id: this.userId
+        user_id: this.userId,
+        stream: false
       }
 
       if (this.conversationId) {

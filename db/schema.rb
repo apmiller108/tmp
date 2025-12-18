@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_13_213054) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_18_155327) do
   create_schema "rollback"
 
   # These are extensions that must be enabled in order to support this database
@@ -106,6 +106,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_13_213054) do
     t.text "image_quality", default: "standard"
     t.vector "embedding", limit: 1024
     t.string "tool_types", default: [], array: true
+    t.boolean "stream", default: true, null: false
     t.index ["memo_id"], name: "index_conversations_on_memo_id"
     t.index ["user_id"], name: "index_conversations_on_user_id"
     t.check_constraint "image_quality = ANY (ARRAY['standard'::text, 'high'::text])"

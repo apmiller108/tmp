@@ -1,6 +1,6 @@
 class Conversation < ApplicationRecord
   # excluding :embedding because it fill up the console with numbers
-  self.attributes_for_inspect = %i[id title image_quality tool_types user_id memo_id create_at updated_at]
+  self.attributes_for_inspect = %i[id title image_quality tool_types user_id memo_id stream create_at updated_at]
 
   # When getting the nearest neighbors, this attribute holds the distance if
   # included in the select statement. Example: given `vector` is Array<Float>,

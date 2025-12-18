@@ -15,9 +15,9 @@ export const generateConversationTitle = (conversation_id) => {
 }
 
 export const createConversation = (params) => {
-  const { prompt, text_id, temperature, generate_text_preset_id } = params
+  const { prompt, text_id, temperature, generate_text_preset_id, stream } = params
   const headers = jsonFormatHeaders()
-  const body = JSON.stringify({
+  const body = {
     conversation: {
       turnable_type: 'GenerateTextRequest',
       prompt,
@@ -25,17 +25,22 @@ export const createConversation = (params) => {
       temperature,
       generate_text_preset_id
     }
-  })
+  }
+
+  if (stream !== undefined) {
+    body.conversation.stream = stream
+  }
 
   const url = `/conversations`
 
-  return fetch(url, { method: 'POST', headers, body })
+  return fetch(url, { method: 'POST', headers, body: JSON.stringify(body) })
 }
 
 export const updateConversation = (params) => {
   const {
     conversation_id, memo_id, prompt, text_id, temperature,
-    generate_text_preset_id, image_quality, tool_types
+    generate_text_preset_id, image_quality, tool_types,
+    stream
   } = params
 
   const headers = jsonFormatHeaders()
@@ -51,6 +56,10 @@ export const updateConversation = (params) => {
 
   if (tool_types !== undefined) {
     body.conversation.tool_types = tool_types
+  }
+
+  if (stream !== undefined) {
+    body.conversation.stream = stream
   }
 
   if (prompt) {

@@ -9,7 +9,8 @@ export default class PromptFormController extends Controller {
   static targets = [
     'promptInput', 'form', 'submitButton', 'showOptionsButton', 'options',
     'temperatureSlider', 'temperatureValue', 'temperatureSelect', 'modelSelect',
-    'presetSelect', 'textId', 'toggleTextAreaButton', 'imageQuality', 'toolTypes'
+    'presetSelect', 'textId', 'toggleTextAreaButton', 'imageQuality', 'toolTypes',
+    'streamInput'
   ]
 
   connect() {
@@ -190,6 +191,14 @@ export default class PromptFormController extends Controller {
     this.imageQualityTarget.value = imageQuality
     this.updateConversation({
       image_quality: imageQuality
+    })
+  }
+
+  onStreamChange(e) {
+    const stream = e.target.checked ? 1 : 0
+    this.streamInputTarget.value = stream
+    this.updateConversation({
+      stream: stream
     })
   }
 

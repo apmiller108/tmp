@@ -109,7 +109,8 @@ RSpec.describe 'Conversations', type: :request do
           text_id: 'gentext_1234',
           generate_text_preset_id: '',
           model: user.setting.text_model,
-          turnable_type: 'GenerateTextRequest'
+          turnable_type: 'GenerateTextRequest',
+          stream: false
         }
       }
     end
@@ -144,7 +145,8 @@ RSpec.describe 'Conversations', type: :request do
     it 'enqueus a GenerateTextJob' do
       allow(GenerateTextJob).to receive(:perform_async)
       request
-      expect(GenerateTextJob).to have_received(:perform_async).with(user.generate_text_requests.last.id, false)
+      expect(GenerateTextJob).to have_received(:perform_async)
+        .with(user.generate_text_requests.last.id, params[:conversation][:stream])
     end
 
     context 'with invalid params' do
@@ -207,7 +209,8 @@ RSpec.describe 'Conversations', type: :request do
           text_id: 'gentext_1234',
           generate_text_preset_id: '',
           model: user.setting.text_model,
-          turnable_type: 'GenerateTextRequest'
+          turnable_type: 'GenerateTextRequest',
+          stream: false
         }
       }
     end
@@ -232,7 +235,8 @@ RSpec.describe 'Conversations', type: :request do
     it 'enqueus a GenerateTextJob' do
       allow(GenerateTextJob).to receive(:perform_async)
       request
-      expect(GenerateTextJob).to have_received(:perform_async).with(user.generate_text_requests.last.id, false)
+      expect(GenerateTextJob).to have_received(:perform_async)
+        .with(user.generate_text_requests.last.id, params[:conversation][:stream])
     end
 
     it 'renders the conversation title' do

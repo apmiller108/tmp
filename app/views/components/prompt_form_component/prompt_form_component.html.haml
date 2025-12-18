@@ -4,7 +4,7 @@
     data: { 'prompt-form-target' => 'form', action: 'direct-uploads:start->prompt-form#disableForm', **turbo_attrs } do |form|
     = form.hidden_field :turnable_type, value: 'GenerateTextRequest'
     = form.hidden_field :text_id, data: { 'prompt-form-target' => 'textId' }
-    = form.hidden_field :stream, value: 1
+    = form.hidden_field :stream, value: conversation.stream, data: { 'prompt-form-target' => 'streamInput' }
     = form.hidden_field :image_quality, { data: { 'prompt-form-target' => 'imageQuality' } }
     = form.hidden_field :tool_types, { data: { 'prompt-form-target' => 'toolTypes' } }
 
@@ -100,6 +100,14 @@
           %h5.modal-title#conversationSettingsModalLabel Conversation Settings
           %button.btn-close.btn-close-white{ type: 'button', 'data-bs-dismiss': 'modal', 'aria-label': 'Close' }
         .modal-body
+          %h6.mb-3 Stream Response
+          .mb-3
+            .form-check.form-switch.mb-3
+              = check_box :conversation, :stream, checked: conversation.stream, include_hidden: false,
+              role: :switch, class: 'form-check-input', data: { action: 'change->prompt-form#onStreamChange' }
+              %label.form-check-label{ for: 'conversation_stream' }
+              Stream response as it's generated
+          %h6.mb-3 Image Generation Quality
           .mb-3
             .form-floating.d-flex
               = select :conversation, :image_quality, Conversation.image_qualities, { include_blank: false, selected: conversation.image_quality },

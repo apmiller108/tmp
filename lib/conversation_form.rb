@@ -14,7 +14,7 @@ class ConversationForm
   attribute :model
   attribute :file
   attribute :turnable_type
-  attribute :stream, :boolean, default: false
+  attribute :stream, :boolean, default: true
   attribute :image_quality
   attribute :tool_types
 
@@ -97,6 +97,7 @@ class ConversationForm
       attrs[:title] = title if title.present?
       attrs[:memo_id] = memo_id if memo_id.present?
       attrs[:image_quality] = image_quality if image_quality.present?
+      attrs[:stream] = stream unless stream.nil?
     end
   end
 
@@ -133,7 +134,7 @@ class ConversationForm
 
     case turnable_type
     when 'GenerateTextRequest'
-      GenerateTextJob.perform_async(turnable.id, stream)
+      GenerateTextJob.perform_async(turnable.id, conversation.stream)
     end
   end
 

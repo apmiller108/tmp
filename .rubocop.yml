@@ -29,10 +29,7 @@ Lint/MissingSuper:
   Enabled: false
 
 Metrics/AbcSize:
-  Exclude:
-    - 'app/sidekiq/**/*'
-    - 'app/controllers/**/*'
-    - 'spec/support/**/*'
+  Enabled: false
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
