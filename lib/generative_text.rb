@@ -17,7 +17,7 @@ class GenerativeText
   end
 
   DEFAULT_MODEL = find_model 'claude-3-5-haiku-latest'
-  SUMMARY_MODEL = find_model 'claude-3-haiku-20240307'
+  SUMMARY_MODEL = find_model 'claude-3-5-haiku-latest'
 
   def self.active_models
     MODELS.select(&:active?)

@@ -31,8 +31,12 @@ class GenerativeText
     end
 
     def self.conversation_title_prompt(conversation)
-      instructions = 'Create a brief title for the following conversation. Only return the title, '\
-                     'without any quotation marks. Do not prefix the title with \"Title:\".'
+      instructions = <<~INST
+        Create a brief title for the following conversation. It should be like
+        the title of an article. Only return the title,without any quotation
+        marks. Do not prefix the title with \"Title:\".
+      INST
+
       <<~PROMPT
         #{instructions}
 

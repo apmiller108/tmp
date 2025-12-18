@@ -14,7 +14,8 @@ class GenerateConversationTitleJob
 
     response = GenerativeText.new.invoke_model(request)
     request.update!(response: response.data, status: GenerateTextRequest.statuses[:completed])
-    conversation.update!(title: response.content)
+    # truncate title to 100 characters
+    conversation.update!(title: response.content.strip.truncate(100, omission: ''))
 
     broadcast_render(conversation)
   rescue StandardError => e
