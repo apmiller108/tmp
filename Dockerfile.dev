@@ -32,7 +32,7 @@ RUN yarn install
 FROM base AS gems
 
 COPY Gemfile Gemfile.lock ./
-RUN gem install bundler && bundle install --jobs 20 --retry 5
+RUN gem install bundler -v '~> 2.6' && bundle install --jobs 20 --retry 5
 
 # Final build
 FROM base AS build
