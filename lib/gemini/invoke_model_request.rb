@@ -43,10 +43,10 @@ module Gemini
       turns = conversation.turns.to_a
       # Get history + current turn
       ex = conversation.exchange.push(Turn.user_turn(generate_text_request, turns:))
-      
+
       # Prepend context documents to the first message if any
       if conversation.respond_to?(:contexts) && conversation.contexts.any?
-         file_parts = conversation.contexts.map do |context|
+         file_parts = Array(conversation.contexts).select { |c| c.vendor == 'google' }.map do |context|
            # Check if it's a Gemini URI
            if context.file_ref.start_with?('https://')
              {
@@ -61,8 +61,8 @@ module Gemini
            end
          end.compact
          
-         if file_parts.any? && ex.first && ex.first['role'] == 'user'
-           ex.first['parts'].unshift(*file_parts)
+         if file_parts.any? && ex.first && ex.first[:role] == 'user'
+           ex.first[:parts].unshift(*file_parts)
          end
       end
 

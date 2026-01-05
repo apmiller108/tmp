@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_18_155327) do
+ActiveRecord::Schema[8.0].define(version: 2026_01_05_155719) do
   create_schema "rollback"
 
   # These are extensions that must be enabled in order to support this database
@@ -73,6 +73,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_18_155327) do
     t.string "context_type", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "vendor"
     t.index ["user_id"], name: "index_conversation_contexts_on_user_id"
   end
 

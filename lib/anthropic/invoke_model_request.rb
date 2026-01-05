@@ -41,7 +41,12 @@ module Anthropic
       turns = conversation.turns.to_a
       conversation.exchange.push(Turn.user_turn(generate_text_request, turns:)).tap do |ex|
         # prepend context documents to the user message
-        ex.first['content'] = [*conversation.documents, *ex.first['content']]
+        documents = if conversation.respond_to?(:contexts)
+                      Array(conversation.contexts).select { |c| c.vendor == 'anthropic' }.map(&:to_content_block)
+                    else
+                      conversation.documents
+                    end
+        ex.first['content'] = [*documents, *ex.first['content']]
       end
     end
 

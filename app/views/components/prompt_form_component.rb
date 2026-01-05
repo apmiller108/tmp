@@ -51,7 +51,7 @@ class PromptFormComponent < ApplicationViewComponent
   end
 
   def model_data
-    GenerativeText.active_models.to_json(only: [:api_name, :capabilities, :image?])
+    GenerativeText.active_models.to_json(only: [:api_name, :capabilities, :image?, :vendor])
   end
 
   def after_create_preset_redirect_path

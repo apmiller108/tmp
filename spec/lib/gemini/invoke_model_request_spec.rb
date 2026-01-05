@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Gemini::InvokeModelRequest do
-  let(:model) { GenerativeText::MODELS.find { |m| m.api_name == 'gemini-1.5-flash-latest' } }
+  let(:model) { GenerativeText::MODELS.find { |m| m.api_name == 'gemini-2.5-flash' } }
   let(:generate_text_request) { create :generate_text_request, model: model.api_name, prompt: 'Hello' }
   subject { described_class.new(generate_text_request) }
 

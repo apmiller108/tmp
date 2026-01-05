@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Gemini::Client do
   let(:client) { described_class.new }
   let(:prompt) { 'Write a haiku about a rainy day.' }
-  let(:model) { GenerativeText::MODELS.find { |m| m.api_name == 'gemini-1.5-flash-latest' } }
+  let(:model) { GenerativeText::MODELS.find { |m| m.api_name == 'gemini-2.5-flash' } }
   let(:temperature) { 0.1 }
   let(:generate_text_request) { create :generate_text_request, model: model.api_name, prompt:, temperature: }
 

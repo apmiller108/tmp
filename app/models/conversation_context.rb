@@ -31,11 +31,16 @@ class ConversationContext < ApplicationRecord
     file: 'file'
   }, validate: true
 
+  enum :vendor, {
+    anthropic: 'anthropic',
+    google: 'google'
+  }, validate: true
+
   DOCUMENT_CONTENT_TYPE = 'document'.freeze
   IMAGE_CONTENT_TYPE = 'image'.freeze
   DEFAULT_CONTENT_BLOCK_TYPE = 'container_upload'.freeze
   CONTENT_BLOCK_TYPES = {
-    ['application/pdf', 'text/plain'] => DOCUMENT_CONTENT_TYPE,
+    ['application/pdf', 'text/plain', 'text/markdown'] => DOCUMENT_CONTENT_TYPE,
     ['image/jpeg', 'image/png', 'image/gif', 'image/webp'] => IMAGE_CONTENT_TYPE
   }.freeze
 
@@ -49,23 +54,25 @@ class ConversationContext < ApplicationRecord
   }
 
   # @param user [User]
-  # @param file_response [Anthropic::FileResponse]
+  # @param file_response [Anthropic::FileResponse | Gemini::FileResponse]
+  # @param vendor [Symbol]
   # @return [ConversationContext]
-  def self.create_for!(user, file_response)
+  def self.create_for!(user, file_response, vendor: :anthropic)
     context = create(
       file_ref: file_response.id,
       filename: file_response.filename,
       mime_type: file_response.mime_type,
       context_type: context_types['file'],
+      vendor:,
       user_id: user.id
     )
     unless context.persisted?
-      DeleteRemoteConversationContextJob.perform_async(file_response.id)
+      clean_up_remote_context(vendor, file_response)
     end
     context
-  rescue StandardError
-    DeleteRemoteConversationContextJob.perform_async(file_response.id)
-    raise CreateError, "Failed to create conversation context for file: #{file_response.id}"
+  rescue StandardError => e
+    clean_up_remote_context(vendor, file_response)
+    raise CreateError, "Failed to create conversation context for file: #{file_response.id}. Error: #{e.message}"
   end
 
   def to_content_block
@@ -89,6 +96,18 @@ class ConversationContext < ApplicationRecord
       { title: filename }
     else
       {}
+    end
+  end
+
+  private
+
+  def clean_up_remote_context(vendor, file_response)
+    case vendor.to_sym
+    when :anthropic
+      DeleteRemoteConversationContextJob.perform_async(file_response.id)
+    when :google
+      # TODO: make this async as well
+      Gemini.delete_file(file_response.id)
     end
   end
 end

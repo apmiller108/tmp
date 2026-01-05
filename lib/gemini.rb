@@ -10,8 +10,16 @@ module Gemini
   def self.models
     [
       GenerativeText::Model.new(
-        api_name: 'gemini-2.5-flash',
-        name: 'Gemini 2.5 Flash',
+        api_name: 'gemini-3-pro-preview',
+        name: 'Gemini 3 Pro Preview',
+        vendor:,
+        capabilities:,
+        max_tokens: 65_536,
+        active?: true
+      ),
+      GenerativeText::Model.new(
+        api_name: 'gemini-3-flash-preview',
+        name: 'Gemini 3 Flash Preview',
         vendor:,
         capabilities:,
         max_tokens: 65_536,
@@ -25,6 +33,14 @@ module Gemini
         max_tokens: 65_536,
         active?: true
       ),
+      GenerativeText::Model.new(
+        api_name: 'gemini-2.5-flash',
+        name: 'Gemini 2.5 Flash',
+        vendor:,
+        capabilities:,
+        max_tokens: 65_536,
+        active?: true
+      )
     ]
   end
 
