@@ -65,6 +65,15 @@ class GenerateTextRequestComponent < ApplicationViewComponent
     }
   end
 
+  def bot_icon
+    case model.vendor
+    when :google
+      'bi-google'
+    else
+      'bi-robot'
+    end
+  end
+
   def readonly?
     @readonly
   end

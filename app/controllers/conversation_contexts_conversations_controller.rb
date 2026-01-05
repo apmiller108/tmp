@@ -17,7 +17,16 @@ class ConversationContextsConversationsController < ApplicationController
     end
 
     if conversation_context_params[:file].present?
-      file_response = Anthropic.upload_file(conversation_context_params[:file])
+      model_api_name = current_user.setting&.text_model || GenerativeText::DEFAULT_MODEL.api_name
+      model = GenerativeText::MODELS.find { |m| m.api_name == model_api_name }
+      vendor = model&.vendor || :anthropic
+
+      file_response = if vendor == :google
+                        Gemini.upload_file(conversation_context_params[:file])
+                      else
+                        Anthropic.upload_file(conversation_context_params[:file])
+                      end
+
       contexts << ConversationContext.create_for!(current_user, file_response)
     end
 

@@ -81,6 +81,8 @@ class GenerateTextRequest < ApplicationRecord
     case model.vendor
     when :anthropic
       Anthropic::Turn.for(self, turns:)
+    when :google
+      Gemini::Turn.for(self, turns:)
     when :aws
       GenerativeText::AWS::Turn.for(self)
     end
@@ -124,6 +126,8 @@ class GenerateTextRequest < ApplicationRecord
     case model.vendor
     when :anthropic
       Anthropic::InvokeModelResponse
+    when :google
+      Gemini::InvokeModelResponse
     when :aws
       GenerativeText::AWS::InvokeModelResponse
     end

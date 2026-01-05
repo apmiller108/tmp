@@ -7,6 +7,7 @@ class GenerativeText
 
   MODELS = [
     *::Anthropic.models,
+    *::Gemini.models,
     *AWS::MODELS
   ].freeze
 
@@ -34,6 +35,8 @@ class GenerativeText
       AWS::Client
     when :anthropic
       ::Anthropic::Client
+    when :google
+      ::Gemini::Client
     end
   end
 
