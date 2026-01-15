@@ -5,7 +5,7 @@ class GenerateTextRequest < ApplicationRecord
   include Turnable
 
   TEMPERATURE_VALUES = 0.step(to: 1, by: 0.1).map { _1.round(1) }
-  MAX_PROMPT_LENGTH = 150_000
+  MAX_PROMPT_LENGTH = 200_000
 
   SUPPORTED_MIME_TYPES = %w[image/jpeg image/gif image/png image/webp].freeze
   MAX_FILE_SIZE = 4.megabytes
