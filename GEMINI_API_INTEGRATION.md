@@ -87,3 +87,4 @@ This document outlines the plan to integrate the Gemini API adapter into the exi
 - [ ] In app/views/conversation_contexts_conversations/index.html.haml show a vendor badge, Anthropic or Google. This needs to change dynamically when the user selects a model in the prompt form component. Also show a vendor badge next to each of the selected conversation contexts. Show them in a disabled state when the currently selected model vendor is different from the context's vendor
 - [ ] In app/views/conversation_contexts/_conversation_context.html.haml show a vendor badge next to each conversation context.
 - [ ] Create a scheduled sidekiq job the deletes Google file uploads / conversation contexts, 48 hours after they are uploaded / created.
+- [ ] When creating a conversation_conversation_context record, the front end should pass the vendor. Currently the vendor is inferred from the user's settings which may not match the model selected in prompt form component.
