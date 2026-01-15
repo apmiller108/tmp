@@ -27,7 +27,7 @@ class ConversationContextsConversationsController < ApplicationController
                         Anthropic.upload_file(conversation_context_params[:file])
                       end
 
-      contexts << ConversationContext.create_for!(current_user, file_response)
+      contexts << ConversationContext.create_for!(current_user, file_response, vendor:)
     end
 
     contexts.select(&:persisted?).each do |context|
