@@ -1,13 +1,16 @@
 %turbo-frame#conversation-contexts
   .modal-content
     .modal-header.bg-primary.text-white
-      %h5.modal-title#conversationContextModalLabel Conversation Context
+      %h5.modal-title#conversationContextModalLabel
+        Conversation Context
+        %span.badge.rounded-pill.bg-info.ms-2= @vendor.to_s.titleize
       %button.btn-close.btn-close-white{ type: 'button', 'data-bs-dismiss': 'modal', 'aria-label': 'Close' }
-    .modal-body
+    .modal-body{ data: { controller: 'conversation-context', 'conversation-id': @conversation.id } }
       = render partial: 'upload_area', locals: { conversation: @conversation }
       #context-files-selector
         - if @available_contexts.present?
-          = render partial: 'context_files_selector', locals: { conversation: @conversation, available_contexts: @available_contexts }
+          = render partial: 'context_files_selector', locals: { conversation: @conversation, available_contexts: @available_contexts, current_vendor: @vendor }
+        - else
       .conversation-context-files.mt-4
         %h6 Context Files
         .contexts-container#conversation-context-list

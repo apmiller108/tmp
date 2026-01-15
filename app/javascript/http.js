@@ -140,9 +140,12 @@ export const generateImage = ({ prompt, negative_prompt, image_name, style, aspe
   })
 }
 
-export const createConversationContext = (conversation_id, file, signal) => {
+export const createConversationContext = (conversation_id, file, vendor, signal) => {
   const formData = new FormData()
   formData.append('conversation_context[file]', file)
+  if (vendor) {
+    formData.append('conversation_context[vendor]', vendor)
+  }
 
   return fetch(`/conversations/${conversation_id}/conversation_contexts_conversations`, {
     method: 'POST',

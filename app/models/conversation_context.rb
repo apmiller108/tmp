@@ -6,7 +6,7 @@ class ConversationContext < ApplicationRecord
 
   validates :file_ref, :filename, presence: true
 
-  after_destroy_commit -> { DeleteRemoteConversationContextJob.perform_async(file_ref) }
+  after_destroy_commit -> { DeleteRemoteConversationContextJob.perform_async(file_ref, vendor) }
 
   # rubocop:disable Layout/LineLength
   enum :mime_type, {
@@ -101,13 +101,7 @@ class ConversationContext < ApplicationRecord
 
   private
 
-  def clean_up_remote_context(vendor, file_response)
-    case vendor.to_sym
-    when :anthropic
-      DeleteRemoteConversationContextJob.perform_async(file_response.id)
-    when :google
-      # TODO: make this async as well
-      Gemini.delete_file(file_response.id)
-    end
+  def self.clean_up_remote_context(vendor, file_response)
+    DeleteRemoteConversationContextJob.perform_async(file_response.id, vendor)
   end
 end

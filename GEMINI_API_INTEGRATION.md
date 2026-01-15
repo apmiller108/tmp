@@ -83,8 +83,9 @@ This document outlines the plan to integrate the Gemini API adapter into the exi
 
 ### Phase 7: Conversation Contexts
 
-- [ ] In app/views/conversation_contexts_conversations/index.html.haml, the @available_contexts should be scoped to the model selected in the prompt form component. When selecting an Anthropic model, the available contexts should only be Anthropic file uploads. When selecting a Google model, the available contexts should only be Google file uploads. These needs to happen dynamically.One option could be evertime the modal is opened a turbo frame request gets the available contexts. Look into using a Stimulus controller to do `frameElement.reload()`.
-- [ ] In app/views/conversation_contexts_conversations/index.html.haml show a vendor badge, Anthropic or Google. This needs to change dynamically when the user selects a model in the prompt form component. Also show a vendor badge next to each of the selected conversation contexts. Show them in a disabled state when the currently selected model vendor is different from the context's vendor
-- [ ] In app/views/conversation_contexts/_conversation_context.html.haml show a vendor badge next to each conversation context.
-- [ ] Create a scheduled sidekiq job the deletes Google file uploads / conversation contexts, 48 hours after they are uploaded / created.
-- [ ] When creating a conversation_conversation_context record, the front end should pass the vendor. Currently the vendor is inferred from the user's settings which may not match the model selected in prompt form component.
+- [x] In app/views/conversation_contexts_conversations/index.html.haml, the @available_contexts should be scoped to the model selected in the prompt form component. When selecting an Anthropic model, the available contexts should only be Anthropic file uploads. When selecting a Google model, the available contexts should only be Google file uploads. These needs to happen dynamically.
+- [x] In app/views/conversation_contexts_conversations/index.html.haml show a vendor badge, Anthropic or Google. This needs to change dynamically when the user selects a model in the prompt form component. Also show a vendor badge next to each of the selected conversation contexts. Show them in a disabled state when the currently selected model vendor is different from the context's vendor.
+- [x] In app/views/conversation_contexts/_conversation_context.html.haml show a vendor badge next to each conversation context.
+- [x] Create a scheduled sidekiq job the deletes Google file uploads / conversation contexts, 48 hours after they are uploaded / created.
+- [x] When creating a conversation_conversation_context record, the front end should pass the vendor. Currently the vendor is inferred from the user's settings which may not match the model selected in prompt form component.
+
