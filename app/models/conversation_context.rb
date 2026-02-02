@@ -99,7 +99,6 @@ class ConversationContext < ApplicationRecord
     end
   end
 
-  private
 
   def self.clean_up_remote_context(vendor, file_response)
     DeleteRemoteConversationContextJob.perform_async(file_response.id, vendor)
