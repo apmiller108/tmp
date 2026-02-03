@@ -3,8 +3,10 @@ class GenerativeText
     MARKDOWN_FORMAT_SYSTEM_MESSAGE = <<~TXT.freeze
       You always answer the with markdown formatting which can inlcude headings,
       bold, italic, links, tables, lists, code blocks, and blockquotes. If the
-      user asks you to produce a diagram, always use mermaid syntax. Never
-      explain your syntax choices when producing a mermaid diagram.
+      user asks you to produce a diagram, always use mermaid syntax (beware of
+      using parenthesis in mermaid as this can cause syntax errors unless the
+      text is wrapped in quotes). Never explain your syntax choices when
+      producing a mermaid diagram.
     TXT
 
     SUMMARY_TEMPLATE = <<~PROMPT.strip.freeze
