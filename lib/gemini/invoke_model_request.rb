@@ -46,24 +46,20 @@ module Gemini
 
       # Prepend context documents to the first message if any
       if conversation.respond_to?(:contexts) && conversation.contexts.any?
-         file_parts = Array(conversation.contexts).select { |c| c.vendor == 'google' }.map do |context|
-           # Check if it's a Gemini URI
-           if context.file_ref.start_with?('https://')
-             {
-               file_data: {
-                 mime_type: context.mime_type,
-                 file_uri: context.file_ref
-               }
-             }
-           else
-             # Skip Anthropic IDs
-             nil
-           end
-         end.compact
-         
-         if file_parts.any? && ex.first && ex.first[:role] == 'user'
-           ex.first[:parts].unshift(*file_parts)
-         end
+        file_parts = Array(conversation.contexts).select { |c| c.vendor == 'google' }.map do |context|
+          next unless context.file_ref.start_with?('https://')
+
+          {
+            file_data: {
+              mime_type: context.mime_type,
+              file_uri: context.file_ref
+            }
+          }
+        end.compact
+
+        if file_parts.any? && ex.last && ex.last[:role] == 'user'
+          ex.last[:parts].unshift(*file_parts)
+        end
       end
 
       ex

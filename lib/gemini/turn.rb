@@ -62,13 +62,13 @@ module Gemini
     # Phase 4 implementation placeholder
     def user_upload_image_part
       return unless generate_text_request.image_attached?
-      
-      # Use inline data for now, similar to Anthropic, 
+
+      # Use inline data for now, similar to Anthropic,
       # but Gemini supports inline_data or file_data (Files API)
       # For parity with current Anthropic implementation (base64 source), we use inline_data.
-      
+
       image = generate_text_request.file.variant(:webp).processed.image
-      
+
       {
         inline_data: {
           mime_type: image.content_type,
@@ -81,7 +81,7 @@ module Gemini
       return unless include_previous_gen_image && previous_turn.present? && previous_turn.generated_image?
 
       image = previous_turn.turnable.image.variant(:webp).image
-      
+
       {
         inline_data: {
           mime_type: image.content_type,
