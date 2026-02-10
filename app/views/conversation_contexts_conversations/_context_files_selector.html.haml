@@ -14,9 +14,11 @@
                     class: 'form-select',
                     size: 5,
                     data: { action: 'change->conversation-context-selector#toggleSubmit',
-                                    'conversation-context-selector-target' => 'select' } } do
+                                    'conversation-context-selector-target' => 'select',
+                                    'current-vendor' => local_assigns[:current_vendor] || @vendor } } do
       - available_contexts.each do |context|
-        %option{ value: context.id, id: dom_id(context) }= context.filename
+        %option{ value: context.id, id: dom_id(context), data: { vendor: context.vendor } }
+          = "#{context.filename} (#{context.vendor.to_s.titleize})"
   .mb-3
     = form.submit 'Add Selected Files',
                   class: 'btn btn-outline-primary',

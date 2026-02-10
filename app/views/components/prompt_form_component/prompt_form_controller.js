@@ -161,6 +161,27 @@ export default class PromptFormController extends Controller {
 
   onChangeModel() {
     this.initializeFileInput()
+    this.updateModalFrameSrc()
+    this.notifyModelChange()
+  }
+
+  updateModalFrameSrc() {
+    const frame = document.getElementById('conversation-contexts')
+    if (frame && frame.src) {
+      const selectedModel = this.modelData.find(m => m.api_name === this.modelSelectTarget.value)
+      if (selectedModel) {
+        const url = new URL(frame.src, window.location.origin)
+        url.searchParams.set('vendor', selectedModel.vendor)
+        frame.src = url.toString()
+      }
+    }
+  }
+
+  notifyModelChange() {
+    const selectedModel = this.modelData.find(m => m.api_name === this.modelSelectTarget.value)
+    if (selectedModel) {
+      this.dispatch('model-changed', { detail: { vendor: selectedModel.vendor } })
+    }
   }
 
   // If there is an error in the background job, enabled the form

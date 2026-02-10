@@ -20,11 +20,17 @@ CLOSED: [2025-09-15 Mon 08:19]
 * TODO Make it optional to include generated images in the conversation context
   Right now it's decided by the backend to include the previous one automatically. This
   isn't always -- or usually -- what I want
+
+* TODO Fix Markdown tables in assistant response
+- [ ] When converting markdown to HTML, the tables to not appear properly (eg, not
+  in table format). Find a way to render tables properly
 * TODO Gemini integration
- - [ ] Refactor existing claude integration to adapter
- - [ ] Add Gemini interface
- - [ ] Add Gemini models selectable in UI
+ - [X] Refactor existing claude integration to adapter
+ - [X] Add Gemini interface
+ - [X] Add Gemini models selectable in UI
  - [ ] Handle context documents
+ - [ ] Pass vendor when creating conversation contexts. Right now the vendor is
+   inferred from the user settings default model.
 * TODO Enhanced copy response
  - [ ] Option to copy markdown formatted response
 * DONE Add support for PDFs

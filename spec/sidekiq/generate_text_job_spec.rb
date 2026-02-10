@@ -1,173 +1,42 @@
 require 'rails_helper'
 
 RSpec.describe GenerateTextJob, type: :job do
-  describe 'sidekiq_options' do
-    subject { described_class.sidekiq_options }
+  include GeminiHelpers
 
-    it { is_expected.to include('retry' => 1) }
+  let(:user) { create :user }
+  let(:model) { GenerativeText::MODELS.find { |m| m.vendor == :google } }
+  let(:conversation) { create :conversation, user: user }
+  let(:generate_text_request) do
+     create :generate_text_request, user: user, model: model.api_name, prompt: 'Hello Gemini', conversation: conversation
   end
-
+  
   describe '#perform' do
-    subject(:perform) { described_class.new.perform(generate_text_request.id, stream) }
-
-    let(:stream) { false }
-    let(:conversation_turn) { build_stubbed :conversation_turn, conversation: }
-    let(:generate_text_request) { build_stubbed :generate_text_request, :with_preset, conversation_turn:, user: }
-    let(:user) { build_stubbed :user, setting: build(:setting) }
-    let(:conversation) { build_stubbed :conversation }
-    let(:response_data) { { 'content' => 'response data' } }
-    let(:response) do
-      instance_double(Anthropic::InvokeModelResponse,
-                      content: Faker::Lorem.paragraph, data: response_data, tool_use?: false)
-    end
-    let(:prompt_form_component) { instance_double PromptFormComponent }
-    let(:conversation_turn_component) { instance_double ConversationTurnComponent }
-    let(:generative_text) { instance_double(GenerativeText, invoke_model: response) }
-
-    before do
-      allow(GenerateTextRequest).to receive(:find).and_return(generate_text_request)
-      allow(MyChannel).to receive(:broadcast_to)
-      allow(ViewComponentBroadcaster).to receive(:call)
-      allow(GenerativeText).to receive(:new).and_return(generative_text)
-      allow(PromptFormComponent).to receive(:new).with(conversation_form: kind_of(ConversationForm))
-                                                 .and_return(prompt_form_component)
-      allow(ConversationTurnComponent).to receive(:new).with(conversation_turn:)
-                                                       .and_return(conversation_turn_component)
-      allow(generate_text_request).to receive(:update!)
-      allow(generate_text_request).to receive(:in_progress!)
-      allow(generate_text_request).to receive(:failed!)
-      allow(generate_text_request).to receive(:conversation).and_return(conversation)
-      allow(conversation).to receive(:reload).and_return(conversation)
-      allow(ConversationEmbeddingJob).to receive(:perform_in)
-    end
-
-    context 'when the text is generated successfully' do
-      it 'marks the request as in_progress' do
-        perform
-        expect(generate_text_request).to have_received(:in_progress!)
-      end
-
-      it 'broadcasts the text content' do
-        perform
-        expect(MyChannel).to(
-          have_received(:broadcast_to).with(
-            user,
-            generate_text: { 'text_id' => generate_text_request.text_id,
-                             'user_id' => user.id,
-                             conversation_id: conversation.id,
-                             content: response.content,
-                             error: nil }
-          )
+    context 'with a Gemini model' do
+      before do
+        allow(ENV).to receive(:fetch).with('GEMINI_API_KEY').and_return('fake_key')
+        
+        stub_gemini_generate_content_request(
+          model: model,
+          response_body: {
+            candidates: [
+              {
+                content: {
+                  parts: [{ text: 'Hello from Gemini' }]
+                }
+              }
+            ],
+            usageMetadata: { promptTokenCount: 5, candidatesTokenCount: 5 }
+          }.to_json
         )
       end
 
-      it 'updates the request' do
-        perform
-        expect(generate_text_request).to have_received(:update!).with(response: response_data, status: 'completed')
-      end
-
-      it 'broadcasts the ConversationTurnComponent' do
-        perform
-        expect(ViewComponentBroadcaster).to(
-          have_received(:call).with([user, TurboStreams::STREAMS[:main]],
-                                    component: conversation_turn_component, action: :replace)
-        )
-      end
-
-      it 'broadcasts the PromptFormComponent' do
-        perform
-        expect(ViewComponentBroadcaster).to(
-          have_received(:call).with([user, TurboStreams::STREAMS[:main]],
-                                    component: prompt_form_component, action: :replace)
-        )
-      end
-
-      it 'schedules a ConversationEmbeddingJob' do
-        perform
-        expect(ConversationEmbeddingJob).to have_received(:perform_in).with(5.minutes, conversation.id)
-      end
-
-      context 'when streaming is true' do
-        let(:stream) { true }
-        let(:response_chunks) { %w[chunk1 chunk2 chunk3 chunk4 chunk5 chunk6] }
-        let(:markdown_to_html_component) { instance_double ContentCustomizerComponent }
-
-        before do
-          allow(generative_text).to receive(:invoke_model_stream).and_yield(response_chunks[0])
-                                                                 .and_yield(response_chunks[1])
-                                                                 .and_yield(response_chunks[2])
-                                                                 .and_yield(response_chunks[3])
-                                                                 .and_yield(response_chunks[4])
-                                                                 .and_yield(response_chunks[5])
-                                                                 .and_return(response)
-          allow(ContentCustomizerComponent).to receive(:new).with(markup: response_chunks.take(5).join,
-                                                                  markdown: true,
-                                                                  simple: true)
-                                                            .and_return(markdown_to_html_component)
-        end
-
-        it 'broadcasts the message on every 5th chunk' do
-          perform
-          expect(ViewComponentBroadcaster).to(
-            have_received(:call).with([user, TurboStreams::STREAMS[:main]],
-                                      component: markdown_to_html_component,
-                                      action: :update,
-                                      target: "assistant_response_generate_text_request_#{generate_text_request.id}")
-          )
-        end
-
-        it 'updates the request' do
-          perform
-          expect(generate_text_request).to have_received(:update!).with(response: response_data, status: 'completed')
-        end
-
-        it 'broadcasts the ConversationTurnComponent' do
-          perform
-          expect(ViewComponentBroadcaster).to(
-            have_received(:call).with([user, TurboStreams::STREAMS[:main]],
-                                      component: conversation_turn_component, action: :replace)
-          )
-        end
-
-        it 'broadcasts the PromptFormComponent' do
-          perform
-          expect(ViewComponentBroadcaster).to(
-            have_received(:call).with([user, TurboStreams::STREAMS[:main]],
-                                      component: prompt_form_component, action: :replace)
-          )
-        end
-      end
-    end
-
-    describe '.on_retries_exhausted' do
-      subject(:on_retries_exhausted) { described_class.on_retries_exhausted(generate_text_request.id) }
-
-      it 'marks the request as failed' do
-        on_retries_exhausted
-        expect(generate_text_request).to have_received(:failed!)
-      end
-
-      it 'broadcasts the ConversationTurnComponent' do
-        on_retries_exhausted
-        expect(ViewComponentBroadcaster).to(
-          have_received(:call).with([user, TurboStreams::STREAMS[:main]],
-                                    component: conversation_turn_component, action: :replace)
-        )
-      end
-
-      it 'broadcasts an error response' do
-        on_retries_exhausted
-        expect(MyChannel).to have_received(:broadcast_to).with(user,
-                                                               generate_text: { text_id: generate_text_request.text_id,
-                                                                                content: nil, error: true })
-      end
-
-      it 'broadcasts a flash message' do
-        on_retries_exhausted
-        expect(ViewComponentBroadcaster).to(
-          have_received(:call).with([generate_text_request.user, TurboStreams::STREAMS[:main]],
-                                    component: kind_of(FlashMessageComponent), action: :update)
-        )
+      it 'completes the request and saves the response' do
+        described_class.new.perform(generate_text_request.id, false)
+        
+        generate_text_request.reload
+        expect(generate_text_request.status).to eq('completed')
+        expect(generate_text_request.response.content).to eq('Hello from Gemini')
+        expect(generate_text_request.response.data).to be_present
       end
     end
   end

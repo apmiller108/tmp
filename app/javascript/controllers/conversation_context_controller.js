@@ -3,7 +3,7 @@ import { createConversationContext } from '@javascript/http';
 
 export default class ConversationContextController extends Controller {
   static targets = [
-    "dropZone", "fileInput", "successAlert", "errorAlert", "successMessage", "errorMessage", "spinner"
+    "dropZone", "fileInput", "successAlert", "errorAlert", "successMessage", "errorMessage", "spinner", "item"
   ]
 
   abortController = null;
@@ -11,12 +11,55 @@ export default class ConversationContextController extends Controller {
 
   connect() {
     this.conversationId = this.element.dataset.conversationId
+    this.boundOnModelChanged = this.onModelChanged.bind(this)
+    document.addEventListener('prompt-form:model-changed', this.boundOnModelChanged)
+
+    this.updateItems()
+
+    // Slight delay to ensure other controllers (like the selector) are connected
+    setTimeout(() => {
+      this.dispatch('opened', { detail: { vendor: this.currentVendor } })
+    }, 100)
   }
 
   disconnect() {
     if (this.abortController) {
       this.abortController.abort()
     }
+    document.removeEventListener('prompt-form:model-changed', this.boundOnModelChanged)
+  }
+
+  get currentVendor() {
+    if (this.element.dataset.vendor) return this.element.dataset.vendor
+
+    const modelSelect = document.querySelector('[data-prompt-form-target="modelSelect"]')
+    if (!modelSelect) return 'anthropic'
+    const modelData = JSON.parse(modelSelect.dataset.modelData)
+    const selectedModel = modelData.find(m => m.api_name === modelSelect.value)
+    return selectedModel ? selectedModel.vendor : 'anthropic'
+  }
+
+  onModelChanged(event) {
+    this.element.dataset.vendor = event.detail.vendor
+    this.updateItems()
+    // The frame reload handled in PromptForm will replace the modal content,
+    // but we can also trigger immediate updates if needed.
+  }
+
+  updateItems() {
+    const vendor = this.currentVendor
+    this.itemTargets.forEach(item => {
+      const itemVendor = item.dataset.vendor
+      if (itemVendor && itemVendor !== vendor) {
+        item.classList.add('disabled-context')
+        item.style.opacity = '0.5'
+        item.style.pointerEvents = 'none'
+      } else {
+        item.classList.remove('disabled-context')
+        item.style.opacity = '1'
+        item.style.pointerEvents = 'auto'
+      }
+    })
   }
 
   openFileDialog() {
@@ -74,6 +117,7 @@ export default class ConversationContextController extends Controller {
       const response = await createConversationContext(
         this.conversationId,
         file,
+        this.currentVendor,
         this.abortController.signal
       )
 

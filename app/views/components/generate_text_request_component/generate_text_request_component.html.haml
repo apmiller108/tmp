@@ -18,7 +18,7 @@
     .g-col-12
       .card.segment-assistant
         .turn-icon.ps-3.pt-1
-          %i.bi-robot
+          %i{ class: bot_icon }
         .card-body.pt-1{ id: assistant_response_id }
           - if created? || in_progress?
             .text-center

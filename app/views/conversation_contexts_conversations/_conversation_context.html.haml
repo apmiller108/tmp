@@ -1,8 +1,9 @@
-.context-item.d-flex.justify-content-between.align-items-center.p-2.border.rounded.mb-2{ id: dom_id(conversation_context)}
+.context-item.d-flex.justify-content-between.align-items-center.p-2.border.rounded.mb-2{ id: dom_id(conversation_context), data: { vendor: conversation_context.context.vendor, 'conversation-context-target': 'item' } }
   .context-info.d-flex.align-items-center
     %i.bi.bi-file-earmark.me-2.text-muted
     .context-details
       .file-name.fw-medium= conversation_context.context.filename
+      %span.badge.bg-info.small= conversation_context.context.vendor.to_s.titleize
   .context-actions
     = link_to conversation_conversation_contexts_conversation_path(conversation_context.conversation_id, conversation_context),
       id: dom_id(conversation_context, 'delete'),

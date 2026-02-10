@@ -2,3 +2,7 @@ transcription_status_check:
   class: 'TranscriptionStatusCheckJob'
   cron: '* * * * *'
   queue: 'default'
+cleanup_google_conversation_contexts:
+  class: 'CleanupGoogleConversationContextsJob'
+  cron: '0 * * * *' # Run every hour
+  queue: 'default'

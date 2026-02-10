@@ -17,8 +17,15 @@ class ConversationContextsConversationsController < ApplicationController
     end
 
     if conversation_context_params[:file].present?
-      file_response = Anthropic.upload_file(conversation_context_params[:file])
-      contexts << ConversationContext.create_for!(current_user, file_response)
+      vendor = conversation_context_params[:vendor] || current_vendor
+
+      file_response = if vendor.to_sym == :google
+                        Gemini.upload_file(conversation_context_params[:file])
+                      else
+                        Anthropic.upload_file(conversation_context_params[:file])
+                      end
+
+      contexts << ConversationContext.create_for!(current_user, file_response, vendor: vendor)
     end
 
     contexts.select(&:persisted?).each do |context|
@@ -51,9 +58,32 @@ class ConversationContextsConversationsController < ApplicationController
 
   def index
     @contexts = @conversation.conversation_contexts.order(created_at: :desc)
+    @vendor = current_vendor
+    @available_contexts = available_contexts
     respond_to do |format|
       format.html
       format.json { render json: @contexts, status: :ok }
+    end
+  end
+
+  def available
+    @vendor = params[:vendor]
+    @available_contexts = available_contexts
+
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.update(
+            'context-files-selector',
+            partial: 'context_files_selector',
+            locals: { conversation: @conversation, available_contexts: @available_contexts, current_vendor: @vendor }
+          ),
+          turbo_stream.update(
+            'conversationContextModalLabel',
+            "Conversation Context <span class='badge rounded-pill bg-info ms-2'>#{@vendor.to_s.titleize}</span>".html_safe
+          )
+        ]
+      end
     end
   end
 
@@ -100,15 +130,26 @@ class ConversationContextsConversationsController < ApplicationController
     @conversation = current_user.conversations.find(params[:conversation_id])
   end
 
+  def default_vendor
+    current_user.setting&.text_model&.yield_self do |m|
+      GenerativeText::MODELS.find { |mod| mod.api_name == m }
+    end&.vendor
+  end
+
   def set_available_contexts
     @available_contexts = available_contexts
   end
 
   def available_contexts
-    current_user.conversation_contexts.available_for(@conversation).order(:filename)
+    current_user.conversation_contexts.available_for(@conversation).order(created_at: :desc)
+  end
+
+  def current_vendor
+    vendor = params[:vendor] || @conversation.turns.last&.turnable&.model&.vendor || default_vendor || :anthropic
+    vendor.to_sym
   end
 
   def conversation_context_params
-    params.require(:conversation_context).permit(:file, conversation_context_ids: [])
+    params.require(:conversation_context).permit(:file, :vendor, conversation_context_ids: [])
   end
 end
